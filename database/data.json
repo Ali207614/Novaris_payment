@@ -1,0 +1,216 @@
+[
+    {
+        "id": "zQ8NpPKQg0",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 561932032,
+        "full": false,
+        "is_delete": false,
+        "subMenu": "Naqd hisobidan to'lov/xarajat",
+        "payment": true,
+        "documentType": false,
+        "accountType": "Tovar qabuli",
+        "accountList": [
+            {
+                "name": "1514 - Transport va Logistika xarajatlari (Mahalliy xarid)",
+                "id": "1514",
+                "num": 1
+            },
+            {
+                "name": "1513 - Deklarant xarajati",
+                "id": "1513",
+                "num": 2
+            },
+            {
+                "name": "1510 - Materiallarni tayyorlash va xarid qilish",
+                "id": "1510",
+                "num": 3
+            },
+            {
+                "name": "1511 - Bojxona xarajatlari va Xitoydagi xarajatlar",
+                "id": "1511",
+                "num": 4
+            },
+            {
+                "name": "9464 - Tovarlar kamomadi (Inventarizatsiya)",
+                "id": "9464",
+                "num": 5
+            },
+            {
+                "name": "1512 - Transport va Logistika xarajatlari (Xorijiy xarid)",
+                "id": "1512",
+                "num": 6
+            },
+            {
+                "name": "9463 - Tovarlar kamomadi (Xitoy xarid)",
+                "id": "9463",
+                "num": 7
+            }
+        ],
+        "accountCodeOther": "1512",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 2
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 3
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 4
+            },
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 5
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 6
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 7
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 8
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 9
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 10
+            }
+        ],
+        "accountCode": "5031",
+        "summa": "10000",
+        "currencyRate": "1000",
+        "comment": "Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov",
+        "point": "777",
+        "ddsList": [
+            {
+                "name": "Yuk tushirish xarajati",
+                "id": 0
+            }
+        ],
+        "dds": "Qarz(Tushum)",
+        "lastStep": 52,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ]
+            }
+        },
+        "vendorList": [
+            {
+                "name": "HAYOT AKA SEBZOR 93-330-67-77",
+                "id": "12-Hayot01",
+                "num": 1
+            },
+            {
+                "name": "HAYOT AKA 94-608-33-03",
+                "id": "64-Hayot01",
+                "num": 2
+            },
+            {
+                "name": "(N/A)HAYOT AKA DO'MBIROBOD 94-650-60-04",
+                "id": "O-Hayot01",
+                "num": 3
+            },
+            {
+                "name": "Hayot aka",
+                "id": "Hayot01",
+                "num": 4
+            },
+            {
+                "name": "OF-MIRHAYOT MIRAHMATOV",
+                "id": "X-Mirhayot",
+                "num": 5
+            },
+            {
+                "name": "HAYOT AKA QO'QON 94-496-80-87",
+                "id": "12-Hayot03",
+                "num": 6
+            },
+            {
+                "name": "HAYOT AKA QASHQADARYO 99-502-00-22",
+                "id": "777-Hayot02",
+                "num": 7
+            },
+            {
+                "name": "NOSIR AKA YANGI HAYOT 99-333-33-54",
+                "id": "O-Nosir01",
+                "num": 8
+            },
+            {
+                "name": "HAYOT AKA 99-838-11-31",
+                "id": "12-Hayot02",
+                "num": 9
+            },
+            {
+                "name": "HAYOT AKA 93-698-47-40",
+                "id": "64-HAYOT05",
+                "num": 10
+            },
+            {
+                "name": "HAYOT AKA ANTENA 99-838-11-31",
+                "id": "777-HAYOT01",
+                "num": 11
+            },
+            {
+                "name": "HAYOT AKA SERGELI 93-353-57-63",
+                "id": "O-Hayot02",
+                "num": 12
+            },
+            {
+                "name": "HAYOT AKA QO'QON 94-496-80-87",
+                "id": "Q01-Hayot01",
+                "num": 13
+            },
+            {
+                "name": "(N/A) HAYOT AKA MANGAL 99-721-43-35",
+                "id": "O-Hayot03",
+                "num": 14
+            }
+        ],
+        "vendorId": "X-Mirhayot"
+    }
+]
