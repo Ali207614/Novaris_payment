@@ -34,13 +34,41 @@ let Menu = [
 let SubMenu = {
     1: [
         {
-            name: 'Xorijiy xarid transport buyurtmasi',
-            comment: "Sana:\n\nTicket raqami: \nTransport buyurtma.\nYetkazib beruvchi/ Tovar nomi: \nTovar ortilish reja sanasi: \n\nAlternative - 1(Lisa): \n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: Yurishdan oldin;\n3) Yurish Muddati: 20 - 25.05.2021; \n\nAlternative- 2(Lancy): \n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: May boshi(aniq etmayapti) \n\nAlternative - 3(Misha): \n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: 10.05.2021\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#kontener\n",
+            name: 'Xorijiy xarid konteyner buyurtmasi',
+            comment: "Transport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar nomi:\n5) Tovar ortilish reja sanasi:\n\n6) Alternative-1 (Lisa):\n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: Yurishdan oldin;\n3) Yurish Muddati: 20-25.05.2021; \n\n7) Alternative-2 (Lancy): \n1) To'lov summasi: xyz Yuan;\n2)  To'lov muddati: 01.06.2021 Yetib kelgandan keyin; \n3) Yurish Muddati: May boshi (aniq etmayapti)\n\n8) Alternative-3 (Misha):\n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: 10.05.2021\n\n9) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#kontener\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nTicket raqami: \nTransport buyurtma.\nYetkazib beruvchi/ Tovar nomi: \nTovar ortilish reja sanasi: \n\nAlternative - 1(Lisa): \n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: Yurishdan oldin;\n3) Yurish Muddati: 20 - 25.05.2021; \n\nAlternative- 2(Lancy): \n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: May boshi(aniq etmayapti) \n\nAlternative - 3(Misha): \n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: 10.05.2021\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#kontener\n`,
+                    message: `Transport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar nomi:\n5) Tovar ortilish reja sanasi:\n\n6) Alternative-1 (Lisa):\n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: Yurishdan oldin;\n3) Yurish Muddati: 20-25.05.2021; \n\n7) Alternative-2 (Lancy): \n1) To'lov summasi: xyz Yuan;\n2)  To'lov muddati: 01.06.2021 Yetib kelgandan keyin; \n3) Yurish Muddati: May boshi (aniq etmayapti)\n\n8) Alternative-3 (Misha):\n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: 10.05.2021\n\n9) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#kontener\n`,
+                    btn: () => empDynamicBtn(),
+                    step: '13'
+                },
+                {
+                    id: 2,
+                    name: "Ticket raqami",
+                    message: 'Ticket raqamini kiriting',
+                    btn: () => empDynamicBtn(),
+                    step: '12'
+                }
+            ],
+            updateLine: 2,
+            lastStep: 14,
+            infoFn: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let data = infoData().find(item => item.id == user.currentDataId)
+                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                return info
+            }
+        },
+        {
+            name: 'Xorijiy xarid mashina buyurtmasi',
+            comment: "AvtoTransport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar Kodi :  (80851)\n5) Tovar ortilish reja sanasi:\n\n6) Yetkazib beruvchi ( Baliq Urumchi ):\n1) To'lov summasi: xyz Yuan;\n2) Tovar og'irligi: \n3) Bir tonna uchun kelishilgan narx : \n4) Paddonlar soni : \n5) Yetkazib berish Manzil : (乌鲁木齐市天山区延安路662号边疆宾馆海关监管库888库房7区 ) Ali aka sklad\n",
+            update: [
+                {
+                    id: 1,
+                    name: "Izoh",
+                    message: `AvtoTransport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar Kodi :  (80851)\n5) Tovar ortilish reja sanasi:\n\n6) Yetkazib beruvchi ( Baliq Urumchi ):\n1) To'lov summasi: xyz Yuan;\n2) Tovar og'irligi: \n3) Bir tonna uchun kelishilgan narx : \n4) Paddonlar soni : \n5) Yetkazib berish Manzil : (乌鲁木齐市天山区延安路662号边疆宾馆海关监管库888库房7区 ) Ali aka sklad\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 },
@@ -63,12 +91,12 @@ let SubMenu = {
         },
         {
             name: 'Xorijiy xarid tovar buyurtmasi',
-            comment: "Sana:\n\nTicket raqami :\nXorijiy buyurtma.\nZakaz nomeri:\nYetkazib beruvchi:\nTovar nomi:\nZaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\nTovar summasi: 120000 Yuan\nTo'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin(..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\nTayyor bo'lish muddati:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#21059MY(Zakaz nomeri)",
+            comment: "Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: @Nodirbek_Kuddusiy\n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nTicket raqami :\nXorijiy buyurtma.\nZakaz nomeri:\nYetkazib beruvchi:\nTovar nomi:\nZaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\nTovar summasi: 120000 Yuan\nTo'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin(..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\nTayyor bo'lish muddati:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#21059MY(Zakaz nomeri)`,
+                    message: `Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: @Nodirbek_Kuddusiy\n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 },
@@ -102,9 +130,9 @@ let SubMenu = {
                 },
                 {
                     id: 2,
-                    name: "Yetkazib beruvchi",
-                    message: 'Поставщик (Yetkazib beruvchi) ni ismini yozing',
-                    btn: () => empDynamicBtn(),
+                    name: "Document Type (Schet,Поставщик)",
+                    message: 'Document type ni tanlang',
+                    btn: () => empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2),
                     step: '21'
                 },
                 {
@@ -183,10 +211,137 @@ let SubMenu = {
                 let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
                 let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name
 
-                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOneStep'))?.name) : vendorName
+
+                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
                 return info
             }
-        }
+        },
+        {
+            name: "Chetga pul chiqarish",
+            comment: `Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n`,
+            update: [
+                {
+                    id: 1,
+                    name: "Sap Document",
+                    message: `Hujjatni tanlang`,
+                    btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                    step: '90'
+                },
+                {
+                    id: 2,
+                    name: "Schet",
+                    message: 'Schetni tanlang',
+                    btn: async ({ chat_id }) => {
+                        let user = infoUser().find(item => item.chat_id == chat_id)
+                        let list = infoData().find(item => item.id == user?.currentDataId)
+                        if (!list?.accountList.length) {
+                            let b1Account15 = await b1Controller.getAccount15({ status: true })
+                            let accountList15 = b1Account15?.map((item, i) => {
+                                return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+                            })
+                            list.accountList = accountList15
+                            updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+                        }
+                        let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                        return btn
+                    },
+                    step: '64'
+                },
+                {
+                    id: 3,
+                    name: "Sana",
+                    message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                    btn: () => empDynamicBtn(),
+                    step: '44'
+                },
+
+                {
+                    id: 7,
+                    name: "Valyuta kursi",
+                    message: `Valyuta kursi `,
+                    btn: async ({ chat_id }) => {
+                        let user = infoUser().find(item => item.chat_id == chat_id)
+                        let list = infoData().find(item => item.id == user.currentDataId)
+                        if (!list?.currencyRate) {
+                            let data = await b1Controller.getCurrentRate('USD')
+                            let rate = data[0]?.Rate
+                            list.currencyRate = rate
+                            updateData(user.currentDataId, { currencyRate: rate })
+                        }
+                        let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                        return btn
+                    },
+                    step: '49'
+                },
+                {
+                    id: 8,
+                    name: "Summa",
+                    message: `Summani yozing`,
+                    btn: () => empDynamicBtn(),
+                    step: '48'
+                },
+                {
+                    id: 9,
+                    name: "Izoh",
+                    message: `Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n`,
+                    btn: () => empDynamicBtn(),
+                    step: '50'
+                },
+                {
+                    id: 10,
+                    name: "Hisob Nuqtasi",
+                    message: `Hisob Nuqtasini tanlang`,
+                    btn: async () => await dataConfirmBtnEmp(ocrdList, 1, 'point'),
+                    step: '51'
+                },
+                {
+                    id: 4,
+                    name: "To'lov usullari , Valyuta , Schet",
+                    message: `To'lov usullarini tanlang`,
+                    btn: async ({ chat_id }) => {
+                        let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                        return await dataConfirmBtnEmp(btnList, 2, 'payType')
+                    },
+                    step: '45'
+                },
+                {
+                    id: 11,
+                    name: "Statya DDS",
+                    message: `Statya DDS ni tanlang`,
+                    btn: async ({ chat_id }) => {
+                        let user = infoUser().find(item => item.chat_id == chat_id)
+                        let list = infoData().find(item => item.id == user.currentDataId)
+                        let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            return { name: item, id: i }
+                        }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
+                        return await dataConfirmBtnEmp(
+                            ddsList, 2, 'dds')
+                    },
+                    step: '52'
+                },
+            ],
+            updateLine: 2,
+            lastStep: 52,
+            infoFn: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let data = infoData().find(item => item.id == user.currentDataId)
+
+                let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
+                if (!ddsList.includes(get(data, 'dds'))) {
+                    updateData(user.currentDataId, { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                    data = infoData().find(item => item.id == user.currentDataId)
+                }
+
+                let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
+                let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
+                let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
+
+                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                return info
+            }
+        },
     ],
     2: [
         {
@@ -435,10 +590,129 @@ let SubMenu = {
             }
         },
         {
-            name: "Naqd Bojxonaga oid xarajatlar"
-        },
-        {
-            name: "Click Bojxonaga oid xarajatlar"
+            name: "Naqd/Click Bojxonaga oid xarajatlar",
+            comment: `Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov`,
+            update: [
+                {
+                    id: 1,
+                    name: "Sap Document",
+                    message: `Hujjatni tanlang`,
+                    btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                    step: '90'
+                },
+                {
+                    id: 2,
+                    name: "Schet",
+                    message: 'Schetni tanlang',
+                    btn: async ({ chat_id }) => {
+                        let user = infoUser().find(item => item.chat_id == chat_id)
+                        let list = infoData().find(item => item.id == user?.currentDataId)
+                        if (!list?.accountList.length) {
+                            let b1Account15 = await b1Controller.getAccount15()
+                            let accountList15 = b1Account15?.map((item, i) => {
+                                return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+                            })
+                            list.accountList = accountList15
+                            updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+                        }
+                        let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                        return btn
+                    },
+                    step: '64'
+                },
+                {
+                    id: 3,
+                    name: "Sana",
+                    message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                    btn: () => empDynamicBtn(),
+                    step: '44'
+                },
+
+                {
+                    id: 7,
+                    name: "Valyuta kursi",
+                    message: `Valyuta kursi `,
+                    btn: async ({ chat_id }) => {
+                        let user = infoUser().find(item => item.chat_id == chat_id)
+                        let list = infoData().find(item => item.id == user.currentDataId)
+                        if (!list?.currencyRate) {
+                            let data = await b1Controller.getCurrentRate('USD')
+                            let rate = data[0]?.Rate
+                            list.currencyRate = rate
+                            updateData(user.currentDataId, { currencyRate: rate })
+                        }
+                        let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                        return btn
+                    },
+                    step: '49'
+                },
+                {
+                    id: 8,
+                    name: "Summa",
+                    message: `Summani yozing`,
+                    btn: () => empDynamicBtn(),
+                    step: '48'
+                },
+                {
+                    id: 9,
+                    name: "Izoh",
+                    message: `Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov`,
+                    btn: () => empDynamicBtn(),
+                    step: '50'
+                },
+                {
+                    id: 10,
+                    name: "Hisob Nuqtasi",
+                    message: `Hisob Nuqtasini tanlang`,
+                    btn: async () => await dataConfirmBtnEmp(ocrdList, 1, 'point'),
+                    step: '51'
+                },
+                {
+                    id: 4,
+                    name: "To'lov usullari , Valyuta , Schet",
+                    message: `To'lov usullarini tanlang`,
+                    btn: async ({ chat_id }) => {
+                        let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                        return await dataConfirmBtnEmp(btnList, 2, 'payType')
+                    },
+                    step: '45'
+                },
+                {
+                    id: 11,
+                    name: "Statya DDS",
+                    message: `Statya DDS ni tanlang`,
+                    btn: async ({ chat_id }) => {
+                        let user = infoUser().find(item => item.chat_id == chat_id)
+                        let list = infoData().find(item => item.id == user.currentDataId)
+                        let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            return { name: item, id: i }
+                        }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
+                        return await dataConfirmBtnEmp(
+                            ddsList, 2, 'dds')
+                    },
+                    step: '52'
+                },
+            ],
+            updateLine: 2,
+            lastStep: 52,
+            infoFn: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let data = infoData().find(item => item.id == user.currentDataId)
+
+                let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
+                if (!ddsList.includes(get(data, 'dds'))) {
+                    updateData(user.currentDataId, { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                    data = infoData().find(item => item.id == user.currentDataId)
+                }
+
+                let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
+                let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
+                let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
+
+                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                return info
+            }
         },
         {
             name: "Bank Bojxonaga oid xarajatlar",
@@ -465,12 +739,12 @@ let SubMenu = {
     4: [
         {
             name: "D12 Shartnoma shabloni",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -486,12 +760,12 @@ let SubMenu = {
         },
         {
             name: "D64 Shartnoma shabloni",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n `,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -507,12 +781,12 @@ let SubMenu = {
         },
         {
             name: "D777 Shartnoma shabloni",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n ",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n `,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -528,12 +802,12 @@ let SubMenu = {
         },
         {
             name: "Distribyutsiya Shartnoma shabloni",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n ",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n `,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -551,12 +825,12 @@ let SubMenu = {
     5: [
         {
             name: "Narx chiqarishni tasdiqlash xitoy",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ibrohim\nTekshirdi: Temur\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#Chnarx \n#prixod (sana)\n#xitoy\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ibrohim\nTekshirdi: Temur\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#Chnarx \n#prixod (sana)\n#xitoy\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -572,12 +846,12 @@ let SubMenu = {
         },
         {
             name: "Narx chiqarishni tasdiqlash mahalliy",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)\n\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)\n\n `,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -595,12 +869,12 @@ let SubMenu = {
     6: [
         {
             name: "SAPda o'zgartirishni tasdiqlash",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "#XATO\nSababi: Tovar nomi va nima o'zgarish bo'lgani\n12 do'kon sap - 0 real - 0\n64 do'kon sap - 0 real - 0\n777 do'kon sap - 0 real - 0\nOmbor sap - 0 real - 0\nDis sap - 0 real - 0\nKim qilgan: Sklad nomi\nO'zgartirish kerak: SAP da pt/vt qilish kerak\nTasdiqlovchi:  \n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `#XATO\nSababi: Tovar nomi va nima o'zgarish bo'lgani\n12 do'kon sap - 0 real - 0\n64 do'kon sap - 0 real - 0\n777 do'kon sap - 0 real - 0\nOmbor sap - 0 real - 0\nDis sap - 0 real - 0\nKim qilgan: Sklad nomi\nO'zgartirish kerak: SAP da pt/vt qilish kerak\nTasdiqlovchi:  \n `,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -616,12 +890,12 @@ let SubMenu = {
         },
         {
             name: "Do'kon xarid",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Kimdan:12/00 do'kondan\nTovar nomi: Anker sariq 20x200 dan 320 dona\nOlingan narx: 1.36$\nSotish narxi: 1.6$\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#dxarid\n\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Kimdan:12/00 do'kondan\nTovar nomi: Anker sariq 20x200 dan 320 dona\nOlingan narx: 1.36$\nSotish narxi: 1.6$\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#dxarid\n\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -637,12 +911,12 @@ let SubMenu = {
         },
         {
             name: "Chegirma",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Sana:\nKimga: Mijoz ismi\nTovar 1: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 2: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 3: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nUmumiy buyurtma summasi: 6025$\nUmumiy chegirma summasi: 25$\n---------------------------------------\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#chegirma\n\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Sana:\nKimga: Mijoz ismi\nTovar 1: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 2: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 3: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nUmumiy buyurtma summasi: 6025$\nUmumiy chegirma summasi: 25$\n---------------------------------------\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#chegirma\n\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }
@@ -658,12 +932,12 @@ let SubMenu = {
         },
         {
             name: "Yangi tovar nomi",
-            comment: "Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov",
+            comment: "Shtrix kodi:\nNomi:\nAlternativ nomi:\nGuruhi:\nIchki guruh:\nTipi:\nO'lchov birligi:\nBrendi:\nRazmeri:\nPachka/Korobkasi:\nBruttosi:\nTara:\nCBN:\nSvoystva: Xitoy yoki Mahalliy\nMRP: Ha/Yo'q\nИнтервал заказа: (nechi oylik zakaz qilishi)\nВремя подготовки: (kelish vaqti)\nДопустимое отклонение в днях: 7/14 kun\"\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
+                    message: `Shtrix kodi:\nNomi:\nAlternativ nomi:\nGuruhi:\nIchki guruh:\nTipi:\nO'lchov birligi:\nBrendi:\nRazmeri:\nPachka/Korobkasi:\nBruttosi:\nTara:\nCBN:\nSvoystva: Xitoy yoki Mahalliy\nMRP: Ha/Yo'q\nИнтервал заказа: (nechi oylik zakaz qilishi)\nВремя подготовки: (kelish vaqti)\nДопустимое отклонение в днях: 7/14 kun\"\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 }

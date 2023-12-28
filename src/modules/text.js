@@ -7,6 +7,7 @@ const ShortUniqueId = require('short-unique-id');
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 const { dataConfirmText } = require("../keyboards/text");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
+const b1Controller = require("../controllers/b1Controller");
 let executeBtn = {
     "Orqaga": {
         selfExecuteFn: ({ chat_id }) => {
@@ -136,12 +137,33 @@ let xorijiyXaridBtn = {
             },
         },
     },
-    "Xorijiy xarid transport buyurtmasi": {
+    "Xorijiy xarid konteyner buyurtmasi": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 12)
-            updateData(get(dataCurUser, 'id'), { subMenu: 'Xorijiy xarid transport buyurtmasi' })
+            updateData(get(dataCurUser, 'id'), { subMenu: 'Xorijiy xarid konteyner buyurtmasi' })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu[dataCurUser.menu].map(item => item.name)], 2), step: 11 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 11
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Ticket raqamini kiriting"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Xorijiy xarid mashina buyurtmasi": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateStep(chat_id, 12)
+            updateData(get(dataCurUser, 'id'), { subMenu: 'Xorijiy xarid mashina buyurtmasi' })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu[dataCurUser.menu].map(item => item.name)], 2), step: 11 })
         },
         middleware: ({ chat_id }) => {
@@ -199,6 +221,27 @@ let xorijiyXaridBtn = {
             },
         },
     },
+    "Chetga pul chiqarish": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateStep(chat_id, 90)
+            updateData(get(dataCurUser, 'id'), { subMenu: `Chetga pul chiqarish` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu[dataCurUser.menu].map(item => item.name)], 2), step: 11 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 11
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2)
+            },
+        },
+    },
     "Исходящий платеж(Chiquvchi to'lov)": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -220,12 +263,12 @@ let xorijiyXaridBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Поставщик (Yetkazib beruvchi) ni ismini yozing"
+                return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Document Type ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = user?.update ? list.lastBtn : empDynamicBtn()
+                let btn = user?.update ? list.lastBtn : empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2)
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -258,7 +301,7 @@ let xorijiyXaridBtn = {
                 try {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let list = infoData().find(item => item.id == user?.currentDataId)
-                    return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Поставщик (Yetkazib beruvchi) ni ismini yozing"
+                    return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Document Type ni tanlang"
                 }
                 catch (e) {
                     throw new Error(e)
@@ -268,13 +311,59 @@ let xorijiyXaridBtn = {
                 try {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let list = infoData().find(item => item.id == user?.currentDataId)
-                    let btn = user?.update ? list.lastBtn : empDynamicBtn()
+                    let btn = user?.update ? list.lastBtn : empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2)
                     updateUser(chat_id, { update: false })
                     return btn
                 }
                 catch (e) {
                     throw new Error(e)
                 }
+            },
+        },
+    },
+    "Schet(Hisob)": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2), step: 21 })
+            updateData(user.currentDataId, { documentType: true })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 21
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Schet turini tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let b1Account43 = await b1Controller.getAccount43()
+                let accountList43 = b1Account43.map((item, i) => {
+                    return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+                })
+                updateData(user?.currentDataId, { accountList43 })
+                return await dataConfirmBtnEmp(accountList43.sort((a, b) => a.id - b.id), 1, 'accountOneStep')
+            },
+        },
+    },
+    "Поставщик (Yetkazib beruvchi)": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2), step: 21 })
+            updateData(user.currentDataId, { documentType: false })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 21
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Поставщик (Yetkazib beruvchi) ni ismini yozing"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
             },
         },
     },
@@ -476,7 +565,28 @@ let tolovHarajatBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 61)
-            updateData(get(dataCurUser, 'id'), { subMenu: `Naqd hisobidan to'lov/xarajat` })
+            updateData(get(dataCurUser, 'id'), { subMenu: `Naqd/Karta hisobidan to'lov/xarajat` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu[dataCurUser.menu].map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2)
+            },
+        },
+    },
+    "Naqd/Click Bojxonaga oid xarajatlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateStep(chat_id, 90)
+            updateData(get(dataCurUser, 'id'), { subMenu: `Naqd/Click Bojxonaga oid xarajatlar` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu[dataCurUser.menu].map(item => item.name)], 2), step: 60 })
         },
         middleware: ({ chat_id }) => {
@@ -516,7 +626,6 @@ let tolovHarajatBtn = {
             },
         },
     },
-
     "Исходящий платеж(Chiquvchi to'lov)": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -629,7 +738,125 @@ let tolovHarajatBtn = {
             },
         },
     },
+}
 
+let tolovHarajatBojBtn = {
+    "Исходящий платеж(Chiquvchi to'lov)": {
+        selfExecuteFn: async ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            if (user?.update) {
+                updateStep(chat_id, dataCurUser?.lastStep)
+            }
+            else {
+                updateStep(chat_id, 64)
+                updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2), step: 90 })
+            }
+            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser.menuName == 'Xorijiy xarid') })
+            let accountList15 = b1Account15?.map((item, i) => {
+                return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+            })
+            updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 90
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Schetni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                updateUser(chat_id, { update: false })
+                return btn
+            },
+        },
+    },
+    "Входящий платеж(Kiruvchi to'lov)": {
+        selfExecuteFn: async ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            if (user?.update) {
+                updateStep(chat_id, dataCurUser?.lastStep)
+            }
+            else {
+                updateStep(chat_id, 64)
+                updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2), step: 90 })
+            }
+            let b1Account15 = await b1Controller.getAccount15()
+            let accountList15 = b1Account15?.map((item, i) => {
+                return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+            })
+            updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 90
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Schetni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                updateUser(chat_id, { update: false })
+                return btn
+            },
+        },
+    },
+    "Schet(Hisob)": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateStep(chat_id, 63)
+            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2), step: 62 })
+            updateData(user.currentDataId, { documentType: true })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 62
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Schet turini tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50 : {}) }
+                let btn = await dataConfirmBtnEmp(Object.keys(accountsObj).map((item, i) => {
+                    return { name: item, id: i }
+                }), 2, 'accountType')
+                return btn
+            },
+        },
+    },
+    "Заказчик(Группа: Xodimlar)(Xodim)": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            updateStep(chat_id, 80)
+            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2), step: 62 })
+            updateData(user.currentDataId, { documentType: false })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 62
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Поставщик (Yetkazib beruvchi) ni ismini yozing"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
 }
 
 let shartnomaBtn = {
@@ -972,5 +1199,6 @@ module.exports = {
     tolovHarajatBtn,
     narxChiqarishBtn,
     boshqaBtn,
-    shartnomaBtn
+    shartnomaBtn,
+    tolovHarajatBojBtn
 }

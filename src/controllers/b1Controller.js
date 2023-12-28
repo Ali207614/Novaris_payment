@@ -3,7 +3,7 @@ const https = require("https");
 const { get } = require("lodash");
 let dbService = require('../services/dbService')
 const moment = require('moment');
-const { PARTNERSEARCH, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo } = require("../repositories/dataRepositories");
+const { PARTNERSEARCH, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO } = require("../repositories/dataRepositories");
 
 class b1Controller {
     constructor() {
@@ -81,6 +81,18 @@ class b1Controller {
             throw new Error(e)
         }
     }
+
+    async getAccount15({ status = false }) {
+        try {
+            let account = status ? '5530' : `15%`
+            let data = await dbService.executeParam(ACCOUNTSNO, [account])
+            return data.filter(item => item.AcctCode != 15)
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
     async getAccount(arr) {
         try {
             let accountQuery = accountBuilderFn(arr)

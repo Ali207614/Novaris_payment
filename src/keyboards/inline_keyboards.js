@@ -20,6 +20,7 @@ const dataConfirmBtnEmp = async (list = [], count = 1, cbName, pagination = { pr
     let objCb = {
         'point': 'paginationPoint',
         'partnerSearch': 'pagination',
+        'accountOneStep': 'paginationOneSetp',
         'othersAccount': 'paginationAccount',
         'accountType': 'paginationAccountType'
     }

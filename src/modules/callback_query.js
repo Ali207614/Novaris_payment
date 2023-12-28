@@ -1,7 +1,7 @@
 const { get } = require("lodash");
 const b1Controller = require("../controllers/b1Controller");
 const { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50 } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency } = require("../helpers");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { empKeyboard, empMenuKeyboard } = require("../keyboards/keyboards");
@@ -29,6 +29,9 @@ let xorijiyXaridCallback = {
                     let info = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                     return dataConfirmText(info, `O'zgartirasizmi ?`)
                 }
+                else if (data[1] == '2') {
+                    return 'Menuni tanlang'
+                }
             },
             btn: async ({ chat_id, data }) => {
                 if (data[1] == '3') {
@@ -36,6 +39,12 @@ let xorijiyXaridCallback = {
                     let list = infoData().find(item => item.id == user.currentDataId)
                     let updateList = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
                     return await dataConfirmBtnEmp([...updateList.update, { name: "Bekor qilish ❌", id: 0 }], updateList.updateLine, 'update')
+                }
+                else if (data[1] == '2') {
+                    updateUser(chat_id, { back: [], update: false })
+                    updateStep(chat_id, 10)
+                    deleteAllInvalidData({ chat_id })
+                    return empMenuKeyboard
                 }
             },
         },
@@ -171,6 +180,60 @@ let xorijiyXaridCallback = {
                 updateUser(chat_id, { update: false })
                 return btn
             },
+        },
+    },
+    "accountOneStep": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == user.currentDataId)
+            if (user?.update) {
+                updateStep(chat_id, get(list, 'lastStep', 30))
+            }
+            else {
+                updateStep(chat_id, 23)
+                let btn = await dataConfirmBtnEmp(list.accountList43, 1, 'accountOneStep')
+                updateBack(chat_id, { text: `Schetni tanlang`, btn, step: 21 })
+            }
+            updateData(user.currentDataId, { accountCodeOneStep: data[1] })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 21
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20
+                `
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let btn = user?.update ? list.lastBtn : empDynamicBtn()
+                updateUser(chat_id, { update: false })
+                return btn
+            },
+        },
+    },
+    "paginationOneSetp": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Schetni tanlang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user.currentDataId)
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                return await dataConfirmBtnEmp(list.vendorList, 1, 'accountOneStep', pagination)
+            },
+            update: true
         },
     },
     "currency": {
@@ -449,9 +512,9 @@ let mahalliyXaridCallback = {
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                let ddsList = get(list, 'documentType', true) ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                     return { name: item, id: i }
-                }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: '-1' } : { name: '(Xodim) Qarz (Xarajat)', id: '-2' })
+                }) : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])
                 updateData(user.currentDataId, { ddsList })
                 return await dataConfirmBtnEmp(
                     ddsList, 2, 'dds')
