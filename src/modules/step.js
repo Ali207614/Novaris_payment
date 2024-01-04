@@ -1,6 +1,7 @@
 const { get, update } = require("lodash")
 const moment = require('moment')
 const b1Controller = require("../controllers/b1Controller")
+const jiraController = require("../controllers/jiraController")
 const { SubMenu, ocrdList } = require("../credentials")
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
@@ -11,26 +12,50 @@ const { dataConfirmText } = require("../keyboards/text")
 let xorijiyXaridStep = {
     "12": {
         selfExecuteFn: ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            let list = infoData().find(item => item.id == user.currentDataId)
-
-            if (user?.update) {
-                updateStep(chat_id, list.lastStep)
-            }
-            else {
-                updateStep(chat_id, 13)
-                updateBack(chat_id, { text: "Ticker raqamini kiriting", btn: empDynamicBtn(), step: 12 })
-            }
-            updateData(user.currentDataId, { ticket: msgText })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 12
         },
         next: {
-            text: ({ chat_id }) => {
+            text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
+                let jira = await jiraController.getTicketById({ issueKey: msgText })
+                if (jira?.status) {
+                    let statusId = get(jira, 'data.fields.status.id', 0)
+                    let subMenu = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+                    if (statusId == get(subMenu, 'jira.statusId', '')) {
+                        if (user?.update) {
+                            updateStep(chat_id, list.lastStep)
+                        }
+                        else {
+                            updateStep(chat_id, 13)
+                            updateBack(chat_id, { text: "Ticket raqamini kiriting", btn: empDynamicBtn(), step: 12 })
+                        }
+                        updateData(user.currentDataId, { ticket: msgText })
+                        xorijiyXaridStep['12'].next.btn = () => {
+                            let btn = user?.update ? list.lastBtn : empDynamicBtn()
+                            updateUser(chat_id, { update: false })
+                            return btn
+                        }
+                    }
+                    else {
+                        xorijiyXaridStep['12'].next.btn = () => {
+                            let btn = empDynamicBtn()
+                            updateUser(chat_id, { update: false })
+                            return btn
+                        }
+                        return `This task is not defined `
+                    }
+                } else {
+                    xorijiyXaridStep['12'].next.btn = () => {
+                        let btn = empDynamicBtn()
+                        updateUser(chat_id, { update: false })
+                        return btn
+                    }
+                    return `${jira.message}`
+                }
                 return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.comment
             },
             btn: async ({ chat_id, }) => {

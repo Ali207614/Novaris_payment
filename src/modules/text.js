@@ -114,7 +114,7 @@ let xorijiyXaridBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != 'Xorijiy xarid') {
+            if (dataCurUser?.menuName != 'Xorijiy xarid' || dataCurUser.full) {
                 let uid = randomUUID()
                 updateUser(chat_id, { currentDataId: uid })
                 writeData({ id: uid, menu: 1, menuName: 'Xorijiy xarid', chat_id })
@@ -374,7 +374,7 @@ let mahalliyXaridBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != 'Mahalliy xarid') {
+            if (dataCurUser?.menuName != 'Mahalliy xarid' || dataCurUser.full) {
                 let uid = randomUUID()
                 updateUser(chat_id, { currentDataId: uid })
                 writeData({ id: uid, menu: 2, menuName: 'Mahalliy xarid', chat_id })
@@ -513,7 +513,7 @@ let tolovHarajatBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != "To'lov/Xarajat") {
+            if (dataCurUser?.menuName != "To'lov/Xarajat" || dataCurUser.full) {
                 let uid = randomUUID()
                 updateUser(chat_id, { currentDataId: uid })
                 writeData({ id: uid, menu: 3, menuName: "To'lov/Xarajat", chat_id })
@@ -864,7 +864,7 @@ let shartnomaBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != "Shartnoma") {
+            if (dataCurUser?.menuName != "Shartnoma" || dataCurUser.full) {
                 let uid = randomUUID()
                 updateUser(chat_id, { currentDataId: uid })
                 writeData({ id: uid, menu: 4, menuName: "Shartnoma", chat_id })
@@ -991,7 +991,7 @@ let narxChiqarishBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != "Narx chiqarish") {
+            if (dataCurUser?.menuName != "Narx chiqarish" || dataCurUser.full) {
                 let uid = randomUUID()
                 updateUser(chat_id, { currentDataId: uid })
                 writeData({ id: uid, menu: 5, menuName: "Narx chiqarish", chat_id })
@@ -1069,7 +1069,7 @@ let boshqaBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != "Boshqa") {
+            if (dataCurUser?.menuName != "Boshqa" || dataCurUser.full) {
                 let uid = randomUUID()
                 updateUser(chat_id, { currentDataId: uid })
                 writeData({ id: uid, menu: 6, menuName: "Boshqa", chat_id })

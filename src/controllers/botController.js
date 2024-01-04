@@ -8,6 +8,7 @@ const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback } = require(
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn } = require("../modules/text");
 const b1Controller = require("./b1Controller");
+const jiraController = require("./jiraController");
 
 class botConroller {
     async text(msg, chat_id) {
@@ -24,6 +25,7 @@ class botConroller {
                     "Assalomu Aleykum",
                     !get(user, "user_step") ? option : jobMenu[user.JobTitle]
                 );
+
                 if (get(user, "user_step")) {
                     updateUser(chat_id, { back: [], update: false })
                     updateStep(chat_id, 1)
@@ -36,7 +38,7 @@ class botConroller {
                 let btnTreeList = [executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn]
                 let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
                 execute = execute ? execute[msg.text] : {}
-                if (get(execute, 'middleware', () => { })({ chat_id })) {
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
                     if (execute?.next) {
                         let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
@@ -50,7 +52,7 @@ class botConroller {
                 stepTree[get(user, 'user_step', '1').toString()]
             ) {
                 let execute = stepTree[get(user, 'user_step', '1').toString()]
-                if (get(execute, 'middleware', () => { })({ chat_id })) {
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.tex })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text }) : undefined
                     if (execute?.next) {
                         let botInfo = await execute?.next?.file ? await bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
@@ -88,7 +90,6 @@ class botConroller {
                 }
             }
         } catch (err) {
-            console.log(err)
             throw new Error(err);
         }
     }

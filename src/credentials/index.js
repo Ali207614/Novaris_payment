@@ -52,6 +52,11 @@ let SubMenu = {
                     step: '12'
                 }
             ],
+            jira: {
+                statusId: '10032',
+                transitionId: '11',
+                operationsList: { comment: true, transition: true, date: false }
+            },
             updateLine: 2,
             lastStep: 14,
             infoFn: ({ chat_id }) => {
@@ -80,6 +85,11 @@ let SubMenu = {
                     step: '12'
                 }
             ],
+            jira: {
+                statusId: '10031',
+                transitionId: '81',
+                operationsList: { comment: true, transition: true, date: false }
+            },
             updateLine: 2,
             lastStep: 14,
             infoFn: ({ chat_id }) => {
@@ -91,12 +101,12 @@ let SubMenu = {
         },
         {
             name: 'Xorijiy xarid tovar buyurtmasi',
-            comment: "Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: @Nodirbek_Kuddusiy\n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n",
+            comment: "Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n",
             update: [
                 {
                     id: 1,
                     name: "Izoh",
-                    message: `Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: @Nodirbek_Kuddusiy\n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n`,
+                    message: `Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n`,
                     btn: () => empDynamicBtn(),
                     step: '13'
                 },
@@ -110,6 +120,11 @@ let SubMenu = {
             ],
             updateLine: 2,
             lastStep: 14,
+            jira: {
+                statusId: '10009',
+                transitionId: '31',
+                operationsList: { comment: true, transition: true, date: true }
+            },
             infoFn: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)

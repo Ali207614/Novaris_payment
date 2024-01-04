@@ -1,42 +1,53 @@
 const { get } = require("lodash");
 const b1Controller = require("../controllers/b1Controller");
+const jiraController = require("../controllers/jiraController");
 const { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50 } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { empKeyboard, empMenuKeyboard } = require("../keyboards/keyboards");
-const { dataConfirmText } = require("../keyboards/text");
+const { dataConfirmText, ticketAddText } = require("../keyboards/text");
 let xorijiyXaridCallback = {
     "confirmEmp": {
-        selfExecuteFn: async ({ chat_id }) => {
+        selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             updateStep(chat_id, user.user_step + 1)
-            let info = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+            let cred = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+            let info = cred.infoFn({ chat_id })
             let btn = await dataConfirmBtnEmp([{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
             updateBack(chat_id, { text: dataConfirmText(info, 'Tasdiqlaysizmi ?'), btn, step: user.user_step })
+            if (data[1] == '1') {
+                let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred })
+                updateData(user.currentDataId, { ticketAdd: true, ticketStatusObj: statusObj })
+            }
         },
         middleware: ({ chat_id, id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return get(user, 'lastMessageId', 1) == id
         },
         next: {
-            text: ({ chat_id, data }) => {
+            text: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user.currentDataId)
                 if (data[1] == '3') {
                     updateUser(chat_id, { update: true })
-                    let user = infoUser().find(item => item.chat_id == chat_id)
-                    let list = infoData().find(item => item.id == user.currentDataId)
                     let info = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                     return dataConfirmText(info, `O'zgartirasizmi ?`)
                 }
                 else if (data[1] == '2') {
                     return 'Menuni tanlang'
                 }
+                else if (data[1] == '1') {
+                    let text = ticketAddText(list.ticketStatusObj)
+                    return text
+                }
+
             },
             btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user.currentDataId)
                 if (data[1] == '3') {
-                    let user = infoUser().find(item => item.chat_id == chat_id)
-                    let list = infoData().find(item => item.id == user.currentDataId)
                     let updateList = SubMenu[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
                     return await dataConfirmBtnEmp([...updateList.update, { name: "Bekor qilish ❌", id: 0 }], updateList.updateLine, 'update')
                 }
@@ -44,6 +55,12 @@ let xorijiyXaridCallback = {
                     updateUser(chat_id, { back: [], update: false })
                     updateStep(chat_id, 10)
                     deleteAllInvalidData({ chat_id })
+                    return empMenuKeyboard
+                }
+                else if (data[1] == '1') {
+                    updateData(user.currentDataId, { full: true })
+                    updateStep(chat_id, 10)
+                    updateUser(chat_id, { back: [], update: false })
                     return empMenuKeyboard
                 }
             },

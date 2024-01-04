@@ -1,1 +1,109 @@
-[]
+[
+    {
+        "id": "5QFyJFN4J6",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "full": true,
+        "is_delete": false,
+        "subMenu": "Xorijiy xarid konteyner buyurtmasi",
+        "ticket": "Xar-1770",
+        "comment": "Transport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar nomi:\n5) Tovar ortilish reja sanasi:\n\n6) Alternative-1 (Lisa):\n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: Yurishdan oldin;\n3) Yurish Muddati: 20-25.05.2021; \n\n7) Alternative-2 (Lancy): \n1) To'lov summasi: xyz Yuan;\n2)  To'lov muddati: 01.06.2021 Yetib kelgandan keyin; \n3) Yurish Muddati: May boshi (aniq etmayapti)\n\n8) Alternative-3 (Misha):\n1) To'lov summasi: xyz Yuan;\n2) To'lov muddati: 01.06.2021 Yetib kelgandan keyin;\n3) Yurish Muddati: 10.05.2021\n\n9) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#kontener",
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1,
+            "transition": 1
+        }
+    },
+    {
+        "id": "7sXZxmjJia",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "full": true,
+        "is_delete": false,
+        "subMenu": "Xorijiy xarid mashina buyurtmasi",
+        "ticket": "Xar-1817",
+        "comment": "AvtoTransport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar Kodi :  (80851)\n5) Tovar ortilish reja sanasi:\n\n6) Yetkazib beruvchi ( Baliq Urumchi ):\n1) To'lov summasi: xyz Yuan;\n2) Tovar og'irligi: \n3) Bir tonna uchun kelishilgan narx : \n4) Paddonlar soni : \n5) Yetkazib berish Manzil : (乌鲁木齐市天山区延安路662号边疆宾馆海关监管库888库房7区 ) Ali aka sklad",
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1,
+            "transition": 2,
+            "transitionError": [
+                "Transition id '82' is not valid for this issue."
+            ]
+        }
+    },
+    {
+        "id": "UgxT17vW7c",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "full": true,
+        "is_delete": false,
+        "subMenu": "Xorijiy xarid mashina buyurtmasi",
+        "ticket": "Xar-1817",
+        "comment": "AvtoTransport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar Kodi :  (80851)\n5) Tovar ortilish reja sanasi:\n\n6) Yetkazib beruvchi ( Baliq Urumchi ):\n1) To'lov summasi: xyz Yuan;\n2) Tovar og'irligi: \n3) Bir tonna uchun kelishilgan narx : \n4) Paddonlar soni : \n5) Yetkazib berish Manzil : (乌鲁木齐市天山区延安路662号边疆宾馆海关监管库888库房7区 ) Ali aka sklad",
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1,
+            "transition": 2,
+            "transitionError": [
+                "Transition id '82' is not valid for this issue."
+            ]
+        }
+    },
+    {
+        "id": "UiRVhc1L5m",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "full": true,
+        "is_delete": false,
+        "subMenu": "Xorijiy xarid mashina buyurtmasi",
+        "ticket": "Xar-1817",
+        "comment": "AvtoTransport buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Yetkazib beruvchi\n4) Tovar Kodi :  (80851)\n5) Tovar ortilish reja sanasi:\n\n6) Yetkazib beruvchi ( Baliq Urumchi ):\n1) To'lov summasi: xyz Yuan;\n2) Tovar og'irligi: \n3) Bir tonna uchun kelishilgan narx : \n4) Paddonlar soni : \n5) Yetkazib berish Manzil : (乌鲁木齐市天山区延安路662号边疆宾馆海关监管库888库房7区 ) Ali aka sklad",
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1,
+            "transition": 1
+        }
+    },
+    {
+        "id": "4gwP9Oe27P",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "full": true,
+        "is_delete": false,
+        "subMenu": "Xorijiy xarid tovar buyurtmasi",
+        "ticket": "Xar-1818",
+        "comment": "Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n\n#zakaz\n13) #21059MY (Zakaz nomeri)",
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1,
+            "transition": 2,
+            "transitionError": [
+                "Не удается переместить (XAR-1818). У вас может не быть прав, или в задаче недостает необходимой информации. Если эта задача осталась, обратитесь к администратору Jira."
+            ],
+            "date": 1
+        }
+    },
+    {
+        "id": "DemBRWSrZc",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "full": true,
+        "is_delete": false,
+        "subMenu": "Xorijiy xarid tovar buyurtmasi",
+        "ticket": "Xar-1818",
+        "comment": "Xorijiy buyurtma.\n1) Ticket raqami: Xar-1818\n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n\n#zakaz\n13) #21059MY (Zakaz nomeri)",
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1,
+            "transition": 1,
+            "date": 1
+        }
+    }
+]
