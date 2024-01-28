@@ -59,10 +59,10 @@ let SubMenu = {
             },
             updateLine: 2,
             lastStep: 14,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -92,10 +92,10 @@ let SubMenu = {
             },
             updateLine: 2,
             lastStep: 14,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -125,10 +125,10 @@ let SubMenu = {
                 transitionId: '31',
                 operationsList: { comment: true, transition: true, date: true }
             },
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -216,11 +216,15 @@ let SubMenu = {
                     step: '29'
                 }
             ],
+            jira: {
+                operationsList: { comment: true, transition: false, date: false }
+            },
+            b1: true, // hali aniqmas 
             updateLine: 3,
             lastStep: 30,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
                 let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
                 let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
@@ -228,7 +232,7 @@ let SubMenu = {
 
                 let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOneStep'))?.name) : vendorName
 
-                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
                 return info
             }
         },
@@ -336,16 +340,19 @@ let SubMenu = {
                     step: '52'
                 },
             ],
+            b1: {
+                status: true,
+                type: 'account',
+            },
             updateLine: 2,
             lastStep: 52,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                 let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
                 if (!ddsList.includes(get(data, 'dds'))) {
-                    updateData(user.currentDataId, { dds: ddsList?.length == 1 ? ddsList[0] : false })
-                    data = infoData().find(item => item.id == user.currentDataId)
+                    updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                    data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                 }
 
                 let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
@@ -353,7 +360,7 @@ let SubMenu = {
                 let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
                 let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
 
-                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
                 return info
             }
         },
@@ -373,10 +380,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 42,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -453,18 +460,23 @@ let SubMenu = {
                     step: '45'
                 },
             ],
+            b1: {
+                status: true,
+                type: 'supplier',
+                cashFlow: true,
+            },
             updateLine: 2,
             lastStep: 52,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
                 let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
                 let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
                 let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                 let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
 
-                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: `Mahalliy yetkazib beruvchilarga to'lov` }, { name: 'Izoh', message: data?.comment },]
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: `Mahalliy yetkazib beruvchilarga to'lov` }, { name: 'Izoh', message: data?.comment },]
                 return info
             }
         },
@@ -484,10 +496,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -579,16 +591,20 @@ let SubMenu = {
                     step: '52'
                 },
             ],
+            b1: {
+                status: true,
+                cashFlow: true,
+            },
             updateLine: 2,
             lastStep: 52,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
                 let ddsList = get(data, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther'))) : (get(data, 'payment') ? ['Qarz(Tushum)'] : ['(Xodim) Qarz (Xarajat)'])
                 if (!ddsList.includes(get(data, 'dds'))) {
-                    updateData(user.currentDataId, { dds: ddsList?.length == 1 ? ddsList[0] : false })
-                    data = infoData().find(item => item.id == user.currentDataId)
+                    updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                    data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                 }
 
                 let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
@@ -600,7 +616,7 @@ let SubMenu = {
 
                 let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : '(Xodim) Qarz (Xarajat)')
 
-                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Document Type', message: docType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Document Type', message: docType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                 return info
             }
         },
@@ -708,16 +724,21 @@ let SubMenu = {
                     step: '52'
                 },
             ],
+            b1: {
+                status: true,
+                type: 'account',
+                cashFlow: true,
+            },
             updateLine: 2,
             lastStep: 52,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
                 let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
                 if (!ddsList.includes(get(data, 'dds'))) {
-                    updateData(user.currentDataId, { dds: ddsList?.length == 1 ? ddsList[0] : false })
-                    data = infoData().find(item => item.id == user.currentDataId)
+                    updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                    data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                 }
 
                 let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
@@ -725,7 +746,7 @@ let SubMenu = {
                 let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
                 let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
 
-                let info = [{ name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
                 return info
             }
         },
@@ -743,10 +764,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -766,10 +787,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -787,10 +808,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -808,10 +829,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -829,10 +850,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         }
@@ -852,10 +873,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -873,10 +894,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         }
@@ -896,10 +917,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -917,10 +938,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -938,10 +959,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         },
@@ -959,10 +980,10 @@ let SubMenu = {
             ],
             updateLine: 1,
             lastStep: 62,
-            infoFn: ({ chat_id }) => {
+            infoFn: ({ chat_id, id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                let info = [{ name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                 return info
             }
         }

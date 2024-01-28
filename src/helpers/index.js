@@ -45,6 +45,24 @@ function updateUser(chat_id, userData) {
     );
 }
 
+function updateID(id) {
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "id.json"),
+        JSON.stringify(
+            { ID: id }
+            , null, 4)
+    );
+}
+function infoID() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "id.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : { ID: 0 };
+    return docs;
+}
+
+
 function updateBack(chat_id, userData) {
     let users = infoUser();
     let index = users.findIndex((item) => item.chat_id === chat_id);
@@ -69,6 +87,36 @@ function updateStep(chat_id = '', user_step = 1) {
     );
 }
 
+function infoPermisson() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "permisson.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : [];
+    return docs;
+}
+
+function updatePermisson(id, data) {
+    let main = infoPermisson();
+    let index = main.findIndex((item) => item.chat_id == id);
+    if (index != -1) {
+        main[index] = { ...main[index], ...data };
+    }
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "permisson.json"),
+        JSON.stringify(main, null, 4)
+    );
+}
+
+function writePermisson(data) {
+    let main = infoPermisson();
+    let { ID } = infoID()
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "permisson.json"),
+        JSON.stringify([...main, data], null, 4)
+    );
+    updateID(+ID + 1)
+}
 
 function infoData() {
     let docs = fs.readFileSync(
@@ -91,11 +139,12 @@ function updateData(id, data) {
 
 function writeData(data) {
     let main = infoData();
-
+    let { ID } = infoID()
     fs.writeFileSync(
         path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify([...main, { ...data, full: false, is_delete: false }], null, 4)
+        JSON.stringify([...main, { ...data, full: false, is_delete: false, ID }], null, 4)
     );
+    updateID(+ID + 1)
 }
 
 function deleteData({ id }) {
@@ -117,6 +166,14 @@ function deleteAllInvalidData({ chat_id }) {
     );
 }
 
+function confirmativeListFn() {
+    return infoUser().filter(item => item.JobTitle == 'Tasdiqlovchi')
+}
+function executerListFn() {
+    return infoUser().filter(item => item.JobTitle == 'Bajaruvchi')
+}
+
+
 module.exports = {
     updateUser,
     writeUser,
@@ -128,5 +185,12 @@ module.exports = {
     infoData,
     writeData,
     deleteAllInvalidData,
-    formatterCurrency
+    formatterCurrency,
+    confirmativeListFn,
+    executerListFn,
+    updateID,
+    infoID,
+    updatePermisson,
+    infoPermisson,
+    writePermisson
 }

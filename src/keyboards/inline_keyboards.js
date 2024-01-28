@@ -22,7 +22,8 @@ const dataConfirmBtnEmp = async (list = [], count = 1, cbName, pagination = { pr
         'partnerSearch': 'pagination',
         'accountOneStep': 'paginationOneSetp',
         'othersAccount': 'paginationAccount',
-        'accountType': 'paginationAccountType'
+        'accountType': 'paginationAccountType',
+        'adminUsers': 'paginationAdminUsers'
     }
 
     if (result.length > 10) {

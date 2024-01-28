@@ -1,13 +1,15 @@
 const { get } = require("lodash");
 const { SubMenu, accounts, accounts50 } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData } = require("../helpers");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
-const { empKeyboard, empMenuKeyboard } = require("../keyboards/keyboards");
+const { empKeyboard, empMenuKeyboard, adminKeyboard } = require("../keyboards/keyboards");
 const ShortUniqueId = require('short-unique-id');
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 const { dataConfirmText } = require("../keyboards/text");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const b1Controller = require("../controllers/b1Controller");
+const { bot } = require("../config");
+
 let executeBtn = {
     "Orqaga": {
         selfExecuteFn: ({ chat_id }) => {
@@ -63,11 +65,29 @@ let executeBtn = {
             return user.user_step == 1
         },
         next: {
-            text: ({ chat_id }) => {
-                return "So'rovlar"
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && !item?.confirmative && item.chat_id == chat_id)
+                if (mainData.length) {
+                    let info = SubMenu[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `Kutilayotgan So'rovlar`), await dataConfirmBtnEmp([{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting'))
+                        console.log(mainData[i].ID, ' bu i id')
+                    }
+
+                    return dataConfirmText(info, `Kutilayotgan So'rovlar`)
+                }
+                return 'Mavjud emas'
+
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn()
+                let mainData = infoData().filter(item => item.full && !item?.confirmative && item.chat_id == chat_id)
+                if (mainData.length) {
+                    let btn = await dataConfirmBtnEmp([{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
+                    return btn
+                }
+                return
             },
         },
     },
@@ -764,12 +784,15 @@ let tolovHarajatBojBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return 'Schetni tanlang'
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+
+                return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : 'Schetni tanlang'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -786,11 +809,11 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15()
+            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
-            updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+            updateData(user?.currentDataId, { accountList: accountList15, payment: true })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -798,12 +821,14 @@ let tolovHarajatBojBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return 'Schetni tanlang'
+                let user = infoUser().find(item => item.chat_id == chat_id)
+
+                return user?.update ? dataConfirmText(SubMenu[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : 'Schetni tanlang'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -1190,6 +1215,69 @@ let boshqaBtn = {
     },
 }
 
+let adminBtn = {
+    "Foydalanuvchilar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
+            updateStep(chat_id, 700)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 1
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Foydalanuvchini tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().filter(item => item.JobTitle !== 'Admin')
+                return dataConfirmBtnEmp(user.map(item => {
+                    return {
+                        name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
+                    }
+                }), 1, 'adminUsers')
+            },
+        },
+    },
+    "Rollar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            // updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
+            updateStep(chat_id, 702)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 701
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Rollarni belgilang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                return dataConfirmBtnEmp(
+                    [
+                        {
+                            name: `Xodim ${get(infoPermissonData, 'roles').includes('1') ? '✅' : ' '}`,
+                            id: 1
+                        },
+                        {
+                            name: `Tasdiqlovchi ${get(infoPermissonData, 'roles').includes('2') ? '✅' : ' '}`,
+                            id: 2
+                        },
+                        {
+                            name: `Bajaruvchi ${get(infoPermissonData, 'roles').includes('3') ? '✅' : ' '}`,
+                            id: 3
+                        }
+                    ]
+                    , 1, 'roles')
+            },
+        },
+    }
+}
+
 
 
 module.exports = {
@@ -1200,5 +1288,6 @@ module.exports = {
     narxChiqarishBtn,
     boshqaBtn,
     shartnomaBtn,
-    tolovHarajatBojBtn
+    tolovHarajatBojBtn,
+    adminBtn
 }

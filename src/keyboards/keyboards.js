@@ -86,7 +86,7 @@ const executorKeyboard = {
         keyboard: [
             [
                 {
-                    text: "Bajarilgan ",
+                    text: "Bajarilgan",
                 },
             ],
         ],
@@ -100,17 +100,36 @@ const affirmativeKeyboard = {
         keyboard: [
             [
                 {
-                    text: "Tasdiqlangan ",
+                    text: "Tasdiqlangan",
                 },
             ],
         ],
     },
 };
 
+const adminKeyboard = {
+    parse_mode: "Markdown",
+    reply_markup: {
+        resize_keyboard: true,
+        keyboard: [
+            [
+                {
+                    text: "Foydalanuvchilar",
+                },
+                {
+                    text: "Ma'lumotlar",
+                }
+            ],
+        ],
+    },
+};
+
+
 let jobMenu = {
     'Xodim': empKeyboard,
     'Tasdiqlovchi': affirmativeKeyboard,
-    'Bajaruvchi': executorKeyboard
+    'Bajaruvchi': executorKeyboard,
+    'Admin': adminKeyboard
 }
 
-module.exports = { option, jobMenu, empKeyboard, empMenuKeyboard }
+module.exports = { option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard }
