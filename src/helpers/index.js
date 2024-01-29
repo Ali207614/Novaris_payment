@@ -76,6 +76,15 @@ function updateBack(chat_id, userData) {
     );
 }
 
+function deleteBack(chat_id, step) {
+    let users = infoUser();
+    let index = users.findIndex((item) => item.chat_id === chat_id);
+    users[index].back = get(users[index], 'back', []).filter(item => item.step != step);
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "user.json"),
+        JSON.stringify(users, null, 4)
+    );
+}
 
 function updateStep(chat_id = '', user_step = 1) {
     let users = infoUser();
@@ -110,12 +119,10 @@ function updatePermisson(id, data) {
 
 function writePermisson(data) {
     let main = infoPermisson();
-    let { ID } = infoID()
     fs.writeFileSync(
         path.join(process.cwd(), "database", "permisson.json"),
         JSON.stringify([...main, data], null, 4)
     );
-    updateID(+ID + 1)
 }
 
 function infoData() {
@@ -192,5 +199,6 @@ module.exports = {
     infoID,
     updatePermisson,
     infoPermisson,
-    writePermisson
+    writePermisson,
+    deleteBack
 }

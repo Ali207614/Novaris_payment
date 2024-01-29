@@ -2,8 +2,8 @@ const { get } = require("lodash");
 const { bot } = require("../config");
 const b1Controller = require("../controllers/b1Controller");
 const jiraController = require("../controllers/jiraController");
-const { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50 } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson } = require("../helpers");
+const { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu } = require("../credentials");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { empKeyboard, empMenuKeyboard } = require("../keyboards/keyboards");
@@ -950,7 +950,7 @@ let adminCallback = {
                 return `${user?.LastName} ${user?.FirstName}`
             },
             btn: async ({ chat_id, data }) => {
-                return empDynamicBtn(['Rollar', "Menular"], 2)
+                return empDynamicBtn(['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular"], 2)
             },
         },
     },
@@ -988,6 +988,76 @@ let adminCallback = {
                         }
                     ]
                     , 1, 'roles')
+            },
+            update: true
+        },
+    },
+    "empMenu": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+            let menuList = Menu.map(item => {
+                return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenu', {})[item.id]?.length ? '✅' : ''}` }
+            })
+            updateBack(chat_id, {
+                text: "Menuni tanlang", btn: await dataConfirmBtnEmp(menuList, 1, 'empMenu'), step: 702
+            })
+            updateStep(chat_id, 703)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 702
+        },
+        next: {
+            text: async ({ chat_id, data }) => {
+                return `Xodim uchun menularni belgilang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                let infPermisson = get(infoPermissonData, 'permissonMenu', {})[data[1]]?.length ? get(infoPermissonData, 'permissonMenu', {})[data[1]] : []
+                return dataConfirmBtnEmp(SubMenu[data[1]].map((item, i) => {
+                    return { name: `${item.name} ${infPermisson.includes(`${i}`) ? '✅' : ' '}`, id: `${data[1]}#${i}` }
+                }), 1, 'subMenu')
+            },
+        },
+    },
+    "subMenu": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+            let infPermisson = get(infoPermissonData, 'permissonMenu', {})
+            if (infPermisson[data[1]]?.length) {
+                infPermisson[data[1]] = infPermisson[data[1]].find(item => item == data[2]) ? infPermisson[data[1]].filter(item => item != data[2]) : [...infPermisson[data[1]], data[2]]
+            }
+            else {
+                infPermisson = { ...infPermisson, ...Object.fromEntries([[data[1], [data[2]]]]) }
+            }
+            deleteBack(chat_id, 702)
+            updatePermisson(get(user, 'selectedAdminUserChatId'), { permissonMenu: infPermisson })
+            infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+            let menuList = Menu.map(item => {
+                return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenu', {})[item.id]?.length ? '✅' : ''}` }
+            })
+            updateBack(chat_id, {
+                text: "Menuni tanlang", btn: await dataConfirmBtnEmp(menuList, 1, 'empMenu'), step: 702
+            })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 703
+        },
+        next: {
+            text: async ({ chat_id, data }) => {
+                return `Xodim uchun menularni belgilang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                let infPermisson = get(infoPermissonData, 'permissonMenu', {})[data[1]]?.length ? get(infoPermissonData, 'permissonMenu', {})[data[1]] : []
+                return dataConfirmBtnEmp(SubMenu[data[1]].map((item, i) => {
+                    return { name: `${item.name} ${infPermisson.includes(`${i}`) ? '✅' : ' '}`, id: `${data[1]}#${i}` }
+                }), 1, 'subMenu')
             },
             update: true
         },

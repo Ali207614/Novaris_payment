@@ -1,7 +1,7 @@
 const { get } = require("lodash");
 let { bot } = require("../config");
 const {
-    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData
+    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson
 } = require("../helpers");
 const { option, jobMenu } = require("../keyboards/keyboards");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
@@ -106,6 +106,9 @@ class botConroller {
                     is_active: true,
                     user_step: 1,
                 });
+                writePermisson({
+                    chat_id
+                })
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
                 bot.sendMessage(
                     chat_id,
