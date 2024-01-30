@@ -1277,6 +1277,7 @@ let adminBtn = {
     "Xodim-Menular": {
         selfExecuteFn: async ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
+            updateUser(chat_id, { selectedAdminUserStatus: 'emp' })
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id }) => {
@@ -1284,13 +1285,63 @@ let adminBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Menuni tanlang"
+                return "Xodim uchun menuni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
                 let menuList = Menu.map(item => {
-                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenu', {})[item.id]?.length ? '✅' : ''}` }
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''}` }
+                })
+                return dataConfirmBtnEmp(
+                    menuList
+                    , 1, 'empMenu')
+            },
+        },
+    },
+    "Tasdiqlovchi-Menular": {
+        selfExecuteFn: async ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateUser(chat_id, { selectedAdminUserStatus: 'affirmative' })
+            updateStep(chat_id, 702)
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Tasdiqlochi uchun menuni tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                let menuList = Menu.map(item => {
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuAffirmative', {})[item.id]?.length ? '✅' : ''}` }
+                })
+                return dataConfirmBtnEmp(
+                    menuList
+                    , 1, 'empMenu')
+            },
+        },
+    },
+    "Bajaruvchi-Menular": {
+        selfExecuteFn: async ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateUser(chat_id, { selectedAdminUserStatus: 'executor' })
+            updateStep(chat_id, 702)
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Bajaruvchi uchun menuni tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                let menuList = Menu.map(item => {
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuExecutor', {})[item.id]?.length ? '✅' : ''}` }
                 })
                 return dataConfirmBtnEmp(
                     menuList

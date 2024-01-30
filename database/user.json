@@ -8,12 +8,24 @@
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 1,
-        "back": [],
+        "user_step": 702,
+        "back": [
+            {
+                "text": "Asosiy Menu",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Assalomu Aleykum"
+                },
+                "step": 1
+            }
+        ],
         "update": false,
-        "lastMessageId": 12416,
+        "lastMessageId": 12514,
         "currentDataId": "eIrDN3inpv",
-        "selectedAdminUserChatId": "561932032"
+        "selectedAdminUserChatId": "561932032",
+        "selectedAdminUserStatus": "affirmative"
     },
     {
         "EmployeeID": 170,

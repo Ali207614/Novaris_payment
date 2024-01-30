@@ -1290,7 +1290,7 @@ let adminBtn = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
                 let menuList = Menu.map(item => {
-                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenu', {})[item.id]?.length ? '✅' : ''}` }
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''}` }
                 })
                 return dataConfirmBtnEmp(
                     menuList

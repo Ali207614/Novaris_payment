@@ -2,7 +2,7 @@ const { get } = require("lodash");
 const { bot } = require("../config");
 const b1Controller = require("../controllers/b1Controller");
 const jiraController = require("../controllers/jiraController");
-const { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu } = require("../credentials");
+const { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
@@ -997,10 +997,10 @@ let adminCallback = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
             let menuList = Menu.map(item => {
-                return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenu', {})[item.id]?.length ? '✅' : ''}` }
+                return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''}` }
             })
             updateBack(chat_id, {
-                text: "Menuni tanlang", btn: await dataConfirmBtnEmp(menuList, 1, 'empMenu'), step: 702
+                text: `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`, btn: await dataConfirmBtnEmp(menuList, 1, 'empMenu'), step: 702
             })
             updateStep(chat_id, 703)
         },
@@ -1010,23 +1010,27 @@ let adminCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
-                return `Xodim uchun menularni belgilang`
+
+                let user = infoUser().find(item => item.chat_id == chat_id)
+
+                return `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let infPermisson = get(infoPermissonData, 'permissonMenu', {})[data[1]]?.length ? get(infoPermissonData, 'permissonMenu', {})[data[1]] : []
+                let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]] : []
                 return dataConfirmBtnEmp(SubMenu[data[1]].map((item, i) => {
                     return { name: `${item.name} ${infPermisson.includes(`${i}`) ? '✅' : ' '}`, id: `${data[1]}#${i}` }
                 }), 1, 'subMenu')
             },
         },
     },
+    // affirmativeMenu
     "subMenu": {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-            let infPermisson = get(infoPermissonData, 'permissonMenu', {})
+            let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})
             if (infPermisson[data[1]]?.length) {
                 infPermisson[data[1]] = infPermisson[data[1]].find(item => item == data[2]) ? infPermisson[data[1]].filter(item => item != data[2]) : [...infPermisson[data[1]], data[2]]
             }
@@ -1034,13 +1038,14 @@ let adminCallback = {
                 infPermisson = { ...infPermisson, ...Object.fromEntries([[data[1], [data[2]]]]) }
             }
             deleteBack(chat_id, 702)
-            updatePermisson(get(user, 'selectedAdminUserChatId'), { permissonMenu: infPermisson })
+            // `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`
+            updatePermisson(get(user, 'selectedAdminUserChatId'), Object.fromEntries([[selectedUserStatus[get(user, 'selectedAdminUserStatus')], infPermisson]]))
             infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
             let menuList = Menu.map(item => {
-                return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenu', {})[item.id]?.length ? '✅' : ''}` }
+                return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''}` }
             })
             updateBack(chat_id, {
-                text: "Menuni tanlang", btn: await dataConfirmBtnEmp(menuList, 1, 'empMenu'), step: 702
+                text: `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`, btn: await dataConfirmBtnEmp(menuList, 1, 'empMenu'), step: 702
             })
         },
         middleware: ({ chat_id }) => {
@@ -1049,12 +1054,13 @@ let adminCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
-                return `Xodim uchun menularni belgilang`
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                return `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let infPermisson = get(infoPermissonData, 'permissonMenu', {})[data[1]]?.length ? get(infoPermissonData, 'permissonMenu', {})[data[1]] : []
+                let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]] : []
                 return dataConfirmBtnEmp(SubMenu[data[1]].map((item, i) => {
                     return { name: `${item.name} ${infPermisson.includes(`${i}`) ? '✅' : ' '}`, id: `${data[1]}#${i}` }
                 }), 1, 'subMenu')

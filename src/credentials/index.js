@@ -1205,7 +1205,17 @@ let subAccounts50 = {
 }
 
 
+let selectedUserStatus = {
+    'emp': 'permissonMenuEmp',
+    'affirmative': 'permissonMenuAffirmative',
+    'executer': 'permissonMenuExecutor'
+}
 
+let selectedUserStatusUzb = {
+    'emp': 'Xodim',
+    'affirmative': 'Tasdiqlovchi',
+    'executer': 'Bajaruvchi'
+}
 
 
 
@@ -1218,6 +1228,8 @@ module.exports = {
     ocrdList,
     accounts,
     DDS,
-    subAccounts50
+    subAccounts50,
+    selectedUserStatus,
+    selectedUserStatusUzb
 }
 
