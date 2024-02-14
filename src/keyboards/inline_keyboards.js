@@ -1,6 +1,6 @@
 const { get } = require("lodash")
 
-const dataConfirmBtnEmp = async (list = [], count = 1, cbName, pagination = { prev: 0, next: 10 }) => {
+const dataConfirmBtnEmp = async (list = [], count = 1, cbName, pagination = { prev: 0, next: 10 }, keyboardList = []) => {
     let arr = []
     let result = list
     let next = get(pagination, 'next', 0)
@@ -34,12 +34,25 @@ const dataConfirmBtnEmp = async (list = [], count = 1, cbName, pagination = { pr
 
         arr.push(paginationBtn.filter(item => item))
     }
-    return {
+    let keyboard = {
         reply_markup: {
-            inline_keyboard: arr
+            inline_keyboard: arr,
+            resize_keyboard: true,
         },
     };
+    return keyboard
 }
+// parse_mode: "Markdown",
+// reply_markup: {
+//     resize_keyboard: true,
+//     keyboard: [
+//         [
+//             {
+//                 text: "Tasdiqlangan",
+//             },
+//         ],
+//     ],
+// },
 
 
 module.exports = {

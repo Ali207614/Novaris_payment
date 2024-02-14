@@ -3,18 +3,18 @@
         "EmployeeID": 170,
         "LastName": "Madaminov",
         "FirstName": "Muhammadali",
-        "JobTitle": "Admin",
+        "JobTitle": "Xodim",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 702,
+        "user_step": 10,
         "back": [
             {
-                "text": "Asosiy Menu",
+                "text": "So'rovlar",
                 "btn": {
                     "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}]]}",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}]]}",
                     "chat_id": 561932032,
                     "text": "Assalomu Aleykum"
                 },
@@ -22,10 +22,12 @@
             }
         ],
         "update": false,
-        "lastMessageId": 12514,
-        "currentDataId": "eIrDN3inpv",
-        "selectedAdminUserChatId": "561932032",
-        "selectedAdminUserStatus": "affirmative"
+        "lastMessageId": 13404,
+        "currentDataId": "A4o7vKeb8Z",
+        "selectedAdminUserChatId": "5619320232",
+        "selectedAdminUserStatus": "emp",
+        "newSubMenu": {},
+        "newMenu": {}
     },
     {
         "EmployeeID": 170,
@@ -34,7 +36,7 @@
         "JobTitle": "Xodim",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
-        "chat_id": 561932032,
+        "chat_id": 5619320232,
         "is_active": true,
         "user_step": 701,
         "back": [
@@ -60,7 +62,7 @@
         "JobTitle": "Xodim",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
-        "chat_id": 561932032,
+        "chat_id": 5619321032,
         "is_active": true,
         "user_step": 701,
         "back": [

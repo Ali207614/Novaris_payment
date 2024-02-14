@@ -5,7 +5,7 @@ const {
 } = require("../helpers");
 const { option, jobMenu } = require("../keyboards/keyboards");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
-const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep } = require("../modules/step");
+const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn } = require("../modules/text");
 const b1Controller = require("./b1Controller");
 const jiraController = require("./jiraController");
@@ -17,7 +17,7 @@ class botConroller {
             let btnTree = {
                 ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...adminBtn
             }
-            let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep }
+            let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
 
             if (msg.text == "/start") {
                 bot.sendMessage(

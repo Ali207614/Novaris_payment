@@ -120,6 +120,11 @@ const adminKeyboard = {
                     text: "Ma'lumotlar",
                 }
             ],
+            [
+                {
+                    text: "Menular"
+                }
+            ]
         ],
     },
 };

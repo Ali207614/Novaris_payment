@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Salom",
+        "status": true,
+        "isDelete": false,
+        "creationDate": "2024-02-14T21:09:19.177Z",
+        "id": 7
+    },
+    {
+        "name": "Test",
+        "status": true,
+        "isDelete": false,
+        "creationDate": "2024-02-14T21:09:56.043Z",
+        "id": 8
+    }
+]

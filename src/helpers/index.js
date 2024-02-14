@@ -31,7 +31,7 @@ function writeUser(userData) {
     let users = infoUser();
     fs.writeFileSync(
         path.join(process.cwd(), "database", "user.json"),
-        JSON.stringify([...users, userData], null, 4)
+        JSON.stringify([...users, { ...userData, creationDate: new Date() }], null, 4)
     );
 }
 
@@ -111,6 +111,9 @@ function updatePermisson(id, data) {
     if (index != -1) {
         main[index] = { ...main[index], ...data };
     }
+    else {
+        main.push({ chat_id: id, ...data })
+    }
     fs.writeFileSync(
         path.join(process.cwd(), "database", "permisson.json"),
         JSON.stringify(main, null, 4)
@@ -134,6 +137,98 @@ function infoData() {
     return docs;
 }
 
+function writeMenu(data) {
+    let main = infoAllMenu();
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        JSON.stringify([...main, { ...data, status: true, isDelete: false, creationDate: new Date(), id: !main.length ? 7 : Math.max(...main.map(item => item.id)) + 1 }], null, 4)
+    );
+}
+function updateMenu(id, data) {
+    let main = infoAllMenu();
+    let index = main.findIndex((item) => item.id === id);
+    main[index] = { ...main[index], ...data };
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        JSON.stringify(main, null, 4)
+    );
+}
+function deleteMenu({ id }) {
+    let main = infoAllMenu();
+    main = main.filter(item => item.id != id)
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        JSON.stringify(main, null, 4)
+    );
+}
+
+function infoMenu() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : [];
+    return docs.filter(item => item?.status && !item?.isDelete).map(item => {
+        return { name: item.name, id: item.id }
+    });
+}
+
+function infoAllMenu() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : [];
+    return docs
+}
+
+
+
+
+
+function writeSubMenu(data) {
+    let main = infoAllSubMenu();
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        JSON.stringify([...main, { ...data, isDelete: false, status: true, id: main?.length + 1, creationDate: new Date() }], null, 4)
+    );
+}
+function updateSubMenu(id, data) {
+    let main = infoAllSubMenu();
+    let index = main.findIndex((item) => item.id === id);
+    main[index] = { ...main[index], ...data };
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        JSON.stringify(main, null, 4)
+    );
+}
+function deleteSubMenu({ id }) {
+    let main = infoAllSubMenu();
+    main = main.filter(item => item.id != id)
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        JSON.stringify(main, null, 4)
+    );
+}
+
+function infoAllSubMenu() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : [];
+    return docs
+}
+function infoSubMenu() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : [];
+    return docs.filter(item => item?.status && !item?.isDelete);
+}
+
+
 function updateData(id, data) {
     let main = infoData();
     let index = main.findIndex((item) => item.id === id);
@@ -149,7 +244,7 @@ function writeData(data) {
     let { ID } = infoID()
     fs.writeFileSync(
         path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify([...main, { ...data, full: false, is_delete: false, ID }], null, 4)
+        JSON.stringify([...main, { ...data, creationDate: new Date(), full: false, is_delete: false, ID }], null, 4)
     );
     updateID(+ID + 1)
 }
@@ -200,5 +295,14 @@ module.exports = {
     updatePermisson,
     infoPermisson,
     writePermisson,
-    deleteBack
+    deleteBack,
+    writeMenu,
+    infoMenu,
+    updateMenu,
+    deleteMenu,
+    writeSubMenu,
+    updateSubMenu,
+    deleteSubMenu,
+    infoSubMenu,
+    infoAllSubMenu
 }
