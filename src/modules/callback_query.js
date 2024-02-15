@@ -1,14 +1,14 @@
-const { get } = require("lodash");
+const { get, isEmpty } = require("lodash");
 const { bot } = require("../config");
 const b1Controller = require("../controllers/b1Controller");
 const jiraController = require("../controllers/jiraController");
 let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu } = require("../helpers");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { empKeyboard, jobMenu } = require("../keyboards/keyboards");
 const { dataConfirmText, ticketAddText } = require("../keyboards/text");
-
+let moment = require('moment')
 let xorijiyXaridCallback = {
     "confirmEmp": {
         selfExecuteFn: async ({ chat_id, data }) => {
@@ -1029,7 +1029,6 @@ let adminCallback = {
             },
         },
     },
-    // affirmativeMenu
     "subMenu": {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1042,7 +1041,6 @@ let adminCallback = {
                 infPermisson = { ...infPermisson, ...Object.fromEntries([[data[1], [data[2]]]]) }
             }
             deleteBack(chat_id, 702)
-            // `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`
             updatePermisson(get(user, 'selectedAdminUserChatId'), Object.fromEntries([[selectedUserStatus[get(user, 'selectedAdminUserStatus')], infPermisson]]))
             infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
             let menuList = Menu().map(item => {
@@ -1102,8 +1100,7 @@ let adminCallback = {
     "newSubMenu": {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            console.log(data, ' bu data')
-            let btn = dataConfirmBtnEmp(
+            let btn = await dataConfirmBtnEmp(
                 infoMenu()
                 , 1, 'newSubMenu')
             updateBack(chat_id, { text: "Menuni tanlang", btn, step: 704 })
@@ -1193,7 +1190,298 @@ let adminCallback = {
                 return jobMenu[user.JobTitle]
             },
         },
-    }
+    },
+    "paginationNewSubMenu": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Menuni tanlang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                let btn = dataConfirmBtnEmp(
+                    infoMenu()
+                    , 1, 'newSubMenu', pagination)
+                return btn
+            },
+            update: true
+        },
+    },
+
+    "paginationUpdateMenus": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Menuni tanlang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                let btn = dataConfirmBtnEmp(
+                    (get(user, 'updatePaginationMenu', 1) == '1' ? infoMenu().map(item => {
+                        return { name: item.name, id: `${item.id}#1` }
+                    }) : infoSubMenu().map(item => {
+                        return { name: item.name, id: `${item.id}#2` }
+                    }))
+                    , 1, 'updateMenus', pagination)
+                return btn
+            },
+            update: true
+        },
+    },
+    "paginationSelectMenus": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Menuni tanlang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                let btn = dataConfirmBtnEmp(
+                    infoMenu().map(item => {
+                        return { name: item.name, id: `${item.id}` }
+                    })
+                    , 1, 'selectMenus', pagination)
+                return btn
+            },
+            update: true
+        },
+    },
+    "selectMenus": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let btn = await dataConfirmBtnEmp(
+                infoMenu().map(item => {
+                    return { name: item.name, id: `${item.id}` }
+                })
+                , 1, 'selectMenus')
+            updateUser(chat_id, { updatePaginationMenu: 2 })
+            updateBack(chat_id, { text: "Menuni tanlang", btn, step: 801 })
+        },
+        middleware: ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && +user?.user_step == 801
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                let menu = infoSubMenu().filter(item => item.menuId == data[1])
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'adminType') == 'delete' && menu?.length == 0) {
+                    updateMenu(data[1], { isDelete: true })
+                    return `Asosiy Menu O'chirildi ✅`
+                }
+                return menu?.length ? "Menuni tanlang" : 'Menular mavjud emas'
+            },
+            btn: async ({ chat_id, data }) => {
+                if (infoSubMenu().filter(item => item.menuId == data[1]).length) {
+                    return dataConfirmBtnEmp(
+                        infoSubMenu().filter(item => item.menuId == data[1]).map(item => {
+                            return { name: item.name, id: `${item.id}#2` }
+                        })
+                        , 1, 'updateMenus')
+                }
+                return jobMenu[user.JobTitle]
+            },
+        },
+    },
+    "updateMenus": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            updateStep(chat_id, 802)
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let lastBtn = data[2] == '1' ?
+                [
+                    {
+                        name: 'Asosiy Menu nomi',
+                        id: `1#1`
+                    }
+                ] :
+                [
+                    {
+                        name: 'Sub Menu nomi',
+                        id: `1#2`
+                    },
+                    {
+                        name: 'Kommentariya',
+                        id: `2#2`
+                    }
+                ]
+            let subMenu = infoSubMenu().find(item => item.id == data[1])
+            let mainMenu = infoMenu().find(item => item.id == (data[2] == '1' ? data[1] : get(subMenu, 'menuId', 1)))
+            let info = [
+                {
+                    name: 'Asosiy Menu Nomi',
+                    message: get(mainMenu, 'name', '')
+                },
+                ...(data[2] == '2' ? [
+                    {
+                        name: 'Sub Menu Nomi',
+                        message: get(subMenu, 'name')
+                    },
+                    {
+                        name: 'Kommentariya',
+                        message: get(subMenu, 'comment')
+                    },
+                    {
+                        name: "Yaratilagan Sana",
+                        message: moment(subMenu?.creationDate).format('LL')
+                    }
+                ] : [
+                    {
+                        name: "Yaratilagan Sana",
+                        message: moment(mainMenu?.creationDate).format('LL')
+                    }
+                ]
+                )
+            ]
+
+            let btn = await dataConfirmBtnEmp(lastBtn, 2, 'updateAdminMenu')
+            updateUser(chat_id, {
+                updateMenu: { menuType: data[2], menuId: data[1], mainMenuId: get(mainMenu, 'id') },
+                lastAdminSteps: {
+                    btn,
+                    text: dataConfirmText(info, `O'zgartirasizmi ?`),
+                    step: 802
+                }
+            })
+            updateBack(chat_id, {
+                text: `Menuni tanlang`, btn: await dataConfirmBtnEmp(
+                    infoMenu().map(item => {
+                        return { name: item.name, id: `${item.id}` }
+                    })
+                    , 1, 'selectMenus'), step: 801
+            })
+        },
+        middleware: ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return +user.user_step == 801
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let subMenu = infoSubMenu().find(item => item.id == data[1])
+                let mainMenu = infoMenu().find(item => item.id == (data[2] == '1' ? data[1] : get(subMenu, 'menuId', 1)))
+                let info = [
+                    {
+                        name: 'Asosiy Menu Nomi',
+                        message: get(mainMenu, 'name', '')
+                    },
+                    ...(data[2] == '2' ? [
+                        {
+                            name: 'Sub Menu Nomi',
+                            message: get(subMenu, 'name')
+                        },
+                        {
+                            name: 'Kommentariya',
+                            message: get(subMenu, 'comment')
+                        },
+                        {
+                            name: "Yaratilagan Sana",
+                            message: moment(subMenu?.creationDate).format('LL')
+                        }
+                    ] : [
+                        {
+                            name: "Yaratilagan Sana",
+                            message: moment(mainMenu?.creationDate).format('LL')
+                        }
+                    ]
+                    )
+                ]
+                return dataConfirmText(info, ` ${get(user, 'adminType') == 'update' ? `O'zgartirasizmi` : `Ochirish`}  ?`)
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+
+                let btn = []
+                if (get(user, 'adminType') == 'update') {
+                    btn = data[2] == '1' ?
+                        [
+                            {
+                                name: 'Asosiy Menu nomi',
+                                id: `1#1`
+                            }
+                        ] :
+                        [
+                            {
+                                name: 'Sub Menu nomi',
+                                id: `1#2`
+                            },
+                            {
+                                name: 'Kommentariya',
+                                id: `2#2`
+                            }
+                        ]
+                } else if (get(user, 'adminType') == 'delete') {
+                    btn = [
+                        {
+                            name: `O'chirish`,
+                            id: `1`
+                        }
+                    ]
+                }
+
+                return dataConfirmBtnEmp(btn, 2, 'updateAdminMenu')
+            },
+        },
+    },
+    "updateAdminMenu": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            if (get(user, 'adminType') == 'update') {
+                updateStep(chat_id, 803)
+                updateUser(chat_id, { updateMenu: { ...get(user, 'updateMenu'), key: data[1] } })
+                updateBack(chat_id, { text: user?.lastAdminSteps?.text, btn: get(user, 'lastAdminSteps.btn'), step: get(user, 'lastAdminSteps.step') })
+            } else if (get(user, 'adminType') == 'delete') {
+                updateSubMenu(get(user, 'updateMenu.menuId', 1), { isDelete: true })
+                if (infoSubMenu().filter(item => item.menuId == get(user, 'updateMenu.mainMenuId')).length == 0) {
+                    updateMenu(get(user, 'updateMenu.mainMenuId'), { isDelete: true })
+                }
+                updateUser(chat_id, { back: [] })
+                updateStep(chat_id, 702)
+            }
+        },
+        middleware: ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && +user?.user_step == 802
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'adminType') == 'update') {
+                    return data[2] == 2 ? (data[1] == 1 ? 'Sub Menu nomini yozing' : "Kommentariya yozing") : 'Asosiy Menu nomini yozing'
+                }
+                else if (get(user, 'adminType') == 'delete') {
+                    let status = infoSubMenu().filter(item => item.menuId == get(user, 'updateMenu.mainMenuId')).length == 0
+                    return `Sub Menu ${status ? 'va Asosiy Menu ' : ''}o'chirildi ✅`
+                }
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'adminType') == 'update') {
+                    return empDynamicBtn()
+                }
+                else if (get(user, 'adminType') == 'delete') {
+                    return jobMenu[user.JobTitle]
+                }
+            },
+        },
+    },
+
 }
 
 module.exports = {

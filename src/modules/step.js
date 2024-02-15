@@ -1,9 +1,10 @@
 const { get, update } = require("lodash")
 const moment = require('moment')
+const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
 let { SubMenu, ocrdList } = require("../credentials")
-const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu } = require("../helpers")
+const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 const { dataConfirmText } = require("../keyboards/text")
@@ -740,7 +741,7 @@ let adminStep = {
                 if (!infoSubMenu().find(item => item.name == msgText)) {
                     return 'Kommentariyani yozing'
                 }
-                return 'Bu Sub Menu mavjud'
+                return 'Sub Menu mavjud'
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -814,6 +815,34 @@ let adminStep = {
                     return dataConfirmBtnEmp([{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }], 2, 'confirmAdminMenu')
                 }
                 return empDynamicBtn()
+            },
+        },
+    },
+    "803": {
+        selfExecuteFn: ({ chat_id, msgText }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let type = get(user, 'updateMenu.menuType')
+            let id = get(user, 'updateMenu.menuId')
+            let key = get(user, 'updateMenu.key')
+            type == 1 ? updateMenu(id, { name: msgText }) : updateSubMenu(id, (key == 1 ? { name: msgText } : { comment: msgText }))
+            updateUser(chat_id, { back: get(user, 'back').filter(item => ![800, 801, 802].includes(+item.step)) })
+            updateStep(chat_id, 800)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 803
+        },
+        next: {
+            text: ({ chat_id, msgText }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let type = get(user, 'updateMenu.menuType')
+                let id = get(user, 'updateMenu.menuId')
+                let menu = (type == 1) ? infoMenu().find(item => item.id == id) : infoSubMenu().find(item => item.id == id)
+                bot.sendMessage(chat_id, `${type == '1' ? 'Asosiy' : 'Sub'} Menu ${get(user, 'updateMenu.key') == 1 ? 'nomi' : 'kommentariya'} o'zgartirildi ✅`)
+                return `Menular o'zgartirish`
+            },
+            btn: async ({ chat_id, msgText }) => {
+                return empDynamicBtn(["Asosiy Menu", "Sub Menu"], 2)
             },
         },
     },

@@ -146,7 +146,7 @@ function writeMenu(data) {
 }
 function updateMenu(id, data) {
     let main = infoAllMenu();
-    let index = main.findIndex((item) => item.id === id);
+    let index = main.findIndex((item) => item.id == id);
     main[index] = { ...main[index], ...data };
     fs.writeFileSync(
         path.join(process.cwd(), "database", "menu.json"),
@@ -179,7 +179,7 @@ function infoAllMenu() {
         "UTF-8"
     );
     docs = docs ? JSON.parse(docs) : [];
-    return docs
+    return docs.filter(item => !item.isDelete)
 }
 
 
@@ -190,13 +190,16 @@ function writeSubMenu(data) {
     let main = infoAllSubMenu();
     fs.writeFileSync(
         path.join(process.cwd(), "database", "subMenu.json"),
-        JSON.stringify([...main, { ...data, isDelete: false, status: true, id: main?.length + 1, creationDate: new Date() }], null, 4)
+        JSON.stringify([...main, { ...data, isDelete: false, status: true, id: main?.length ? Math.max(...main.map(item => item.id)) + 1 : 1, creationDate: new Date() }], null, 4)
     );
 }
 function updateSubMenu(id, data) {
     let main = infoAllSubMenu();
-    let index = main.findIndex((item) => item.id === id);
+    let index = main.findIndex((item) => item.id == id);
     main[index] = { ...main[index], ...data };
+    if (data?.comment) {
+        main[index] = { ...main[index], update: [{ ...main[index].update[0], message: data.comment }] }
+    }
     fs.writeFileSync(
         path.join(process.cwd(), "database", "subMenu.json"),
         JSON.stringify(main, null, 4)
@@ -217,7 +220,7 @@ function infoAllSubMenu() {
         "UTF-8"
     );
     docs = docs ? JSON.parse(docs) : [];
-    return docs
+    return docs.filter(item => !item.isDelete)
 }
 function infoSubMenu() {
     let docs = fs.readFileSync(

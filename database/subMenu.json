@@ -1,44 +1,23 @@
 [
-  {
-    "menuId": "8",
-    "name": "Test Sub Menu",
-    "comment": "zor",
-    "update": [
-      {
-        "id": 1,
-        "name": "Izoh",
-        "message": "zor",
-        "btn": "() => empDynamicBtn()",
-        "step": "13"
-      }
-    ],
-    "updateLine": 1,
-    "lastStep": 62,
-    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
-    "isDelete": false,
-    "status": true,
-    "id": 1,
-    "creationDate": "2024-02-14T21:14:27.544Z"
-  },
-  {
-    "menuId": "8",
-    "name": "Test Sub Menu2",
-    "comment": "zor",
-    "update": [
-      {
-        "id": 1,
-        "name": "Izoh",
-        "message": "zor",
-        "btn": "() => empDynamicBtn()",
-        "step": "13"
-      }
-    ],
-    "updateLine": 1,
-    "lastStep": 62,
-    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
-    "isDelete": false,
-    "status": true,
-    "id": 1,
-    "creationDate": "2024-02-14T21:14:27.544Z"
-  }
+    {
+        "menuId": "8",
+        "name": "Test Sub Menu",
+        "comment": "zor",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "zor",
+                "btn": "() => empDynamicBtn()",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": true,
+        "status": true,
+        "id": 22,
+        "creationDate": "2024-02-14T21:14:27.544Z"
+    }
 ]

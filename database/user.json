@@ -3,31 +3,102 @@
         "EmployeeID": 170,
         "LastName": "Madaminov",
         "FirstName": "Muhammadali",
-        "JobTitle": "Xodim",
+        "JobTitle": "Admin",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 10,
+        "user_step": 801,
         "back": [
             {
-                "text": "So'rovlar",
+                "text": "Asosiy Menu",
                 "btn": {
                     "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}]]}",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}],[{\"text\":\"Menular\"}]]}",
                     "chat_id": 561932032,
                     "text": "Assalomu Aleykum"
                 },
                 "step": 1
+            },
+            {
+                "text": "Menular",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Menular qo'shish"
+                                },
+                                {
+                                    "text": "Menular o'zgartirish"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Menular o'chirish"
+                                },
+                                {
+                                    "text": "Menular status"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Menular info"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 702
             }
         ],
         "update": false,
-        "lastMessageId": 13404,
-        "currentDataId": "A4o7vKeb8Z",
+        "lastMessageId": 14619,
+        "currentDataId": "kqjSgMiCma",
         "selectedAdminUserChatId": "5619320232",
         "selectedAdminUserStatus": "emp",
-        "newSubMenu": {},
-        "newMenu": {}
+        "newSubMenu": {
+            "menu": "7"
+        },
+        "newMenu": {},
+        "updatePaginationMenu": 2,
+        "updateMenu": {
+            "menuType": "2",
+            "menuId": "22",
+            "mainMenuId": 8
+        },
+        "lastAdminSteps": {
+            "btn": {
+                "reply_markup": {
+                    "inline_keyboard": [
+                        [
+                            {
+                                "text": "Sub Menu nomi",
+                                "callback_data": "updateAdminMenu#1#2"
+                            },
+                            {
+                                "text": "Kommentariya",
+                                "callback_data": "updateAdminMenu#2#2"
+                            }
+                        ]
+                    ],
+                    "resize_keyboard": true
+                }
+            },
+            "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Qanday\nSub Menu Nomi : Test Sub Menu\nKommentariya : zor\nYaratilagan Sana : February 15, 2024\n",
+            "step": 802
+        },
+        "menuType": "2",
+        "menuId": "2",
+        "key": "1",
+        "adminType": "delete"
     },
     {
         "EmployeeID": 170,
