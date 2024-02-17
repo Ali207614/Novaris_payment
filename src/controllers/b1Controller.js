@@ -177,7 +177,6 @@ class b1Controller {
         return axios
             .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
             .then(({ data }) => {
-                console.log(data.DocEntry)
                 return { status: true, data }
             })
             .catch(async (err) => {
@@ -189,8 +188,6 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    console.log('errr')
-                    console.log(get(err, 'response.data.error.message.value'))
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });

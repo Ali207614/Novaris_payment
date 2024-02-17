@@ -3,10 +3,10 @@ let { bot } = require("../config");
 const {
     writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson
 } = require("../helpers");
-const { option, jobMenu } = require("../keyboards/keyboards");
+const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
-const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn } = require("../modules/text");
+const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor } = require("../modules/text");
 const b1Controller = require("./b1Controller");
 const jiraController = require("./jiraController");
 
@@ -15,15 +15,15 @@ class botConroller {
         try {
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let btnTree = {
-                ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...updateAdminBtn, ...adminBtn, ...deleteAdminBtn, ...newBtnExecuter()
+                ...firtBtnExecutor(),
+                ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...updateAdminBtn, ...adminBtn, ...deleteAdminBtn, ...changeStatusAdminBtn, ...infoAdminBtn, ...newBtnExecuter()
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
-
-            if (msg.text == "/start") {
+            if (msg.text == "/boshlash") {
                 bot.sendMessage(
                     chat_id,
                     "Assalomu Aleykum",
-                    !get(user, "user_step") ? option : jobMenu[user.JobTitle]
+                    !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
                 );
 
                 if (get(user, "user_step")) {
@@ -35,7 +35,7 @@ class botConroller {
             else if (
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
             ) {
-                let btnTreeList = [executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, newBtnExecuter()]
+                let btnTreeList = [firtBtnExecutor(), executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, newBtnExecuter()]
                 let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
                 execute = execute ? execute[msg.text] : {}
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
@@ -63,7 +63,6 @@ class botConroller {
             }
         }
         catch (err) {
-            console.log(err)
             throw new Error(err);
         }
     }

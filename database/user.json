@@ -3,75 +3,26 @@
         "EmployeeID": 170,
         "LastName": "Madaminov",
         "FirstName": "Muhammadali",
-        "JobTitle": "Admin",
+        "JobTitle": "Xodim",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 801,
-        "back": [
-            {
-                "text": "Asosiy Menu",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}],[{\"text\":\"Menular\"}]]}",
-                    "chat_id": 561932032,
-                    "text": "Assalomu Aleykum"
-                },
-                "step": 1
-            },
-            {
-                "text": "Menular",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Menular qo'shish"
-                                },
-                                {
-                                    "text": "Menular o'zgartirish"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Menular o'chirish"
-                                },
-                                {
-                                    "text": "Menular status"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Menular info"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Orqaga"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 702
-            }
-        ],
+        "user_step": 10,
+        "back": [],
         "update": false,
-        "lastMessageId": 14619,
-        "currentDataId": "kqjSgMiCma",
-        "selectedAdminUserChatId": "5619320232",
+        "lastMessageId": 16550,
+        "currentDataId": "e6LKhrl4wm",
+        "selectedAdminUserChatId": "56219320322",
         "selectedAdminUserStatus": "emp",
         "newSubMenu": {
-            "menu": "7"
+            "menu": "8"
         },
         "newMenu": {},
         "updatePaginationMenu": 2,
         "updateMenu": {
             "menuType": "2",
-            "menuId": "22",
+            "menuId": "3",
             "mainMenuId": 8
         },
         "lastAdminSteps": {
@@ -92,64 +43,64 @@
                     "resize_keyboard": true
                 }
             },
-            "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Qanday\nSub Menu Nomi : Test Sub Menu\nKommentariya : zor\nYaratilagan Sana : February 15, 2024\n",
+            "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Test2\nSub Menu Nomi : test 2 Sub menu\nKommentariya : salom\nYaratilagan Sana : February 16, 2024\n",
             "step": 802
         },
         "menuType": "2",
         "menuId": "2",
         "key": "1",
-        "adminType": "delete"
+        "adminType": "update"
     },
     {
         "EmployeeID": 170,
-        "LastName": "Testov",
-        "FirstName": "Test",
+        "LastName": "Akbarov",
+        "FirstName": "Sardor",
         "JobTitle": "Xodim",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
-        "chat_id": 5619320232,
+        "chat_id": 56219320322,
         "is_active": true,
-        "user_step": 701,
-        "back": [
-            {
-                "text": "Asosiy Menu",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}]]}",
-                    "chat_id": 561932032,
-                    "text": "Assalomu Aleykum"
-                },
-                "step": 1
-            }
-        ],
+        "user_step": 801,
+        "back": [],
         "update": false,
-        "lastMessageId": 11847,
-        "currentDataId": "eIrDN3inpv"
-    },
-    {
-        "EmployeeID": 170,
-        "LastName": "Jalolov",
-        "FirstName": "Abdujabbor",
-        "JobTitle": "Xodim",
-        "SalesPersonCode": null,
-        "MobilePhone": "998903367448",
-        "chat_id": 5619321032,
-        "is_active": true,
-        "user_step": 701,
-        "back": [
-            {
-                "text": "Asosiy Menu",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}]]}",
-                    "chat_id": 561932032,
-                    "text": "Assalomu Aleykum"
-                },
-                "step": 1
-            }
-        ],
-        "update": false,
-        "lastMessageId": 11847,
-        "currentDataId": "eIrDN3inpv"
+        "lastMessageId": 15838,
+        "currentDataId": "I6YBNl3gaA",
+        "selectedAdminUserChatId": "5619320232",
+        "selectedAdminUserStatus": "emp",
+        "newSubMenu": {
+            "menu": "8"
+        },
+        "newMenu": {},
+        "updatePaginationMenu": 2,
+        "updateMenu": {
+            "menuType": "2",
+            "menuId": "3",
+            "mainMenuId": 8
+        },
+        "lastAdminSteps": {
+            "btn": {
+                "reply_markup": {
+                    "inline_keyboard": [
+                        [
+                            {
+                                "text": "Sub Menu nomi",
+                                "callback_data": "updateAdminMenu#1#2"
+                            },
+                            {
+                                "text": "Kommentariya",
+                                "callback_data": "updateAdminMenu#2#2"
+                            }
+                        ]
+                    ],
+                    "resize_keyboard": true
+                }
+            },
+            "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Test2\nSub Menu Nomi : test 2 Sub menu\nKommentariya : salom\nYaratilagan Sana : February 16, 2024\n",
+            "step": 802
+        },
+        "menuType": "2",
+        "menuId": "2",
+        "key": "1",
+        "adminType": "update"
     }
 ]

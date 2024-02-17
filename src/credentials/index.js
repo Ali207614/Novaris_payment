@@ -49,7 +49,7 @@ let SubMenu = () => {
             }]
         }
     }
-    return {
+    let menuCred = {
         1: [
             {
                 name: 'Xorijiy xarid konteyner buyurtmasi',
@@ -1006,6 +1006,13 @@ let SubMenu = () => {
                 }
             }
         ],
+    }
+    return {
+        ...Object.fromEntries(Object.entries(menuCred).map(item => [item[0], item[1].map((el, i) => {
+            return {
+                ...el, id: i + 1
+            }
+        })])),
         ...newSubMenus
     }
 }

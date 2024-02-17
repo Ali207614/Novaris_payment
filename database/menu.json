@@ -1,9 +1,16 @@
 [
     {
-        "name": "Salom 1",
+        "name": "Bugalteriya",
         "status": true,
         "isDelete": true,
-        "creationDate": "2024-02-14T21:09:19.177Z",
+        "creationDate": "2024-02-16T16:53:37.755Z",
         "id": 7
+    },
+    {
+        "name": "Test2",
+        "status": true,
+        "isDelete": false,
+        "creationDate": "2024-02-16T16:53:56.796Z",
+        "id": 8
     }
 ]

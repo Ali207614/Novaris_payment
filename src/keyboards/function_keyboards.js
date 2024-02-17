@@ -1,4 +1,4 @@
-const empDynamicBtn = (list = [], count = 1) => {
+const empDynamicBtn = (list = [], count = 1, back = true) => {
     let arr = []
     for (let i = 0; i < list.length; i += count) {
         let el = list
@@ -10,7 +10,7 @@ const empDynamicBtn = (list = [], count = 1) => {
         parse_mode: "Markdown",
         reply_markup: {
             resize_keyboard: true,
-            keyboard: [...arr, [{ text: 'Orqaga' }]]
+            keyboard: [...arr, ...(back ? [[{ text: 'Orqaga' }]] : [])]
         },
     };
 }

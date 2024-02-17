@@ -1,4 +1,5 @@
 const jiraController = require("../controllers/jiraController")
+const { infoMenu, infoAllMenu, infoAllSubMenu } = require("../helpers")
 
 const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ') => {
     let result = `${firstText}\n\n`
@@ -19,9 +20,26 @@ const ticketAddText = (obj) => {
     return text
 }
 
+const adminMenusInfo = () => {
+    let menu = infoAllMenu()
+    let subMenu = infoAllSubMenu()
+    let str = `${menu.length ? 'Menular\n\n' : 'Menular mavjud emas'}`
+    for (let i = 0; i < menu.length; i++) {
+        str += `${menu[i].name}\n`
+        let filterData = subMenu.filter(item => item.menuId == menu[i].id)
+        if (filterData?.length) {
+            for (let j = 0; j < filterData.length; j++) {
+                str += ` -${filterData[j].name} ${filterData[j].status ? '✅' : '❌'}\n`
+            }
+        }
+        str += '\n'
+    }
+    return str
+}
 
 
 module.exports = {
     dataConfirmText,
     ticketAddText,
+    adminMenusInfo
 }

@@ -138,14 +138,22 @@ function infoData() {
 }
 
 function writeMenu(data) {
-    let main = infoAllMenu();
+    let main = fs.readFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        "UTF-8"
+    );
+    main = main ? JSON.parse(main) : [];
     fs.writeFileSync(
         path.join(process.cwd(), "database", "menu.json"),
         JSON.stringify([...main, { ...data, status: true, isDelete: false, creationDate: new Date(), id: !main.length ? 7 : Math.max(...main.map(item => item.id)) + 1 }], null, 4)
     );
 }
 function updateMenu(id, data) {
-    let main = infoAllMenu();
+    let main = fs.readFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        "UTF-8"
+    );
+    main = main ? JSON.parse(main) : [];
     let index = main.findIndex((item) => item.id == id);
     main[index] = { ...main[index], ...data };
     fs.writeFileSync(
@@ -154,7 +162,11 @@ function updateMenu(id, data) {
     );
 }
 function deleteMenu({ id }) {
-    let main = infoAllMenu();
+    let main = fs.readFileSync(
+        path.join(process.cwd(), "database", "menu.json"),
+        "UTF-8"
+    );
+    main = main ? JSON.parse(main) : [];;
     main = main.filter(item => item.id != id)
     fs.writeFileSync(
         path.join(process.cwd(), "database", "menu.json"),
@@ -187,14 +199,22 @@ function infoAllMenu() {
 
 
 function writeSubMenu(data) {
-    let main = infoAllSubMenu();
+    let main = fs.readFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        "UTF-8"
+    );
+    main = main ? JSON.parse(main) : [];;
     fs.writeFileSync(
         path.join(process.cwd(), "database", "subMenu.json"),
         JSON.stringify([...main, { ...data, isDelete: false, status: true, id: main?.length ? Math.max(...main.map(item => item.id)) + 1 : 1, creationDate: new Date() }], null, 4)
     );
 }
 function updateSubMenu(id, data) {
-    let main = infoAllSubMenu();
+    let main = fs.readFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        "UTF-8"
+    );
+    main = main ? JSON.parse(main) : [];;
     let index = main.findIndex((item) => item.id == id);
     main[index] = { ...main[index], ...data };
     if (data?.comment) {
@@ -206,7 +226,11 @@ function updateSubMenu(id, data) {
     );
 }
 function deleteSubMenu({ id }) {
-    let main = infoAllSubMenu();
+    let main = fs.readFileSync(
+        path.join(process.cwd(), "database", "subMenu.json"),
+        "UTF-8"
+    );
+    main = main ? JSON.parse(main) : [];;
     main = main.filter(item => item.id != id)
     fs.writeFileSync(
         path.join(process.cwd(), "database", "subMenu.json"),
@@ -307,5 +331,6 @@ module.exports = {
     updateSubMenu,
     deleteSubMenu,
     infoSubMenu,
-    infoAllSubMenu
+    infoAllSubMenu,
+    infoAllMenu
 }

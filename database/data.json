@@ -30,5 +30,65 @@
             "chat_id": 1980248,
             "status": false
         }
+    },
+    {
+        "id": "Pgzi3kQaIo",
+        "menu": 8,
+        "menuName": "Bugalteriya",
+        "chat_id": 561932032,
+        "creationDate": "2024-02-15T19:48:18.691Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 24,
+        "subMenu": "Bug2",
+        "comment": "AvtoTrasnport buyurtma \n  1) Ticket raqam:2\n  2) Sana: 2\n\nYetkazib beruvchi :\nZakaz raqami :",
+        "lastStep": 62,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
+            }
+        }
+    },
+    {
+        "id": "2ey3qPtYkm",
+        "menu": 5,
+        "menuName": "Narx chiqarish",
+        "chat_id": 561932032,
+        "creationDate": "2024-02-17T12:19:45.617Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 38,
+        "subMenu": "Narx chiqarishni tasdiqlash mahalliy",
+        "comment": "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)"
+    },
+    {
+        "id": "e6LKhrl4wm",
+        "menu": 6,
+        "menuName": "Boshqa",
+        "chat_id": 561932032,
+        "creationDate": "2024-02-17T12:24:02.445Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 39,
+        "subMenu": "Do'kon xarid",
+        "comment": "Kimdan:12/00 do'kondan\nTovar nomi: Anker sariq 20x200 dan 320 dona\nOlingan narx: 1.36$\nSotish narxi: 1.6$\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#dxarid"
     }
 ]

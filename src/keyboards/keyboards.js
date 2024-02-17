@@ -1,3 +1,7 @@
+const { get } = require("lodash");
+const { infoPermisson, infoUser } = require("../helpers");
+const { empDynamicBtn } = require("./function_keyboards");
+
 const option = {
     parse_mode: "Markdown",
     reply_markup: {
@@ -36,6 +40,7 @@ const empKeyboard = {
                     text: "Rad etilgan so'rovlar",
                 },
             ],
+            [{ text: 'Orqaga' }]
         ],
     },
 };
@@ -89,6 +94,8 @@ const executorKeyboard = {
                     text: "Bajarilgan",
                 },
             ],
+            [{ text: 'Orqaga' }]
+
         ],
     },
 };
@@ -103,6 +110,8 @@ const affirmativeKeyboard = {
                     text: "Tasdiqlangan",
                 },
             ],
+            [{ text: 'Orqaga' }]
+
         ],
     },
 };
@@ -137,4 +146,37 @@ let jobMenu = {
     'Admin': adminKeyboard
 }
 
-module.exports = { option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard }
+const mainMenuByRoles = ({ chat_id }) => {
+    let user = infoUser().find(item => item.chat_id == chat_id)
+    let permissons = infoPermisson().find(item => {
+        return item.chat_id == `${chat_id}`
+    })
+    let roles = get(permissons, 'roles', [])
+    if (get(user, 'JobTitle', '') == 'Admin') {
+        return adminKeyboard
+    }
+    if (roles?.length) {
+        let permissonMenuId = {
+            1: 'Xodim',
+            2: 'Tasdiqlovchi',
+            3: 'Bajaruvchi'
+        }
+        let menu = empDynamicBtn(roles.map(item => permissonMenuId[item]), 2, false)
+        return menu
+    }
+    return {
+        parse_mode: "Markdown",
+        reply_markup: {
+            resize_keyboard: true,
+            keyboard: [
+                [
+                    {
+                        text: 'Menular mavjud emas'
+                    }
+                ]
+            ]
+        },
+    };
+}
+
+module.exports = { mainMenuByRoles, option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard }
