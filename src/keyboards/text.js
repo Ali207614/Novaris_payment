@@ -1,7 +1,12 @@
+const { get } = require("lodash")
 const jiraController = require("../controllers/jiraController")
-const { infoMenu, infoAllMenu, infoAllSubMenu } = require("../helpers")
+const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser } = require("../helpers")
 
-const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ') => {
+const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '') => {
+    let user = infoUser().find(item => item.chat_id == chat_id)
+    if (get(user, 'waitingUpdateStatus')) {
+        return "O'zgartirildi ✅"
+    }
     let result = `${firstText}\n\n`
     for (let i = 0; i < list.length; i++) {
         result += `${list[i].name} : ${list[i].message}\n`

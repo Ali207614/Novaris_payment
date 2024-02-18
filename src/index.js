@@ -7,7 +7,7 @@ const hanaClient = require("@sap/hana-client");
 const start = async () => {
     try {
         bot.setMyCommands([
-            { command: "/boshlash", description: "boshlash" },
+            { command: "/start", description: "start" },
             { command: "/info", description: "info" },
         ]);
         const connection = hanaClient.createConnection();

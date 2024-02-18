@@ -193,7 +193,7 @@ let SubMenu = () => {
                                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                             })
                             updateData(user?.currentDataId, { accountList43 })
-                            return await dataConfirmBtnEmp(accountList43.sort((a, b) => a.id - b.id), 1, 'account')
+                            return await dataConfirmBtnEmp(chat_id, accountList43.sort((a, b) => a.id - b.id), 1, 'account')
                         },
                         step: '25'
                     },
@@ -201,7 +201,7 @@ let SubMenu = () => {
                         id: 6,
                         name: "Valyuta",
                         message: `Valyutani tanlang`,
-                        btn: async () => await dataConfirmBtnEmp([{ name: 'CNY(yuan)', id: 'CNY' }], 2, 'currency'),
+                        btn: async () => await dataConfirmBtnEmp(chat_id, [{ name: 'CNY(yuan)', id: 'CNY' }], 2, 'currency'),
                         step: '26'
                     },
                     {
@@ -214,7 +214,7 @@ let SubMenu = () => {
                             let data = await b1Controller.getCurrentRate('CNY')
                             let rate = data[0]?.Rate
                             updateData(user.currentDataId, { currencyRate: rate })
-                            let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'CNY'), id: 'CNY' }], 1, 'rate') : empDynamicBtn()
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'CNY'), id: 'CNY' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '28'
@@ -280,7 +280,7 @@ let SubMenu = () => {
                                 list.accountList = accountList15
                                 updateData(user?.currentDataId, { accountList: accountList15, payment: false })
                             }
-                            let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                            let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
                             return btn
                         },
                         step: '64'
@@ -306,7 +306,7 @@ let SubMenu = () => {
                                 list.currencyRate = rate
                                 updateData(user.currentDataId, { currencyRate: rate })
                             }
-                            let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -329,7 +329,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(ocrdList, 1, 'point'),
+                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -338,7 +338,7 @@ let SubMenu = () => {
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
-                            return await dataConfirmBtnEmp(btnList, 2, 'payType')
+                            return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
                     },
@@ -352,7 +352,7 @@ let SubMenu = () => {
                             let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
-                            return await dataConfirmBtnEmp(
+                            return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
                         step: '52'
@@ -441,7 +441,7 @@ let SubMenu = () => {
                             let data = await b1Controller.getCurrentRate('USD')
                             let rate = data[0]?.Rate
                             updateData(user.currentDataId, { currencyRate: rate })
-                            let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -464,7 +464,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(ocrdList, 1, 'point'),
+                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -473,7 +473,7 @@ let SubMenu = () => {
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
-                            return await dataConfirmBtnEmp(btnList, 2, 'payType')
+                            return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
                     },
@@ -557,7 +557,7 @@ let SubMenu = () => {
                             let data = await b1Controller.getCurrentRate('USD')
                             let rate = data[0]?.Rate
                             updateData(user.currentDataId, { currencyRate: rate })
-                            let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -580,7 +580,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(ocrdList, 1, 'point'),
+                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -589,7 +589,7 @@ let SubMenu = () => {
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
-                            return await dataConfirmBtnEmp(btnList, 2, 'payType')
+                            return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
                     },
@@ -603,7 +603,7 @@ let SubMenu = () => {
                             let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
-                            return await dataConfirmBtnEmp(
+                            return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
                         step: '52'
@@ -664,7 +664,7 @@ let SubMenu = () => {
                                 list.accountList = accountList15
                                 updateData(user?.currentDataId, { accountList: accountList15, payment: false })
                             }
-                            let btn = await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                            let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
                             return btn
                         },
                         step: '64'
@@ -690,7 +690,7 @@ let SubMenu = () => {
                                 list.currencyRate = rate
                                 updateData(user.currentDataId, { currencyRate: rate })
                             }
-                            let btn = rate ? await dataConfirmBtnEmp([{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -713,7 +713,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(ocrdList, 1, 'point'),
+                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -722,7 +722,7 @@ let SubMenu = () => {
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
-                            return await dataConfirmBtnEmp(btnList, 2, 'payType')
+                            return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
                     },
@@ -736,7 +736,7 @@ let SubMenu = () => {
                             let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
-                            return await dataConfirmBtnEmp(
+                            return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
                         step: '52'

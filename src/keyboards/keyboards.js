@@ -107,11 +107,27 @@ const affirmativeKeyboard = {
         keyboard: [
             [
                 {
-                    text: "Tasdiqlangan",
+                    text: "Tasdiqlanmagan so'rovlar",
+                },
+
+                {
+                    text: "Tasdiqlanib , bajarilmagan so'rovlar",
+                },
+            ],
+            [
+                {
+                    text: "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar",
+                },
+            ],
+            [
+                {
+                    text: "Rad etilgan so'rovlar",
+                },
+                {
+                    text: "Bajarilgan so'rovlar",
                 },
             ],
             [{ text: 'Orqaga' }]
-
         ],
     },
 };
@@ -179,4 +195,4 @@ const mainMenuByRoles = ({ chat_id }) => {
     };
 }
 
-module.exports = { mainMenuByRoles, option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard }
+module.exports = { mainMenuByRoles, option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard , affirmativeKeyboard }

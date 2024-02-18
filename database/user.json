@@ -3,18 +3,76 @@
         "EmployeeID": 170,
         "LastName": "Madaminov",
         "FirstName": "Muhammadali",
-        "JobTitle": "Xodim",
+        "JobTitle": "Admin",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 10,
-        "back": [],
+        "user_step": 703,
+        "back": [
+            {
+                "text": "Asosiy Menu",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}],[{\"text\":\"Menular\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Assalomu Aleykum"
+                },
+                "step": 1
+            },
+            {
+                "text": "Bajaruvchi uchun menuni tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Xorijiy xarid ",
+                                    "callback_data": "empMenu#1"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Mahalliy xarid ✅",
+                                    "callback_data": "empMenu#2"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "To'lov/Xarajat ",
+                                    "callback_data": "empMenu#3"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Narx chiqarish ",
+                                    "callback_data": "empMenu#5"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Boshqa ",
+                                    "callback_data": "empMenu#6"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Test2 ",
+                                    "callback_data": "empMenu#8"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 702
+            }
+        ],
         "update": false,
-        "lastMessageId": 16550,
-        "currentDataId": "e6LKhrl4wm",
+        "lastMessageId": 17659,
+        "currentDataId": "gdHeTN6WTk",
         "selectedAdminUserChatId": "56219320322",
-        "selectedAdminUserStatus": "emp",
+        "selectedAdminUserStatus": "executor",
         "newSubMenu": {
             "menu": "8"
         },
@@ -49,7 +107,9 @@
         "menuType": "2",
         "menuId": "2",
         "key": "1",
-        "adminType": "update"
+        "adminType": "update",
+        "waitingUpdateStatus": false,
+        "currentUserRole": "Tasdiqlovchi"
     },
     {
         "EmployeeID": 170,

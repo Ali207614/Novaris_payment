@@ -1,6 +1,12 @@
 const { get } = require("lodash")
+const { infoUser, updateUser } = require("../helpers")
 
-const dataConfirmBtnEmp = async (list = [], count = 1, cbName, pagination = { prev: 0, next: 10 }, keyboardList = []) => {
+const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pagination = { prev: 0, next: 10 }, keyboardList = []) => {
+    let user = infoUser().find(item => item.chat_id == chat_id)
+    if (get(user, 'waitingUpdateStatus')) {
+        updateUser(chat_id, { waitingUpdateStatus: false })
+        return {}
+    }
     let arr = []
     let result = list
     let next = get(pagination, 'next', 0)

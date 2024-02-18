@@ -2,7 +2,7 @@ const { get, isEmpty } = require("lodash");
 let { SubMenu, accounts, accounts50, Menu } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson, infoMenu, infoSubMenu, infoAllMenu } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
-const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
+const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles, affirmativeKeyboard } = require("../keyboards/keyboards");
 const ShortUniqueId = require('short-unique-id');
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 const { dataConfirmText, adminMenusInfo } = require("../keyboards/text");
@@ -19,6 +19,7 @@ let firtBtnExecutor = () => {
         newBtnMenu[item] = {
             selfExecuteFn: ({ chat_id, }) => {
                 updateStep(chat_id, 2)
+                updateUser(chat_id, { currentUserRole: menuList[i] })
                 updateBack(chat_id, { text: "Assalomu Aleykum", btn: mainMenuByRoles({ chat_id }), step: 1 })
             },
             middleware: ({ chat_id }) => {
@@ -37,6 +38,162 @@ let firtBtnExecutor = () => {
     }
     return newBtnMenu
 }
+
+let confirmativeBtn = {
+    "Tasdiqlanmagan so'rovlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && !item?.confirmative)
+
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlanmagan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        let btn = mainData[i].chat_id != chat_id ? (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative')) : undefined
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                let mainData = infoData().filter(item => item.full && !item?.confirmative)
+                if (mainData.length) {
+                    let btn = mainData[0].chat_id != chat_id ? (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative')) : undefined
+                    return btn
+                }
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Tasdiqlanib , bajarilmagan so'rovlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false)
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlanib , bajarilmagan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executer)
+
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlanib, bajarilishi kutilayotgan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Rad etilgan so'rovlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'confirmative.status') == false)
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Rad etilgan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Bajarilgan so'rovlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status'))
+
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Bajarilgan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+
+}
+
+
+
 
 let executeBtn = {
     "Orqaga": {
@@ -64,6 +221,28 @@ let executeBtn = {
             },
         },
     },
+    "So'rov Yuborish": {
+        selfExecuteFn: ({ chat_id, }) => {
+            updateStep(chat_id, 10)
+            updateBack(chat_id, { text: "So'rovlar", btn: empKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Menuni tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let permisson = infoPermisson().find(item => chat_id == item.chat_id)
+                let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
+                return empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            },
+        },
+    },
+
+
     "Kutilayotgan so’rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -95,26 +274,25 @@ let executeBtn = {
         next: {
             text: async ({ chat_id }) => {
                 let mainData = infoData().filter(item => item.full && !item?.confirmative && item.chat_id == chat_id)
-                if (mainData.length) {
-                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
 
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlanishi kutilayotgan so’rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `Kutilayotgan So'rovlar`), await dataConfirmBtnEmp([{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting'))
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting'))
                     }
-
-                    return dataConfirmText(info, `Kutilayotgan So'rovlar`)
+                    return dataConfirmText(info, `So'rovlar`)
                 }
                 return 'Mavjud emas'
-
             },
             btn: async ({ chat_id, }) => {
                 let mainData = infoData().filter(item => item.full && !item?.confirmative && item.chat_id == chat_id)
                 if (mainData.length) {
-                    let btn = await dataConfirmBtnEmp([{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
+                    let btn = await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
                     return btn
                 }
-                return
+                return empDynamicBtn()
             },
         },
     },
@@ -128,17 +306,32 @@ let executeBtn = {
             return user.user_step == 2
         },
         next: {
-            text: ({ chat_id }) => {
-                return "So'rovlar"
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && !item?.executer && get(item, 'confirmative.status') && item.chat_id == chat_id)
+
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Bajarilishi kutilaytogan so’rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
             },
         },
     },
-    "So'rov Yuborish": {
+
+
+
+
+    "Tasdiqlangan so’rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            updateStep(chat_id, 10)
+            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: empKeyboard, step: 2 })
         },
         middleware: ({ chat_id }) => {
@@ -147,12 +340,145 @@ let executeBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Menuni tanlang"
+                return "So'rovlar"
             },
             btn: async ({ chat_id, }) => {
-                let permisson = infoPermisson().find(item => chat_id == item.chat_id)
-                let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-                return empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+                return empDynamicBtn(["Tasdiqlangan , bajarilmagan so'rovlar", "Tasdiqlangan , bajarilgan so'rovlar"])
+            },
+        },
+    },
+    "Tasdiqlangan , bajarilmagan so'rovlar": {
+        selfExecuteFn: ({ chat_id }) => {
+            updateStep(chat_id, 200)
+            updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlangan , bajarilmagan so'rovlar", "Tasdiqlangan , bajarilgan so'rovlar"]), step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'confirmative.status') && !item?.executer && item.chat_id == chat_id)
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlangan , bajarilmagan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Tasdiqlangan , bajarilgan so'rovlar": {
+        selfExecuteFn: ({ chat_id }) => {
+            updateStep(chat_id, 200)
+            updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlangan , bajarilmagan so'rovlar", "Tasdiqlangan , bajarilgan so'rovlar"]), step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'executer.status') && get(item, 'confirmative.status') && item.chat_id == chat_id)
+
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlangan , bajarilgan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+
+
+
+    "Rad etilgan so'rovlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "So'rovlar", btn: empKeyboard, step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "So'rovlar"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn(["Tasdiqlovchi rad etgan so'rovlar", "Bajaruvchi rad etgan so'rovlar"])
+            },
+        },
+    },
+    "Tasdiqlovchi rad etgan so'rovlar": {
+        selfExecuteFn: ({ chat_id }) => {
+            updateStep(chat_id, 200)
+            updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlovchi rad etgan so'rovlar", "Bajaruvchi rad etgan so'rovlar"]), step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'confirmative.status') == false && item.chat_id == chat_id)
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Tasdiqlovchi rad etgan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Bajaruvchi rad etgan so'rovlar": {
+        selfExecuteFn: ({ chat_id }) => {
+            updateStep(chat_id, 200)
+            updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlovchi rad etgan so'rovlar", "Bajaruvchi rad etgan so'rovlar"]), step: 2 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 2
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                let mainData = infoData().filter(item => item.full && get(item, 'executer.status') == false && get(item, 'confirmative.status') && item.chat_id == chat_id)
+
+                if (mainData.length) {
+                    await bot.sendMessage(chat_id, `Bajaruvchi rad etgan so'rovlar`, empDynamicBtn())
+                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
+                    for (let i = 1; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id))
+                    }
+                    return dataConfirmText(info, `So'rovlar`)
+                }
+                return 'Mavjud emas'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
             },
         },
     },
@@ -327,7 +653,7 @@ let xorijiyXaridBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Document Type ni tanlang"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -365,7 +691,7 @@ let xorijiyXaridBtn = {
                 try {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let list = infoData().find(item => item.id == user?.currentDataId)
-                    return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Document Type ni tanlang"
+                    return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
                 }
                 catch (e) {
                     throw new Error(e)
@@ -407,7 +733,7 @@ let xorijiyXaridBtn = {
                     return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                 })
                 updateData(user?.currentDataId, { accountList43 })
-                return await dataConfirmBtnEmp(accountList43.sort((a, b) => a.id - b.id), 1, 'accountOneStep')
+                return await dataConfirmBtnEmp(chat_id, accountList43.sort((a, b) => a.id - b.id), 1, 'accountOneStep')
             },
         },
     },
@@ -538,7 +864,7 @@ let mahalliyXaridBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Поставщик (Yetkazib beruvchi) ni ismini yozing"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Поставщик (Yetkazib beruvchi) ni ismini yozing"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -570,7 +896,7 @@ let mahalliyXaridBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Поставщик (Yetkazib beruvchi) ni ismini yozing"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Поставщик (Yetkazib beruvchi) ni ismini yozing"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -737,7 +1063,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Document Type ni tanlang"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -769,7 +1095,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : "Document Type ni tanlang"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -800,7 +1126,7 @@ let tolovHarajatBtn = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50 : {}) }
-                let btn = await dataConfirmBtnEmp(Object.keys(accountsObj).map((item, i) => {
+                let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
                 }), 2, 'accountType')
                 return btn
@@ -857,12 +1183,12 @@ let tolovHarajatBojBtn = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
 
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : 'Schetni tanlang'
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Schetni tanlang'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -893,12 +1219,12 @@ let tolovHarajatBojBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
 
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : 'Schetni tanlang'
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Schetni tanlang'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -924,7 +1250,7 @@ let tolovHarajatBojBtn = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50 : {}) }
-                let btn = await dataConfirmBtnEmp(Object.keys(accountsObj).map((item, i) => {
+                let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
                 }), 2, 'accountType')
                 return btn
@@ -1347,7 +1673,7 @@ let adminBtn = {
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().filter(item => item.JobTitle !== 'Admin')
-                return dataConfirmBtnEmp(user.map(item => {
+                return dataConfirmBtnEmp(chat_id, user.map(item => {
                     return {
                         name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
                     }
@@ -1371,7 +1697,7 @@ let adminBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     [
                         {
                             name: `Xodim ${get(infoPermissonData, 'roles')?.includes('1') ? '✅' : ' '}`,
@@ -1410,7 +1736,7 @@ let adminBtn = {
                 let menuList = Menu().map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''}` }
                 })
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     menuList
                     , 1, 'empMenu')
             },
@@ -1436,7 +1762,7 @@ let adminBtn = {
                 let menuList = Menu().map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuAffirmative', {})[item.id]?.length ? '✅' : ''}` }
                 })
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     menuList
                     , 1, 'empMenu')
             },
@@ -1465,7 +1791,7 @@ let adminBtn = {
                 if (get(user, 'selectedAdminUserStatus') == 'executor') {
                     menuList = menuList.filter(item => item.id != 4)
                 }
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     menuList
                     , 1, 'empMenu')
             },
@@ -1553,7 +1879,7 @@ let adminBtn = {
                 return menu?.length ? "Menuni tanlang" : 'Menular mavjud emas'
             },
             btn: async ({ chat_id, }) => {
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     infoMenu()
                     , 1, 'newSubMenu')
             },
@@ -1605,7 +1931,7 @@ let updateAdminBtn = {
                 return menu?.length ? "Menuni tanlang" : 'Menular mavjud emas'
             },
             btn: async ({ chat_id, }) => {
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     infoMenu().map(item => {
                         return { name: item.name, id: `${item.id}#1` }
                     })
@@ -1637,7 +1963,7 @@ let updateAdminBtn = {
                 return subMenu?.length ? "Menuni tanlang" : 'Menular mavjud emas'
             },
             btn: async ({ chat_id, }) => {
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     infoMenu().map(item => {
                         return { name: item.name, id: `${item.id}` }
                     })
@@ -1674,7 +2000,7 @@ let deleteAdminBtn = {
                 if (infoMenu().length == 0) {
                     return empDynamicBtn()
                 }
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     infoMenu().map(item => {
                         return { name: item.name, id: `${item.id}` }
                     })
@@ -1711,7 +2037,7 @@ let changeStatusAdminBtn = {
                 if (infoAllMenu().length == 0) {
                     return empDynamicBtn()
                 }
-                return dataConfirmBtnEmp(
+                return dataConfirmBtnEmp(chat_id,
                     infoAllMenu().map(item => {
                         return { name: `${item.name}`, id: `${item.id}` }
                     })
@@ -1829,5 +2155,6 @@ module.exports = {
     deleteAdminBtn,
     changeStatusAdminBtn,
     infoAdminBtn,
-    firtBtnExecutor
+    firtBtnExecutor,
+    confirmativeBtn
 }
