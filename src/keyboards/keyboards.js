@@ -91,8 +91,16 @@ const executorKeyboard = {
         keyboard: [
             [
                 {
-                    text: "Bajarilgan",
+                    text: "Bajarilmagan so'rovlar",
                 },
+                {
+                    text: "Bajarilgan so'rovlar",
+                },
+            ],
+            [
+                {
+                    text: "Rad etilgan so'rovlar",
+                }
             ],
             [{ text: 'Orqaga' }]
 
@@ -195,4 +203,4 @@ const mainMenuByRoles = ({ chat_id }) => {
     };
 }
 
-module.exports = { mainMenuByRoles, option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard , affirmativeKeyboard }
+module.exports = { mainMenuByRoles, option, jobMenu, empKeyboard, empMenuKeyboard, adminKeyboard, affirmativeKeyboard, executorKeyboard }

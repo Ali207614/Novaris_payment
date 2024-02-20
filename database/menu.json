@@ -1,16 +1,9 @@
 [
     {
-        "name": "Bugalteriya",
-        "status": true,
-        "isDelete": true,
-        "creationDate": "2024-02-16T16:53:37.755Z",
-        "id": 7
-    },
-    {
-        "name": "Test2",
+        "name": "Menu",
         "status": true,
         "isDelete": false,
-        "creationDate": "2024-02-16T16:53:56.796Z",
-        "id": 8
+        "creationDate": "2024-02-19T16:12:46.329Z",
+        "id": 7
     }
 ]

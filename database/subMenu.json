@@ -1,65 +1,23 @@
 [
   {
     "menuId": "7",
-    "name": "Bugalteriya Ma'lumotlari",
-    "comment": "Izoh:Bugalteriya\nsana:\nmiqdori:40",
+    "name": "Test",
+    "comment": "comment",
     "update": [
       {
         "id": 1,
         "name": "Izoh",
-        "message": "Izoh:Bugalteriya\nsana:\nmiqdori:40",
+        "message": "comment",
         "btn": "() => empDynamicBtn()",
         "step": "13"
       }
     ],
     "updateLine": 1,
     "lastStep": 62,
-    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Izoh', message: data?.comment }]\n                            return info\n                        }",
-    "isDelete": true,
+    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+    "isDelete": false,
     "status": true,
     "id": 1,
-    "creationDate": "2024-02-16T16:55:17.819Z"
-  },
-  {
-    "menuId": "8",
-    "name": "test sub menu",
-    "comment": "Assalomu Aleykum",
-    "update": [
-      {
-        "id": 1,
-        "name": "Izoh",
-        "message": "Assalomu Aleykum",
-        "btn": "() => empDynamicBtn()",
-        "step": "13"
-      }
-    ],
-    "updateLine": 1,
-    "lastStep": 62,
-    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Izoh', message: data?.comment }]\n                            return info\n                        }",
-    "isDelete": false,
-    "status": true,
-    "id": 10,
-    "creationDate": "2024-02-16T16:58:58.061Z"
-  },
-  {
-    "menuId": "8",
-    "name": "test 2 Sub menu",
-    "comment": "salom",
-    "update": [
-      {
-        "id": 1,
-        "name": "Izoh",
-        "message": "salom",
-        "btn": "() => empDynamicBtn()",
-        "step": "13"
-      }
-    ],
-    "updateLine": 1,
-    "lastStep": 62,
-    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Izoh', message: data?.comment }]\n                            return info\n                        }",
-    "isDelete": false,
-    "status": true,
-    "id": 3,
-    "creationDate": "2024-02-16T16:59:31.622Z"
+    "creationDate": "2024-02-19T16:13:14.783Z"
   }
 ]

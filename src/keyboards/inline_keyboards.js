@@ -32,7 +32,8 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         'adminUsers': 'paginationAdminUsers',
         'newSubMenu': 'paginationNewSubMenu',
         'updateMenus': 'paginationUpdateMenus',
-        "selectMenus": 'paginationSelectMenus'
+        "selectMenus": 'paginationSelectMenus',
+        "purchase": 'paginationPurchase'
     }
 
     if (result.length > 10) {
@@ -51,17 +52,7 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
     };
     return keyboard
 }
-// parse_mode: "Markdown",
-// reply_markup: {
-//     resize_keyboard: true,
-//     keyboard: [
-//         [
-//             {
-//                 text: "Tasdiqlangan",
-//             },
-//         ],
-//     ],
-// },
+
 
 
 module.exports = {

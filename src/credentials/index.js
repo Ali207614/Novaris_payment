@@ -40,7 +40,7 @@ let SubMenu = () => {
         let item = infoSubMenu()[i]
         if (newSubMenus[item.menuId]?.length) {
             newSubMenus[item.menuId].push({
-                ...item, infoFn: eval(item.infoFn), update: [{ ...item.update[0], btn: eval(item.update[0].btn) }]
+                ...item, menuId: Number(item.menuId), infoFn: eval(item.infoFn), update: [{ ...item.update[0], btn: eval(item.update[0].btn) }]
             })
         }
         else {
@@ -237,7 +237,10 @@ let SubMenu = () => {
                 jira: {
                     operationsList: { comment: true, transition: false, date: false }
                 },
-                b1: true, // hali aniqmas 
+                b1: {
+                    status: true,
+                    type: 'account',
+                },
                 updateLine: 3,
                 lastStep: 30,
                 infoFn: ({ chat_id, id }) => {
@@ -249,8 +252,11 @@ let SubMenu = () => {
                     let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name
 
                     let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOneStep'))?.name) : vendorName
-
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                    let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                    if (!get(purchase, 'DocEntry')) {
+                        info = info.filter(item => item.name != 'Zakupka')
+                    }
                     return info
                 }
             },
@@ -1010,7 +1016,7 @@ let SubMenu = () => {
     return {
         ...Object.fromEntries(Object.entries(menuCred).map(item => [item[0], item[1].map((el, i) => {
             return {
-                ...el, id: i + 1
+                ...el, id: i + 1, menuId: Number(item[0])
             }
         })])),
         ...newSubMenus

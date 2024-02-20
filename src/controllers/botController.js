@@ -6,7 +6,7 @@ const {
 const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
-const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn } = require("../modules/text");
+const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
 const b1Controller = require("./b1Controller");
 const jiraController = require("./jiraController");
 
@@ -16,7 +16,7 @@ class botConroller {
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let btnTree = {
                 ...firtBtnExecutor(), ...confirmativeBtn,
-                ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...updateAdminBtn, ...adminBtn, ...deleteAdminBtn, ...changeStatusAdminBtn, ...infoAdminBtn, ...newBtnExecuter()
+                ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...updateAdminBtn, ...adminBtn, ...deleteAdminBtn, ...changeStatusAdminBtn, ...infoAdminBtn, ...executorBtn, ...newBtnExecuter()
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
             if (msg.text == "/start") {
@@ -35,17 +35,22 @@ class botConroller {
             else if (
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
             ) {
-                let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, , newBtnExecuter()]
-                let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
-                execute = execute ? execute[msg.text] : {}
-                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
-                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
-                    if (execute?.next) {
-                        let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
-                            bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
-                        let lastMessageId = await botInfo
-                        updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
+                try {
+                    let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, executorBtn, newBtnExecuter()]
+                    let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
+                    execute = execute ? execute[msg.text] : {}
+                    if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
+                        await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
+                        if (execute?.next) {
+                            let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
+                                bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
+                            let lastMessageId = await botInfo
+                            updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
+                        }
                     }
+                }
+                catch (e) {
+                    console.log('tst ', e)
                 }
             }
             else if (
@@ -63,6 +68,7 @@ class botConroller {
             }
         }
         catch (err) {
+            console.log(err, ' bu err')
             throw new Error(err);
         }
     }
@@ -99,6 +105,7 @@ class botConroller {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
             let deleteMessage = await bot.sendMessage(chat_id, 'Loading...')
             let sap_user = await b1Controller.getEmpInfo(phone);
+            console.log(sap_user, ' bu sap user')
             if (get(sap_user, "status") && get(sap_user, "data.value")?.length) {
                 writeUser({
                     ...get(sap_user, "data.value[0]", {}),
@@ -113,7 +120,7 @@ class botConroller {
                 bot.sendMessage(
                     chat_id,
                     "Foydalanuvchi tasdiqlandi ✅",
-                    jobMenu[get(sap_user, "data.value[0].JobTitle", {})]
+                    mainMenuByRoles({ chat_id })
                 );
             } else {
                 bot.deleteMessage(chat_id, deleteMessage.message_id)

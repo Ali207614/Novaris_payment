@@ -3,7 +3,7 @@ const https = require("https");
 const { get } = require("lodash");
 let dbService = require('../services/dbService')
 const moment = require('moment');
-const { PARTNERSEARCH, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW } = require("../repositories/dataRepositories");
+const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW } = require("../repositories/dataRepositories");
 
 class b1Controller {
     constructor() {
@@ -12,7 +12,7 @@ class b1Controller {
 
     async auth() {
         let obj = {
-            "CompanyDB": "TEST0105",
+            "CompanyDB": "TEST311223",
             "UserName": "manager",
             "Password": "w2e3r4Q!"
         }
@@ -91,6 +91,17 @@ class b1Controller {
             throw new Error(e)
         }
     }
+
+    async getPurchaseOrder({ cardCode }) {
+        try {
+            let data = await dbService.executeParam(GETPURCHASEORDER, [cardCode])
+            return data
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+
 
     async getAccount15({ status = false }) {
         try {
@@ -185,6 +196,51 @@ class b1Controller {
                     if (token.status) {
                         this.token = token.data
                         return await this.executePayments({ list, cred })
+                    }
+                    return { status: false, message: token.message }
+                } else {
+                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                }
+            });
+    }
+
+
+    async purchaseDownPayments({ list = {} }) {
+        let DocumentLines = get(list, 'purchaseOrders', []).filter(item => item.DocEntry == get(list, 'purchaseEntry')).map(item => {
+            return { BaseLine: item.LineNum, BaseEntry: item.DocEntry, BaseType: 22 }
+        })
+        let body = {
+            "CardCode": get(list, 'vendorId'),
+            "DocCurrency": get(list, 'currency', 'CNY'),
+            "DocTotalFc": Number(get(list, 'summa', 0)),
+            "ControlAccount": get(list, 'accountCode'),
+            "DocRate": Number(get(list, 'currencyRate', 7.120)),
+            "DownPaymentAmountFC": Number(get(list, 'summa', 0)),
+            "DocObjectCode": "oPurchaseDownPayments",
+            "DownPaymentType": "dptRequest",
+            DocumentLines
+        }
+        const axios = Axios.create({
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            timeout: 30000,
+            headers: {
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        });
+        return axios
+            .post(`PurchaseDownPayments`, body)
+            .then(({ data }) => {
+                return { status: true, data }
+            })
+            .catch(async (err) => {
+                if (get(err, 'response.status') == 401) {
+                    let token = await this.auth()
+                    if (token.status) {
+                        this.token = token.data
+                        return await this.purchaseDownPayments({ list })
                     }
                     return { status: false, message: token.message }
                 } else {
