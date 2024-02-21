@@ -95,7 +95,6 @@ class botConroller {
                 }
             }
         } catch (err) {
-            console.log(err, '  bu err')
             throw new Error(err);
         }
     }
@@ -105,13 +104,13 @@ class botConroller {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
             let deleteMessage = await bot.sendMessage(chat_id, 'Loading...')
             let sap_user = await b1Controller.getEmpInfo(phone);
-            console.log(sap_user, ' bu sap user')
             if (get(sap_user, "status") && get(sap_user, "data.value")?.length) {
                 writeUser({
                     ...get(sap_user, "data.value[0]", {}),
                     chat_id,
                     is_active: true,
                     user_step: 1,
+                    back: []
                 });
                 writePermisson({
                     chat_id

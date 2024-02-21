@@ -51,7 +51,17 @@ let confirmativeBtn = {
         },
         next: {
             text: async ({ chat_id }) => {
-                let mainData = infoData().filter(item => item.full && !item?.confirmative)
+                let permission = infoPermisson().find(item => item.chat_id == chat_id)
+                let permissonMenuAffirmative = Object.fromEntries(Object.entries(get(permission, 'permissonMenuAffirmative', {})).map(item => {
+                    return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
+                }))
+                let mainData = infoData().filter(item => item?.full
+                    && !get(item, 'confirmative')
+                    && (permissonMenuAffirmative[item.menu] ? permissonMenuAffirmative[item.menu].includes(item?.subMenu) : false)
+                )
+                if (!permissonMenuAffirmative) {
+                    return 'Mavjud emas'
+                }
 
                 if (mainData.length) {
                     await bot.sendMessage(chat_id, `Tasdiqlanmagan so'rovlar`, empDynamicBtn())
@@ -66,7 +76,17 @@ let confirmativeBtn = {
                 return 'Mavjud emas'
             },
             btn: async ({ chat_id, }) => {
-                let mainData = infoData().filter(item => item.full && !item?.confirmative)
+                let permission = infoPermisson().find(item => item.chat_id == chat_id)
+                let permissonMenuAffirmative = Object.fromEntries(Object.entries(get(permission, 'permissonMenuAffirmative', {})).map(item => {
+                    return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
+                }))
+                let mainData = infoData().filter(item => item?.full
+                    && !get(item, 'confirmative')
+                    && (permissonMenuAffirmative[item.menu] ? permissonMenuAffirmative[item.menu].includes(item?.subMenu) : false)
+                )
+                if (!permissonMenuAffirmative) {
+                    return empDynamicBtn()
+                }
                 if (mainData.length) {
                     let btn = mainData[0].chat_id != chat_id ? (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative')) : undefined
                     return btn
@@ -209,7 +229,7 @@ let executorBtn = {
                     return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
                 }))
                 let mainData = infoData().filter(item => item?.full
-                    && get(item, 'confirmative.status')
+                    && get(item, 'confirmative.status') && !get(item, 'executer')
                     && (permissonMenuExecutor[item.menu] ? permissonMenuExecutor[item.menu].includes(item?.subMenu) : false)
                 )
                 if (!permissonMenuExecutor) {
@@ -234,7 +254,7 @@ let executorBtn = {
                     return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
                 }))
                 let mainData = infoData().filter(item => item?.full
-                    && get(item, 'confirmative.status')
+                    && get(item, 'confirmative.status') && !get(item, 'executer')
                     && (permissonMenuExecutor[item.menu] ? permissonMenuExecutor[item.menu].includes(item?.subMenu) : false)
                 )
                 if (!permissonMenuExecutor) {

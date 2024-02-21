@@ -147,12 +147,17 @@ class b1Controller {
     }
 
     async executePayments({ list = {}, cred = {} }) {
+        if (get(list, 'purchase')) {
+            return await this.purchaseDownPayments({ list })
+        }
         let DocType = {
             'account': 'rAccount',
             'customer': 'rCustomer',
             'supplier': 'rSupplier'
         }
         let body = {
+            "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
+            "DueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId') ? 'rCustomer' : 'rAccount'))],
             "CardCode": get(list, 'accountCodeOther', get(list, 'vendorId')),
             "CashAccount": get(list, 'accountCode'),
@@ -218,6 +223,8 @@ class b1Controller {
             "DownPaymentAmountFC": Number(get(list, 'summa', 0)),
             "DocObjectCode": "oPurchaseDownPayments",
             "DownPaymentType": "dptRequest",
+            "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
+            "DocDueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             DocumentLines
         }
         const axios = Axios.create({

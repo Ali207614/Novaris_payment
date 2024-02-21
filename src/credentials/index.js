@@ -239,7 +239,6 @@ let SubMenu = () => {
                 },
                 b1: {
                     status: true,
-                    type: 'account',
                 },
                 updateLine: 3,
                 lastStep: 30,

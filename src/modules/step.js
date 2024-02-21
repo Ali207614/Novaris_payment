@@ -215,50 +215,50 @@ let xorijiyXaridStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                // let jira = await jiraController.getTicketById({ issueKey: msgText })
-                // if (jira?.status) {
-                //     let statusId = get(jira, 'data.fields.status.id', 0)
-                //     let subMenu = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
-                //     if (get(subMenu, 'jira.statusId', '') ? (statusId == get(subMenu, 'jira.statusId', '')) : true) {
-                //         if (user?.update) {
-                //             updateStep(chat_id, get(data, 'lastStep', 30))
-                //         }
-                //         else {
-                //             updateStep(chat_id, 25)
-                //             updateBack(chat_id, { text: `Ticket raqamini kiriting`, btn: empDynamicBtn(), step: 24 })
-                //         }
-                //         let b1Account43 = await b1Controller.getAccount43()
-                //         let accountList43 = b1Account43?.map((item, i) => {
-                //             return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
-                //         })
-                //         updateData(user?.currentDataId, { ticket: msgText, accountList43 })
-                //         xorijiyXaridStep['24'].next.btn = async () => {
-                //             if (data?.accountList43?.length) {
-                //                 let user = infoUser().find(item => item.chat_id == chat_id)
-                //                 let list = infoData().find(item => item.id == user?.currentDataId)
-                //                 let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, data?.accountList43.sort((a, b) => a.id - b.id), 1, 'account')
-                //                 updateUser(chat_id, { update: false })
-                //                 return btn
-                //             }
-                //             return empDynamicBtn()
-                //         }
-                //     }
-                //     else {
-                //         xorijiyXaridStep['24'].next.btn = () => {
-                //             let btn = empDynamicBtn()
-                //             updateUser(chat_id, { update: false })
-                //             return btn
-                //         }
-                //         return `This task is not defined `
-                //     }
-                // } else {
-                //     xorijiyXaridStep['24'].next.btn = () => {
-                //         let btn = empDynamicBtn()
-                //         updateUser(chat_id, { update: false })
-                //         return btn
-                //     }
-                //     return `${jira.message}`
-                // }
+                let jira = await jiraController.getTicketById({ issueKey: msgText })
+                if (jira?.status) {
+                    let statusId = get(jira, 'data.fields.status.id', 0)
+                    let subMenu = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+                    if (get(subMenu, 'jira.statusId', '') ? (statusId == get(subMenu, 'jira.statusId', '')) : true) {
+                        if (user?.update) {
+                            updateStep(chat_id, get(list, 'lastStep', 30))
+                        }
+                        else {
+                            updateStep(chat_id, 25)
+                            updateBack(chat_id, { text: `Ticket raqamini kiriting`, btn: empDynamicBtn(), step: 24 })
+                        }
+                        let b1Account43 = await b1Controller.getAccount43()
+                        let accountList43 = b1Account43?.map((item, i) => {
+                            return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+                        })
+                        updateData(user?.currentDataId, { ticket: msgText, accountList43 })
+                        xorijiyXaridStep['24'].next.btn = async () => {
+                            if (list?.accountList43?.length) {
+                                let user = infoUser().find(item => item.chat_id == chat_id)
+                                let list = infoData().find(item => item.id == user?.currentDataId)
+                                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, list?.accountList43.sort((a, b) => a.id - b.id), 1, 'account')
+                                updateUser(chat_id, { update: false })
+                                return btn
+                            }
+                            return empDynamicBtn()
+                        }
+                    }
+                    else {
+                        xorijiyXaridStep['24'].next.btn = () => {
+                            let btn = empDynamicBtn()
+                            updateUser(chat_id, { update: false })
+                            return btn
+                        }
+                        return `This task is not defined `
+                    }
+                } else {
+                    xorijiyXaridStep['24'].next.btn = () => {
+                        let btn = empDynamicBtn()
+                        updateUser(chat_id, { update: false })
+                        return btn
+                    }
+                    return `${jira.message}`
+                }
 
                 return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `Schetni tanlang`
             },

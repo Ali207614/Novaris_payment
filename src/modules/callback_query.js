@@ -21,21 +21,12 @@ let xorijiyXaridCallback = {
             updateBack(chat_id, { text: dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btn, step: user.user_step })
             if (data[1] == '1') {
                 let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${cred?.id}`)).map(item => item.chat_id)
-                let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }, { name: "O'zgartirish", id: `3#${list.id}` }], 2, 'confirmConfirmative')
+                let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                 for (let i = 0; i < accessChatId.length; i++) {
                     bot.sendMessage(accessChatId[i], dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btnConfirmative)
                 }
 
-                // if (get(cred, 'jira')) {
-                //     let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred })
-                //     updateData(user.currentDataId, { ticketAdd: true, ticketStatusObj: statusObj })
-                // }
-                // if (get(cred, 'b1.status')) {
-                //     let b1MainStatus = await b1Controller.executePayments({ list, cred })
-                // }
-                // if (get(cred, 'b1.status')) {
-                //     let b1MainStatus =  await b1Controller.purchaseDownPayments({ list })
-                // }
+
             }
         },
         middleware: ({ chat_id, id }) => {
@@ -55,11 +46,6 @@ let xorijiyXaridCallback = {
                     return 'Menuni tanlang'
                 }
                 else if (data[1] == '1') {
-                    // if (list.ticketAdd) {
-                    //     let text = ticketAddText(list.ticketStatusObj)
-                    //     return text
-                    // }
-                    // return 'SAP'
                     return `Tasdiqlovchiga jo'natildi`
                 }
             },
@@ -101,17 +87,18 @@ let xorijiyXaridCallback = {
             console.log(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn, ' bu data')
 
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             if (get(list, 'confirmative')) {
                 return
             }
             else if (data[1] == '1') {
-                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
-                let btnExecuter = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmExecuter')
+                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                let btnExecuter = await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmExecuter')
                 for (let i = 0; i < executerList.length; i++) {
-                    bot.sendMessage(executerList[i], dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btnExecuter)
+                    bot.sendMessage(executerList[i], dataConfirmText(info, 'Bajarasizmi ?', chat_id), btnExecuter)
                 }
 
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
+                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqladi ✅ ID:${list.ID}`
                 for (let i = 0; i < confirmativeList.length; i++) {
                     bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
@@ -119,7 +106,7 @@ let xorijiyXaridCallback = {
                 bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
             }
             else if (data[1] == '2') {
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
+                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqlamadi ❌ ID:${list.ID}`
                 for (let i = 0; i < confirmativeList.length; i++) {
                     bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
@@ -133,6 +120,7 @@ let xorijiyXaridCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
+
                 let list = infoData().find(item => item.id == data[2])
                 if (get(list, 'confirmative')) {
                     let confirmativeUser = infoUser().find(item => item.chat_id == get(list, 'confirmative.chat_id'))
@@ -159,33 +147,34 @@ let xorijiyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
+            let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+
             if (get(list, 'executer')) {
                 return
             }
             else if (data[1] == '1') {
-                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
-                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqladi ✅ ID:${list.ID}`
-                for (let i = 0; i < executerList.length; i++) {
-                    bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
+
+                if (get(cred, 'jira')) {
+                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred })
+                    updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj })
+                }
+                if (get(cred, 'b1.status')) {
+                    let b1MainStatus = await b1Controller.executePayments({ list, cred })
+                    updateData(data[2], { sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
                 }
 
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
-
-                for (let i = 0; i < confirmativeList.length; i++) {
-                    bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
-                }
-
-                bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
             }
             else if (data[1] == '2') {
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
+                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqlamadi ❌ ID:${list.ID}`
                 for (let i = 0; i < confirmativeList.length; i++) {
                     bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
                 }
 
-                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${data[2]}`)).map(item => item.chat_id)
+                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 for (let i = 0; i < executerList.length; i++) {
                     bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
                 }
@@ -201,6 +190,10 @@ let xorijiyXaridCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
+
+                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
+                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+
                 if (get(list, 'executer')) {
                     let executerUser = infoUser().find(item => item.chat_id == get(list, 'executer.chat_id'))
                     let text = `${get(executerUser, 'LastName')} ${get(executerUser, 'FirstName')} Bajaruvchi ${get(lit, 'confirmative.status') ? 'tasdiqlagan ✅' : 'bekor qilgan ❌'}`
@@ -208,19 +201,43 @@ let xorijiyXaridCallback = {
                 }
                 if (data[1] == '1') {
                     updateData(data[2], { executer: { chat_id, status: true } })
+                    let str = ''
+                    if (get(list, 'ticketAdd')) {
+                        let text = ticketAddText(list.ticketStatusObj)
+                        str += `${text}\n\n`
+                    }
+                    if (get(list, 'sap')) {
+                        str += `Sapga qo'shildi ✅`
+                    }
+                    else if (get(list, 'sap') === false) {
+                        str += `Sapga qo'shilmadi ❌ ${get(list, 'sapErrorMessage', '')}`
+                    }
+                    if (str) {
+                        updateData(data[2], { SapJiraMessage: str })
+                    }
+                    let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                    let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqladi ✅ ID:${list.ID}`
+                    for (let i = 0; i < executerList.length; i++) {
+                        bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
+                    }
 
-                    return `Tasdiqlandi jo'natildi ✅`
+                    let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+
+                    for (let i = 0; i < confirmativeList.length; i++) {
+                        bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
+                    }
+
+                    bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+
+                    return str || 'Bajarildi ✅'
                 }
                 if (data[1] == '2') {
                     updateData(data[2], { executer: { chat_id, status: false } })
-
                     return `Tasdiqlanmadi ❌`
                 }
             },
             btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let list = infoData().find(item => item.id == data[2])
-                return
+                return empDynamicBtn()
             },
         },
     },

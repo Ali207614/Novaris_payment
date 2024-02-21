@@ -2,7 +2,14 @@ const { bot, personalChatId, conn_params } = require("./config");
 const botController = require("./controllers/botController");
 const b1Controller = require("./controllers/b1Controller")
 const hanaClient = require("@sap/hana-client");
-
+// {
+//     "chat_id": 561932032,
+//     "roles": ["1"],
+//     "permissonMenuEmp": {
+//       "1": ["1", "2", "3", "4", "5"],
+//       "7": ["1"]
+//     }
+//   }
 
 const start = async () => {
     try {
