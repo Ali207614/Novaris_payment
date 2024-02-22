@@ -87,7 +87,7 @@ let xorijiyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
-            console.log(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn, ' bu data')
+
 
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
@@ -109,16 +109,11 @@ let xorijiyXaridCallback = {
                 bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
             }
             else if (data[1] == '2') {
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqlamadi ❌ ID:${list.ID}`
-                for (let i = 0; i < confirmativeList.length; i++) {
-                    bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
-                }
-                bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+                updateStep(chat_id, 4000)
+                updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
             }
         },
         middleware: ({ chat_id, id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             return true
         },
         next: {
@@ -136,24 +131,22 @@ let xorijiyXaridCallback = {
                 }
                 if (data[1] == '2') {
                     updateData(data[2], { confirmative: { chat_id, status: false } })
-                    return `Tasdiqlanmadi ❌`
+                    return `Bekor qilinganlik sababini yozing`
                 }
             },
             btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let list = infoData().find(item => item.id == data[2])
                 return
             },
         },
     },
     "confirmExecuter": {
         selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+            // let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
 
-            let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
-            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            // let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
+            // let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
 
             if (get(list, 'executer')) {
                 return
@@ -169,22 +162,11 @@ let xorijiyXaridCallback = {
                 }
             }
             else if (data[1] == '2') {
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqlamadi ❌ ID:${list.ID}`
-                for (let i = 0; i < confirmativeList.length; i++) {
-                    bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
-                }
-
-                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                for (let i = 0; i < executerList.length; i++) {
-                    bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
-                }
-
-                bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+                updateStep(chat_id, 5000)
+                updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
             }
         },
         middleware: ({ chat_id, id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             return true
         },
         next: {
@@ -233,7 +215,7 @@ let xorijiyXaridCallback = {
                 }
                 if (data[1] == '2') {
                     updateData(data[2], { executer: { chat_id, status: false } })
-                    return `Tasdiqlanmadi ❌`
+                    return `Bekor qilinganlik sababini yozing`
                 }
             },
             btn: async ({ chat_id, data }) => {

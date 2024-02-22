@@ -332,6 +332,9 @@ let executeBtn = {
     "Orqaga": {
         selfExecuteFn: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
+            if (get(user, 'confirmationStatus')) {
+                return
+            }
             updateStep(chat_id, get(user, `back[${user.back.length - 1}].step`, 1))
         },
         middleware: ({ chat_id }) => {
@@ -341,10 +344,16 @@ let executeBtn = {
         next: {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'confirmationStatus')) {
+                    return 'Bekor qilinganlik sababini yozing'
+                }
                 return get(user, `back[${user.back.length - 1}].text`)
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'confirmationStatus')) {
+                    return
+                }
                 let btnBack = get(user, `back[${user.back.length - 1}].btn`)
                 updateUser(chat_id, { back: user.back.filter((item, i) => i != user.back.length - 1) })
                 return await btnBack

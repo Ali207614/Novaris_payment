@@ -4,9 +4,10 @@ const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
 let { SubMenu, ocrdList } = require("../credentials")
-const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu } = require("../helpers")
+const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
+const { mainMenuByRoles } = require("../keyboards/keyboards")
 const { dataConfirmText } = require("../keyboards/text")
 
 let xorijiyXaridStep = {
@@ -843,6 +844,70 @@ let adminStep = {
             },
             btn: async ({ chat_id, msgText }) => {
                 return empDynamicBtn(["Asosiy Menu", "Sub Menu"], 2)
+            },
+        },
+    },
+    "4000": {
+        selfExecuteFn: ({ chat_id, msgText }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
+            updateData(list.id, { notConfirmMessage: msgText })
+            let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqlamadi ❌ ID:${list.ID}`
+            for (let i = 0; i < confirmativeList.length; i++) {
+                bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
+            }
+            bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+            updateUser(chat_id, { confirmationStatus: false })
+
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 4000
+        },
+        next: {
+            text: ({ chat_id, msgText }) => {
+                return `Jo'natildi ✅`
+            },
+            btn: async ({ chat_id, msgText }) => {
+                return mainMenuByRoles({ chat_id })
+            },
+        },
+    },
+    "5000": {
+        selfExecuteFn: ({ chat_id, msgText }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
+            updateData(list.id, { notConfirmMessage: msgText })
+            let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
+
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqlamadi ❌ ID:${list.ID}`
+            for (let i = 0; i < confirmativeList.length; i++) {
+                bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
+            }
+
+            let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            for (let i = 0; i < executerList.length; i++) {
+                bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
+            }
+
+            bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+            updateUser(chat_id, { confirmationStatus: false })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 5000
+        },
+        next: {
+            text: ({ chat_id, msgText }) => {
+                return `Jo'natildi ✅`
+            },
+            btn: async ({ chat_id, msgText }) => {
+                return mainMenuByRoles({ chat_id })
             },
         },
     },

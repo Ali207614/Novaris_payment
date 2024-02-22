@@ -4,7 +4,7 @@ const https = require("https");
 const { get } = require("lodash");
 
 let authKey = `Basic ${Buffer.from(
-    'nodirbek.quddusov@tisco.uz:ATATT3xFfGF0M76cOT_Qci0H_iwiIEX71zI5KyJKcxTe1SKc7IIChfoRbMX49zfBFaCnrgkEgAjA8P0itVVnfEpn9Byv_7RkndhW9uG4dBy0vddOqu76ImeM4syjbz7MjaMHa8gnsrp33pRMm1tFBWiGbQC48mNBmKHfybmclyD3WSU35AfVvTw=77AEEADC'
+    'nodirbek.quddusov@tisco.uz:ATATT3xFfGF0w7Mk_jFOxZ9zc7PZZH8rEUyGwrfqG64rdcjF5T8WEJAzullh8zhAXHjwZlwu6UD9Aa4HPi4LOIpOOpC_TQ0iSoKzo8f6n5n6pQTdszYTyZbkyZFmDExFjdqTUY436p-oRWFNBTBpbLC_XoWNs2BL3gXl5bGc5AOp0Ym-N5XBwLw=E50F5748'
 ).toString('base64')}`
 class jiraController {
     getTicketById = async ({ issueKey }) => {

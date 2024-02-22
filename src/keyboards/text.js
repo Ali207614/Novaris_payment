@@ -5,9 +5,11 @@ const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData } 
 const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '') => {
     let user = infoUser().find(item => item.chat_id == chat_id)
     let newErrStr = ''
+    let notConfirmMessage = 'Bekor qilinganlik sababi : '
     if (get(list, '[0].message', '') && get(list, '[0].name', '') === 'ID') {
         let userData = infoData().find(item => item.ID == get(list, '[0].message', ''))
         newErrStr = get(userData, 'SapJiraMessage', '')
+        notConfirmMessage += get(userData, 'notConfirmMessage', '')
     }
     if (get(user, 'waitingUpdateStatus')) {
         return "O'zgartirildi ✅"
@@ -16,9 +18,13 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     for (let i = 0; i < list.length; i++) {
         result += `${list[i].name} : ${list[i].message}\n`
     }
-    if (newErrStr) {
-        result += `\n\n----------------------\n\n${newErrStr}`
+    if (notConfirmMessage != 'Bekor qilinganlik sababi : ') {
+        result += `\n\n----------------------\n${notConfirmMessage}`
     }
+    if (newErrStr) {
+        result += `\n\n----------------------\n${newErrStr}`
+    }
+
     return result
 }
 
