@@ -17,16 +17,16 @@ let xorijiyXaridCallback = {
             updateStep(chat_id, user.user_step + 1)
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
             let info = cred.infoFn({ chat_id })
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+
             let btn = await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
             updateBack(chat_id, { text: dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btn, step: user.user_step })
             if (data[1] == '1') {
-                let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${cred?.id}`)).map(item => item.chat_id)
+                let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                 for (let i = 0; i < accessChatId.length; i++) {
                     bot.sendMessage(accessChatId[i], dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btnConfirmative)
                 }
-
-
             }
         },
         middleware: ({ chat_id, id }) => {
@@ -37,15 +37,18 @@ let xorijiyXaridCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
+                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+
                 if (data[1] == '3') {
                     updateUser(chat_id, { update: true })
-                    let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                     return dataConfirmText(info, `O'zgartirasizmi ?`, chat_id)
                 }
                 else if (data[1] == '2') {
                     return 'Menuni tanlang'
                 }
                 else if (data[1] == '1') {
+
                     return `Tasdiqlovchiga jo'natildi`
                 }
             },
@@ -156,16 +159,14 @@ let xorijiyXaridCallback = {
                 return
             }
             else if (data[1] == '1') {
-
                 if (get(cred, 'jira')) {
                     let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred })
                     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj })
                 }
                 if (get(cred, 'b1.status')) {
                     let b1MainStatus = await b1Controller.executePayments({ list, cred })
-                    updateData(data[2], { sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
+                    updateData(data[2], { sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message, purchase: false })
                 }
-
             }
             else if (data[1] == '2') {
                 let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
@@ -204,7 +205,8 @@ let xorijiyXaridCallback = {
                     let str = ''
                     if (get(list, 'ticketAdd')) {
                         let text = ticketAddText(list.ticketStatusObj)
-                        str += `${text}\n\n`
+                        console.log(text, ' bu ')
+                        str += `Jira\n${text}\n`
                     }
                     if (get(list, 'sap')) {
                         str += `Sapga qo'shildi ✅`
@@ -213,7 +215,7 @@ let xorijiyXaridCallback = {
                         str += `Sapga qo'shilmadi ❌ ${get(list, 'sapErrorMessage', '')}`
                     }
                     if (str) {
-                        updateData(data[2], { SapJiraMessage: str })
+                        updateData(list.id, { SapJiraMessage: str })
                     }
                     let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                     let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqladi ✅ ID:${list.ID}`
@@ -226,9 +228,7 @@ let xorijiyXaridCallback = {
                     for (let i = 0; i < confirmativeList.length; i++) {
                         bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
                     }
-
                     bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
-
                     return str || 'Bajarildi ✅'
                 }
                 if (data[1] == '2') {

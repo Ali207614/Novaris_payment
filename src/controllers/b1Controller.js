@@ -227,6 +227,7 @@ class b1Controller {
             "DocDueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             DocumentLines
         }
+
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
@@ -239,6 +240,54 @@ class b1Controller {
         });
         return axios
             .post(`PurchaseDownPayments`, body)
+            .then(async ({ data }) => {
+                return await this.DownPayments({ list, data })
+            })
+            .catch(async (err) => {
+                if (get(err, 'response.status') == 401) {
+                    let token = await this.auth()
+                    if (token.status) {
+                        this.token = token.data
+                        return await this.purchaseDownPayments({ list })
+                    }
+                    return { status: false, message: token.message }
+                } else {
+                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                }
+            });
+    }
+
+    async DownPayments({ list = {}, data = {} }) {
+        let body = {
+            "CardCode": get(list, 'vendorId'),
+            "DocType": "rSupplier",
+            "DocCurrency": get(list, 'currency', 'CNY'),
+            "CashAccount": get(list, 'accountCode'),
+            "CashSum": Number(get(list, 'summa')),
+            "DocRate": Number(get(list, 'currencyRate', 7.12)),
+            "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
+            "DueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
+            "PaymentInvoices": [
+                {
+                    "AppliedFC": Number(get(list, 'summa', 0)),
+                    "InvoiceType": "it_PurchaseDownPayment",
+                    "DocEntry": get(data, 'DocEntry'),
+                }
+            ]
+        }
+
+        const axios = Axios.create({
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            timeout: 30000,
+            headers: {
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        });
+        return axios
+            .post(`VendorPayments`, body)
             .then(({ data }) => {
                 return { status: true, data }
             })
@@ -247,7 +296,7 @@ class b1Controller {
                     let token = await this.auth()
                     if (token.status) {
                         this.token = token.data
-                        return await this.purchaseDownPayments({ list })
+                        return await this.DownPayments({ list, data })
                     }
                     return { status: false, message: token.message }
                 } else {
