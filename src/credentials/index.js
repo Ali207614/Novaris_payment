@@ -334,7 +334,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -469,7 +469,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -585,7 +585,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -718,7 +718,7 @@ let SubMenu = () => {
                         id: 10,
                         name: "Hisob Nuqtasi",
                         message: `Hisob Nuqtasini tanlang`,
-                        btn: async () => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
                         step: '51'
                     },
                     {
@@ -1060,7 +1060,8 @@ let DDS = {
     "Dastur xarajati": [9457],
     "Pul o'tkazish xarajati": [9458],
     "Texnik xizmat(Xarajat)": [9459],
-    "TMB xaridi(Xarajat)/TMB sotuvi(Tushum)": [9460],
+    "TMB sotuvi(Tushum)": [9460],
+    "TMB xaridi(Xarajat)": [9460],
     "Xizmat safari xarajati ": [9461],
     "Yoqilg'i(Xarajat)": [9462],
     "Kurs farqi": [9465, 9540, 9620],
@@ -1107,24 +1108,12 @@ let ocrdList = [
         name: "777-DO'KON"
     },
     {
-        id: 'A',
-        name: "Ark-buloq"
-    },
-    {
         id: 'D',
         name: "DISTRIBYUTSIYA"
     },
     {
-        id: 'G',
-        name: "GARAJ"
-    },
-    {
         id: 'KORXONA',
         name: "KORXONA"
-    },
-    {
-        id: 'M',
-        name: "Misafir"
     },
     {
         id: 'O',
@@ -1231,7 +1220,7 @@ let accounts = {
 
 let subAccounts50 = {
     'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090],
-    'Karta': [5050, 5052, 5053, 5054, 5063],
+    'Karta': [5050, 5052, 5053, 5054, 5063, 5072],
     'Terminal': [5022, 5032, 5045, 5064, 5082, 5092],
     "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093]
 

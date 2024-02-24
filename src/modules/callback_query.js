@@ -14,6 +14,9 @@ let xorijiyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
+            if (get(list, 'full')) {
+                return
+            }
             updateStep(chat_id, user.user_step + 1)
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
             let info = cred.infoFn({ chat_id })
@@ -35,8 +38,12 @@ let xorijiyXaridCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
+                if (get(list, 'full')) {
+                    return `Tasdiqlovchiga jo'natilagan`
+                }
                 let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
 
@@ -53,8 +60,12 @@ let xorijiyXaridCallback = {
                 }
             },
             btn: async ({ chat_id, data }) => {
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
+                if (get(list, 'full')) {
+                    return
+                }
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
 
                 if (data[1] == '3') {
@@ -62,23 +73,23 @@ let xorijiyXaridCallback = {
                     return await dataConfirmBtnEmp(chat_id, [...updateList.update, { name: "Bekor qilish ❌", id: 0 }], updateList.updateLine, 'update')
                 }
                 else if (data[1] == '2') {
-                    updateUser(chat_id, { update: false })
+                    updateUser(chat_id, { update: false, back: [] })
                     updateStep(chat_id, 10)
                     deleteAllInvalidData({ chat_id })
 
                     let permisson = infoPermisson().find(item => chat_id == item.chat_id)
                     let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-                    let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
-                    return btn
+                    // let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+                    return mainMenuByRoles({ chat_id })
                 }
                 else if (data[1] == '1') {
                     updateData(user.currentDataId, { full: true })
                     updateStep(chat_id, 10)
-                    updateUser(chat_id, { update: false })
+                    updateUser(chat_id, { update: false, back: [] })
                     let permisson = infoPermisson().find(item => chat_id == item.chat_id)
                     let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-                    let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
-                    return btn
+                    // let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+                    return mainMenuByRoles({ chat_id })
                 }
             },
         },
@@ -87,8 +98,6 @@ let xorijiyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
-
-
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             if (get(list, 'confirmative')) {
@@ -146,19 +155,32 @@ let xorijiyXaridCallback = {
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
 
             // let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
-            // let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-
+            // let subMenu Id = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            if (get(list, 'sap') === false && get(list, 'jira') === false) {
+                return
+            }
             if (get(list, 'executer')) {
                 return
             }
             else if (data[1] == '1') {
+                updateData(data[2], { jira: true, sap: true })
+                let deleteMessage = bot.sendMessage(chat_id, `Loading...`)
+                let count = 0;
                 if (get(cred, 'jira')) {
                     let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred })
-                    updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj })
+                    updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
+                    count += 1
+                    if (count == 2) {
+                        bot.deleteMessage(chat_id, deleteMessage.message_id)
+                    }
                 }
                 if (get(cred, 'b1.status')) {
                     let b1MainStatus = await b1Controller.executePayments({ list, cred })
-                    updateData(data[2], { sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message, purchase: false })
+                    updateData(data[2], { sap: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message, purchase: false })
+                    count += 1
+                    if (count == 2) {
+                        bot.deleteMessage(chat_id, deleteMessage.message_id)
+                    }
                 }
             }
             else if (data[1] == '2') {
@@ -173,13 +195,15 @@ let xorijiyXaridCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
-
+                if (get(list, 'sap') === false && get(list, 'jira') === false) {
+                    return
+                }
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
                 let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
 
                 if (get(list, 'executer')) {
                     let executerUser = infoUser().find(item => item.chat_id == get(list, 'executer.chat_id'))
-                    let text = `${get(executerUser, 'LastName')} ${get(executerUser, 'FirstName')} Bajaruvchi ${get(lit, 'confirmative.status') ? 'tasdiqlagan ✅' : 'bekor qilgan ❌'}`
+                    let text = `${get(executerUser, 'LastName')} ${get(executerUser, 'FirstName')} Bajaruvchi ${get(list, 'confirmative.status') ? 'tasdiqlagan ✅' : 'bekor qilgan ❌'}`
                     return text
                 }
                 if (data[1] == '1') {
@@ -882,6 +906,7 @@ let mahalliyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
+
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
@@ -891,6 +916,8 @@ let mahalliyXaridCallback = {
                 updateBack(chat_id, { text: `Hisob nuqtasini tanlang`, btn, step: 51 })
             }
             updateData(user.currentDataId, { point: data[1] })
+
+
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -898,12 +925,17 @@ let mahalliyXaridCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
+
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                 return user?.update ? dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id) : 'Statya DDS ni tanlang'
+
             },
             btn: async ({ chat_id, data }) => {
+
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let ddsList = get(list, 'documentType', false) ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
@@ -912,7 +944,9 @@ let mahalliyXaridCallback = {
                 updateData(user.currentDataId, { ddsList })
                 let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id,
                     ddsList, 2, 'dds')
+
                 return btn
+
             },
         },
     },

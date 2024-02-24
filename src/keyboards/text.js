@@ -6,8 +6,11 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     let user = infoUser().find(item => item.chat_id == chat_id)
     let newErrStr = ''
     let notConfirmMessage = 'Bekor qilinganlik sababi : '
+    let empName = ``
     if (get(list, '[0].message', '') && get(list, '[0].name', '') === 'ID') {
         let userData = infoData().find(item => item.ID == get(list, '[0].message', ''))
+        let empData = infoUser().find(item => item.chat_id == get(userData, 'chat_id'))
+        empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
         newErrStr = get(userData, 'SapJiraMessage', '')
         notConfirmMessage += get(userData, 'notConfirmMessage', '')
     }
@@ -15,6 +18,9 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
         return "O'zgartirildi ✅"
     }
     let result = `${firstText}\n\n`
+    if (empName) {
+        result += `Xodim : ${empName}\n`
+    }
     for (let i = 0; i < list.length; i++) {
         result += `${list[i].name} : ${list[i].message}\n`
     }

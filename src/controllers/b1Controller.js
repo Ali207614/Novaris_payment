@@ -60,9 +60,10 @@ class b1Controller {
             });
     }
 
-    async getPartner(name = "") {
+    async getPartner(name = "", groupList) {
         try {
-            let data = await dbService.executeParam(PARTNERSEARCH, [`%${name}%`])
+            let sql = PARTNERSEARCH + ` and T0.\"GroupCode\" in  (${groupList.map(item => `'${item}'`)})`
+            let data = await dbService.executeParam(sql, [`%${name}%`])
             return data
         }
         catch (e) {
@@ -157,7 +158,7 @@ class b1Controller {
         }
         let body = {
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
-            "DueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
+            "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId') ? 'rCustomer' : 'rAccount'))],
             "CardCode": get(list, 'accountCodeOther', get(list, 'vendorId')),
             "CashAccount": get(list, 'accountCode'),
@@ -266,7 +267,7 @@ class b1Controller {
             "CashSum": Number(get(list, 'summa')),
             "DocRate": Number(get(list, 'currencyRate', 7.12)),
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
-            "DueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
+            "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             "PaymentInvoices": [
                 {
                     "AppliedFC": Number(get(list, 'summa', 0)),

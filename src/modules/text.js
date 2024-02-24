@@ -553,7 +553,7 @@ let executeBtn = {
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            return user.user_step == 2
+            return user.user_step == 2 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
             text: ({ chat_id }) => {

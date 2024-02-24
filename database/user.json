@@ -1,1 +1,33 @@
-[]
+[
+    {
+        "EmployeeID": 170,
+        "LastName": "Madaminov",
+        "FirstName": "Muhammadali",
+        "SalesPersonCode": null,
+        "MobilePhone": "998903367448",
+        "chat_id": 561932032,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-02-24T16:47:53.537Z",
+        "lastMessageId": 23900,
+        "selectedAdminUserChatId": "5619320322",
+        "selectedAdminUserStatus": "emp",
+        "update": false,
+        "currentUserRole": "Xodim",
+        "currentDataId": "jg6gRvNOyr"
+    },
+    {
+        "EmployeeID": 1701,
+        "LastName": "Test",
+        "FirstName": "TEs",
+        "SalesPersonCode": null,
+        "MobilePhone": "998903367448",
+        "chat_id": 5619320322,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-02-24T16:47:53.537Z",
+        "lastMessageId": 23463
+    }
+]

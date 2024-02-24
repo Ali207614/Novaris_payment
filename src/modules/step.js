@@ -100,7 +100,7 @@ let xorijiyXaridStep = {
             if (msgText.length > 3) {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni ismini yozing`, btn: empDynamicBtn(), step: 21 })
-                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase())
+                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [101, 106])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
                 })
@@ -282,6 +282,9 @@ let xorijiyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
+            if (msgText.replace(/\D/g, '').length != msgText.length) {
+                return
+            }
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 30))
             }
@@ -292,7 +295,7 @@ let xorijiyXaridStep = {
             }
             let data = await b1Controller.getCurrentRate('CNY')
             let rate = data[0]?.Rate
-            updateData(user.currentDataId, { summa: msgText, currencyRate: rate })
+            updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: rate })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -300,11 +303,17 @@ let xorijiyXaridStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
+                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                    return 'Format xato yozilgan qaytadan yozing.'
+                }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : (list?.currencyRate ? `Kursni yozing yoki sistemni kursni tanlang` : 'Kursni yozing')
             },
             btn: async ({ chat_id, msgText }) => {
+                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                    return
+                }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, 'CNY'), id: 'CNY' }], 1, 'rate') : empDynamicBtn())
@@ -406,9 +415,9 @@ let mahalliyXaridStep = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateStep(chat_id, 43)
                 updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni ismini yozing`, btn: empDynamicBtn(), step: 42 })
-                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase())
+                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [113, 107])
                 let vendorList = b1Partner.map((item, i) => {
-                    return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
+                    return { name: `${item.CardName} - ${item.GroupCode == 113 ? 'Korxona' : "Do'kon"}`, id: item.CardCode, num: i + 1 }
                 })
                 updateData(user?.currentDataId, { vendorList })
             }
@@ -499,6 +508,10 @@ let mahalliyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
+            console.log(/\D/g.test(msgText.text))
+            if (msgText.replace(/\D/g, '').length != msgText.length) {
+                return
+            }
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
@@ -508,7 +521,7 @@ let mahalliyXaridStep = {
             }
             let data = await b1Controller.getCurrentRate('UZS')
             let rate = data[0]?.Rate
-            updateData(user.currentDataId, { summa: msgText, currencyRate: rate })
+            updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: rate })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -516,11 +529,17 @@ let mahalliyXaridStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
+                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                    return 'Format xato yozilgan qaytadan yozing.'
+                }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : (list?.currencyRate ? `Kursni yozing yoki sistemni kursni tanlang` : 'Kursni yozing')
             },
             btn: async ({ chat_id, msgText }) => {
+                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                    return
+                }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn())
@@ -681,8 +700,8 @@ let tolovHarajatStep = {
             if (msgText.length > 3) {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateStep(chat_id, 43)
-                updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni ismini yozing`, btn: empDynamicBtn(), step: 80 })
-                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase())
+                updateBack(chat_id, { text: `Заказчик(Группа: Xodimlar)(Xodim) ni ismini yozing`, btn: empDynamicBtn(), step: 80 })
+                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [111])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
                 })
@@ -701,11 +720,11 @@ let tolovHarajatStep = {
 
                 if (msgText.length > 3) {
                     if (data?.vendorList?.length) {
-                        return `Поставщик (Yetkazib beruvchi) ni tanlang`
+                        return `Заказчик(Группа: Xodimlar)(Xodim) ni tanlang`
                     }
-                    return `Поставщик (Yetkazib beruvchi) mavjud emas`
+                    return `Заказчик(Группа: Xodimlar)(Xodim) mavjud emas`
                 }
-                return `Поставщик (Yetkazib beruvchi) ni ismi 3 ta harfdan katta bo'lishi kerak`
+                return `Заказчик(Группа: Xodimlar)(Xodim) ni ismi 3 ta harfdan katta bo'lishi kerak`
 
             },
             btn: async ({ chat_id, msgText }) => {
