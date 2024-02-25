@@ -1,7 +1,9 @@
 const { get } = require("lodash")
-const jiraController = require("../controllers/jiraController")
-const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData } = require("../helpers")
-
+const { bot } = require("../config")
+const { SubMenu } = require("../credentials")
+const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData, updateData } = require("../helpers")
+const { dataConfirmBtnEmp } = require("./inline_keyboards")
+const moment = require('moment')
 const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '') => {
     let user = infoUser().find(item => item.chat_id == chat_id)
     let newErrStr = ''
@@ -15,6 +17,12 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
         notConfirmMessage += get(userData, 'notConfirmMessage', '')
     }
     if (get(user, 'waitingUpdateStatus')) {
+        confirmativeUpdateMessage({ user, list, chat_id })
+        updateData(user.currentDataId, {
+            stateTime: {
+                update: new Date()
+            }
+        })
         return "O'zgartirildi ✅"
     }
     let result = `${firstText}\n\n`
@@ -60,6 +68,22 @@ const adminMenusInfo = () => {
         str += '\n'
     }
     return str
+}
+
+const confirmativeUpdateMessage = async ({ user, list, chat_id }) => {
+    let actData = infoData().find(item => item.id == user.currentDataId)
+    let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu)
+    let info = updateList.infoFn({ chat_id })
+    for (let i = 0; i < get(actData, 'confirmativeSendlist', []).length; i++) {
+        moment.locale('uz');
+        let list = actData.confirmativeSendlist[i]
+        let btnConfirmative = await dataConfirmBtnEmp(list.chatId, [{ name: 'Tasdiqlash', id: `1#${actData.id}`, }, { name: 'Bekor qilish', id: `2#${actData.id}` }], 2, 'confirmConfirmative')
+        bot.editMessageText(`O'zgartirildi ${moment().format('LT')} 🕰\n\n` + dataConfirmText(info, "Kutilayotgan So'rovlar ?", chat_id), {
+            chat_id: list.chatId,
+            message_id: list.messageId,
+            ...btnConfirmative
+        })
+    }
 }
 
 

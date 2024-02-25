@@ -1,1 +1,44 @@
-[]
+[
+    {
+        "id": "Z5OzBs9Aiw",
+        "menu": 5,
+        "menuName": "Narx chiqarish",
+        "chat_id": 561932032,
+        "creationDate": "2024-02-25T12:08:32.694Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 138,
+        "subMenu": "Narx chiqarishni tasdiqlash mahalliy",
+        "comment": "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)",
+        "confirmativeSendlist": [
+            {
+                "messageId": 24195,
+                "chatId": 977634486
+            }
+        ],
+        "lastStep": 200,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "Waiting#3#Z5OzBs9Aiw"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
+            }
+        },
+        "confirmative": {
+            "chat_id": 977634486,
+            "status": true
+        },
+        "stateTime": {
+            "confirmative": {
+                "status": true,
+                "date": "2024-02-25T12:40:06.181Z"
+            }
+        }
+    }
+]

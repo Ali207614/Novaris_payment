@@ -7,15 +7,97 @@
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 1,
-        "back": [],
+        "user_step": 14,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "Kutilayotgan So'rovlar\n\nXodim : Madaminov Muhammadali\nID : 138\nMenu : Narx chiqarish\nSubMenu : Narx chiqarishni tasdiqlash mahalliy\nIzoh : Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)\n",
+                "btn": {},
+                "step": 200
+            },
+            {
+                "text": "O'zgartirasizmi ?\n\nXodim : Madaminov Muhammadali\nID : 138\nMenu : Narx chiqarish\nSubMenu : Narx chiqarishni tasdiqlash mahalliy\nIzoh : Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Izoh",
+                                    "callback_data": "updateWaiting#1"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "updateWaiting#0#undefined"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 201
+            },
+            {
+                "text": "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)\n\n",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 13
+            }
+        ],
         "creationDate": "2024-02-24T16:47:53.537Z",
-        "lastMessageId": 23900,
+        "lastMessageId": 24337,
         "selectedAdminUserChatId": "5619320322",
         "selectedAdminUserStatus": "emp",
-        "update": false,
+        "update": true,
         "currentUserRole": "Xodim",
-        "currentDataId": "jg6gRvNOyr"
+        "currentDataId": "Z5OzBs9Aiw",
+        "waitingUpdateStatus": false
     },
     {
         "EmployeeID": 1701,
@@ -23,11 +105,44 @@
         "FirstName": "TEs",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
-        "chat_id": 5619320322,
+        "chat_id": 977634486,
         "is_active": true,
-        "user_step": 1,
-        "back": [],
+        "user_step": 2,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 977634486,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            }
+        ],
         "creationDate": "2024-02-24T16:47:53.537Z",
-        "lastMessageId": 23463
+        "lastMessageId": 24362,
+        "update": false,
+        "currentUserRole": "Tasdiqlovchi"
     }
 ]
