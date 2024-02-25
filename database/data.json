@@ -30,15 +30,8 @@
                 "resize_keyboard": true
             }
         },
-        "confirmative": {
-            "chat_id": 977634486,
-            "status": true
-        },
         "stateTime": {
-            "confirmative": {
-                "status": true,
-                "date": "2024-02-25T12:40:06.181Z"
-            }
+            "update": "2024-02-25T17:59:56.608Z"
         }
     }
 ]

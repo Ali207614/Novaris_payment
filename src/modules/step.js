@@ -163,7 +163,7 @@ let xorijiyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8) {
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L'))) {
                         count += 1
                     }
                 }

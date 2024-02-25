@@ -390,7 +390,7 @@ let xorijiyXaridCallback = {
                         updateStep(chat_id, updateList.lastStep)
                         return await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${user.currentDataId}` }], 2, 'Waiting')
                     }
-                    return mainMenuByRoles({ chat_id })
+                    return empDynamicBtn()
                 }
                 catch (e) {
                     throw new Error(e)

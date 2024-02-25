@@ -1,6 +1,6 @@
 const { get, update } = require("lodash")
 const b1Controller = require("../controllers/b1Controller")
-const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu } = require("../helpers")
+const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu, infoPermisson } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 
@@ -412,7 +412,8 @@ let SubMenu = () => {
             },
             {
                 name: "Mahalliy xarid to'lovi",
-                comment: `Sana:\n\nTicket raqami :\nXorijiy to'lov.\nTo'lov nomeri:\nTovar nomi:\nZakaz nomeri:\nKimga (Yetkazib beruvchi):\nTo'lovchi:\nTo'lov summasi:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)`,
+                comment: `Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. 
+                Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n`,
                 update: [
                     {
                         id: 1,
@@ -461,7 +462,8 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `Sana:\n\nTicket raqami :\nXorijiy to'lov.\nTo'lov nomeri:\nTovar nomi:\nZakaz nomeri:\nKimga (Yetkazib beruvchi):\nTo'lovchi:\nTo'lov summasi:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)`,
+                        message: `Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. 
+                        Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1240,6 +1242,67 @@ let selectedUserStatusUzb = {
 }
 
 
+const empDataCred = () => {
+    let mainDataCred = {
+        "Tasdiqlanishi kutilayotgan so’rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && !item?.confirmative && item.chat_id == chat_id),
+        "Bajarilishi kutilaytogan so’rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && !item?.executer && get(item, 'confirmative.status') && item.chat_id == chat_id),
+        "Tasdiqlangan , bajarilmagan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item?.executer && item.chat_id == chat_id),
+        "Tasdiqlangan , bajarilgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'executer.status') && get(item, 'confirmative.status') && item.chat_id == chat_id),
+        "Tasdiqlovchi rad etgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false && item.chat_id == chat_id),
+        "Bajaruvchi rad etgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'executer.status') == false && get(item, 'confirmative.status') && item.chat_id == chat_id)
+    }
+    return mainDataCred
+}
+
+const execDataCred = () => {
+    let mainDataCred = {
+        "Bajarilmagan so'rovlar": ({ chat_id }) => {
+            let permission = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonMenuExecutor = Object.fromEntries(Object.entries(get(permission, 'permissonMenuExecutor', {})).map(item => {
+                return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
+            }))
+            return infoData().filter(item => item?.full
+                && get(item, 'confirmative.status') && !get(item, 'executer')
+                && (permissonMenuExecutor[item.menu] ? permissonMenuExecutor[item.menu].includes(item?.subMenu) : false))
+        },
+        "Bajarilgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') && get(item, 'executer.chat_id') == chat_id),
+        "Rad etilgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false && get(item, 'executer.chat_id') == chat_id)
+    }
+    return mainDataCred
+}
+
+const confDataCred = () => {
+    let mainDataCred = {
+        "Tasdiqlanmagan so'rovlar": ({ chat_id }) => {
+            let permission = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonMenuAffirmative = Object.fromEntries(Object.entries(get(permission, 'permissonMenuAffirmative', {})).map(item => {
+                return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
+            }))
+            return infoData().filter(item => item?.full
+                && !get(item, 'confirmative')
+                && (permissonMenuAffirmative[item.menu] ? permissonMenuAffirmative[item.menu].includes(item?.subMenu) : false)
+            )
+        },
+        "Tasdiqlanib , bajarilmagan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false),
+        "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executer),
+        "Rad etilgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false),
+        "Bajarilgan so'rovlar":
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status'))
+    }
+    return mainDataCred
+}
+
 
 
 module.exports = {
@@ -1252,6 +1315,9 @@ module.exports = {
     DDS,
     subAccounts50,
     selectedUserStatus,
-    selectedUserStatusUzb
+    selectedUserStatusUzb,
+    empDataCred,
+    execDataCred,
+    confDataCred
 }
 
