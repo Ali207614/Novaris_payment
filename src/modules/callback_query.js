@@ -159,14 +159,14 @@ let xorijiyXaridCallback = {
 
             // let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
             // let subMenu Id = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-            if (get(list, 'sap') === false && get(list, 'jira') === false) {
+            if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
                 return
             }
             if (get(list, 'executer')) {
                 return
             }
             else if (data[1] == '1') {
-                updateData(data[2], { jira: true, sap: true })
+                updateData(data[2], { jira: true, sapB1: true })
                 let deleteMessage = bot.sendMessage(chat_id, `Loading...`)
                 let count = 0;
                 if (get(cred, 'jira')) {
@@ -179,7 +179,7 @@ let xorijiyXaridCallback = {
                 }
                 if (get(cred, 'b1.status')) {
                     let b1MainStatus = await b1Controller.executePayments({ list, cred })
-                    updateData(data[2], { sap: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message, purchase: false })
+                    updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message, purchase: false })
                     count += 1
                     if (count == 2) {
                         bot.deleteMessage(chat_id, deleteMessage.message_id)
@@ -198,7 +198,7 @@ let xorijiyXaridCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
-                if (get(list, 'sap') === false && get(list, 'jira') === false) {
+                if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
                     return
                 }
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
@@ -227,7 +227,7 @@ let xorijiyXaridCallback = {
                         updateData(list.id, { SapJiraMessage: str })
                     }
                     let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                    let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqladi ✅ ID:${list.ID}`
+                    let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
                     for (let i = 0; i < executerList.length; i++) {
                         bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
                     }
@@ -241,7 +241,9 @@ let xorijiyXaridCallback = {
                     return str || 'Bajarildi ✅'
                 }
                 if (data[1] == '2') {
-                    updateData(data[2], { executer: { chat_id, status: false }, stateTime: { ...list.stateTime, executor: { status: false, date: new Date() } } })
+                    updateData(data[2], { executer: { chat_id, status: false } })
+                    updateData(data[2], { stateTime: { ...list.stateTime, executor: { status: false, date: new Date() } } })
+
                     return `Bekor qilinganlik sababini yozing`
                 }
             },

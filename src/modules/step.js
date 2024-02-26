@@ -163,7 +163,8 @@ let xorijiyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L'))) {
+                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
                     }
                 }
@@ -183,8 +184,24 @@ let xorijiyXaridStep = {
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = user?.update ? list.lastBtn : empDynamicBtn()
+                let data = infoData().find(item => item.id == user.currentDataId)
+                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.split(' ').filter(item => item)
+                let count = 0
+                for (let i = 0; i < msgText.length; i++) {
+                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
+                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
+                    const isValid = isValidDate(dateToCheck);
+                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
+                        count += 1
+                    }
+                }
+                if (count != 2) {
+                    return empDynamicBtn()
+                }
+                let btn = user?.update ? data.lastBtn : empDynamicBtn()
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -476,7 +493,9 @@ let mahalliyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8) {
+                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
                     }
                 }
@@ -495,10 +514,29 @@ let mahalliyXaridStep = {
                 return `Data formatida xatolik bor Qaytadan kiriting`
             },
             btn: async ({ chat_id, msgText }) => {
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let list = infoData().find(item => item.id == user?.currentDataId)
+                let data = infoData().find(item => item.id == user.currentDataId)
+                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.split(' ').filter(item => item)
+                let count = 0
+                for (let i = 0; i < msgText.length; i++) {
+                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
+                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
+                    const isValid = isValidDate(dateToCheck);
+                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
+                        count += 1
+                    }
+                }
+                if (count != 2) {
+                    return empDynamicBtn()
+                }
+
                 let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
-                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
+                let btn = user?.update ? data.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -667,7 +705,9 @@ let tolovHarajatStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8) {
+                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
                     }
                 }
@@ -687,9 +727,26 @@ let tolovHarajatStep = {
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let list = infoData().find(item => item.id == user?.currentDataId)
+                let data = infoData().find(item => item.id == user.currentDataId)
+                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.split(' ').filter(item => item)
+                let count = 0
+                for (let i = 0; i < msgText.length; i++) {
+                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
+                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
+                    const isValid = isValidDate(dateToCheck);
+                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+
+                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
+                        count += 1
+                    }
+                }
+                if (count != 2) {
+                    return empDynamicBtn()
+                }
                 let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
-                let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
+                let btn = user?.update ? data.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                 updateUser(chat_id, { update: false })
                 return btn
             },

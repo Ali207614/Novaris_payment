@@ -223,6 +223,7 @@ let confirmativeBtn = {
     },
 
 
+
     "Kunlik": {
         selfExecuteFn: ({ chat_id }) => {
             updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
@@ -243,7 +244,7 @@ let confirmativeBtn = {
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                         let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined))
                     }
                     return dataConfirmText(info, `So'rovlar`)
                 }
@@ -254,8 +255,8 @@ let confirmativeBtn = {
                 let mainData = confDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
-                if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                if (mainData.length && get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar") {
+                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
@@ -282,7 +283,7 @@ let confirmativeBtn = {
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                         let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined))
                     }
                     return dataConfirmText(info, `So'rovlar`)
                 }
@@ -293,8 +294,8 @@ let confirmativeBtn = {
                 let mainData = confDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
-                if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                if (mainData.length && get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar") {
+                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
@@ -321,7 +322,7 @@ let confirmativeBtn = {
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                         let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined))
                     }
                     return dataConfirmText(info, `So'rovlar`)
                 }
@@ -332,8 +333,8 @@ let confirmativeBtn = {
                 let mainData = confDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
                 mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
-                if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                if (mainData.length && get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar") {
+                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
@@ -485,8 +486,8 @@ let executorBtn = {
                     let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined))
                     }
                     return dataConfirmText(info, `So'rovlar`)
                 }
@@ -498,7 +499,7 @@ let executorBtn = {
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
@@ -524,8 +525,8 @@ let executorBtn = {
                     let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined))
                     }
                     return dataConfirmText(info, `So'rovlar`)
                 }
@@ -537,7 +538,7 @@ let executorBtn = {
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
@@ -563,8 +564,8 @@ let executorBtn = {
                     let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
                     for (let i = 1; i < mainData.length; i++) {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), btn)
+                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
+                        bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined))
                     }
                     return dataConfirmText(info, `So'rovlar`)
                 }
@@ -576,7 +577,7 @@ let executorBtn = {
                 mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
