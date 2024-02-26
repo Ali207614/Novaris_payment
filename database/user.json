@@ -3,102 +3,11 @@
         "EmployeeID": 170,
         "LastName": "Madaminov",
         "FirstName": "Muhammadali",
-        "JobTitle": "Admin",
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 703,
-        "back": [
-            {
-                "text": "Asosiy Menu",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Foydalanuvchilar"
-                                },
-                                {
-                                    "text": "Ma'lumotlar"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Menular"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 1
-            },
-            {
-                "text": "Tasdiqlovchi uchun menuni tanlang",
-                "btn": {
-                    "reply_markup": {
-                        "inline_keyboard": [
-                            [
-                                {
-                                    "text": "Xorijiy xarid ✅",
-                                    "callback_data": "empMenu#1"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Mahalliy xarid ✅",
-                                    "callback_data": "empMenu#2"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "To'lov/Xarajat ",
-                                    "callback_data": "empMenu#3"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Shartnoma ",
-                                    "callback_data": "empMenu#4"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Narx chiqarish ",
-                                    "callback_data": "empMenu#5"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Boshqa ",
-                                    "callback_data": "empMenu#6"
-                                }
-                            ]
-                        ],
-                        "resize_keyboard": true
-                    }
-                },
-                "step": 702
-            }
-        ],
-        "creationDate": "2024-02-26T06:26:05.919Z",
-        "lastMessageId": 25493,
-        "selectedAdminUserChatId": "937011370",
-        "selectedAdminUserStatus": "affirmative",
-        "update": false
-    },
-    {
-        "EmployeeID": 112,
-        "LastName": "Qo'chqorov",
-        "FirstName": "Behzod",
-        "JobTitle": null,
-        "SalesPersonCode": null,
-        "MobilePhone": "998946259256",
-        "chat_id": 110697090,
-        "is_active": true,
-        "user_step": 52,
+        "user_step": 53,
         "back": [
             {
                 "text": "Assalomu Aleykum",
@@ -122,7 +31,7 @@
                 "btn": {
                     "parse_mode": "Markdown",
                     "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-                    "chat_id": 110697090,
+                    "chat_id": 561932032,
                     "text": "Xodim"
                 },
                 "step": 2
@@ -147,6 +56,14 @@
                             ],
                             [
                                 {
+                                    "text": "Shartnoma"
+                                },
+                                {
+                                    "text": "Narx chiqarish"
+                                }
+                            ],
+                            [
+                                {
                                     "text": "Orqaga"
                                 }
                             ]
@@ -164,18 +81,10 @@
                         "keyboard": [
                             [
                                 {
-                                    "text": "Bank hisobidan to'lov/xarajat"
+                                    "text": "Mahalliy xarid buyurtmasi"
                                 },
                                 {
-                                    "text": "Naqd/Karta hisobidan to'lov/xarajat"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Naqd/Click Bojxonaga oid xarajatlar"
-                                },
-                                {
-                                    "text": "Bank Bojxonaga oid xarajatlar"
+                                    "text": "Mahalliy xarid to'lovi"
                                 }
                             ],
                             [
@@ -186,7 +95,7 @@
                         ]
                     }
                 },
-                "step": 60
+                "step": 40
             },
             {
                 "text": "Hujjatni tanlang",
@@ -211,23 +120,15 @@
                         ]
                     }
                 },
-                "step": 61
+                "step": 41
             },
             {
-                "text": "Document Type ni tanlang",
+                "text": "Поставщик (Yetkazib beruvchi) ni ismini yozing",
                 "btn": {
                     "parse_mode": "Markdown",
                     "reply_markup": {
                         "resize_keyboard": true,
                         "keyboard": [
-                            [
-                                {
-                                    "text": "Schet(Hisob)"
-                                },
-                                {
-                                    "text": "Заказчик(Группа: Xodimlar)(Xodim)"
-                                }
-                            ],
                             [
                                 {
                                     "text": "Orqaga"
@@ -236,83 +137,30 @@
                         ]
                     }
                 },
-                "step": 62
+                "step": 42
             },
             {
-                "text": "Schet turini tanlang",
+                "text": "Поставщик (Yetkazib beruvchi) ni tanlang",
                 "btn": {
                     "reply_markup": {
                         "inline_keyboard": [
                             [
                                 {
-                                    "text": "AV/TMB",
-                                    "callback_data": "accountType#0"
-                                },
-                                {
-                                    "text": "Kassa farq",
-                                    "callback_data": "accountType#1"
+                                    "text": "MAHMUD AKA 99-438-07-01 - Do'kon",
+                                    "callback_data": "partnerSearch#MAHMUD01"
                                 }
                             ],
                             [
                                 {
-                                    "text": "Oylik/Bonus",
-                                    "callback_data": "accountType#2"
-                                },
-                                {
-                                    "text": "Qarz",
-                                    "callback_data": "accountType#3"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Tovar qabuli",
-                                    "callback_data": "accountType#4"
-                                },
-                                {
-                                    "text": "Doimiy xarajat",
-                                    "callback_data": "accountType#5"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Yetkazish",
-                                    "callback_data": "accountType#6"
+                                    "text": "MAHMUDXON OFM - Korxona",
+                                    "callback_data": "partnerSearch#Mahmudxon01"
                                 }
                             ]
                         ],
                         "resize_keyboard": true
                     }
                 },
-                "step": 63
-            },
-            {
-                "text": "Schetni tanlang",
-                "btn": {
-                    "reply_markup": {
-                        "inline_keyboard": [
-                            [
-                                {
-                                    "text": "9460 - TMB",
-                                    "callback_data": "othersAccount#9460"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "9310 - Аsosiy vositalarning chiqib ketishidan foyda",
-                                    "callback_data": "othersAccount#9310"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "9210 - Asosiy vositalarning chiqib ketishi",
-                                    "callback_data": "othersAccount#9210"
-                                }
-                            ]
-                        ],
-                        "resize_keyboard": true
-                    }
-                },
-                "step": 64
+                "step": 43
             },
             {
                 "text": "1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20",
@@ -329,7 +177,7 @@
                         ]
                     }
                 },
-                "step": 65
+                "step": 44
             },
             {
                 "text": "To'lov usullarini tanlang",
@@ -402,6 +250,24 @@
                             ],
                             [
                                 {
+                                    "text": "5012 - Korxona-2 (USD)",
+                                    "callback_data": "account#5012"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5021 - D12 kassasi (USD)",
+                                    "callback_data": "account#5021"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5031 - D64 kassasi (USD)",
+                                    "callback_data": "account#5031"
+                                }
+                            ],
+                            [
+                                {
                                     "text": "5041 - Q01 kassasi (USD)",
                                     "callback_data": "account#5041"
                                 }
@@ -414,8 +280,26 @@
                             ],
                             [
                                 {
+                                    "text": "5051 - Misafir kassasi (USD)",
+                                    "callback_data": "account#5051"
+                                }
+                            ],
+                            [
+                                {
                                     "text": "5061 - Ombor kassasi (USD)",
                                     "callback_data": "account#5061"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5071 - Ofis kassa (USD)",
+                                    "callback_data": "account#5071"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Next➡️",
+                                    "callback_data": "paginationAccounts#next#10"
                                 }
                             ]
                         ],
@@ -442,7 +326,7 @@
                 "step": 48
             },
             {
-                "text": "Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov",
+                "text": "Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. \n                Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n",
                 "btn": {
                     "parse_mode": "Markdown",
                     "reply_markup": {
@@ -522,26 +406,138 @@
                     }
                 },
                 "step": 51
+            },
+            {
+                "text": "Tasdiqlaysizmi ?\n\nXodim : Madaminov Muhammadali\nID : 160\nMenu : Mahalliy xarid\nSubMenu : Mahalliy xarid to'lovi\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nYetkazib beruvchi : MAHMUDXON OFM - Korxona\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5041 - Q01 kassasi (USD)\nValyuta : USD\nValyuta kursi : 12 500 UZS\nSumma : 1 000 $\nHisob Nuqtasi : 777-DO'KON\nStatya DDS : Mahalliy yetkazib beruvchilarga to'lov\nIzoh : Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. \n                Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Ha",
+                                    "callback_data": "confirmEmp#1"
+                                },
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "confirmEmp#2"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "O'zgartirish",
+                                    "callback_data": "confirmEmp#3"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 53
+            },
+            {
+                "text": "O'zgartirasizmi ?\n\nXodim : Madaminov Muhammadali\nID : 160\nMenu : Mahalliy xarid\nSubMenu : Mahalliy xarid to'lovi\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nYetkazib beruvchi : MAHMUDXON OFM - Korxona\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5041 - Q01 kassasi (USD)\nValyuta : USD\nValyuta kursi : 12 500 UZS\nSumma : 1 000 $\nHisob Nuqtasi : 777-DO'KON\nStatya DDS : Mahalliy yetkazib beruvchilarga to'lov\nIzoh : Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. \n                Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Sap Document",
+                                    "callback_data": "update#1"
+                                },
+                                {
+                                    "text": "Yetkazib beruvchi",
+                                    "callback_data": "update#2"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Sana",
+                                    "callback_data": "update#3"
+                                },
+                                {
+                                    "text": "Valyuta kursi",
+                                    "callback_data": "update#7"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Summa",
+                                    "callback_data": "update#8"
+                                },
+                                {
+                                    "text": "Izoh",
+                                    "callback_data": "update#9"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Hisob Nuqtasi",
+                                    "callback_data": "update#10"
+                                },
+                                {
+                                    "text": "To'lov usullari , Valyuta , Schet",
+                                    "callback_data": "update#4"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "update#0"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 54
+            },
+            {
+                "text": "Tasdiqlaysizmi ?\n\nXodim : Madaminov Muhammadali\nID : 160\nMenu : Mahalliy xarid\nSubMenu : Mahalliy xarid to'lovi\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nYetkazib beruvchi : MAHMUDXON OFM - Korxona\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5041 - Q01 kassasi (USD)\nValyuta : USD\nValyuta kursi : 12 500 UZS\nSumma : 1 000 $\nHisob Nuqtasi : KORXONA\nStatya DDS : Mahalliy yetkazib beruvchilarga to'lov\nIzoh : Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. \n                Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Ha",
+                                    "callback_data": "confirmEmp#1"
+                                },
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "confirmEmp#2"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "O'zgartirish",
+                                    "callback_data": "confirmEmp#3"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 52
             }
         ],
-        "creationDate": "2024-02-26T06:26:23.120Z",
-        "update": false,
+        "creationDate": "2024-02-26T06:26:05.919Z",
+        "lastMessageId": 395,
+        "selectedAdminUserChatId": "5619322032",
+        "selectedAdminUserStatus": "emp",
+        "update": true,
         "currentUserRole": "Xodim",
-        "lastMessageId": 25804,
-        "currentDataId": "N5xpaeVBiR",
         "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "currentDataId": "F44bgQEVZu",
         "waitingUpdateStatus": false
     },
     {
-        "EmployeeID": 9,
-        "LastName": "Usmonov",
-        "FirstName": "Behzod",
-        "JobTitle": null,
+        "EmployeeID": 170,
+        "LastName": "Madaminov",
+        "FirstName": "Muhammadali",
         "SalesPersonCode": null,
-        "MobilePhone": "998977524040",
-        "chat_id": 937011370,
+        "MobilePhone": "998903367448",
+        "chat_id": 5619322032,
         "is_active": true,
-        "user_step": 300,
+        "user_step": 10,
         "back": [
             {
                 "text": "Assalomu Aleykum",
@@ -552,7 +548,7 @@
                         "keyboard": [
                             [
                                 {
-                                    "text": "Tasdiqlovchi"
+                                    "text": "Xodim"
                                 }
                             ]
                         ]
@@ -564,82 +560,21 @@
                 "text": "So'rovlar",
                 "btn": {
                     "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-                    "chat_id": 937011370,
-                    "text": "Tasdiqlovchi"
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Xodim"
                 },
                 "step": 2
-            },
-            {
-                "text": "Sanani tanlang",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Kunlik"
-                                },
-                                {
-                                    "text": "Haftalik"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Oylik"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Orqaga"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 300
             }
         ],
-        "creationDate": "2024-02-26T06:26:30.934Z",
+        "creationDate": "2024-02-26T06:26:05.919Z",
+        "lastMessageId": 112,
+        "selectedAdminUserChatId": "937011370",
+        "selectedAdminUserStatus": "affirmative",
         "update": false,
-        "currentUserRole": "Tasdiqlovchi",
-        "lastMessageId": 25665,
-        "selectedInfoMenu": "Tasdiqlanmagan so'rovlar"
-    },
-    {
-        "EmployeeID": 5,
-        "LastName": "Gulyamov",
-        "FirstName": "Bobur",
-        "JobTitle": null,
-        "SalesPersonCode": null,
-        "MobilePhone": "998999102030",
-        "chat_id": 5979205450,
-        "is_active": true,
-        "user_step": 2,
-        "back": [
-            {
-                "text": "Assalomu Aleykum",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Bajaruvchi"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 1
-            }
-        ],
-        "creationDate": "2024-02-26T06:26:47.788Z",
-        "update": false,
-        "currentUserRole": "Bajaruvchi",
-        "lastMessageId": 25671,
-        "selectedInfoMenu": "Bajarilgan so'rovlar"
+        "currentUserRole": "Xodim",
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "currentDataId": "VJH6X6tiln",
+        "waitingUpdateStatus": false
     }
 ]

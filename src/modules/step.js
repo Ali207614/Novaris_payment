@@ -163,7 +163,7 @@ let xorijiyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
                     }
@@ -193,7 +193,7 @@ let xorijiyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
                     }
@@ -493,7 +493,7 @@ let mahalliyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
 
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
@@ -525,7 +525,7 @@ let mahalliyXaridStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
 
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
@@ -625,10 +625,11 @@ let mahalliyXaridStep = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             if (user?.update) {
-                updateStep(chat_id, get(list, 'lastStep', 0))
+                updateStep(chat_id, get(list, 'lastStep', 1))
             }
             else {
-                updateStep(chat_id, (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? get(list, 'lastStep', 0) : 51)
+                // updateStep(chat_id, (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? get(list, 'lastStep', 0) : 51)
+                updateStep(chat_id, 51)
                 let findComment = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu)?.comment
                 let btn = empDynamicBtn()
                 updateBack(chat_id, { text: findComment, btn, step: 50 })
@@ -643,12 +644,14 @@ let mahalliyXaridStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                return (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : (user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob nuqtasini tanlang')
+                // return (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : (user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob nuqtasini tanlang')
+                return (user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob nuqtasini tanlang')
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp') : (user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'))
+                // let btn = (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp') : (user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'))
+                let btn = (user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'))
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -705,7 +708,7 @@ let tolovHarajatStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
 
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
@@ -736,7 +739,7 @@ let tolovHarajatStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    let isV = i == 1 ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
 
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1

@@ -1,1 +1,129 @@
-[]
+[
+    {
+        "id": "F44bgQEVZu",
+        "menu": 2,
+        "menuName": "Mahalliy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-02-26T18:55:36.309Z",
+        "full": false,
+        "is_delete": false,
+        "ID": 160,
+        "DDS": "Mahalliy yetkazib beruvchilarga to'lov",
+        "subMenu": "Mahalliy xarid to'lovi",
+        "payment": true,
+        "vendorList": [
+            {
+                "name": "MAHMUD AKA 99-438-07-01 - Do'kon",
+                "id": "MAHMUD01",
+                "num": 1
+            },
+            {
+                "name": "MAHMUDXON OFM - Korxona",
+                "id": "Mahmudxon01",
+                "num": 2
+            }
+        ],
+        "vendorId": "Mahmudxon01",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 1
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 2
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 3
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 4
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 5
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 6
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 7
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 8
+            },
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 9
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 10
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 11
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 12
+            }
+        ],
+        "accountCode": "5041",
+        "summa": "1000",
+        "currencyRate": "12500.000000",
+        "comment": "Sana: 23.12.2021\nMahalliy to'lov\n-Buyurtma raqami:\n-Yetkazib beruvchi: \n-Tovar nomi:\n-To'lovchi: Bolter/Rasul aka \n-Bo’nak (zaklad) summasi: Yo'q/1000$. \n                Bo’nak to’lov sanasi: \n-Tovar summasi: 12000$. Tovar to’lov sanasi:\n-To'lov summasi: \n#mtolov\n#21059MY(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:",
+        "point": "KORXONA",
+        "ddsList": [
+            {
+                "name": "Mahalliy yetkazib beruvchilarga to'lov",
+                "id": "-3"
+            }
+        ],
+        "lastStep": 52,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
+            }
+        }
+    }
+]
