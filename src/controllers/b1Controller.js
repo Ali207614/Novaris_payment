@@ -115,9 +115,12 @@ class b1Controller {
         }
     }
 
-    async getAccount(arr) {
+    async getAccount(arr, isPay = false) {
         try {
             let accountQuery = accountBuilderFn(arr)
+            if (isPay) {
+                accountQuery += ` and  T0.\"CurrTotal\" > 0`
+            }
             let data = await dbService.execute(accountQuery)
             return data
         }
@@ -159,7 +162,7 @@ class b1Controller {
         let body = {
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
             "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
-            "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId') ? 'rCustomer' : 'rAccount'))],
+            "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId', '') ? 'customer' : 'account'))],
             "CardCode": get(list, 'accountCodeOther', get(list, 'vendorId')),
             "CashAccount": get(list, 'accountCode'),
             "DocCurrency": get(list, 'currency'),
@@ -180,6 +183,8 @@ class b1Controller {
                 ]
             }
         }
+
+        console.log(body, ' bu body')
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",

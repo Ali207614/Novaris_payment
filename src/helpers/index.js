@@ -180,9 +180,7 @@ function infoMenu() {
         "UTF-8"
     );
     docs = docs ? JSON.parse(docs) : [];
-    return docs.filter(item => item?.status && !item?.isDelete).map(item => {
-        return { name: item.name, id: item.id }
-    });
+    return docs.filter(item => item?.status && !item?.isDelete);
 }
 
 function infoAllMenu() {

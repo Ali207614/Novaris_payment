@@ -15,6 +15,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-telegram-bot-api": "^0.64.0",
-    "short-unique-id": "^5.0.3"
+    "short-unique-id": "^5.0.3",
+    "write-excel-file": "^1.4.29"
   }
 }

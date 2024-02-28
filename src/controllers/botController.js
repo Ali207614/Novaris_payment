@@ -35,23 +35,19 @@ class botConroller {
             else if (
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
             ) {
-                try {
-                    let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, executorBtn, newBtnExecuter()]
-                    let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
-                    execute = execute ? execute[msg.text] : {}
-                    if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
-                        await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
-                        if (execute?.next) {
-                            let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
-                                bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
-                            let lastMessageId = await botInfo
-                            updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
-                        }
+                let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, executorBtn, newBtnExecuter()]
+                let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
+                execute = execute ? execute[msg.text] : {}
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
+                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
+                    if (execute?.next) {
+                        let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
+                            bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
+                        let lastMessageId = await botInfo
+                        updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
                     }
                 }
-                catch (e) {
-                    console.log('tst ', e)
-                }
+
             }
             else if (
                 stepTree[get(user, 'user_step', '1').toString()]
@@ -68,7 +64,6 @@ class botConroller {
             }
         }
         catch (err) {
-            console.log(err, ' bu err')
             throw new Error(err);
         }
     }

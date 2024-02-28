@@ -9,15 +9,20 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     let newErrStr = ''
     let notConfirmMessage = 'Bekor qilinganlik sababi : '
     let empName = ``
+    let executor = {};
+    let confirmative = {};
     if (get(list, '[0].message', '') && get(list, '[0].name', '') === 'ID') {
         let userData = infoData().find(item => item.ID == get(list, '[0].message', ''))
         let empData = infoUser().find(item => item.chat_id == get(userData, 'chat_id'))
         empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
+        executor = get(userData, 'executer', {})
+        confirmative = get(userData, 'confirmative', {})
         newErrStr = get(userData, 'SapJiraMessage', '')
         notConfirmMessage += get(userData, 'notConfirmMessage', '')
     }
     if (get(user, 'waitingUpdateStatus')) {
         confirmativeUpdateMessage({ user, list, chat_id })
+        updateUser(chat_id, { waitingUpdateStatus: false, extraWaiting: true })
         updateData(user.currentDataId, {
             stateTime: {
                 update: new Date()
@@ -29,6 +34,15 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     if (empName) {
         result += `Xodim : ${empName}\n`
     }
+    if (get(confirmative, 'chat_id')) {
+        let confirmUser = infoUser().find(item => item.chat_id == get(confirmative, 'chat_id'))
+        result += `Tasdiqlovchi : ${get(confirmUser, 'LastName')} ${get(confirmUser, 'FirstName')} ${get(confirmative, 'status') ? '✅' : '❌'}\n`
+    }
+    if (get(executor, 'chat_id')) {
+        let executUser = infoUser().find(item => item.chat_id == get(executor, 'chat_id'))
+        result += `Bajaruvchi : ${get(executUser, 'LastName')} ${get(executUser, 'FirstName')} ${get(executor, 'status') ? '✅' : '❌'}\n`
+    }
+
     for (let i = 0; i < list.length; i++) {
         result += `${list[i].name} : ${list[i].message}\n`
     }

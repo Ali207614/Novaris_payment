@@ -8,31 +8,77 @@ let Menu = () => {
     return [
         {
             name: 'Xorijiy xarid',
+            status: true, isDelete: false,
             id: 1
         },
         {
             name: 'Mahalliy xarid',
+            status: true, isDelete: false,
             id: 2
         },
         {
             name: "To'lov/Xarajat",
+            status: true, isDelete: false,
             id: 3
         },
         {
             name: "Shartnoma",
+            status: true, isDelete: false,
             id: 4
         },
         {
             name: "Narx chiqarish",
+            status: true, isDelete: false,
             id: 5
         },
         {
             name: "Boshqa",
+            status: true, isDelete: false,
             id: 6
         },
         ...infoMenu()
     ]
 }
+
+let newMenu = [
+    {
+        name: 'Xorijiy xarid',
+        status: true, isDelete: false,
+        id: 1
+    },
+    {
+        name: 'Mahalliy xarid',
+        status: true, isDelete: false,
+        id: 2
+    },
+    {
+        name: "To'lov/Xarajat",
+        status: true, isDelete: false,
+        id: 3
+    },
+    {
+        name: "Shartnoma",
+        status: true, isDelete: false,
+        id: 4
+    },
+    {
+        name: "Narx chiqarish",
+        status: true, isDelete: false,
+        id: 5
+    },
+    {
+        name: "Boshqa",
+        status: true, isDelete: false,
+        id: 6
+    },
+]
+
+let payType50 = [
+    { name: 'Naqd', id: 'Naqd' },
+    { name: 'Karta', id: 'Karta' },
+    // { name: 'Terminal', id: 'Terminal' }, 
+    // { name: `O'tkazma`, id: `O'tkazma` }
+]
 
 let SubMenu = () => {
     let newSubMenus = {}
@@ -213,7 +259,12 @@ let SubMenu = () => {
                             let list = infoData().find(item => item.id == user.currentDataId)
                             let data = await b1Controller.getCurrentRate('CNY')
                             let rate = data[0]?.Rate
-                            updateData(user.currentDataId, { currencyRate: rate })
+                            if (rate) {
+                                updateData(user.currentDataId, { currencyRate: rate })
+                            }
+                            else {
+                                rate = list?.currencyRate
+                            }
                             let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'CNY'), id: 'CNY' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
@@ -305,13 +356,15 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            if (!list?.currencyRate) {
-                                let data = await b1Controller.getCurrentRate('USD')
-                                let rate = data[0]?.Rate
-                                list.currencyRate = rate
+                            let data = await b1Controller.getCurrentRate('UZS')
+                            let rate = data[0]?.Rate
+                            if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
                             }
-                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            else {
+                                rate = list?.currencyRate
+                            }
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -342,7 +395,7 @@ let SubMenu = () => {
                         name: "To'lov usullari , Valyuta , Schet",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
-                            let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                            let btnList = payType50
                             return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
@@ -354,9 +407,9 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
-                            }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
+                            }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -366,6 +419,7 @@ let SubMenu = () => {
                 b1: {
                     status: true,
                     type: 'account',
+                    cashFlow: true,
                 },
                 updateLine: 2,
                 lastStep: 52,
@@ -444,10 +498,15 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('USD')
+                            let data = await b1Controller.getCurrentRate('UZS')
                             let rate = data[0]?.Rate
-                            updateData(user.currentDataId, { currencyRate: rate })
-                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            if (rate) {
+                                updateData(user.currentDataId, { currencyRate: rate })
+                            }
+                            else {
+                                rate = list?.currencyRate
+                            }
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -479,7 +538,7 @@ let SubMenu = () => {
                         name: "To'lov usullari , Valyuta , Schet",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
-                            let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                            let btnList = payType50
                             return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
@@ -561,10 +620,15 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('USD')
+                            let data = await b1Controller.getCurrentRate('UZS')
                             let rate = data[0]?.Rate
-                            updateData(user.currentDataId, { currencyRate: rate })
-                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            if (rate) {
+                                updateData(user.currentDataId, { currencyRate: rate })
+                            }
+                            else {
+                                rate = list?.currencyRate
+                            }
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -595,7 +659,7 @@ let SubMenu = () => {
                         name: "To'lov usullari , Valyuta , Schet",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
-                            let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                            let btnList = payType50
                             return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
@@ -607,9 +671,10 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
-                            }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
+                            }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                          
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -626,9 +691,11 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
-                    let ddsList = get(data, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther'))) : (get(data, 'payment') ? ['Qarz(Tushum)'] : ['(Xodim) Qarz (Xarajat)'])
+                    let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther'))).map((item, i) => {
+                        return { name: item, id: i }
+                    }) || ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                     if (!ddsList.includes(get(data, 'dds'))) {
-                        updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                        updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0].name : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
@@ -691,13 +758,15 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            if (!list?.currencyRate) {
-                                let data = await b1Controller.getCurrentRate('USD')
-                                let rate = data[0]?.Rate
-                                list.currencyRate = rate
+                            let data = await b1Controller.getCurrentRate('UZS')
+                            let rate = data[0]?.Rate
+                            if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
                             }
-                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'USD'), id: 'USD' }], 1, 'rate') : empDynamicBtn()
+                            else {
+                                rate = list?.currencyRate
+                            }
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -728,7 +797,7 @@ let SubMenu = () => {
                         name: "To'lov usullari , Valyuta , Schet",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
-                            let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                            let btnList = payType50
                             return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                         },
                         step: '45'
@@ -740,9 +809,9 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
-                            }) : (get(list, 'payment') ? { name: 'Qarz(Tushum)', id: 'Qarz(Tushum)' } : { name: '(Xodim) Qarz (Xarajat)', id: '(Xodim)Qarz(Xarajat)' })
+                            }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -1085,7 +1154,7 @@ let accounts50 = {
         'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090]
     },
     'Karta': {
-        'UZS': [5050, 5052, 5053, 5054, 5063]
+        'UZS': [5050, 5052, 5053, 5054, 5063, 5072]
     },
     'Terminal': {
         'UZS': [5022, 5032, 5045, 5064, 5082, 5092]
@@ -1138,8 +1207,8 @@ let ocrdList = [
 
 let accounts = {
     'AV/TMB': [
-        0820,
-        0830,
+        '0820',
+        '0830',
         9210,
         9310,
         9460
@@ -1303,7 +1372,82 @@ const confDataCred = () => {
     return mainDataCred
 }
 
+let excelFnFormatData = ({ main }) => {
+    let objects = []
+    let schema = []
+    for (let i = 0; i < main.length; i++) {
+        let data = main[i]
+        let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+        let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name || ''
+        let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name || ''
+        let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
 
+        let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOneStep'))?.name) : vendorName
+        let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
+        let empData = infoUser().find(item => item.chat_id == get(data, 'chat_id'))
+        let empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
+        let executor = get(data, 'executer', {})
+        let confirmative = get(data, 'confirmative', {})
+        let confirmUser = confirmative ? infoUser().find(item => item.chat_id == get(data, 'confirmative.chat_id')) : {}
+        let executUser = executor ? infoUser().find(item => item.chat_id == get(data, 'executer.chat_id')) : {}
+        let info = [
+            { name: 'ID', message: data?.ID || 1 },
+            { name: 'Menu', message: get(data, 'menuName', '') },
+            { name: 'SubMenu', message: get(data, 'subMenu', '') },
+            { name: 'Xodim', message: empName },
+            { name: 'Tasdiqlovchi', message: `${get(confirmUser, 'LastName', '')} ${get(confirmUser, 'FirstName', '')}` },
+            { name: 'Bajaruvchi', message: `${get(executUser, 'LastName', '')} ${get(executUser, 'FirstName', '')}` },
+            { name: 'SAP Document', message: paymentType || '' },
+            { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType || '' },
+            { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` },
+            { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate', '') },
+            { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate', '') },
+            { name: 'Ticket raqami', message: get(data, 'ticket', '') },
+            { name: 'Schet', message: `${accountName}` },
+            { name: 'Valyuta', message: get(data, 'currency', '') },
+            { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) },
+            { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) },
+            { name: "Hisob Nuqtasi", message: pointName },
+            { name: 'Statya DDS', message: get(data, 'dds', '❌') },
+            { name: 'Izoh', message: get(data, 'comment', '') }
+        ]
+        if (!get(purchase, 'DocEntry')) {
+            info = info.filter(item => item.name != 'Zakupka')
+        }
+        if (schema.length == 0) {
+            info.forEach(el => {
+                let obj = {
+                    column: el.name,
+                    type: String,
+                    value: student => {
+                        return `${student[el.name]}`
+                    },
+                    align: 'center',
+                    alignVertical: 'center',
+                    span: 2,
+                }
+                // 
+                if (el.name == 'Tasdiqlovchi' && (get(confirmative, 'status') === false || get(confirmative, 'status') === true)) {
+                    obj['backgroundColor'] = get(confirmative, 'status') ? "#00AB66" : "#FF0000"
+                }
+                if (el.name == 'Bajaruvchi' && (get(executor, 'status') === false || get(executor, 'status') === true)) {
+                    obj['backgroundColor'] = get(executor, 'status') ? "#00AB66" : "#FF0000"
+                }
+                if (el.name == 'Izoh') {
+                    obj['height'] = 100
+                }
+                schema.push(obj)
+            })
+        }
+
+        let resultObj = {}
+        info.forEach(el => {
+            resultObj[el.name] = el.message
+        })
+        objects.push(resultObj)
+    }
+    return { objects, schema }
+}
 
 module.exports = {
     Menu,
@@ -1318,6 +1462,9 @@ module.exports = {
     selectedUserStatusUzb,
     empDataCred,
     execDataCred,
-    confDataCred
+    confDataCred,
+    newMenu,
+    payType50,
+    excelFnFormatData
 }
 

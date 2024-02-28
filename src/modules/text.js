@@ -1,5 +1,5 @@
-const { get, isEmpty } = require("lodash");
-let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred } = require("../credentials");
+const { get, isEmpty, isDate } = require("lodash");
+let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred, newMenu, excelFnFormatData } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson, infoMenu, infoSubMenu, infoAllMenu } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles, affirmativeKeyboard, executorKeyboard } = require("../keyboards/keyboards");
@@ -9,6 +9,9 @@ const { dataConfirmText, adminMenusInfo } = require("../keyboards/text");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const b1Controller = require("../controllers/b1Controller");
 const { bot } = require("../config");
+const path = require('path')
+const writeXlsxFile = require('write-excel-file/node')
+
 let moment = require('moment')
 
 let firtBtnExecutor = () => {
@@ -636,7 +639,7 @@ let executeBtn = {
             btn: async ({ chat_id, }) => {
                 let permisson = infoPermisson().find(item => chat_id == item.chat_id)
                 let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-                return empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+                return empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.isDelete == false && item.status == true).map(item => item.name), 3)
             },
         },
     },
@@ -903,6 +906,7 @@ let executeBtn = {
     "Kunlik": {
         selfExecuteFn: ({ chat_id }) => {
             updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
+
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -921,16 +925,17 @@ let executeBtn = {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                         bot.sendMessage(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined))
                     }
-                    return await dataConfirmText(info, `So'rovlar`)
+                    return dataConfirmText(info, `So'rovlar`)
                 }
                 return 'Mavjud emas'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                let mainData = await empDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY'))
+                let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
+                mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                )
                 if (mainData.length && get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar') {
-                    let btn = await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
+                    let btn = dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
                     return btn
                 }
                 return empDynamicBtn()
@@ -1028,7 +1033,7 @@ let xorijiyXaridBtn = {
             updateStep(chat_id, 11)
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
         },
         middleware: ({ chat_id }) => {
@@ -1303,7 +1308,7 @@ let mahalliyXaridBtn = {
 
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
 
             updateStep(chat_id, 40)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
@@ -1453,7 +1458,7 @@ let tolovHarajatBtn = {
 
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
 
             updateStep(chat_id, 60)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
@@ -1824,7 +1829,7 @@ let shartnomaBtn = {
 
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
 
             updateStep(chat_id, 60)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
@@ -1966,7 +1971,7 @@ let narxChiqarishBtn = {
 
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
 
             updateStep(chat_id, 60)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
@@ -2055,7 +2060,7 @@ let boshqaBtn = {
 
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
+            let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
 
             updateStep(chat_id, 60)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
@@ -2264,7 +2269,7 @@ let adminBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let menuList = Menu().map(item => {
+                let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''}` }
                 })
                 return dataConfirmBtnEmp(chat_id,
@@ -2290,7 +2295,7 @@ let adminBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let menuList = Menu().map(item => {
+                let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuAffirmative', {})[item.id]?.length ? '✅' : ''}` }
                 })
                 return dataConfirmBtnEmp(chat_id,
@@ -2316,7 +2321,7 @@ let adminBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let menuList = Menu().map(item => {
+                let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuExecutor', {})[item.id]?.length ? '✅' : ''}` }
                 })
                 if (get(user, 'selectedAdminUserStatus') == 'executor') {
@@ -2417,7 +2422,9 @@ let adminBtn = {
         },
     },
 
+
 }
+
 
 let updateAdminBtn = {
     "Menular o'zgartirish": {
@@ -2594,6 +2601,109 @@ let infoAdminBtn = {
             },
         },
     },
+    "Ma'lumotlar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
+            updateStep(chat_id, 702)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin'
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Vaqtni tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+            },
+        },
+    },
+    "Kunlik": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, {
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                , step: 702
+            })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+        },
+        next: {
+            file: async ({ chat_id }) => {
+                let data = infoData().filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                )
+                let { objects, schema } = excelFnFormatData({ main: data })
+                await writeXlsxFile(objects, {
+                    schema,
+                    filePath: path.join(process.cwd(), "data.xlsx")
+                })
+                return path.join(process.cwd(), "data.xlsx")
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Haftalik": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, {
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                , step: 702
+            })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+        },
+        next: {
+            file: async ({ chat_id }) => {
+                let data = infoData().filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                )
+                let { objects, schema } = excelFnFormatData({ main: data })
+                await writeXlsxFile(objects, {
+                    schema,
+                    filePath: path.join(process.cwd(), "data.xlsx")
+                })
+                return path.join(process.cwd(), "data.xlsx")
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Oylik": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, {
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                , step: 702
+            })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+        },
+        next: {
+            file: async ({ chat_id }) => {
+                let data = infoData().filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                )
+                let { objects, schema } = excelFnFormatData({ main: data })
+                await writeXlsxFile(objects, {
+                    schema,
+                    filePath: path.join(process.cwd(), "data.xlsx")
+                })
+                return path.join(process.cwd(), "data.xlsx")
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
 }
 
 let newBtnExecuter = () => {
@@ -2613,7 +2723,7 @@ let newBtnExecuter = () => {
                     }
                     let permisson = infoPermisson().find(el => chat_id == el.chat_id)
                     let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(el => el[1]?.length))
-                    let btn = empDynamicBtn(Menu().filter(el => Object.keys(permissonMenuEmp).includes(`${el.id}`)).map(el => el.name), 3)
+                    let btn = empDynamicBtn(Menu().filter(el => Object.keys(permissonMenuEmp).includes(`${el.id}`) && el.status && el.isDelete == false).map(el => el.name), 3)
                     updateStep(chat_id, 60)
                     updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
                 },

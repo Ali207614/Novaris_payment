@@ -1,13 +1,14 @@
 const { get } = require("lodash")
-const { infoUser, updateUser } = require("../helpers")
+const { infoUser, updateUser, updateData } = require("../helpers")
 const { mainMenuByRoles } = require("./keyboards")
 
 const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pagination = { prev: 0, next: 10 }, keyboardList = []) => {
     let user = infoUser().find(item => item.chat_id == chat_id)
-    if (get(user, 'waitingUpdateStatus')) {
-        updateUser(chat_id, { waitingUpdateStatus: false, back: [] })
+    if (get(user, 'extraWaiting')) {
+        updateUser(chat_id, { extraWaiting: false })
         return mainMenuByRoles({ chat_id })
     }
+
     let arr = []
     let result = list
     let next = get(pagination, 'next', 0)

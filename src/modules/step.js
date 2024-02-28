@@ -3,7 +3,7 @@ const moment = require('moment')
 const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
-let { SubMenu, ocrdList } = require("../credentials")
+let { SubMenu, ocrdList ,payType50} = require("../credentials")
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
@@ -535,7 +535,7 @@ let mahalliyXaridStep = {
                     return empDynamicBtn()
                 }
 
-                let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                let btnList = payType50
                 let btn = user?.update ? data.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                 updateUser(chat_id, { update: false })
                 return btn
@@ -546,7 +546,6 @@ let mahalliyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
-            console.log(/\D/g.test(msgText.text))
             if (msgText.replace(/\D/g, '').length != msgText.length) {
                 return
             }
@@ -748,7 +747,7 @@ let tolovHarajatStep = {
                 if (count != 2) {
                     return empDynamicBtn()
                 }
-                let btnList = [{ name: 'Naqd', id: 'Naqd' }, { name: 'Karta', id: 'Karta' }, { name: 'Terminal', id: 'Terminal' }, { name: `O'tkazma`, id: `O'tkazma` }]
+                let btnList = payType50
                 let btn = user?.update ? data.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
                 updateUser(chat_id, { update: false })
                 return btn
