@@ -6,7 +6,7 @@ let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selecte
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
-const { empKeyboard, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
+const { mainMenuByRoles } = require("../keyboards/keyboards");
 const { dataConfirmText, ticketAddText } = require("../keyboards/text");
 let moment = require('moment')
 let xorijiyXaridCallback = {
@@ -160,12 +160,8 @@ let xorijiyXaridCallback = {
     },
     "confirmExecuter": {
         selfExecuteFn: async ({ chat_id, data }) => {
-            // let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
-
-            // let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
-            // let subMenu Id = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
                 return
             }
@@ -667,7 +663,7 @@ let xorijiyXaridCallback = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
-                return await dataConfirmBtnEmp(chat_id, list.vendorList, 1, 'accountOneStep', pagination)
+                return await dataConfirmBtnEmp(chat_id, list.accountList43, 1, 'accountOneStep', pagination)
             },
             update: true
         },
@@ -980,9 +976,10 @@ let mahalliyXaridCallback = {
 
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
+
                 let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                     return { name: item, id: i }
-                }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                }).length || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                 // let ddsList = get(list, 'documentType') ? Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                 //     return { name: item, id: i }
                 // }) : (get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }]))

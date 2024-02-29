@@ -3,7 +3,7 @@ const https = require("https");
 const { get } = require("lodash");
 let dbService = require('../services/dbService')
 const moment = require('moment');
-const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW } = require("../repositories/dataRepositories");
+const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES } = require("../repositories/dataRepositories");
 
 class b1Controller {
     constructor() {
@@ -64,6 +64,15 @@ class b1Controller {
         try {
             let sql = PARTNERSEARCH + ` and T0.\"GroupCode\" in  (${groupList.map(item => `'${item}'`)})`
             let data = await dbService.executeParam(sql, [`%${name}%`])
+            return data
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+    async getJournalEntries(docNum = 0) {
+        try {
+            let data = await dbService.executeParam(GETJOURNALENTRIES, [docNum])
             return data
         }
         catch (e) {
@@ -198,7 +207,8 @@ class b1Controller {
         });
         return axios
             .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
-            .then(({ data }) => {
+            .then(async ({ data }) => {
+                await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
                 return { status: true, data }
             })
             .catch(async (err) => {
@@ -255,6 +265,51 @@ class b1Controller {
                     if (token.status) {
                         this.token = token.data
                         return await this.purchaseDownPayments({ list })
+                    }
+                    return { status: false, message: token.message }
+                } else {
+                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                }
+            });
+    }
+    async PatchJournalEntries(docNum = 1, point = '') {
+        if (!point) {
+            return
+        }
+        let journalEntry = await this.getJournalEntries(docNum)
+        if (!get(journalEntry, '[0].TransId')) {
+            return
+        }
+
+        let body = {
+            "JournalEntryLines": [
+                {
+                    "Line_ID": 1,
+                    "CostingCode2": point
+                }
+            ]
+        }
+        const axios = Axios.create({
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            timeout: 30000,
+            headers: {
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        });
+        return axios
+            .patch(`JournalEntries(${get(journalEntry, '[0].TransId')})`, body)
+            .then(async ({ data }) => {
+                return { status: true }
+            })
+            .catch(async (err) => {
+                if (get(err, 'response.status') == 401) {
+                    let token = await this.auth()
+                    if (token.status) {
+                        this.token = token.data
+                        return await this.PatchJournalEntries(docNum, point)
                     }
                     return { status: false, message: token.message }
                 } else {

@@ -409,7 +409,7 @@ let SubMenu = () => {
                             let list = infoData().find(item => item.id == user.currentDataId)
                             let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
-                            }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                            })?.length || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -543,6 +543,22 @@ let SubMenu = () => {
                         },
                         step: '45'
                     },
+                    {
+                        id: 11,
+                        name: "Statya DDS",
+                        message: `Statya DDS ni tanlang`,
+                        btn: async ({ chat_id }) => {
+                            let user = infoUser().find(item => item.chat_id == chat_id)
+                            let list = infoData().find(item => item.id == user.currentDataId)
+                            let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                                return { name: item, id: i }
+                            })?.length || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+
+                            return await dataConfirmBtnEmp(chat_id,
+                                ddsList, 2, 'dds')
+                        },
+                        step: '52'
+                    },
                 ],
                 b1: {
                     status: true,
@@ -673,8 +689,8 @@ let SubMenu = () => {
                             let list = infoData().find(item => item.id == user.currentDataId)
                             let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
-                            }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
-                          
+                            })?.length || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -693,7 +709,7 @@ let SubMenu = () => {
 
                     let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther'))).map((item, i) => {
                         return { name: item, id: i }
-                    }) || ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                    })?.length || ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                     if (!ddsList.includes(get(data, 'dds'))) {
                         updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0].name : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
@@ -811,7 +827,7 @@ let SubMenu = () => {
                             let list = infoData().find(item => item.id == user.currentDataId)
                             let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
-                            }) || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                            })?.length || ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
