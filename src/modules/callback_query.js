@@ -160,6 +160,7 @@ let xorijiyXaridCallback = {
     },
     "confirmExecuter": {
         selfExecuteFn: async ({ chat_id, data }) => {
+            console.log(data, ' bu data')
             let list = infoData().find(item => item.id == data[2])
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
             if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
@@ -188,6 +189,7 @@ let xorijiyXaridCallback = {
                         bot.deleteMessage(chat_id, deleteMessage.message_id)
                     }
                 }
+
             }
             else if (data[1] == '2') {
                 updateStep(chat_id, 5000)
@@ -201,9 +203,6 @@ let xorijiyXaridCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
-                if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
-                    return
-                }
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
                 let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
 
@@ -239,8 +238,10 @@ let xorijiyXaridCallback = {
                     for (let i = 0; i < confirmativeList.length; i++) {
                         bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
                     }
+
                     bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
                     return str || 'Bajarildi ✅'
+
                 }
                 if (data[1] == '2') {
                     updateData(data[2], { executer: { chat_id, status: false } })
@@ -604,7 +605,7 @@ let xorijiyXaridCallback = {
                 let btn = await dataConfirmBtnEmp(chat_id, list.accountList43, 1, 'accountOneStep')
                 updateBack(chat_id, { text: `Schetni tanlang`, btn, step: 21 })
             }
-            updateData(user.currentDataId, { accountCodeOneStep: data[1] })
+            updateData(user.currentDataId, { accountCodeOther: data[1] })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)

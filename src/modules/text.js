@@ -278,7 +278,9 @@ let confirmativeBtn = {
             text: async ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                mainData = mainData.filter(item =>
+                    moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
+                    ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length) {
                     await bot.sendMessage(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
@@ -502,7 +504,8 @@ let executorBtn = {
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    let btn = mainData[0].chat_id != chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
+                    console.log('ikkita tengni ozgartrsh kerak !=  ga')
+                    let btn = mainData[0].chat_id == chat_id ? (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter')) : undefined
                     return btn
                 }
                 return empDynamicBtn()
@@ -521,7 +524,9 @@ let executorBtn = {
             text: async ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                mainData = mainData.filter(item =>
+                    moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
+                    ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length) {
                     await bot.sendMessage(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
@@ -954,7 +959,9 @@ let executeBtn = {
             text: async ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                mainData = mainData.filter(item =>
+                    moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
+                    ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length) {
                     await bot.sendMessage(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())

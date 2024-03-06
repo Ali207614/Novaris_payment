@@ -178,7 +178,7 @@ class b1Controller {
             "DocRate": Number(get(list, 'currencyRate')),
             "CashSum": Number(get(list, 'summa', 0)),
         }
-        if (body.DocType != 'rSupplier') {
+        if (body.DocType != 'rSupplier' && !get(list, 'vendorId')) {
             body.PaymentAccounts = [{ "AccountCode": get(list, 'accountCodeOther'), 'SumPaid': Number(get(list, 'summa', 0)) }]
         }
         if (get(cred, 'b1.cashFlow', false)) {
@@ -193,7 +193,7 @@ class b1Controller {
             }
         }
 
-        console.log(body, ' bu body')
+        console.log(body, ' bu assosiy body')
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
