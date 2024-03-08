@@ -171,7 +171,7 @@ class b1Controller {
         let body = {
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
             "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
-            "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId', '') ? 'customer' : 'account'))],
+            "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId', '') ? (get(cred, 'b1.supplier') ? 'supplier' : 'customer') : 'account'))],
             "CardCode": get(list, 'accountCodeOther', get(list, 'vendorId')),
             "CashAccount": get(list, 'accountCode'),
             "DocCurrency": get(list, 'currency'),
@@ -194,12 +194,14 @@ class b1Controller {
         }
 
         console.log(body, ' bu assosiy body')
+        console.log(JSON.stringify(body))
+        console.log(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`)
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -220,6 +222,7 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
+                    console.log(get(err, 'response.data.error'))
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });
