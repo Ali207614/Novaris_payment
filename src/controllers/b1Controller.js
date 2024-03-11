@@ -193,9 +193,6 @@ class b1Controller {
             }
         }
 
-        console.log(body, ' bu assosiy body')
-        console.log(JSON.stringify(body))
-        console.log(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`)
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",

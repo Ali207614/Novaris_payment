@@ -504,7 +504,6 @@ let executorBtn = {
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
                 )
                 if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-                    console.log('ikkita tengni ozgartrsh kerak !=  ga')
                     let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter'))
                     return btn
                 }
