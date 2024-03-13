@@ -301,8 +301,8 @@ let SubMenu = () => {
                     let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
                     let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
                     let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name
-
-                    let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOneStep'))?.name) : vendorName
+                    // accountCodeOther
+                    let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
                     let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
                     let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
                     if (!get(purchase, 'DocEntry')) {
@@ -430,7 +430,7 @@ let SubMenu = () => {
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
                     if (!ddsList.includes(get(data, 'dds'))) {
-                        updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                        // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
@@ -715,7 +715,7 @@ let SubMenu = () => {
                     })
                     let ddsList = isDds.length ? isDds : ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
                     if (!ddsList.includes(get(data, 'dds'))) {
-                        updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0].name : false })
+                        // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0].name : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
@@ -852,7 +852,7 @@ let SubMenu = () => {
 
                     let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
                     if (!ddsList.includes(get(data, 'dds'))) {
-                        updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+                        // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
@@ -1403,7 +1403,7 @@ let excelFnFormatData = ({ main }) => {
         let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name || ''
         let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
 
-        let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOneStep'))?.name) : vendorName
+        let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
         let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
         let empData = infoUser().find(item => item.chat_id == get(data, 'chat_id'))
         let empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`

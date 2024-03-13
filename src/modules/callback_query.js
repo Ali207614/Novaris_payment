@@ -47,7 +47,6 @@ let xorijiyXaridCallback = {
                 if (get(list, 'full')) {
                     return `Tasdiqlovchiga jo'natilagan`
                 }
-                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
 
                 if (data[1] == '3') {
@@ -79,19 +78,12 @@ let xorijiyXaridCallback = {
                     updateUser(chat_id, { update: false, back: [] })
                     updateStep(chat_id, 10)
                     deleteAllInvalidData({ chat_id })
-
-                    let permisson = infoPermisson().find(item => chat_id == item.chat_id)
-                    let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-                    // let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
                     return mainMenuByRoles({ chat_id })
                 }
                 else if (data[1] == '1') {
                     updateData(user.currentDataId, { full: true, stateTime: { ...list.stateTime, create: new Date() } })
                     updateStep(chat_id, 10)
                     updateUser(chat_id, { update: false, back: [] })
-                    let permisson = infoPermisson().find(item => chat_id == item.chat_id)
-                    let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
-                    // let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`)).map(item => item.name), 3)
                     return mainMenuByRoles({ chat_id })
                 }
             },
@@ -1013,7 +1005,7 @@ let mahalliyXaridCallback = {
                 let btn = await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point')
                 updateBack(chat_id, { text: `Hisob nuqtasini tanlang`, btn, step: 51 })
             }
-            // updateData(user.currentDataId, { dds: get(list, 'ddsList', []).find((item, i) => i == data[1])?.name })
+            updateData(user.currentDataId, { dds: get(list, 'ddsList', []).find((item, i) => item.id == data[1])?.name })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)

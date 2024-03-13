@@ -27,7 +27,7 @@ class botConroller {
                 );
 
                 if (get(user, "user_step")) {
-                    updateUser(chat_id, { back: [], update: false })
+                    updateUser(chat_id, { back: [], update: false,confirmationStatus:false })
                     updateStep(chat_id, 1)
                     deleteAllInvalidData({ chat_id })
                 }
