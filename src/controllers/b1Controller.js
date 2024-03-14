@@ -35,7 +35,7 @@ class b1Controller {
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -193,6 +193,7 @@ class b1Controller {
             }
         }
 
+        console.log(body, ' bu asosisy')
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
@@ -219,7 +220,6 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    console.log(get(err, 'response.data.error'))
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });
@@ -248,7 +248,7 @@ class b1Controller {
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -289,11 +289,14 @@ class b1Controller {
                 }
             ]
         }
+
+        console.log(body, "bonak")
+
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -341,7 +344,7 @@ class b1Controller {
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node2`,
+                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,

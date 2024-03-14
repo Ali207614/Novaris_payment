@@ -3,7 +3,7 @@ const moment = require('moment')
 const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
-let { SubMenu, ocrdList ,payType50} = require("../credentials")
+let { SubMenu, ocrdList, payType50 } = require("../credentials")
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
@@ -188,6 +188,7 @@ let xorijiyXaridStep = {
                 msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
+
                 let count = 0
                 for (let i = 0; i < msgText.length; i++) {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
@@ -488,6 +489,7 @@ let mahalliyXaridStep = {
                 msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
+
                 let count = 0
                 for (let i = 0; i < msgText.length; i++) {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
@@ -520,6 +522,7 @@ let mahalliyXaridStep = {
                 msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
+
                 let count = 0
                 for (let i = 0; i < msgText.length; i++) {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
@@ -702,13 +705,13 @@ let tolovHarajatStep = {
                 msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
+
                 let count = 0
                 for (let i = 0; i < msgText.length; i++) {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
                     let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
-
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
                     }
@@ -733,6 +736,7 @@ let tolovHarajatStep = {
                 msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
+
                 let count = 0
                 for (let i = 0; i < msgText.length; i++) {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());

@@ -28,6 +28,7 @@ let xorijiyXaridCallback = {
                 let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                 let confirmativeSendlist = []
+                console.log(accessChatId, ' bu chat id')
                 for (let i = 0; i < accessChatId.length; i++) {
                     let send = await bot.sendMessage(accessChatId[i], dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btnConfirmative)
                     confirmativeSendlist.push({ messageId: send.message_id, chatId: accessChatId[i] })
