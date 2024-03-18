@@ -178,7 +178,7 @@ let xorijiyXaridCallback = {
                 }
                 if (get(cred, 'b1.status')) {
                     let b1MainStatus = await b1Controller.executePayments({ list, cred })
-                    updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message, purchase: false })
+                    updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
                     count += 1
                     if (count == 2) {
                         bot.deleteMessage(chat_id, deleteMessage.message_id)
@@ -246,7 +246,7 @@ let xorijiyXaridCallback = {
                 }
             },
             btn: async ({ chat_id, data }) => {
-                return empDynamicBtn()
+                return mainMenuByRoles({ chat_id })
             },
         },
     },

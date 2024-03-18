@@ -26,11 +26,16 @@ class b1Controller {
         return axios.post("/Login", obj).then(({ data }) => {
             return { status: true, data: data.SessionId };
         }).catch(err => {
+            console.log(get(err, 'response.data'))
             return { status: false, message: get(err, 'response.data.error.message.value') }
         });
     }
 
     async getEmpInfo(phone = '') {
+        let token = await this.auth()
+        if (token.status) {
+            this.token = token.data
+        }
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
@@ -160,7 +165,12 @@ class b1Controller {
     }
 
     async executePayments({ list = {}, cred = {} }) {
+        let token = await this.auth()
+        if (token.status) {
+            this.token = token.data
+        }
         if (get(list, 'purchase')) {
+            console.log('tushdi')
             return await this.purchaseDownPayments({ list })
         }
         let DocType = {
@@ -172,7 +182,7 @@ class b1Controller {
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
             "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId', '') ? (get(cred, 'b1.supplier') ? 'supplier' : 'customer') : 'account'))],
-            "CardCode": get(list, 'accountCodeOther', get(list, 'vendorId')),
+            "CardCode": get(list, 'accountCodeOther', '') || get(list, 'vendorId'),
             "CashAccount": get(list, 'accountCode'),
             "DocCurrency": get(list, 'currency'),
             "DocRate": Number(get(list, 'currencyRate')),
@@ -193,7 +203,7 @@ class b1Controller {
             }
         }
 
-        console.log(body, ' bu asosisy')
+        console.log(JSON.stringify(body), ' asosiy')
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
@@ -243,7 +253,7 @@ class b1Controller {
             "DocDueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             DocumentLines
         }
-
+        console.log(`B1SESSION=${this.token}; ROUTEID=.node1`, ' purchaseDownPayments')
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
@@ -339,7 +349,7 @@ class b1Controller {
                 }
             ]
         }
-
+        console.log(`B1SESSION=${this.token}; ROUTEID=.node1`)
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
@@ -364,6 +374,7 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
+                    console.log(get(err, 'response.data.error'), ' bu vendorpaymetns 383')
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });

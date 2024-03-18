@@ -1224,7 +1224,7 @@ let xorijiyXaridBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2), step: 21 })
-            updateData(user.currentDataId, { documentType: true, vendorId: "", vendorList: [], purchaseOrders: [] })
+            updateData(user.currentDataId, { documentType: true, vendorId: "", purchase: false, vendorList: [], purchaseOrders: [] })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1250,7 +1250,7 @@ let xorijiyXaridBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2), step: 21 })
-            updateData(user.currentDataId, { documentType: false })
+            updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1620,7 +1620,8 @@ let tolovHarajatBtn = {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 63)
             updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2), step: 62 })
-            updateData(user.currentDataId, { documentType: true, vendorId: "" })
+            updateData(user.currentDataId, { documentType: true, vendorId: "", purchase: false, vendorList: [], purchaseOrders: [] })
+
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1647,7 +1648,7 @@ let tolovHarajatBtn = {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 80)
             updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2), step: 62 })
-            updateData(user.currentDataId, { documentType: false })
+            updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1744,7 +1745,7 @@ let tolovHarajatBojBtn = {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 63)
             updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2), step: 62 })
-            updateData(user.currentDataId, { documentType: true, vendorId: "" })
+            updateData(user.currentDataId, { documentType: true, vendorId: "", purchase: false, vendorList: [], purchaseOrders: [] })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1771,7 +1772,7 @@ let tolovHarajatBojBtn = {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 80)
             updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2), step: 62 })
-            updateData(user.currentDataId, { documentType: false })
+            updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
