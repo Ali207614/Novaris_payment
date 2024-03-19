@@ -311,7 +311,7 @@ let xorijiyXaridStep = {
                 let btn = empDynamicBtn()
                 updateBack(chat_id, { text: `Summani kiriting`, btn, step: 27 })
             }
-            let data = await b1Controller.getCurrentRate('CNY')
+            let data = await b1Controller.getCurrentRate('CNY', get(list, 'startDate', ''))
             let rate = data[0]?.Rate
             updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: rate })
         },
@@ -559,7 +559,7 @@ let mahalliyXaridStep = {
                 updateStep(chat_id, 49)
                 updateBack(chat_id, { text: `Summani yozing`, btn: empDynamicBtn(), step: 48 })
             }
-            let data = await b1Controller.getCurrentRate('UZS')
+            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
             let rate = data[0]?.Rate
             updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: rate })
         },

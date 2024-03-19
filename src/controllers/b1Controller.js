@@ -154,9 +154,11 @@ class b1Controller {
         }
     }
 
-    async getCurrentRate(cur = 'UZS') {
+    async getCurrentRate(cur = 'UZS', date = '') {
         try {
-            let data = await dbService.executeParam(CURRENTRATE, [cur])
+            console.log(moment(date).format('DD.MM.YY'), cur)
+
+            let data = await dbService.executeParam(CURRENTRATE, [cur, moment(date).format('DD.MM.YY')])
             return data
         }
         catch (e) {

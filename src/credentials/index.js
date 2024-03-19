@@ -257,7 +257,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('CNY')
+                            let data = await b1Controller.getCurrentRate('CNY',get(list,'startDate',''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -357,7 +357,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS')
+                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -500,7 +500,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS')
+                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -638,7 +638,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS')
+                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -778,7 +778,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS')
+                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
