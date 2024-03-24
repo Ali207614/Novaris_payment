@@ -899,7 +899,7 @@ let executeBtn = {
                 }
                 return 'Mavjud emas'
             },
-            btn: async ({ chat_id, }) => {
+            btn: ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
                 mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
@@ -909,6 +909,7 @@ let executeBtn = {
                     return btn
                 }
                 return empDynamicBtn()
+
             },
         },
     },

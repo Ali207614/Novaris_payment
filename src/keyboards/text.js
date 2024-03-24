@@ -91,7 +91,7 @@ const confirmativeUpdateMessage = async ({ user, list, chat_id }) => {
     for (let i = 0; i < get(actData, 'confirmativeSendlist', []).length; i++) {
         let list = actData.confirmativeSendlist[i]
         let btnConfirmative = await dataConfirmBtnEmp(list.chatId, [{ name: 'Tasdiqlash', id: `1#${actData.id}`, }, { name: 'Bekor qilish', id: `2#${actData.id}` }], 2, 'confirmConfirmative')
-        bot.editMessageText(`O'zgartirildi ${moment().locale('uz').format('LT')} 🕰\n\n` + dataConfirmText(info, "Kutilayotgan So'rovlar ?", chat_id), {
+        bot.editMessageText(`O'zgartirildi ${moment().format('lll')} 🕰\n\n` + dataConfirmText(info, "Kutilayotgan So'rovlar ?", chat_id), {
             chat_id: list.chatId,
             message_id: list.messageId,
             ...btnConfirmative

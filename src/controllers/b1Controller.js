@@ -156,8 +156,6 @@ class b1Controller {
 
     async getCurrentRate(cur = 'UZS', date = '') {
         try {
-            console.log(moment(date).format('DD.MM.YY'), cur)
-
             let data = await dbService.executeParam(CURRENTRATE, [cur, moment(date).format('DD.MM.YY')])
             return data
         }
@@ -172,7 +170,6 @@ class b1Controller {
             this.token = token.data
         }
         if (get(list, 'purchase')) {
-            console.log('tushdi')
             return await this.purchaseDownPayments({ list })
         }
         let DocType = {
@@ -255,7 +252,6 @@ class b1Controller {
             "DocDueDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             DocumentLines
         }
-        console.log(`B1SESSION=${this.token}; ROUTEID=.node1`, ' purchaseDownPayments')
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,

@@ -207,13 +207,13 @@ let SubMenu = () => {
                         btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
                         step: '20'
                     },
-                    {
-                        id: 2,
-                        name: "Document Type (Schet,Поставщик)",
-                        message: 'Document type ni tanlang',
-                        btn: () => empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2),
-                        step: '21'
-                    },
+                    // {
+                    //     id: 2,
+                    //     name: "Document Type (Schet,Поставщик)",
+                    //     message: 'Document type ni tanlang',
+                    //     btn: () => empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2),
+                    //     step: '21'
+                    // },
                     {
                         id: 3,
                         name: "Sana",
@@ -257,7 +257,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('CNY',get(list,'startDate',''))
+                            let data = await b1Controller.getCurrentRate('CNY', get(list, 'startDate', ''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -322,26 +322,26 @@ let SubMenu = () => {
                         btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
                         step: '90'
                     },
-                    {
-                        id: 2,
-                        name: "Schet",
-                        message: 'Schetni tanlang',
-                        btn: async ({ chat_id }) => {
-                            let user = infoUser().find(item => item.chat_id == chat_id)
-                            let list = infoData().find(item => item.id == user?.currentDataId)
-                            if (!list?.accountList.length) {
-                                let b1Account15 = await b1Controller.getAccount15({ status: true })
-                                let accountList15 = b1Account15?.map((item, i) => {
-                                    return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
-                                })
-                                list.accountList = accountList15
-                                updateData(user?.currentDataId, { accountList: accountList15, payment: false })
-                            }
-                            let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
-                            return btn
-                        },
-                        step: '64'
-                    },
+                    // {
+                    //     id: 2,
+                    //     name: "Schet",
+                    //     message: 'Schetni tanlang',
+                    //     btn: async ({ chat_id }) => {
+                    //         let user = infoUser().find(item => item.chat_id == chat_id)
+                    //         let list = infoData().find(item => item.id == user?.currentDataId)
+                    //         if (!list?.accountList.length) {
+                    //             let b1Account15 = await b1Controller.getAccount15({ status: true })
+                    //             let accountList15 = b1Account15?.map((item, i) => {
+                    //                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+                    //             })
+                    //             list.accountList = accountList15
+                    //             updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+                    //         }
+                    //         let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                    //         return btn
+                    //     },
+                    //     step: '64'
+                    // },
                     {
                         id: 3,
                         name: "Sana",
@@ -357,7 +357,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
+                            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -500,7 +500,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
+                            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -616,13 +616,13 @@ let SubMenu = () => {
                         btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
                         step: '61'
                     },
-                    {
-                        id: 2,
-                        name: "Document Type (Schet,Поставщик)",
-                        message: 'Document type ni tanlang',
-                        btn: () => empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2),
-                        step: '62'
-                    },
+                    // {
+                    //     id: 2,
+                    //     name: "Document Type (Schet,Поставщик)",
+                    //     message: 'Document type ni tanlang',
+                    //     btn: () => empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2),
+                    //     step: '62'
+                    // },
                     {
                         id: 3,
                         name: "Sana",
@@ -638,7 +638,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
+                            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -743,26 +743,26 @@ let SubMenu = () => {
                         btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
                         step: '90'
                     },
-                    {
-                        id: 2,
-                        name: "Schet",
-                        message: 'Schetni tanlang',
-                        btn: async ({ chat_id }) => {
-                            let user = infoUser().find(item => item.chat_id == chat_id)
-                            let list = infoData().find(item => item.id == user?.currentDataId)
-                            if (!list?.accountList.length) {
-                                let b1Account15 = await b1Controller.getAccount15()
-                                let accountList15 = b1Account15?.map((item, i) => {
-                                    return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
-                                })
-                                list.accountList = accountList15
-                                updateData(user?.currentDataId, { accountList: accountList15, payment: false })
-                            }
-                            let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
-                            return btn
-                        },
-                        step: '64'
-                    },
+                    // {
+                    //     id: 2,
+                    //     name: "Schet",
+                    //     message: 'Schetni tanlang',
+                    //     btn: async ({ chat_id }) => {
+                    //         let user = infoUser().find(item => item.chat_id == chat_id)
+                    //         let list = infoData().find(item => item.id == user?.currentDataId)
+                    //         if (!list?.accountList.length) {
+                    //             let b1Account15 = await b1Controller.getAccount15()
+                    //             let accountList15 = b1Account15?.map((item, i) => {
+                    //                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+                    //             })
+                    //             list.accountList = accountList15
+                    //             updateData(user?.currentDataId, { accountList: accountList15, payment: false })
+                    //         }
+                    //         let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
+                    //         return btn
+                    //     },
+                    //     step: '64'
+                    // },
                     {
                         id: 3,
                         name: "Sana",
@@ -778,7 +778,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS',get(list,'startDate',''))
+                            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
