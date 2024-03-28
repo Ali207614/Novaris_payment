@@ -1,1 +1,649 @@
-[]
+[
+    {
+        "id": "88cCpY734F",
+        "menu": 2,
+        "menuName": "Mahalliy xarid",
+        "chat_id": 110697090,
+        "creationDate": "2024-03-28T10:54:22.976Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 326,
+        "DDS": "Mahalliy yetkazib beruvchilarga to'lov",
+        "subMenu": "Mahalliy xarid to'lovi",
+        "payment": false,
+        "vendorList": [
+            {
+                "name": "2/115 DO'KON - Korxona",
+                "id": "2/15",
+                "num": 1
+            }
+        ],
+        "vendorId": "2/15",
+        "startDate": "2024.03.28",
+        "endDate": "2024.03.20",
+        "payType": "Karta",
+        "currency": "UZS",
+        "accountList50": [
+            {
+                "name": "5054 - Q01 karta (UZS)",
+                "id": "5054",
+                "num": 1
+            },
+            {
+                "name": "5072 - Ofis terminal",
+                "id": "5072",
+                "num": 2
+            },
+            {
+                "name": "5053 - D777 karta (UZS)",
+                "id": "5053",
+                "num": 3
+            },
+            {
+                "name": "5050 - D12 karta (UZS)",
+                "id": "5050",
+                "num": 4
+            },
+            {
+                "name": "5052 - D64 karta (UZS)",
+                "id": "5052",
+                "num": 5
+            }
+        ],
+        "accountCode": "5050",
+        "summa": "1260000",
+        "currencyRate": "12600.000000",
+        "comment": "test",
+        "point": "64",
+        "ddsList": [
+            {
+                "name": "Mahalliy yetkazib beruvchilarga to'lov",
+                "id": "-3"
+            }
+        ],
+        "dds": "Mahalliy yetkazib beruvchilarga to'lov",
+        "lastStep": 200,
+        "lastBtn": {
+            "parse_mode": "Markdown",
+            "reply_markup": {
+                "resize_keyboard": true,
+                "keyboard": [
+                    [
+                        {
+                            "text": "Xodim"
+                        }
+                    ]
+                ]
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 43233,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "update": "2024-03-28T10:58:18.816Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-03-28T10:58:38.239Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-03-28T16:57:58.353Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "Gf8keHaGFJ",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 561932032,
+        "creationDate": "2024-03-28T17:03:39.434Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 294,
+        "subMenu": "Naqd/Click Bojxonaga oid xarajatlar",
+        "accountList": [
+            {
+                "name": "1510 - Materiallarni tayyorlash va xarid qilish",
+                "id": "1510",
+                "num": 1
+            },
+            {
+                "name": "1512 - Transport va Logistika xarajatlari (Xorijiy xarid)",
+                "id": "1512",
+                "num": 2
+            },
+            {
+                "name": "1511 - Bojxona xarajatlari va Xitoydagi xarajatlar",
+                "id": "1511",
+                "num": 3
+            },
+            {
+                "name": "1514 - Transport va Logistika xarajatlari (Mahalliy xarid)",
+                "id": "1514",
+                "num": 4
+            },
+            {
+                "name": "1513 - Deklarant xarajati",
+                "id": "1513",
+                "num": 5
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "1513",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 1
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 2
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 3
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "1000",
+        "currencyRate": "12330.000000",
+        "comment": "test",
+        "point": "777",
+        "ddsList": [
+            {
+                "name": "Deklarant xarajati",
+                "id": 0
+            }
+        ],
+        "dds": "Deklarant xarajati",
+        "confirmativeSendlist": [
+            {
+                "messageId": 44134,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "update": "2024-03-28T17:04:34.906Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-03-28T17:05:02.533Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-03-28T17:20:50.687Z"
+            }
+        },
+        "lastStep": 200,
+        "lastBtn": {
+            "parse_mode": "Markdown",
+            "reply_markup": {
+                "resize_keyboard": true,
+                "keyboard": [
+                    [
+                        {
+                            "text": "Xodim"
+                        },
+                        {
+                            "text": "Tasdiqlovchi"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Bajaruvchi"
+                        }
+                    ]
+                ]
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "lmDo22YhCA",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 561932032,
+        "creationDate": "2024-03-28T17:21:00.981Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 295,
+        "subMenu": "Naqd/Click Bojxonaga oid xarajatlar",
+        "accountList": [
+            {
+                "name": "1510 - Materiallarni tayyorlash va xarid qilish",
+                "id": "1510",
+                "num": 1
+            },
+            {
+                "name": "1512 - Transport va Logistika xarajatlari (Xorijiy xarid)",
+                "id": "1512",
+                "num": 2
+            },
+            {
+                "name": "1511 - Bojxona xarajatlari va Xitoydagi xarajatlar",
+                "id": "1511",
+                "num": 3
+            },
+            {
+                "name": "1514 - Transport va Logistika xarajatlari (Mahalliy xarid)",
+                "id": "1514",
+                "num": 4
+            },
+            {
+                "name": "1513 - Deklarant xarajati",
+                "id": "1513",
+                "num": 5
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "1512",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 1
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 2
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 3
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5044",
+        "summa": "300",
+        "currencyRate": "12330.000000",
+        "comment": "test",
+        "point": "D",
+        "ddsList": [
+            {
+                "name": "Yuk tushirish xarajati",
+                "id": 0
+            }
+        ],
+        "dds": "Yuk tushirish xarajati",
+        "confirmativeSendlist": [
+            {
+                "messageId": 44417,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-03-28T17:21:41.426Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-03-28T17:21:42.731Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-03-28T17:48:21.875Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "QY0VVYbum2",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-03-28T17:46:45.492Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 296,
+        "subMenu": "Xorijiy xarid to'lovi",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountList43": [
+            {
+                "name": "4336 - Avans MOHINUR",
+                "id": "4336",
+                "num": 1
+            },
+            {
+                "name": "4342 - Avans Yorqin",
+                "id": "4342",
+                "num": 2
+            },
+            {
+                "name": "4338 - Avans TOHO TROS ZAVOD",
+                "id": "4338",
+                "num": 3
+            },
+            {
+                "name": "4356 - Avans Piter Klin zavod",
+                "id": "4356",
+                "num": 4
+            },
+            {
+                "name": "4346 - Avans Shili",
+                "id": "4346",
+                "num": 5
+            },
+            {
+                "name": "4345 - Avans Misha konteyner",
+                "id": "4345",
+                "num": 6
+            },
+            {
+                "name": "4347 - Avans Shovkat",
+                "id": "4347",
+                "num": 7
+            },
+            {
+                "name": "4348 - ANKER HELEN ZAVOD",
+                "id": "4348",
+                "num": 8
+            },
+            {
+                "name": "4350 - Avans Jimmy",
+                "id": "4350",
+                "num": 9
+            },
+            {
+                "name": "4355 - Avans MIA Zavod",
+                "id": "4355",
+                "num": 10
+            },
+            {
+                "name": "4331 - Avans ANKER ZAVOD",
+                "id": "4331",
+                "num": 11
+            },
+            {
+                "name": "4349 - LinWei Dubl Zavod",
+                "id": "4349",
+                "num": 12
+            },
+            {
+                "name": "4341 - Avans Bolter",
+                "id": "4341",
+                "num": 13
+            },
+            {
+                "name": "4335 - Avans HONGXU ZAVOD",
+                "id": "4335",
+                "num": 14
+            },
+            {
+                "name": "4358 - Avans ICBC karta (BQ)",
+                "id": "4358",
+                "num": 15
+            },
+            {
+                "name": "4354 - Avans Tracy kontener",
+                "id": "4354",
+                "num": 16
+            },
+            {
+                "name": "4332 - Avans DUBL TAGERT ZAVOD",
+                "id": "4332",
+                "num": 17
+            },
+            {
+                "name": "4359 - Avans LEO",
+                "id": "4359",
+                "num": 18
+            },
+            {
+                "name": "4340 - Avans Wayne Sun",
+                "id": "4340",
+                "num": 19
+            },
+            {
+                "name": "4339 - Avans TROS ZAVOD",
+                "id": "4339",
+                "num": 20
+            },
+            {
+                "name": "4337 - Avans PAT ZAVOD",
+                "id": "4337",
+                "num": 21
+            },
+            {
+                "name": "4357 - Avans Olga kontener",
+                "id": "4357",
+                "num": 22
+            },
+            {
+                "name": "4334 - Avans F2-13331",
+                "id": "4334",
+                "num": 23
+            },
+            {
+                "name": "4353 - Avans TIC",
+                "id": "4353",
+                "num": 24
+            },
+            {
+                "name": "4344 - ICBC Karta (BA)",
+                "id": "4344",
+                "num": 25
+            },
+            {
+                "name": "4352 - Avans Li Chuang",
+                "id": "4352",
+                "num": 26
+            },
+            {
+                "name": "4351 - Avans LIT",
+                "id": "4351",
+                "num": 27
+            },
+            {
+                "name": "4343 - Avans Anny",
+                "id": "4343",
+                "num": 28
+            }
+        ],
+        "accountCodeOther": "4336",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "ticket": "xar-1923",
+        "accountCode": "4336",
+        "currency": "CNY",
+        "summa": "1000",
+        "currencyRate": "7.170000",
+        "comment": "test",
+        "confirmativeSendlist": [
+            {
+                "messageId": 44527,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-03-28T17:47:15.391Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-03-28T17:47:16.627Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-03-28T17:47:23.777Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "jira": false,
+        "sapB1": false,
+        "ticketAdd": true,
+        "ticketStatusObj": {
+            "comment": 1
+        },
+        "sap": true,
+        "executer": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Jira\nKommentariya qo'shildi ✅\n\nSapga qo'shildi ✅"
+    },
+    {
+        "id": "rbCMulTwl3",
+        "menu": 2,
+        "menuName": "Mahalliy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-03-28T17:52:40.845Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 297,
+        "DDS": "Mahalliy yetkazib beruvchilarga to'lov",
+        "subMenu": "Mahalliy xarid to'lovi",
+        "payment": false,
+        "vendorList": [
+            {
+                "name": "2/125 DO'KON - Korxona",
+                "id": "2/125",
+                "num": 1
+            }
+        ],
+        "vendorId": "2/125",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 1
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 2
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 3
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 4
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 5
+            }
+        ],
+        "accountCode": "5044",
+        "summa": "100",
+        "currencyRate": "12330.000000",
+        "comment": "test",
+        "point": "O",
+        "ddsList": [
+            {
+                "name": "Mahalliy yetkazib beruvchilarga to'lov",
+                "id": "-3"
+            }
+        ],
+        "dds": "Mahalliy yetkazib beruvchilarga to'lov",
+        "confirmativeSendlist": [
+            {
+                "messageId": 44606,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-03-28T17:54:04.510Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-03-28T17:54:05.609Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-03-28T17:54:14.101Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    }
+]

@@ -4,11 +4,9 @@ const { get } = require("lodash");
 let dbService = require('../services/dbService')
 const moment = require('moment');
 const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES } = require("../repositories/dataRepositories");
+const { saveSession, getSession } = require("../helpers");
 
 class b1Controller {
-    constructor() {
-        this.token;
-    }
 
     async auth() {
         let obj = {
@@ -23,24 +21,25 @@ class b1Controller {
                 rejectUnauthorized: false,
             }),
         });
-        return axios.post("/Login", obj).then(({ data }) => {
-            return { status: true, data: data.SessionId };
+        return axios.post("/Login", obj).then(({ headers, data }) => {
+            saveSession({
+                'Cookie': get(headers, 'set-cookie', ''),
+                'SessionId': get(data, 'SessionId', '')
+            })
+            return { status: true };
         }).catch(err => {
-            console.log(get(err, 'response.data'))
+            console.log(get(err, 'response.data'), ' bu auth')
             return { status: false, message: get(err, 'response.data.error.message.value') }
         });
     }
 
     async getEmpInfo(phone = '') {
-        let token = await this.auth()
-        if (token.status) {
-            this.token = token.data
-        }
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -55,7 +54,6 @@ class b1Controller {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        this.token = token.data
                         return await this.getEmpInfo(phone)
                     }
                     return { status: false, message: token.message }
@@ -78,7 +76,7 @@ class b1Controller {
     async getJournalEntries(docNum = 0) {
         try {
             let data = await dbService.executeParam(GETJOURNALENTRIES, [docNum])
-            return data
+            return data?.sort((a, b) => b.TransId - a.TransId)
         }
         catch (e) {
             throw new Error(e)
@@ -165,10 +163,7 @@ class b1Controller {
     }
 
     async executePayments({ list = {}, cred = {} }) {
-        let token = await this.auth()
-        if (token.status) {
-            this.token = token.data
-        }
+
         if (get(list, 'purchase')) {
             return await this.purchaseDownPayments({ list })
         }
@@ -178,18 +173,24 @@ class b1Controller {
             'supplier': 'rSupplier'
         }
         let body = {
+            "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId', '') ? (get(cred, 'b1.supplier') ? 'supplier' : 'customer') : 'account'))],
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
             "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
-            "DocType": DocType[get(cred, 'b1.type', (get(list, 'vendorId', '') ? (get(cred, 'b1.supplier') ? 'supplier' : 'customer') : 'account'))],
             "CardCode": get(list, 'accountCodeOther', '') || get(list, 'vendorId'),
             "CashAccount": get(list, 'accountCode'),
             "DocCurrency": get(list, 'currency'),
-            "DocRate": Number(get(list, 'currencyRate')),
             "CashSum": Number(get(list, 'summa', 0)),
+            "PaymentAccounts": []
         }
-        if (body.DocType != 'rSupplier' && !get(list, 'vendorId')) {
-            body.PaymentAccounts = [{ "AccountCode": get(list, 'accountCodeOther'), 'SumPaid': Number(get(list, 'summa', 0)) }]
+        if (get(list, "currency", '') != 'USD') {
+            body.DocRate = Number(get(list, 'currencyRate'))
         }
+
+        if (get(list, 'currency'))
+            if (body.DocType != 'rSupplier' && !get(list, 'vendorId')) {
+                body.PaymentAccounts = [{ "ProfitCenter2": get(list, 'point', ''), "AccountCode": get(list, 'accountCodeOther'), 'SumPaid': Number(get(list, 'summa', 0)) }]
+            }
+
         if (get(cred, 'b1.cashFlow', false)) {
             let cashflow = await this.cashFlow(get(list, 'DDS', get(list, 'dds')))
             if (cashflow.length) {
@@ -203,12 +204,18 @@ class b1Controller {
         }
 
         console.log(JSON.stringify(body), ' asosiy')
-
+        console.log({
+            headers: {
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
+            }
+        })
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -217,18 +224,21 @@ class b1Controller {
         return axios
             .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
             .then(async ({ data }) => {
-                await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
+                if (body.DocType != 'rAccount') {
+                    await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
+                }
                 return { status: true, data }
             })
             .catch(async (err) => {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        this.token = token.data
                         return await this.executePayments({ list, cred })
                     }
+                    console.log(token, ' bu token')
                     return { status: false, message: token.message }
                 } else {
+                    console.log(get(err, 'response.data.error'))
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });
@@ -256,7 +266,8 @@ class b1Controller {
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -271,7 +282,6 @@ class b1Controller {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        this.token = token.data
                         return await this.purchaseDownPayments({ list })
                     }
                     return { status: false, message: token.message }
@@ -284,7 +294,9 @@ class b1Controller {
         if (!point) {
             return
         }
+        console.log('point ', point)
         let journalEntry = await this.getJournalEntries(docNum)
+        console.log(journalEntry, ' bu journalEntry')
         if (!get(journalEntry, '[0].TransId')) {
             return
         }
@@ -297,14 +309,15 @@ class b1Controller {
                 }
             ]
         }
+        console.log(body, ' bu body')
 
-        console.log(body, "bonak")
 
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -319,11 +332,11 @@ class b1Controller {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        this.token = token.data
                         return await this.PatchJournalEntries(docNum, point)
                     }
                     return { status: false, message: token.message }
                 } else {
+                    console.log(get(err, 'response.data.error'), '  bu Hisob Nuqtasi')
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });
@@ -347,12 +360,12 @@ class b1Controller {
                 }
             ]
         }
-        console.log(`B1SESSION=${this.token}; ROUTEID=.node1`)
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
-                Cookie: `B1SESSION=${this.token}; ROUTEID=.node1`,
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
             },
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -367,7 +380,6 @@ class b1Controller {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        this.token = token.data
                         return await this.DownPayments({ list, data })
                     }
                     return { status: false, message: token.message }

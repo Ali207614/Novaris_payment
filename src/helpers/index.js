@@ -25,7 +25,20 @@ function formatterCurrency(
 }
 
 
-
+function saveSession(cookie) {
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "session.json"),
+        JSON.stringify(cookie, null, 4)
+    );
+}
+function getSession() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "session.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : {};
+    return docs
+}
 
 function writeUser(userData) {
     let users = infoUser();
@@ -330,5 +343,7 @@ module.exports = {
     deleteSubMenu,
     infoSubMenu,
     infoAllSubMenu,
-    infoAllMenu
+    infoAllMenu,
+    saveSession,
+    getSession
 }

@@ -1,691 +1,816 @@
 [
-  {
-    "EmployeeID": 172,
-    "LastName": "Ferro",
-    "FirstName": "Admin",
-    "JobTitle": "Admin",
-    "SalesPersonCode": null,
-    "MobilePhone": "998333569256",
-    "chat_id": 7113959453,
-    "is_active": true,
-    "user_step": 1,
-    "back": [],
-    "creationDate": "2024-03-13T08:50:07.338Z",
-    "lastMessageId": 34535,
-    "selectedAdminUserChatId": "5979205450",
-    "selectedAdminUserStatus": "emp",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  },
-  {
-    "EmployeeID": 9,
-    "LastName": "Usmonov",
-    "FirstName": "Behzod",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977524040",
-    "chat_id": 937011370,
-    "is_active": true,
-    "user_step": 1,
-    "back": [],
-    "creationDate": "2024-03-13T08:50:08.055Z",
-    "update": false,
-    "currentUserRole": "Bajaruvchi",
-    "lastMessageId": 40335,
-    "selectedInfoMenu": "Rad etilgan so'rovlar",
-    "notConfirmId": "YLPkfcAwo8",
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  },
-  {
-    "EmployeeID": 5,
-    "LastName": "Gulyamov",
-    "FirstName": "Bobur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998999102030",
-    "chat_id": 5979205450,
-    "is_active": true,
-    "user_step": 2,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 5979205450,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
+    {
+        "EmployeeID": 172,
+        "LastName": "Ferro",
+        "FirstName": "Admin",
+        "JobTitle": "Admin",
+        "SalesPersonCode": null,
+        "MobilePhone": "998333569256",
+        "chat_id": 7113959453,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-03-13T08:50:07.338Z",
+        "lastMessageId": 34535,
+        "selectedAdminUserChatId": "5979205450",
+        "selectedAdminUserStatus": "emp"
+    },
+    {
+        "EmployeeID": 9,
+        "LastName": "Usmonov",
+        "FirstName": "Behzod",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977524040",
+        "chat_id": 937011370,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-03-13T08:50:08.055Z",
+        "update": false,
+        "currentUserRole": "Bajaruvchi",
+        "lastMessageId": 34948,
+        "selectedInfoMenu": "Rad etilgan so'rovlar",
+        "notConfirmId": "YLPkfcAwo8",
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 5,
+        "LastName": "Gulyamov",
+        "FirstName": "Bobur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998999102030",
+        "chat_id": 5979205450,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-03-13T08:50:14.016Z",
+        "update": false,
+        "currentUserRole": "Tasdiqlovchi",
+        "lastMessageId": 34942,
+        "selectedInfoMenu": "Rad etilgan so'rovlar",
+        "notConfirmId": "gKVQdUN9bp",
+        "confirmationStatus": true
+    },
+    {
+        "EmployeeID": 112,
+        "LastName": "Qo'chqorov",
+        "FirstName": "Behzod",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998946259256",
+        "chat_id": 110697090,
+        "is_active": true,
+        "user_step": 2,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-03-13T08:50:14.016Z",
-    "update": false,
-    "currentUserRole": "Tasdiqlovchi",
-    "lastMessageId": 40330,
-    "selectedInfoMenu": "Bajarilgan so'rovlar",
-    "notConfirmId": "PPBcTMmlbE",
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  },
-  {
-    "EmployeeID": 112,
-    "LastName": "Qo'chqorov",
-    "FirstName": "Behzod",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998946259256",
-    "chat_id": 110697090,
-    "is_active": true,
-    "user_step": 201,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 110697090,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlanishi kutilayotgan so’rovlar"
-                }
-              ],
-              [
-                {
-                  "text": "Bajarilishi kutilaytogan so’rovlar"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 3
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 110697090,
+                    "text": "Xodim"
                 },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 200
-      }
-    ],
-    "creationDate": "2024-03-13T08:50:19.619Z",
-    "update": true,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 40377,
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "currentDataId": "uA1nzjJKAr",
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 70,
-    "LastName": "Islomov",
-    "FirstName": "Ibrohim",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998935341566",
-    "chat_id": 688272621,
-    "is_active": true,
-    "user_step": 23,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 688272621,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xorijiy xarid"
+                "step": 2
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xorijiy xarid"
+                                },
+                                {
+                                    "text": "Mahalliy xarid"
+                                },
+                                {
+                                    "text": "To'lov/Xarajat"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Shartnoma"
+                                },
+                                {
+                                    "text": "Narx chiqarish"
+                                },
+                                {
+                                    "text": "Boshqa"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Mahalliy xarid"
+                "step": 10
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xorijiy xarid konteyner buyurtmasi"
+                                },
+                                {
+                                    "text": "Xorijiy xarid mashina buyurtmasi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Xorijiy xarid tovar buyurtmasi"
+                                },
+                                {
+                                    "text": "Xorijiy xarid to'lovi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Chetga pul chiqarish"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "To'lov/Xarajat"
-                }
-              ],
-              [
-                {
-                  "text": "Narx chiqarish"
+                "step": 11
+            },
+            {
+                "text": "Hujjatni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Исходящий платеж(Chiquvchi to'lov)"
+                                },
+                                {
+                                    "text": "Входящий платеж(Kiruvchi to'lov)"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Boshqa"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 10
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xorijiy xarid konteyner buyurtmasi"
+                "step": 20
+            },
+            {
+                "text": "Document Type ni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Schet(Hisob)"
+                                },
+                                {
+                                    "text": "Поставщик (Yetkazib beruvchi)"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Xorijiy xarid mashina buyurtmasi"
-                }
-              ],
-              [
-                {
-                  "text": "Xorijiy xarid tovar buyurtmasi"
+                "step": 21
+            },
+            {
+                "text": "Поставщик (Yetkazib beruvchi) ni tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Fudong Handan Zavod",
+                                    "callback_data": "partnerSearch#Fudong Handan Z"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
                 },
-                {
-                  "text": "Xorijiy xarid to'lovi"
-                }
-              ],
-              [
-                {
-                  "text": "Chetga pul chiqarish"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 11
-      },
-      {
-        "text": "Hujjatni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Исходящий платеж(Chiquvchi to'lov)"
+                "step": 22
+            },
+            {
+                "text": "To'lovni turini tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Bo'nak",
+                                    "callback_data": "type#1"
+                                },
+                                {
+                                    "text": "To'lov",
+                                    "callback_data": "type#2"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
                 },
-                {
-                  "text": "Входящий платеж(Kiruvchi to'lov)"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 20
-      },
-      {
-        "text": "Document Type ni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Schet(Hisob)"
+                "step": 2300
+            },
+            {
+                "text": "1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Поставщик (Yetkazib beruvchi)"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 21
-      },
-      {
-        "text": "Поставщик (Yetkazib beruvchi) ni tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "Fudong Handan Zavod",
-                  "callback_data": "partnerSearch#Fudong Handan Z"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 22
-      },
-      {
-        "text": "To'lovni turini tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "Bo'nak",
-                  "callback_data": "type#1"
+                "step": 23
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Menular mavjud emas"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "To'lov",
-                  "callback_data": "type#2"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 2300
-      },
-      {
-        "text": "Schetni tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "23416AO - 1529",
-                  "callback_data": "purchase#3687"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 2301
-      },
-      {
-        "text": "1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 23
-      }
-    ],
-    "creationDate": "2024-03-13T09:53:00.550Z",
-    "update": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 35006,
-    "currentDataId": "PlBrRTJfOL",
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  },
-  {
-    "EmployeeID": 19,
-    "LastName": "Jumaev",
-    "FirstName": "Temur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998909592034",
-    "chat_id": 652825438,
-    "is_active": true,
-    "user_step": 2,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 652825438,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlanishi kutilayotgan so’rovlar"
-                }
-              ],
-              [
-                {
-                  "text": "Bajarilishi kutilaytogan so’rovlar"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 3
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-03-13T08:50:19.619Z",
+        "update": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 43532,
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "currentDataId": "4oc1dXmvMr",
+        "waitingUpdateStatus": false,
+        "extraWaiting": false
+    },
+    {
+        "EmployeeID": 70,
+        "LastName": "Islomov",
+        "FirstName": "Ibrohim",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998935341566",
+        "chat_id": 688272621,
+        "is_active": true,
+        "user_step": 23,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 200
-      },
-      {
-        "text": "O'zgartirasizmi ?\n\nXodim : Jumaev Temur\nBajaruvchi : Gulyamov Bobur ✅\nID : 236\nMenu : To'lov/Xarajat\nSubMenu : Naqd/Karta hisobidan to'lov/xarajat\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nDocument Type : Schet(Hisob)\nSchet(Hisob) : 5090 - D777 kassasi (UZS)\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5010 - Korxona (UZS)\nValyuta : UZS\nValyuta kursi : 12 500 UZS\nSumma : 50 000 UZS\nHisob Nuqtasi : 777-DO'KON\nStatya DDS : false\nIzoh : Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov\n\n\n----------------------\nSapga qo'shildi ✅",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "Sap Document",
-                  "callback_data": "updateWaiting#1"
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 688272621,
+                    "text": "Xodim"
                 },
-                {
-                  "text": "Document Type (Schet,Поставщик)",
-                  "callback_data": "updateWaiting#2"
-                }
-              ],
-              [
-                {
-                  "text": "Sana",
-                  "callback_data": "updateWaiting#3"
+                "step": 2
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xorijiy xarid"
+                                },
+                                {
+                                    "text": "Mahalliy xarid"
+                                },
+                                {
+                                    "text": "To'lov/Xarajat"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Narx chiqarish"
+                                },
+                                {
+                                    "text": "Boshqa"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Valyuta kursi",
-                  "callback_data": "updateWaiting#7"
-                }
-              ],
-              [
-                {
-                  "text": "Summa",
-                  "callback_data": "updateWaiting#8"
+                "step": 10
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xorijiy xarid konteyner buyurtmasi"
+                                },
+                                {
+                                    "text": "Xorijiy xarid mashina buyurtmasi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Xorijiy xarid tovar buyurtmasi"
+                                },
+                                {
+                                    "text": "Xorijiy xarid to'lovi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Chetga pul chiqarish"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Izoh",
-                  "callback_data": "updateWaiting#9"
-                }
-              ],
-              [
-                {
-                  "text": "Hisob Nuqtasi",
-                  "callback_data": "updateWaiting#10"
+                "step": 11
+            },
+            {
+                "text": "Hujjatni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Исходящий платеж(Chiquvchi to'lov)"
+                                },
+                                {
+                                    "text": "Входящий платеж(Kiruvchi to'lov)"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "To'lov usullari , Valyuta , Schet",
-                  "callback_data": "updateWaiting#4"
-                }
-              ],
-              [
-                {
-                  "text": "Statya DDS",
-                  "callback_data": "updateWaiting#11"
+                "step": 20
+            },
+            {
+                "text": "Document Type ni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Schet(Hisob)"
+                                },
+                                {
+                                    "text": "Поставщик (Yetkazib beruvchi)"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
                 },
-                {
-                  "text": "Bekor qilish",
-                  "callback_data": "updateWaiting#0#undefined"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 201
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-03-13T09:58:02.383Z",
-    "update": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 35059,
-    "currentDataId": "LeicnrM3lA",
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "waitingUpdateStatus": false,
-    "extraWaiting": true
-  },
-  {
-    "EmployeeID": 170,
-    "LastName": "Madaminov",
-    "FirstName": "Muhammadali",
-    "SalesPersonCode": null,
-    "MobilePhone": "998903367448",
-    "chat_id": 561932032,
-    "is_active": true,
-    "user_step": 1,
-    "back": [],
-    "creationDate": "2024-03-13T10:20:58.808Z",
-    "update": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 39402,
-    "currentDataId": "yunUq08Ps5",
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  }
+                "step": 21
+            },
+            {
+                "text": "Поставщик (Yetkazib beruvchi) ni tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Fudong Handan Zavod",
+                                    "callback_data": "partnerSearch#Fudong Handan Z"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 22
+            },
+            {
+                "text": "To'lovni turini tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Bo'nak",
+                                    "callback_data": "type#1"
+                                },
+                                {
+                                    "text": "To'lov",
+                                    "callback_data": "type#2"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 2300
+            },
+            {
+                "text": "Schetni tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "23416AO - 1529",
+                                    "callback_data": "purchase#3687"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 2301
+            },
+            {
+                "text": "1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 23
+            }
+        ],
+        "creationDate": "2024-03-13T09:53:00.550Z",
+        "update": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 35006,
+        "currentDataId": "PlBrRTJfOL",
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "waitingUpdateStatus": false,
+        "extraWaiting": false
+    },
+    {
+        "EmployeeID": 19,
+        "LastName": "Jumaev",
+        "FirstName": "Temur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998909592034",
+        "chat_id": 652825438,
+        "is_active": true,
+        "user_step": 2,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 652825438,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlanishi kutilayotgan so’rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajarilishi kutilaytogan so’rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 3
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 200
+            },
+            {
+                "text": "O'zgartirasizmi ?\n\nXodim : Jumaev Temur\nBajaruvchi : Gulyamov Bobur ✅\nID : 236\nMenu : To'lov/Xarajat\nSubMenu : Naqd/Karta hisobidan to'lov/xarajat\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nDocument Type : Schet(Hisob)\nSchet(Hisob) : 5090 - D777 kassasi (UZS)\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5010 - Korxona (UZS)\nValyuta : UZS\nValyuta kursi : 12 500 UZS\nSumma : 50 000 UZS\nHisob Nuqtasi : 777-DO'KON\nStatya DDS : false\nIzoh : Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov\n\n\n----------------------\nSapga qo'shildi ✅",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Sap Document",
+                                    "callback_data": "updateWaiting#1"
+                                },
+                                {
+                                    "text": "Document Type (Schet,Поставщик)",
+                                    "callback_data": "updateWaiting#2"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Sana",
+                                    "callback_data": "updateWaiting#3"
+                                },
+                                {
+                                    "text": "Valyuta kursi",
+                                    "callback_data": "updateWaiting#7"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Summa",
+                                    "callback_data": "updateWaiting#8"
+                                },
+                                {
+                                    "text": "Izoh",
+                                    "callback_data": "updateWaiting#9"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Hisob Nuqtasi",
+                                    "callback_data": "updateWaiting#10"
+                                },
+                                {
+                                    "text": "To'lov usullari , Valyuta , Schet",
+                                    "callback_data": "updateWaiting#4"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Statya DDS",
+                                    "callback_data": "updateWaiting#11"
+                                },
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "updateWaiting#0#undefined"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 201
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-03-13T09:58:02.383Z",
+        "update": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 35059,
+        "currentDataId": "LeicnrM3lA",
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "waitingUpdateStatus": false,
+        "extraWaiting": true
+    },
+    {
+        "EmployeeID": 170,
+        "LastName": "Madaminov",
+        "FirstName": "Muhammadali",
+        "SalesPersonCode": null,
+        "MobilePhone": "998903367448",
+        "chat_id": 561932032,
+        "is_active": true,
+        "user_step": 300,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Bajaruvchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            }
+        ],
+        "creationDate": "2024-03-13T10:20:58.808Z",
+        "update": false,
+        "currentUserRole": "Bajaruvchi",
+        "lastMessageId": 44623,
+        "currentDataId": "rbCMulTwl3",
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "selectedInfoMenu": "Bajarilmagan so'rovlar"
+    }
 ]

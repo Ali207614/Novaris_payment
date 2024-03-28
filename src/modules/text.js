@@ -1532,7 +1532,7 @@ let tolovHarajatBtn = {
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 61)
-            updateData(get(dataCurUser, 'id'), { subMenu: `Bank hisobidan to'lov/xarajat` })
+            updateData(get(dataCurUser, 'id'), { subMenu: `Bank Bojxonaga oid xarajatlar` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
         middleware: ({ chat_id }) => {

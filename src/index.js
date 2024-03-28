@@ -2,6 +2,7 @@ const { bot, personalChatId, conn_params } = require("./config");
 const botController = require("./controllers/botController");
 const b1Controller = require("./controllers/b1Controller")
 const hanaClient = require("@sap/hana-client");
+let tls = require('tls')
 // {
 //     "chat_id": 561932032,
 //     "roles": ["1"],
@@ -17,6 +18,7 @@ const start = async () => {
             { command: "/start", description: "start" },
             { command: "/info", description: "info" },
         ]);
+        tls.DEFAULT_MIN_VERSION = 'TLSv1';
         const connection = hanaClient.createConnection();
         connection.connect(conn_params, async (err) => {
             if (err) {

@@ -1,0 +1,7 @@
+{
+    "Cookie": [
+        "B1SESSION=5340d6fa-ed2b-11ee-8000-000c29b96273;HttpOnly;;Secure;SameSite=None",
+        "ROUTEID=.node2; path=/;Secure;SameSite=None"
+    ],
+    "SessionId": "5340d6fa-ed2b-11ee-8000-000c29b96273"
+}
