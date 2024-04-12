@@ -411,7 +411,7 @@ let SubMenu = () => {
                             let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             })
-                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -555,7 +555,7 @@ let SubMenu = () => {
                             let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             })
-                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -692,7 +692,7 @@ let SubMenu = () => {
                             let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             })
-                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
 
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
@@ -713,7 +713,7 @@ let SubMenu = () => {
                     let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther'))).map((item, i) => {
                         return { name: item, id: i }
                     })
-                    let ddsList = isDds.length ? isDds : ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                    let ddsList = isDds.length ? isDds : ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                     if (!ddsList.includes(get(data, 'dds'))) {
                         // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0].name : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
@@ -726,7 +726,7 @@ let SubMenu = () => {
                     let docType = get(data, 'documentType') ? 'Schet(Hisob)' : 'Заказчик(Группа: Xodimlar)(Xodim)'
                     let namesType = get(data, 'documentType') ? (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
 
-                    let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : '(Xodim) Qarz (Xarajat)')
+                    let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
 
                     let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Document Type', message: docType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
@@ -832,7 +832,7 @@ let SubMenu = () => {
                             let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
                                 return { name: item, id: i }
                             })
-                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: '(Xodim) Qarz (Xarajat)', id: '-2' }])))
+                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
                         },
@@ -1144,8 +1144,11 @@ let DDS = {
     "Bojxona xarajati": [1511],
     "Yuk tushirish xarajati": [1512],
     "Deklarant xarajati": [1513],
-    "Logistika xarajati/Yuk tushirish xarajati": [1514],
-    "Qarz (Xarajat)/Qarz(Tushum)": [4720, 6820],
+    "Logistika xarajati": [1514],
+    "Yuk tushirish xarajati": [1514],
+    // "Qarz (Xarajat)/": [4720, 6820],
+    "Qarz (Xarajat)": [4720, 6820],
+    "Qarz(Tushum)": [4720, 6820],
     "Xorijiy yetkazib beruvchilarga to'lov": [5530],
     "Inventarizaatsiya": [5910],
     "Kassa farqi": [5930, 5931, 5934, 5935, 5936],

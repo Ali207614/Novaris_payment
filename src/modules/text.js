@@ -22,7 +22,7 @@ let firtBtnExecutor = () => {
         newBtnMenu[item] = {
             selfExecuteFn: ({ chat_id, }) => {
                 updateStep(chat_id, 2)
-                updateUser(chat_id, { currentUserRole: menuList[i] })
+                updateUser(chat_id, { currentUserRole: menuList[i], update: false })
                 updateBack(chat_id, { text: "Assalomu Aleykum", btn: mainMenuByRoles({ chat_id }), step: 1 })
             },
             middleware: ({ chat_id }) => {
