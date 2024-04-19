@@ -1139,26 +1139,29 @@ let SubMenu = () => {
 
 
 
+
 let DDS = {
-    "Asosiy vosita haridi": [0820, 0830],
+    "Yetkazib berish xarajati": [9227, 9226, 9225, 9224],
+    "Agentlar yo'lkirasi": [9229],
+    "Boshqa xarajat": [9499, 9437],
+    "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
     "Yuk tushirish xarajati": [1512],
     "Deklarant xarajati": [1513],
     "Logistika xarajati": [1514],
     "Yuk tushirish xarajati": [1514],
-    // "Qarz (Xarajat)/": [4720, 6820],
-    "Qarz (Xarajat)": [4720, 6820],
-    "Qarz(Tushum)": [4720, 6820],
+    "Qarz (Xarajat)": [6820, 4730, 4790, 4890, 7820],
+    "Qarz(Tushum)": [6820, 4730, 4790, 4890, 7820],
     "Xorijiy yetkazib beruvchilarga to'lov": [5530],
     "Inventarizaatsiya": [5910],
     "Kassa farqi": [5930, 5931, 5934, 5935, 5936],
     "Mahalliy yetkazib beruvchilarga to'lov": [6010],
     "Soliq(Xarajat)": [6410, 6411, 6412, 6413, 6414, 6415],
-    "Oylik(Xarajat)": [6710],
+    "Oylik(Xarajat)": [6710, 9456],
     "Dividend(Xarajat)": [8710],
     "Bonus xodimlar(Xarajat)": [9150],
     "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228],
-    "Distribyutsiya xodimlar yo'lkirasi": [9229],
+    "Distribyutsiya xodimlar yo'lkirasi": [],
     "Asosiy vosita chiqib ketishidan foyda": [9310],
     "Boshqa tushumlar(Tushum)": [9390],
     "Adminstrativ xarajat": [9440],
@@ -1182,7 +1185,8 @@ let DDS = {
     "TMB xaridi(Xarajat)": [9460],
     "Xizmat safari xarajati": [9461],
     "Yoqilg'i(Xarajat)": [9462],
-    "Kurs farqi": [9465, 9540, 9620],
+    "Kurs farqi": [9540, 9620],
+    "Kassa farqi": [9465],
     "Naqd(Tushum)": [5020, 5021, 5030, 5031, 5040, 5041, 5060, 5061, 5080, 5081, 5090, 5091],
     "Karta(Tushum)": [5020, 5030, 5040, 5060, 5080, 5090],
     "Terminal(Tushum)": [5022, 5032, 5045, 5064, 5082, 5092],
@@ -1256,15 +1260,12 @@ let accounts = {
     'AV/TMB': [
         '0820',
         '0830',
-        9210,
         9310,
         9460
     ],
     'Kassa farq': [
         5930,
         5931,
-        5932,
-        5933,
         5934,
         5935,
         5936
@@ -1283,18 +1284,15 @@ let accounts = {
         7820
     ],
     "Tovar qabuli": [
-        1510,
         1511,
         1512,
         1513,
         1514,
-        9463,
-        9464
+        5910
     ],
     "Doimiy xarajat": [
         3120,
         5530,
-        5540,
         5611,
         8710,
         9390,
@@ -1332,7 +1330,8 @@ let accounts = {
         9226,
         9227,
         9228,
-        9229
+        9229,
+        9230
     ]
 }
 
@@ -1341,7 +1340,6 @@ let subAccounts50 = {
     'Karta': [5050, 5052, 5053, 5054, 5063, 5072],
     'Terminal': [5022, 5032, 5045, 5064, 5082, 5092],
     "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093]
-
 }
 
 
@@ -1495,7 +1493,6 @@ let excelFnFormatData = ({ main }) => {
     }
     return { objects, schema }
 }
-
 module.exports = {
     Menu,
     SubMenu,

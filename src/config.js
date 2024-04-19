@@ -7,6 +7,7 @@ let conn_params = {
     uid: 'SYSTEM',
     pwd: 'GrvYL8YX',
 };
+let jiraToken = 'ATATT3xFfGF07HpGwaRH3zDiYxJJ3DTYa6y4vxLP3EN7eijyQdrG90NitT3ZCtU4ees0TxlW60VG00FW8d_9ujKziHy7KQhFqdPgjamm2x9qyPC9q21MUN7HClluixc8lZO5dXdXHVUUPxBtUk7_m4FAjEahno1Z-6NbxBiQt-5TdUHWpUF0sCA=6FDB20C2'
 
 let bot = new TelegramAPi(token, {
     polling: true,
@@ -14,4 +15,4 @@ let bot = new TelegramAPi(token, {
 
 let personalChatId = '561932032'
 
-module.exports = { bot, personalChatId, conn_params }
+module.exports = { bot, personalChatId, conn_params, jiraToken }
