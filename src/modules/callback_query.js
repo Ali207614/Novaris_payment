@@ -977,8 +977,7 @@ let mahalliyXaridCallback = {
                 try {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let list = infoData().find(item => item.id == user.currentDataId)
-
-                    let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                    let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                         return { name: item, id: i }
                     })
                     let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))

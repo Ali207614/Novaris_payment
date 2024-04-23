@@ -1,1 +1,1691 @@
-[]
+[
+    {
+        "id": "jGsV190e6g",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T06:49:15.523Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 308,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Doimiy xarajat",
+        "accountList": [
+            {
+                "name": "9450 - Marketing xarajati",
+                "id": "9450",
+                "num": 1
+            },
+            {
+                "name": "9449 - Kommunal xarajatlar",
+                "id": "9449",
+                "num": 2
+            },
+            {
+                "name": "9448 - Kapital Remont",
+                "id": "9448",
+                "num": 3
+            },
+            {
+                "name": "9447 - Joriy remont",
+                "id": "9447",
+                "num": 4
+            },
+            {
+                "name": "9446 - Internet xarajati",
+                "id": "9446",
+                "num": 5
+            },
+            {
+                "name": "9445 - Ijara xodimlarga",
+                "id": "9445",
+                "num": 6
+            },
+            {
+                "name": "9444 - Ijara korxona",
+                "id": "9444",
+                "num": 7
+            },
+            {
+                "name": "9499 - Boshqa xarajatlar",
+                "id": "9499",
+                "num": 8
+            },
+            {
+                "name": "9390 - Boshqa operatsion daromadlar",
+                "id": "9390",
+                "num": 9
+            },
+            {
+                "name": "8710 - Hisobot davrining taqsimlanmagan foydasi (qoplanmagan zarari)",
+                "id": "8710",
+                "num": 10
+            },
+            {
+                "name": "9465 - Kassa kamomadi boyicha foyda/zarar",
+                "id": "9465",
+                "num": 11
+            },
+            {
+                "name": "9454 - Operatsion xarajatlar",
+                "id": "9454",
+                "num": 12
+            },
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 13
+            },
+            {
+                "name": "9441 - Bank xizmati",
+                "id": "9441",
+                "num": 14
+            },
+            {
+                "name": "9437 - Boshqa operatsion xarajatlar (Korxona umumiy)",
+                "id": "9437",
+                "num": 15
+            },
+            {
+                "name": "5611 - Bank bilan naqd pulli operatsiyalar uchun SUM",
+                "id": "5611",
+                "num": 16
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 17
+            },
+            {
+                "name": "9440 - Administrativ xarajat",
+                "id": "9440",
+                "num": 18
+            },
+            {
+                "name": "9462 - Yoqilg'i",
+                "id": "9462",
+                "num": 19
+            },
+            {
+                "name": "9461 - Xizmat safari xarajati",
+                "id": "9461",
+                "num": 20
+            },
+            {
+                "name": "9459 - Texnik xizmat",
+                "id": "9459",
+                "num": 21
+            },
+            {
+                "name": "9458 - Pul o'tkazish xarajati",
+                "id": "9458",
+                "num": 22
+            },
+            {
+                "name": "9457 - Dastur xarajati",
+                "id": "9457",
+                "num": 23
+            },
+            {
+                "name": "9455 - Ovqat",
+                "id": "9455",
+                "num": 24
+            },
+            {
+                "name": "9453 - Moddiy yordam",
+                "id": "9453",
+                "num": 25
+            },
+            {
+                "name": "9452 - Aloqa xizmati",
+                "id": "9452",
+                "num": 26
+            },
+            {
+                "name": "9451 - Mehmondorchilik",
+                "id": "9451",
+                "num": 27
+            }
+        ],
+        "accountCodeOther": "9454",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 3
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 4
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "10",
+        "currencyRate": "12630.000000",
+        "comment": "10",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "Operatsion xarajatlar",
+                "id": 0
+            }
+        ],
+        "dds": "Operatsion xarajatlar",
+        "confirmativeSendlist": [
+            {
+                "messageId": 51887,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T06:50:04.349Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T06:50:06.601Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T06:50:18.157Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "OLLYXupKcW",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T06:52:00.107Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 310,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Doimiy xarajat",
+        "accountList": [
+            {
+                "name": "9450 - Marketing xarajati",
+                "id": "9450",
+                "num": 1
+            },
+            {
+                "name": "9449 - Kommunal xarajatlar",
+                "id": "9449",
+                "num": 2
+            },
+            {
+                "name": "9448 - Kapital Remont",
+                "id": "9448",
+                "num": 3
+            },
+            {
+                "name": "9447 - Joriy remont",
+                "id": "9447",
+                "num": 4
+            },
+            {
+                "name": "9446 - Internet xarajati",
+                "id": "9446",
+                "num": 5
+            },
+            {
+                "name": "9445 - Ijara xodimlarga",
+                "id": "9445",
+                "num": 6
+            },
+            {
+                "name": "9444 - Ijara korxona",
+                "id": "9444",
+                "num": 7
+            },
+            {
+                "name": "9499 - Boshqa xarajatlar",
+                "id": "9499",
+                "num": 8
+            },
+            {
+                "name": "9390 - Boshqa operatsion daromadlar",
+                "id": "9390",
+                "num": 9
+            },
+            {
+                "name": "8710 - Hisobot davrining taqsimlanmagan foydasi (qoplanmagan zarari)",
+                "id": "8710",
+                "num": 10
+            },
+            {
+                "name": "9465 - Kassa kamomadi boyicha foyda/zarar",
+                "id": "9465",
+                "num": 11
+            },
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 12
+            },
+            {
+                "name": "9441 - Bank xizmati",
+                "id": "9441",
+                "num": 13
+            },
+            {
+                "name": "9437 - Boshqa operatsion xarajatlar (Korxona umumiy)",
+                "id": "9437",
+                "num": 14
+            },
+            {
+                "name": "5611 - Bank bilan naqd pulli operatsiyalar uchun SUM",
+                "id": "5611",
+                "num": 15
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 16
+            },
+            {
+                "name": "9440 - Administrativ xarajat",
+                "id": "9440",
+                "num": 17
+            },
+            {
+                "name": "9462 - Yoqilg'i",
+                "id": "9462",
+                "num": 18
+            },
+            {
+                "name": "9461 - Xizmat safari xarajati",
+                "id": "9461",
+                "num": 19
+            },
+            {
+                "name": "9459 - Texnik xizmat",
+                "id": "9459",
+                "num": 20
+            },
+            {
+                "name": "9458 - Pul o'tkazish xarajati",
+                "id": "9458",
+                "num": 21
+            },
+            {
+                "name": "9457 - Dastur xarajati",
+                "id": "9457",
+                "num": 22
+            },
+            {
+                "name": "9455 - Ovqat",
+                "id": "9455",
+                "num": 23
+            },
+            {
+                "name": "9453 - Moddiy yordam",
+                "id": "9453",
+                "num": 24
+            },
+            {
+                "name": "9452 - Aloqa xizmati",
+                "id": "9452",
+                "num": 25
+            },
+            {
+                "name": "9451 - Mehmondorchilik",
+                "id": "9451",
+                "num": 26
+            },
+            {
+                "name": "9454 - Operatsion xarajatlar",
+                "id": "9454",
+                "num": 27
+            }
+        ],
+        "accountCodeOther": "9441",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 3
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "10",
+        "currencyRate": "12630.000000",
+        "comment": "10",
+        "point": "KORXONA",
+        "ddsList": [
+            {
+                "name": "Bank xizmati(Xarajat)",
+                "id": 0
+            }
+        ],
+        "dds": "Bank xizmati(Xarajat)",
+        "confirmativeSendlist": [
+            {
+                "messageId": 51942,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T06:52:31.096Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T06:52:36.941Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T06:52:50.249Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "AJqYI5hARb",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T06:53:37.252Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 311,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Doimiy xarajat",
+        "accountList": [
+            {
+                "name": "9450 - Marketing xarajati",
+                "id": "9450",
+                "num": 1
+            },
+            {
+                "name": "9449 - Kommunal xarajatlar",
+                "id": "9449",
+                "num": 2
+            },
+            {
+                "name": "9448 - Kapital Remont",
+                "id": "9448",
+                "num": 3
+            },
+            {
+                "name": "9447 - Joriy remont",
+                "id": "9447",
+                "num": 4
+            },
+            {
+                "name": "9446 - Internet xarajati",
+                "id": "9446",
+                "num": 5
+            },
+            {
+                "name": "9445 - Ijara xodimlarga",
+                "id": "9445",
+                "num": 6
+            },
+            {
+                "name": "9444 - Ijara korxona",
+                "id": "9444",
+                "num": 7
+            },
+            {
+                "name": "9499 - Boshqa xarajatlar",
+                "id": "9499",
+                "num": 8
+            },
+            {
+                "name": "9390 - Boshqa operatsion daromadlar",
+                "id": "9390",
+                "num": 9
+            },
+            {
+                "name": "8710 - Hisobot davrining taqsimlanmagan foydasi (qoplanmagan zarari)",
+                "id": "8710",
+                "num": 10
+            },
+            {
+                "name": "9465 - Kassa kamomadi boyicha foyda/zarar",
+                "id": "9465",
+                "num": 11
+            },
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 12
+            },
+            {
+                "name": "9437 - Boshqa operatsion xarajatlar (Korxona umumiy)",
+                "id": "9437",
+                "num": 13
+            },
+            {
+                "name": "5611 - Bank bilan naqd pulli operatsiyalar uchun SUM",
+                "id": "5611",
+                "num": 14
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 15
+            },
+            {
+                "name": "9440 - Administrativ xarajat",
+                "id": "9440",
+                "num": 16
+            },
+            {
+                "name": "9462 - Yoqilg'i",
+                "id": "9462",
+                "num": 17
+            },
+            {
+                "name": "9461 - Xizmat safari xarajati",
+                "id": "9461",
+                "num": 18
+            },
+            {
+                "name": "9459 - Texnik xizmat",
+                "id": "9459",
+                "num": 19
+            },
+            {
+                "name": "9458 - Pul o'tkazish xarajati",
+                "id": "9458",
+                "num": 20
+            },
+            {
+                "name": "9457 - Dastur xarajati",
+                "id": "9457",
+                "num": 21
+            },
+            {
+                "name": "9455 - Ovqat",
+                "id": "9455",
+                "num": 22
+            },
+            {
+                "name": "9453 - Moddiy yordam",
+                "id": "9453",
+                "num": 23
+            },
+            {
+                "name": "9452 - Aloqa xizmati",
+                "id": "9452",
+                "num": 24
+            },
+            {
+                "name": "9451 - Mehmondorchilik",
+                "id": "9451",
+                "num": 25
+            },
+            {
+                "name": "9454 - Operatsion xarajatlar",
+                "id": "9454",
+                "num": 26
+            },
+            {
+                "name": "9441 - Bank xizmati",
+                "id": "9441",
+                "num": 27
+            }
+        ],
+        "accountCodeOther": "5611",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "UZS",
+        "accountList50": [
+            {
+                "name": "5070 - Ofis kassa (UZS)",
+                "id": "5070",
+                "num": 1
+            },
+            {
+                "name": "5010 - Korxona (UZS)",
+                "id": "5010",
+                "num": 2
+            }
+        ],
+        "accountCode": "5010",
+        "summa": "100000",
+        "currencyRate": "12630.000000",
+        "comment": "01",
+        "point": "64",
+        "ddsList": [
+            {
+                "name": "-",
+                "id": 0
+            }
+        ],
+        "dds": "-",
+        "confirmativeSendlist": [
+            {
+                "messageId": 51986,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T06:57:34.597Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T06:57:42.706Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T06:57:48.585Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "fnxviFbvTH",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T06:58:19.411Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 312,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Doimiy xarajat",
+        "accountList": [
+            {
+                "name": "9450 - Marketing xarajati",
+                "id": "9450",
+                "num": 1
+            },
+            {
+                "name": "9449 - Kommunal xarajatlar",
+                "id": "9449",
+                "num": 2
+            },
+            {
+                "name": "9448 - Kapital Remont",
+                "id": "9448",
+                "num": 3
+            },
+            {
+                "name": "9447 - Joriy remont",
+                "id": "9447",
+                "num": 4
+            },
+            {
+                "name": "9446 - Internet xarajati",
+                "id": "9446",
+                "num": 5
+            },
+            {
+                "name": "9445 - Ijara xodimlarga",
+                "id": "9445",
+                "num": 6
+            },
+            {
+                "name": "9444 - Ijara korxona",
+                "id": "9444",
+                "num": 7
+            },
+            {
+                "name": "9499 - Boshqa xarajatlar",
+                "id": "9499",
+                "num": 8
+            },
+            {
+                "name": "9390 - Boshqa operatsion daromadlar",
+                "id": "9390",
+                "num": 9
+            },
+            {
+                "name": "8710 - Hisobot davrining taqsimlanmagan foydasi (qoplanmagan zarari)",
+                "id": "8710",
+                "num": 10
+            },
+            {
+                "name": "9465 - Kassa kamomadi boyicha foyda/zarar",
+                "id": "9465",
+                "num": 11
+            },
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 12
+            },
+            {
+                "name": "9437 - Boshqa operatsion xarajatlar (Korxona umumiy)",
+                "id": "9437",
+                "num": 13
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 14
+            },
+            {
+                "name": "9440 - Administrativ xarajat",
+                "id": "9440",
+                "num": 15
+            },
+            {
+                "name": "9462 - Yoqilg'i",
+                "id": "9462",
+                "num": 16
+            },
+            {
+                "name": "9461 - Xizmat safari xarajati",
+                "id": "9461",
+                "num": 17
+            },
+            {
+                "name": "9459 - Texnik xizmat",
+                "id": "9459",
+                "num": 18
+            },
+            {
+                "name": "9458 - Pul o'tkazish xarajati",
+                "id": "9458",
+                "num": 19
+            },
+            {
+                "name": "9457 - Dastur xarajati",
+                "id": "9457",
+                "num": 20
+            },
+            {
+                "name": "9455 - Ovqat",
+                "id": "9455",
+                "num": 21
+            },
+            {
+                "name": "9453 - Moddiy yordam",
+                "id": "9453",
+                "num": 22
+            },
+            {
+                "name": "9452 - Aloqa xizmati",
+                "id": "9452",
+                "num": 23
+            },
+            {
+                "name": "9451 - Mehmondorchilik",
+                "id": "9451",
+                "num": 24
+            },
+            {
+                "name": "9454 - Operatsion xarajatlar",
+                "id": "9454",
+                "num": 25
+            },
+            {
+                "name": "9441 - Bank xizmati",
+                "id": "9441",
+                "num": 26
+            },
+            {
+                "name": "5611 - Bank bilan naqd pulli operatsiyalar uchun SUM",
+                "id": "5611",
+                "num": 27
+            }
+        ],
+        "accountCodeOther": "3120",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 3
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "100",
+        "currencyRate": "12630.000000",
+        "comment": "test",
+        "point": "O",
+        "ddsList": [
+            {
+                "name": "-",
+                "id": 0
+            }
+        ],
+        "dds": "-",
+        "confirmativeSendlist": [
+            {
+                "messageId": 52029,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T07:00:08.111Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T07:00:15.272Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T07:00:19.513Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "6KQ14eO5R9",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:00:46.908Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 313,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Yetkazish",
+        "accountList": [
+            {
+                "name": "9228 - Yetkazib berish xarajati (Distribyutsiya)",
+                "id": "9228",
+                "num": 1
+            },
+            {
+                "name": "9223 - Yetkazib berish xarajati (777)",
+                "id": "9223",
+                "num": 2
+            },
+            {
+                "name": "9222 - Yetkazib berish xarajati (Qo'qon-01)",
+                "id": "9222",
+                "num": 3
+            },
+            {
+                "name": "9221 - Yetkazib berish xarajati (64)",
+                "id": "9221",
+                "num": 4
+            },
+            {
+                "name": "9220 - Yetkazib berish xarajati (12)",
+                "id": "9220",
+                "num": 5
+            },
+            {
+                "name": "9160 - Yetkazib berish xarajati",
+                "id": "9160",
+                "num": 6
+            },
+            {
+                "name": "9229 - Yo'lkira xarajati (Distribyutsiya)",
+                "id": "9229",
+                "num": 7
+            },
+            {
+                "name": "9227 - Yetkazib berish xarajati (Korxona umumiy)",
+                "id": "9227",
+                "num": 8
+            },
+            {
+                "name": "9224 - Yetkazib berish xarajati (Ombor)",
+                "id": "9224",
+                "num": 9
+            },
+            {
+                "name": "9225 - Yetkazib berish xarajati (Garaj)",
+                "id": "9225",
+                "num": 10
+            },
+            {
+                "name": "9226 - Yetkazib berish xarajati (Ofis)",
+                "id": "9226",
+                "num": 11
+            },
+            {
+                "name": "9230 - Yo'lkira xarajati (Qo'qon)",
+                "id": "9230",
+                "num": 12
+            }
+        ],
+        "accountCodeOther": "9230",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 3
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 4
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "10",
+        "currencyRate": "12630.000000",
+        "comment": "10",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "Agentlar yo'lkirasi",
+                "id": 0
+            }
+        ],
+        "dds": "Agentlar yo'lkirasi",
+        "confirmativeSendlist": [
+            {
+                "messageId": 52090,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T07:09:22.464Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T07:09:33.031Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T07:09:37.983Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "ZtfJJDXzaH",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:10:06.854Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 314,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": false,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Yetkazish",
+        "accountList": [
+            {
+                "name": "9228 - Yetkazib berish xarajati (Distribyutsiya)",
+                "id": "9228",
+                "num": 1
+            },
+            {
+                "name": "9223 - Yetkazib berish xarajati (777)",
+                "id": "9223",
+                "num": 2
+            },
+            {
+                "name": "9222 - Yetkazib berish xarajati (Qo'qon-01)",
+                "id": "9222",
+                "num": 3
+            },
+            {
+                "name": "9221 - Yetkazib berish xarajati (64)",
+                "id": "9221",
+                "num": 4
+            },
+            {
+                "name": "9220 - Yetkazib berish xarajati (12)",
+                "id": "9220",
+                "num": 5
+            },
+            {
+                "name": "9160 - Yetkazib berish xarajati",
+                "id": "9160",
+                "num": 6
+            },
+            {
+                "name": "9229 - Yo'lkira xarajati (Distribyutsiya)",
+                "id": "9229",
+                "num": 7
+            },
+            {
+                "name": "9227 - Yetkazib berish xarajati (Korxona umumiy)",
+                "id": "9227",
+                "num": 8
+            },
+            {
+                "name": "9224 - Yetkazib berish xarajati (Ombor)",
+                "id": "9224",
+                "num": 9
+            },
+            {
+                "name": "9225 - Yetkazib berish xarajati (Garaj)",
+                "id": "9225",
+                "num": 10
+            },
+            {
+                "name": "9226 - Yetkazib berish xarajati (Ofis)",
+                "id": "9226",
+                "num": 11
+            },
+            {
+                "name": "9230 - Yo'lkira xarajati (Qo'qon)",
+                "id": "9230",
+                "num": 12
+            }
+        ],
+        "accountCodeOther": "9227",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 3
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "10",
+        "currencyRate": "12630.000000",
+        "comment": "20",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "Yetkazib berish xarajati",
+                "id": 0
+            }
+        ],
+        "dds": "Yetkazib berish xarajati",
+        "confirmativeSendlist": [
+            {
+                "messageId": 52192,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T07:26:23.582Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T07:26:27.901Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T07:26:33.214Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "RgCxr998gv",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 561932032,
+        "creationDate": "2024-04-23T07:25:30.015Z",
+        "full": false,
+        "is_delete": false,
+        "ID": 315,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": true,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Naqd",
+        "accountList": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 2
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 3
+            },
+            {
+                "name": "5070 - Ofis kassa (UZS)",
+                "id": "5070",
+                "num": 4
+            },
+            {
+                "name": "5030 - D64 kassasi (UZS)",
+                "id": "5030",
+                "num": 5
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 6
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 7
+            },
+            {
+                "name": "5043 - Korxona R (UZS)",
+                "id": "5043",
+                "num": 8
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 9
+            },
+            {
+                "name": "5062 - Dis kassa (UZS)",
+                "id": "5062",
+                "num": 10
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 11
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 12
+            },
+            {
+                "name": "5060 - Ombor kassasi (UZS)",
+                "id": "5060",
+                "num": 13
+            },
+            {
+                "name": "5020 - D12 kassasi (UZS)",
+                "id": "5020",
+                "num": 14
+            },
+            {
+                "name": "5080 - Distribyutsiya (UZS)",
+                "id": "5080",
+                "num": 15
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 16
+            },
+            {
+                "name": "5040 - Q01 kassasi (UZS)",
+                "id": "5040",
+                "num": 17
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 18
+            },
+            {
+                "name": "5090 - D777 kassasi (UZS)",
+                "id": "5090",
+                "num": 19
+            },
+            {
+                "name": "5010 - Korxona (UZS)",
+                "id": "5010",
+                "num": 20
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 21
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 22
+            }
+        ],
+        "accountCodeOther": "5011",
+        "startDate": "2023.11.20",
+        "endDate": "2023.11.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 3
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "2",
+        "currencyRate": "12330.000000",
+        "comment": "s",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "-",
+                "id": 0
+            }
+        ],
+        "dds": "-"
+    },
+    {
+        "id": "ZbUMqdPFwU",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:30:16.527Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 317,
+        "subMenu": "Naqd/Karta hisobidan to'lov/xarajat",
+        "payment": true,
+        "documentType": true,
+        "vendorId": "",
+        "purchase": false,
+        "vendorList": [],
+        "purchaseOrders": [],
+        "accountType": "Naqd",
+        "accountList": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 2
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 3
+            },
+            {
+                "name": "5070 - Ofis kassa (UZS)",
+                "id": "5070",
+                "num": 4
+            },
+            {
+                "name": "5030 - D64 kassasi (UZS)",
+                "id": "5030",
+                "num": 5
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 6
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 7
+            },
+            {
+                "name": "5043 - Korxona R (UZS)",
+                "id": "5043",
+                "num": 8
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 9
+            },
+            {
+                "name": "5062 - Dis kassa (UZS)",
+                "id": "5062",
+                "num": 10
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 11
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 12
+            },
+            {
+                "name": "5060 - Ombor kassasi (UZS)",
+                "id": "5060",
+                "num": 13
+            },
+            {
+                "name": "5020 - D12 kassasi (UZS)",
+                "id": "5020",
+                "num": 14
+            },
+            {
+                "name": "5080 - Distribyutsiya (UZS)",
+                "id": "5080",
+                "num": 15
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 16
+            },
+            {
+                "name": "5040 - Q01 kassasi (UZS)",
+                "id": "5040",
+                "num": 17
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 18
+            },
+            {
+                "name": "5090 - D777 kassasi (UZS)",
+                "id": "5090",
+                "num": 19
+            },
+            {
+                "name": "5010 - Korxona (UZS)",
+                "id": "5010",
+                "num": 20
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 21
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 22
+            }
+        ],
+        "accountCodeOther": "5070",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "UZS",
+        "accountList50": [
+            {
+                "name": "5070 - Ofis kassa (UZS)",
+                "id": "5070",
+                "num": 1
+            },
+            {
+                "name": "5010 - Korxona (UZS)",
+                "id": "5010",
+                "num": 2
+            }
+        ],
+        "accountCode": "5010",
+        "summa": "10000",
+        "currencyRate": "12630.000000",
+        "comment": "10",
+        "point": "Q",
+        "ddsList": [
+            {
+                "name": "-",
+                "id": 0
+            }
+        ],
+        "dds": "-",
+        "confirmativeSendlist": [
+            {
+                "messageId": 52347,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T07:30:57.174Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T07:30:58.928Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T07:31:05.027Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "jV1rsN7K8Y",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:38:33.387Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 319,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.04.23",
+        "endDate": "2024.03.20",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 1
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 2
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 3
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 4
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 5
+            }
+        ],
+        "accountCode": "5011",
+        "summa": "1000",
+        "currencyRate": "12630.000000",
+        "comment": "10",
+        "point": "O",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "confirmativeSendlist": [
+            {
+                "messageId": 52425,
+                "chatId": 5979205450
+            }
+        ],
+        "stateTime": {
+            "create": "2024-04-23T07:39:04.497Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-04-23T07:39:09.932Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-04-23T07:39:14.452Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 5979205450,
+            "status": true
+        },
+        "jira": true,
+        "sapB1": false,
+        "sap": true,
+        "executer": {
+            "chat_id": 937011370,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "yKpiCsZsIj",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:39:26.529Z",
+        "full": false,
+        "is_delete": false,
+        "ID": 320
+    },
+    {
+        "id": "VxwuraFMas",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:39:37.789Z",
+        "full": false,
+        "is_delete": false,
+        "ID": 321,
+        "subMenu": "Chetga pul chiqarish"
+    },
+    {
+        "id": "8Bv689IivD",
+        "menu": 3,
+        "menuName": "To'lov/Xarajat",
+        "chat_id": 110697090,
+        "creationDate": "2024-04-23T07:39:48.550Z",
+        "full": false,
+        "is_delete": false,
+        "ID": 322,
+        "subMenu": "Bank hisobidan to'lov/xarajat"
+    }
+]

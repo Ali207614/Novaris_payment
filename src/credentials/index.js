@@ -408,9 +408,10 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                                 return { name: item, id: i }
                             })
+
                             let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                             return await dataConfirmBtnEmp(chat_id,
                                 ddsList, 2, 'dds')
@@ -428,7 +429,7 @@ let SubMenu = () => {
                 infoFn: ({ chat_id, id }) => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
-                    let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
+                    let ddsList = Object.keys(DDS)?.filter(item => DDS[item].map(item => item.toString()).includes(get(data, 'accountCodeOther', '')))
                     if (!ddsList.includes(get(data, 'dds'))) {
                         // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
@@ -552,7 +553,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                                 return { name: item, id: i }
                             })
                             let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
@@ -689,7 +690,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                                 return { name: item, id: i }
                             })
                             let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
@@ -710,7 +711,7 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
-                    let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther'))).map((item, i) => {
+                    let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(data, 'accountCodeOther', ''))).map((item, i) => {
                         return { name: item, id: i }
                     })
                     let ddsList = isDds.length ? isDds : ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
@@ -829,7 +830,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(list, 'accountCodeOther'))).map((item, i) => {
+                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                                 return { name: item, id: i }
                             })
                             let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
@@ -850,7 +851,7 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
-                    let ddsList = Object.keys(DDS)?.filter(item => DDS[item].includes(+get(data, 'accountCodeOther')))
+                    let ddsList = Object.keys(DDS)?.filter(item => DDS[item].map(item => item.toString()).includes(get(data, 'accountCodeOther', '')))
                     if (!ddsList.includes(get(data, 'dds'))) {
                         // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
@@ -1141,8 +1142,8 @@ let SubMenu = () => {
 
 
 let DDS = {
-    "Yetkazib berish xarajati": [9227, 9226, 9225, 9224],
-    "Agentlar yo'lkirasi": [9229],
+    "-": [5011, 5012, 5044, 5051, 5071, 3120, 5010, 5043, 5062, 5070, 5611],
+    "Agentlar yo'lkirasi": [9229, 9230],
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
@@ -1154,18 +1155,17 @@ let DDS = {
     "Qarz(Tushum)": [6820, 4730, 4790, 4890, 7820],
     "Xorijiy yetkazib beruvchilarga to'lov": [5530],
     "Inventarizaatsiya": [5910],
-    "Kassa farqi": [5930, 5931, 5934, 5935, 5936],
+    "Kassa farqi": [5930, 5931, 5934, 5935, 5936, 9465],
     "Mahalliy yetkazib beruvchilarga to'lov": [6010],
     "Soliq(Xarajat)": [6410, 6411, 6412, 6413, 6414, 6415],
     "Oylik(Xarajat)": [6710, 9456],
     "Dividend(Xarajat)": [8710],
     "Bonus xodimlar(Xarajat)": [9150],
-    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228],
-    "Distribyutsiya xodimlar yo'lkirasi": [],
+    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224],
     "Asosiy vosita chiqib ketishidan foyda": [9310],
     "Boshqa tushumlar(Tushum)": [9390],
     "Adminstrativ xarajat": [9440],
-    "Bank xizmati (Xarajat)": [9441],
+    "Bank xizmati(Xarajat)": [9441],
     "Ijara korxona(Xarajat)": [9444],
     "Ijara xodimlarga(Xarajat)": [9445],
     "Internet xarajati": [9446],
@@ -1176,7 +1176,7 @@ let DDS = {
     "Mehmondorchilik(Xarajat)": [9451],
     "Aloqa xizmati": [9452],
     "Moddiy yordam(Xarajat)": [9453],
-    "Operatsion xarajatlar ": [9454],
+    "Operatsion xarajatlar": [9454],
     "Ovqat(Xarajat)": [9455],
     "Dastur xarajati": [9457],
     "Pul o'tkazish xarajati": [9458],
@@ -1186,7 +1186,6 @@ let DDS = {
     "Xizmat safari xarajati": [9461],
     "Yoqilg'i(Xarajat)": [9462],
     "Kurs farqi": [9540, 9620],
-    "Kassa farqi": [9465],
     "Naqd(Tushum)": [5020, 5021, 5030, 5031, 5040, 5041, 5060, 5061, 5080, 5081, 5090, 5091],
     "Karta(Tushum)": [5020, 5030, 5040, 5060, 5080, 5090],
     "Terminal(Tushum)": [5022, 5032, 5045, 5064, 5082, 5092],
@@ -1276,7 +1275,6 @@ let accounts = {
         9456
     ],
     "Qarz": [
-        4720,
         4730,
         4790,
         4890,
