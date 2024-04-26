@@ -17,6 +17,9 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
     if (result.length > 10) {
         nextCount = list.slice(prev, +next + 1).length - list.slice(prev, next).length
         list = list.slice(prev, next)
+        if (user) {
+            updateUser(chat_id, { pagination: { next, prev } })
+        }
     }
     for (let i = 0; i < list.length; i += count) {
         let el = list
@@ -36,7 +39,8 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         'newSubMenu': 'paginationNewSubMenu',
         'updateMenus': 'paginationUpdateMenus',
         "selectMenus": 'paginationSelectMenus',
-        "purchase": 'paginationPurchase'
+        "purchase": 'paginationPurchase',
+        "selectGroup": "paginationSelectGroup"
     }
 
     if (result.length > 10) {

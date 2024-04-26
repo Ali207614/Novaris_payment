@@ -47,6 +47,40 @@ function writeUser(userData) {
         JSON.stringify([...users, { ...userData, creationDate: new Date() }], null, 4)
     );
 }
+function infoGroup() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "group.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : {};
+    return docs
+}
+function writeGroup(userData) {
+    let users = infoGroup();
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "group.json"),
+        JSON.stringify([...users, { ...userData }], null, 4)
+    );
+}
+function deleteGroup(id) {
+    let users = infoGroup();
+    users = users.filter((item) => item.id != id);
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "group.json"),
+        JSON.stringify(users, null, 4)
+    );
+}
+
+function updateGroup(id, userData) {
+    let users = infoGroup();
+    let index = users.findIndex((item) => item.id == id);
+    users[index] = { ...users[index], ...userData };
+
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "group.json"),
+        JSON.stringify(users, null, 4)
+    );
+}
 
 function updateUser(chat_id, userData) {
     let users = infoUser();
@@ -345,5 +379,9 @@ module.exports = {
     infoAllSubMenu,
     infoAllMenu,
     saveSession,
-    getSession
+    getSession,
+    writeGroup,
+    deleteGroup,
+    updateGroup,
+    infoGroup,
 }

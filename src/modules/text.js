@@ -2396,6 +2396,32 @@ let adminBtn = {
         },
     },
 
+    "Gruppalar": {
+        selfExecuteFn: ({ chat_id, }) => {
+            bot.sendMessage(chat_id, "Gruppalar", empDynamicBtn());
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
+            updateStep(chat_id, 7000)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Menuni tanlang"
+            },
+            btn: async ({ chat_id, }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
+                    return { ...item, name: `${item.name}` }
+                })
+                return dataConfirmBtnEmp(chat_id,
+                    menuList
+                    , 1, 'menuGroup')
+            },
+        },
+    }
 
 }
 

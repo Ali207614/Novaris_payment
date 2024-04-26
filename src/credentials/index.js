@@ -322,26 +322,6 @@ let SubMenu = () => {
                         btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
                         step: '90'
                     },
-                    // {
-                    //     id: 2,
-                    //     name: "Schet",
-                    //     message: 'Schetni tanlang',
-                    //     btn: async ({ chat_id }) => {
-                    //         let user = infoUser().find(item => item.chat_id == chat_id)
-                    //         let list = infoData().find(item => item.id == user?.currentDataId)
-                    //         if (!list?.accountList.length) {
-                    //             let b1Account15 = await b1Controller.getAccount15({ status: true })
-                    //             let accountList15 = b1Account15?.map((item, i) => {
-                    //                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
-                    //             })
-                    //             list.accountList = accountList15
-                    //             updateData(user?.currentDataId, { accountList: accountList15, payment: false })
-                    //         }
-                    //         let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
-                    //         return btn
-                    //     },
-                    //     step: '64'
-                    // },
                     {
                         id: 3,
                         name: "Sana",
@@ -444,6 +424,27 @@ let SubMenu = () => {
                     return info
                 }
             },
+            {
+                name: "Chetga pul chiqarish (Bank)",
+                comment: "Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n",
+                update: [
+                    {
+                        id: 1,
+                        name: "Izoh",
+                        message: `Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n`,
+                        btn: () => empDynamicBtn(),
+                        step: '13'
+                    }
+                ],
+                updateLine: 1,
+                lastStep: 14,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                    return info
+                },
+            }
         ],
         2: [
             {

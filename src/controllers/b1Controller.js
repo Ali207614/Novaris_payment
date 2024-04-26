@@ -28,7 +28,6 @@ class b1Controller {
             })
             return { status: true };
         }).catch(err => {
-            console.log(get(err, 'response.data'), ' bu auth')
             return { status: false, message: get(err, 'response.data.error.message.value') }
         });
     }
@@ -231,10 +230,8 @@ class b1Controller {
                     if (token.status) {
                         return await this.executePayments({ list, cred })
                     }
-                    console.log(token, ' bu token')
                     return { status: false, message: token.message }
                 } else {
-                    console.log(get(err, 'response.data.error'))
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });
@@ -290,9 +287,7 @@ class b1Controller {
         if (!point) {
             return
         }
-        console.log('point ', point)
         let journalEntry = await this.getJournalEntries(docNum)
-        console.log(journalEntry, ' bu journalEntry')
         if (!get(journalEntry, '[0].TransId')) {
             return
         }
@@ -305,7 +300,6 @@ class b1Controller {
                 }
             ]
         }
-        console.log(body, ' bu body')
 
 
         const axios = Axios.create({
@@ -332,7 +326,6 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    console.log(get(err, 'response.data.error'), '  bu Hisob Nuqtasi')
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });
@@ -380,7 +373,6 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    console.log(get(err, 'response.data.error'), ' bu vendorpaymetns 383')
                     return { status: false, message: get(err, 'response.data.error.message.value') };
                 }
             });

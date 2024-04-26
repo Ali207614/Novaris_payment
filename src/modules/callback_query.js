@@ -3,7 +3,7 @@ const { bot } = require("../config");
 const b1Controller = require("../controllers/b1Controller");
 const jiraController = require("../controllers/jiraController");
 let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb, newMenu, payType50 } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu } = require("../helpers");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executerListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { mainMenuByRoles } = require("../keyboards/keyboards");
@@ -28,7 +28,6 @@ let xorijiyXaridCallback = {
                 let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                 let confirmativeSendlist = []
-                console.log(accessChatId, ' bu chat id')
                 for (let i = 0; i < accessChatId.length; i++) {
                     let send = await bot.sendMessage(accessChatId[i], dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btnConfirmative)
                     confirmativeSendlist.push({ messageId: send.message_id, chatId: accessChatId[i] })
@@ -214,6 +213,19 @@ let xorijiyXaridCallback = {
                         str += `Jira\n${text}\n`
                     }
                     if (get(list, 'sap')) {
+                        let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+                        let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                        let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
+
+                        for (let i = 0; i < specialGroup.length; i++) {
+                            bot.sendMessage(specialGroup[i].id, 'Success').then((data) => {
+                            }).catch(e => {
+                                if (get(e, 'response.body.error_code') == 403) {
+                                    deleteGroup(specialGroup[i].id)
+                                }
+                            })
+                        }
+
                         str += `Sapga qo'shildi ✅`
                     }
                     else if (get(list, 'sap') === false) {
@@ -1242,7 +1254,6 @@ let adminCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
-
                 if (SubMenu()[data[1]]) {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     return `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`
@@ -1521,10 +1532,6 @@ let adminCallback = {
                     updateMenu(data[1], { isDelete: true })
                     return `Asosiy Menu O'chirildi ✅`
                 }
-                // else if (get(user, 'adminType') == 'change' && menu?.length == 0) {
-                //     updateMenu(data[1], { status: !mainMenu?.status })
-                //     return `Asosiy Menu ${!mainMenu?.status ? 'active qilindi ✅' : 'ne active qilindi ❌'}`
-                // }
                 return menu?.length ? "Menuni tanlang" : 'Menular mavjud emas'
             },
             btn: async ({ chat_id, data }) => {
@@ -1747,6 +1754,146 @@ let adminCallback = {
             },
         },
     },
+
+    "menuGroup": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateStep(chat_id, 7001)
+            let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
+                return { ...item, name: `${item.name}` }
+            })
+            updateBack(chat_id, {
+                text: `Menuni tanlang`, btn: await dataConfirmBtnEmp(chat_id,
+                    menuList
+                    , 1, 'menuGroup'), step: 7000
+            })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 7000
+        },
+        next: {
+            text: async ({ chat_id, data }) => {
+                if (SubMenu()[data[1]]) {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    return `Sub menuni tanlang`
+                }
+                return "Mavjud emas"
+
+            },
+            btn: async ({ chat_id, data }) => {
+                if (SubMenu()[data[1]]) {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    return dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
+                        return { name: `${item.name}`, id: `${data[1]}#${item.id}` }
+                    }), 1, 'subMenuGroup')
+                }
+                return empDynamicBtn()
+            },
+        },
+    },
+    "subMenuGroup": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateStep(chat_id, 7002)
+            updateBack(chat_id, {
+                text: `Sub menuni tanlang`, btn: await dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
+                    return { name: `${item.name}`, id: `${data[1]}#${item.id}` }
+                }), 1, 'subMenuGroup'), step: 7001
+            })
+            updateUser(chat_id, { selectGroup: { menu: data[1], subMenu: data[2] } })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 7001
+        },
+        next: {
+            text: async ({ chat_id, data }) => {
+                let groups = infoGroup()
+                if (groups.length) {
+                    return 'Gruppani tanlang'
+                }
+                return 'Mavjud emas'
+
+            },
+            btn: async ({ chat_id, data }) => {
+                let groups = infoGroup()
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                if (groups.length) {
+
+                    return await dataConfirmBtnEmp(chat_id, groups.map((item, i) => {
+                        let permissonList = get(item, 'permissions', {})[get(user, 'selectGroup.menu')]
+                        console.log(permissonList)
+                        return { name: `${item.title} ${permissonList?.find(el => el == get(user, 'selectGroup.subMenu')) ? "✅" : ""}`, id: `${item.id}` }
+                    }), 1, 'selectGroup')
+                }
+                return empDynamicBtn()
+            },
+        },
+    },
+    "paginationSelectGroup": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Gruppani tanlang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+
+                let groups = infoGroup()
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                return await dataConfirmBtnEmp(chat_id, groups.map((item, i) => {
+                    let permissonList = get(item, 'permissions', {})[get(user, 'selectGroup.menu')]
+                    return { name: `${item.title} ${permissonList?.find(el => el == get(user, 'selectGroup.subMenu')) ? "✅" : ""}`, id: `${item.id}` }
+                }), 1, 'selectGroup', pagination)
+            },
+            update: true
+        },
+    },
+
+    "selectGroup": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let group = infoGroup().find(item => item.id == data[1])
+            let permissonList = get(group, 'permissions', {})[get(user, 'selectGroup.menu')] || []
+            let filteredList = permissonList.find(item => item == get(user, 'selectGroup.subMenu')) ? permissonList.filter(item => item != get(user, 'selectGroup.subMenu')) : [...permissonList, get(user, 'selectGroup.subMenu')]
+            updateGroup(data[1], {
+                permissions: {
+                    ...get(group, 'permissions', {}), ...Object.fromEntries(
+                        [
+                            [get(user, 'selectGroup.menu'),
+                                filteredList]
+                        ]
+                    )
+                }
+            })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 7002
+        },
+        next: {
+            text: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                return `Gruppani tanlang`
+            },
+            btn: async ({ chat_id, data, msg }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let pagination = { prev: get(user, 'pagination.prev'), next: get(user, 'pagination.next') }
+                let groups = infoGroup()
+                return await dataConfirmBtnEmp(chat_id, groups.map((item, i) => {
+                    let permissonList = get(item, 'permissions', {})[get(user, 'selectGroup.menu')]
+                    return { name: `${item.title} ${permissonList?.find(el => el == get(user, 'selectGroup.subMenu')) ? "✅" : ""}`, id: `${item.id}` }
+                }), 1, 'selectGroup', pagination)
+            },
+            update: true
+        },
+    }
 
 }
 

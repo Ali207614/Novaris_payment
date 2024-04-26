@@ -1,7 +1,7 @@
 const { get } = require("lodash");
 let { bot } = require("../config");
 const {
-    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson
+    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup
 } = require("../helpers");
 const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
@@ -20,20 +20,30 @@ class botConroller {
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
             if (msg.text == "/start") {
-                bot.sendMessage(
-                    chat_id,
-                    "Assalomu Aleykum",
-                    !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
-                );
-
-                if (get(user, "user_step")) {
-                    updateUser(chat_id, {
-                        back: [], update: false, confirmationStatus: false, waitingUpdateStatus: false,
-                        extraWaiting: false
-                    })
-                    updateStep(chat_id, 1)
-                    deleteAllInvalidData({ chat_id })
+                if (get(msg, 'chat.type', '') == 'group' && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
+                    writeGroup(get(msg, 'chat', {}))
+                    bot.sendMessage(get(msg, 'chat.id'), "Qo'shildi ✅")
                 }
+                else if (get(msg, 'chat.type', '') != 'group') {
+                    bot.sendMessage(
+                        chat_id,
+                        "Assalomu Aleykum",
+                        !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
+                    );
+                    if (get(user, "user_step")) {
+                        updateUser(chat_id, {
+                            back: [], update: false, confirmationStatus: false, waitingUpdateStatus: false,
+                            extraWaiting: false
+                        })
+                        updateStep(chat_id, 1)
+                        deleteAllInvalidData({ chat_id })
+                    }
+                }
+
+            }
+            else if (msg.text == '/delete' && get(msg, 'chat.type', '') == 'group' && infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
+                deleteGroup(get(msg, 'chat.id'))
+                bot.sendMessage(get(msg, 'chat.id'), "O'chirildi ❌")
             }
             else if (
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
@@ -84,8 +94,8 @@ class botConroller {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data }) : undefined
                         if (execute?.next) {
                             let user = infoUser().find(item => item.chat_id == chat_id)
-                            let botInfo = await execute?.next?.update ? bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +user.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data }) : undefined) }) : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data }) : undefined) :
-                                bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data }) : undefined))
+                            let botInfo = await execute?.next?.update ? bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +user.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) }) : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
+                                bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined))
                             let botId = await botInfo
                             updateUser(chat_id, { lastMessageId: botId.message_id })
                         }

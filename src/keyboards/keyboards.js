@@ -156,6 +156,9 @@ const adminKeyboard = {
             [
                 {
                     text: "Menular"
+                },
+                {
+                    text: "Gruppalar"
                 }
             ]
         ],

@@ -18,13 +18,13 @@ const start = async () => {
             { command: "/start", description: "start" },
             { command: "/info", description: "info" },
         ]);
+
         tls.DEFAULT_MIN_VERSION = 'TLSv1';
         const connection = hanaClient.createConnection();
         connection.connect(conn_params, async (err) => {
             if (err) {
                 bot.sendMessage("561932032", `Connection error ${err}`);
             } else {
-
                 bot.on("text", async (msg) => {
                     let chat_id = msg.chat.id;
                     await botController.text(msg, chat_id)
