@@ -99,7 +99,7 @@ let xorijiyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             if (msgText.length > 3) {
                 let user = infoUser().find(item => item.chat_id == chat_id)
-                updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni ismini yozing`, btn: empDynamicBtn(), step: 21 })
+                updateBack(chat_id, { text: `Yetkazib beruvchi ni ismini yozing`, btn: empDynamicBtn(), step: 21 })
                 let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [101, 106])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
@@ -121,11 +121,11 @@ let xorijiyXaridStep = {
                 if (msgText.length > 3) {
                     if (data?.vendorList?.length) {
                         updateStep(chat_id, 22)
-                        return `Поставщик (Yetkazib beruvchi) ni tanlang`
+                        return `Yetkazib beruvchi ni tanlang`
                     }
-                    return `Поставщик (Yetkazib beruvchi) mavjud emas`
+                    return `Yetkazib beruvchi mavjud emas`
                 }
-                return `Поставщик (Yetkazib beruvchi) ni ismi 3 ta harfdan katta bo'lishi kerak`
+                return `Yetkazib beruvchi ni ismi 3 ta harfdan katta bo'lishi kerak`
 
             },
             btn: async ({ chat_id, msgText }) => {
@@ -144,7 +144,7 @@ let xorijiyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 23 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 23 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -155,8 +155,8 @@ let xorijiyXaridStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
                 let count = 0
                 for (let i = 0; i < msgText.length; i++) {
@@ -185,8 +185,8 @@ let xorijiyXaridStep = {
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
 
                 let count = 0
@@ -279,7 +279,7 @@ let xorijiyXaridStep = {
                     return `${jira.message}`
                 }
 
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `Schetni tanlang`
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `Hisobni tanlang`
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -432,7 +432,7 @@ let mahalliyXaridStep = {
             if (msgText.length > 3) {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateStep(chat_id, 43)
-                updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni ismini yozing`, btn: empDynamicBtn(), step: 42 })
+                updateBack(chat_id, { text: `Yetkazib beruvchi ni ismini yozing`, btn: empDynamicBtn(), step: 42 })
                 let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [113, 107])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName} - ${item.GroupCode == 113 ? 'Korxona' : "Do'kon"}`, id: item.CardCode, num: i + 1 }
@@ -452,11 +452,11 @@ let mahalliyXaridStep = {
 
                 if (msgText.length > 3) {
                     if (data?.vendorList?.length) {
-                        return `Поставщик (Yetkazib beruvchi) ni tanlang`
+                        return `Yetkazib beruvchi ni tanlang`
                     }
-                    return `Поставщик (Yetkazib beruvchi) mavjud emas`
+                    return `Yetkazib beruvchi mavjud emas`
                 }
-                return `Поставщик (Yetkazib beruvchi) ni ismi 3 ta harfdan katta bo'lishi kerak`
+                return `Yetkazib beruvchi ni ismi 3 ta harfdan katta bo'lishi kerak`
 
             },
             btn: async ({ chat_id, msgText }) => {
@@ -475,7 +475,7 @@ let mahalliyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 44 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 44 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -486,8 +486,8 @@ let mahalliyXaridStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
 
                 let count = 0
@@ -519,8 +519,8 @@ let mahalliyXaridStep = {
 
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
 
                 let count = 0
@@ -646,13 +646,13 @@ let mahalliyXaridStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                // return (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?') : (user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob nuqtasini tanlang')
+
                 return (user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob nuqtasini tanlang')
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                // let btn = (list.menu == 1 && list.menuName == 'Xorijiy xarid') ? await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp') : (user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'))
+
                 let btn = (user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'))
                 updateUser(chat_id, { update: false })
                 return btn
@@ -691,7 +691,7 @@ let tolovHarajatStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 65 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 65 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -702,8 +702,8 @@ let tolovHarajatStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
 
                 let count = 0
@@ -733,8 +733,8 @@ let tolovHarajatStep = {
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  :`, '')
+                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
                 msgText = msgText.split(' ').filter(item => item)
 
                 let count = 0
@@ -763,7 +763,7 @@ let tolovHarajatStep = {
             if (msgText.length > 3) {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateStep(chat_id, 43)
-                updateBack(chat_id, { text: `Заказчик(Группа: Xodimlar)(Xodim) ni ismini yozing`, btn: empDynamicBtn(), step: 80 })
+                updateBack(chat_id, { text: `Xodimning ismini yozing`, btn: empDynamicBtn(), step: 80 })
                 let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [111])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
@@ -783,11 +783,11 @@ let tolovHarajatStep = {
 
                 if (msgText.length > 3) {
                     if (data?.vendorList?.length) {
-                        return `Заказчик(Группа: Xodimlar)(Xodim) ni tanlang`
+                        return `Xodim ni tanlang`
                     }
-                    return `Заказчик(Группа: Xodimlar)(Xodim) mavjud emas`
+                    return `Xodim mavjud emas`
                 }
-                return `Заказчик(Группа: Xodimlar)(Xodim) ni ismi 3 ta harfdan katta bo'lishi kerak`
+                return `Xodim ni ismi 3 ta harfdan katta bo'lishi kerak`
 
             },
             btn: async ({ chat_id, msgText }) => {

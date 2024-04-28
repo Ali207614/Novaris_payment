@@ -204,20 +204,20 @@ let SubMenu = () => {
                         id: 1,
                         name: "Sap Document",
                         message: `Hujjatni tanlang`,
-                        btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                        btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
                         step: '20'
                     },
                     // {
                     //     id: 2,
-                    //     name: "Document Type (Schet,Поставщик)",
+                    //     name: "Document Type (Hisob,Yetkazib beruvchi)",
                     //     message: 'Document type ni tanlang',
-                    //     btn: () => empDynamicBtn([`Schet(Hisob)`, `Поставщик (Yetkazib beruvchi)`], 2),
+                    //     btn: () => empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2),
                     //     step: '21'
                     // },
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
                         btn: () => empDynamicBtn(),
                         step: '23'
                     },
@@ -230,8 +230,8 @@ let SubMenu = () => {
                     },
                     {
                         id: 5,
-                        name: "43% schet",
-                        message: `Schetni tanlang`,
+                        name: "43% Hisob",
+                        message: `Hisobni tanlang`,
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let b1Account43 = await b1Controller.getAccount43()
@@ -298,13 +298,13 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
-                    let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                    let paymentType = get(data, 'payment', true) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
                     let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
                     let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                     // accountCodeOther
                     let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
                     let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
                     if (!get(purchase, 'DocEntry')) {
                         info = info.filter(item => item.name != 'Zakupka')
                     }
@@ -319,13 +319,13 @@ let SubMenu = () => {
                         id: 1,
                         name: "Sap Document",
                         message: `Hujjatni tanlang`,
-                        btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                        btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
                         step: '90'
                     },
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -373,7 +373,7 @@ let SubMenu = () => {
                     },
                     {
                         id: 4,
-                        name: "To'lov usullari , Valyuta , Schet",
+                        name: "To'lov usullari , Valyuta , Hisob",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = payType50
@@ -415,12 +415,12 @@ let SubMenu = () => {
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
-                    let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                    let paymentType = get(data, 'payment', false) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
                     let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
                     let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hisob', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -477,20 +477,20 @@ let SubMenu = () => {
                         id: 1,
                         name: "Sap Document",
                         message: `Hujjatni tanlang`,
-                        btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                        btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
                         step: '41'
                     },
                     {
                         id: 2,
                         name: "Yetkazib beruvchi",
-                        message: 'Поставщик (Yetkazib beruvchi) ni ismini yozing',
+                        message: 'Yetkazib beruvchi ni ismini yozing',
                         btn: () => empDynamicBtn(),
                         step: '42'
                     },
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -539,7 +539,7 @@ let SubMenu = () => {
                     },
                     {
                         id: 4,
-                        name: "To'lov usullari , Valyuta , Schet",
+                        name: "To'lov usullari , Valyuta , Hisob",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = payType50
@@ -575,12 +575,12 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
 
-                    let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                    let paymentType = get(data, 'payment', true) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
                     let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
                     let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: `Mahalliy yetkazib beruvchilarga to'lov` }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: `Mahalliy yetkazib beruvchilarga to'lov` }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -615,20 +615,20 @@ let SubMenu = () => {
                         id: 1,
                         name: "Sap Document",
                         message: `Hujjatni tanlang`,
-                        btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                        btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
                         step: '61'
                     },
                     // {
                     //     id: 2,
-                    //     name: "Document Type (Schet,Поставщик)",
+                    //     name: "Document Type (Hisob,Yetkazib beruvchi)",
                     //     message: 'Document type ni tanlang',
-                    //     btn: () => empDynamicBtn([`Schet(Hisob)`, `Заказчик(Группа: Xodimlar)(Xodim)`], 2),
+                    //     btn: () => empDynamicBtn([`Hisob`, `Xodim`], 2),
                     //     step: '62'
                     // },
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -676,7 +676,7 @@ let SubMenu = () => {
                     },
                     {
                         id: 4,
-                        name: "To'lov usullari , Valyuta , Schet",
+                        name: "To'lov usullari , Valyuta , Hisob",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = payType50
@@ -721,16 +721,16 @@ let SubMenu = () => {
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
-                    let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                    let paymentType = get(data, 'payment', false) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
                     let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
                     let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
-                    let docType = get(data, 'documentType') ? 'Schet(Hisob)' : 'Заказчик(Группа: Xodimlar)(Xodim)'
+                    let docType = get(data, 'documentType') ? 'Hisob' : 'Xodim'
                     let namesType = get(data, 'documentType') ? (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
 
                     let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Document Type', message: docType }, { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Document Type', message: docType }, { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -742,13 +742,13 @@ let SubMenu = () => {
                         id: 1,
                         name: "Sap Document",
                         message: `Hujjatni tanlang`,
-                        btn: () => empDynamicBtn([`Исходящий платеж(Chiquvchi to'lov)`, `Входящий платеж(Kiruvchi to'lov)`], 2),
+                        btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
                         step: '90'
                     },
                     // {
                     //     id: 2,
-                    //     name: "Schet",
-                    //     message: 'Schetni tanlang',
+                    //     name: "Hisob",
+                    //     message: 'Hisobni tanlang',
                     //     btn: async ({ chat_id }) => {
                     //         let user = infoUser().find(item => item.chat_id == chat_id)
                     //         let list = infoData().find(item => item.id == user?.currentDataId)
@@ -768,7 +768,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -816,7 +816,7 @@ let SubMenu = () => {
                     },
                     {
                         id: 4,
-                        name: "To'lov usullari , Valyuta , Schet",
+                        name: "To'lov usullari , Valyuta , Hisob",
                         message: `To'lov usullarini tanlang`,
                         btn: async ({ chat_id }) => {
                             let btnList = payType50
@@ -858,12 +858,12 @@ let SubMenu = () => {
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
-                    let paymentType = get(data, 'payment', false) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+                    let paymentType = get(data, 'payment', false) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
                     let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
                     let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Schet(Hisob)', message: namesType }, { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate') }, { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Schet', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hisob', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -1421,7 +1421,7 @@ let excelFnFormatData = ({ main }) => {
     let schema = []
     for (let i = 0; i < main.length; i++) {
         let data = main[i]
-        let paymentType = get(data, 'payment', true) ? `Входящий платеж(Kiruvchi to'lov)` : `Исходящий платеж(Chiquvchi to'lov)`
+        let paymentType = get(data, 'payment', true) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
         let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name || ''
         let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name || ''
         let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
@@ -1442,12 +1442,12 @@ let excelFnFormatData = ({ main }) => {
             { name: 'Tasdiqlovchi', message: `${get(confirmUser, 'LastName', '')} ${get(confirmUser, 'FirstName', '')}` },
             { name: 'Bajaruvchi', message: `${get(executUser, 'LastName', '')} ${get(executUser, 'FirstName', '')}` },
             { name: 'SAP Document', message: paymentType || '' },
-            { name: get(data, 'documentType') ? 'Schet(Hisob)' : 'Yetkazib beruvchi', message: namesType || '' },
+            { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType || '' },
             { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` },
-            { name: `Data registratsiya (To'lov To'lov sanasisi)`, message: get(data, 'startDate', '') },
-            { name: `Data otneseniya (Hisobot To'lov sanasisi)`, message: get(data, 'endDate', '') },
+            { name: `To'lov sanasi`, message: get(data, 'startDate', '') },
+            { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate', '') },
             { name: 'Ticket raqami', message: get(data, 'ticket', '') },
-            { name: 'Schet', message: `${accountName}` },
+            { name: 'Hisob', message: `${accountName}` },
             { name: 'Valyuta', message: get(data, 'currency', '') },
             { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) },
             { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) },

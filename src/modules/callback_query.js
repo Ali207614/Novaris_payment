@@ -409,7 +409,7 @@ let xorijiyXaridCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
-                return `Поставщик (Yetkazib beruvchi) ni tanlang`
+                return `Yetkazib beruvchi ni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -427,7 +427,7 @@ let xorijiyXaridCallback = {
             updateStep(chat_id, 2300)
             let pagination = { prev: 0, next: 10 }
             let btn = await dataConfirmBtnEmp(chat_id, list.vendorList, 1, 'partnerSearch', pagination)
-            updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni tanlang`, btn, step: 22 })
+            updateBack(chat_id, { text: `Yetkazib beruvchi ni tanlang`, btn, step: 22 })
             updateData(user.currentDataId, { vendorId: data[1] })
         },
         middleware: ({ chat_id }) => {
@@ -481,7 +481,7 @@ let xorijiyXaridCallback = {
                     return (get(list, 'purchaseOrders', [])?.length) ? 'Zakupkani tanlang' : 'Mavjud emas'
                 }
                 updateData(user.currentDataId, { purchaseOrders: [], purchase: false })
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -518,7 +518,7 @@ let xorijiyXaridCallback = {
                 let btnList = setEntry.map(item => get(list, 'purchaseOrders', []).find(el => el.DocEntry == item)).map(item => {
                     return { name: `${item.NumAtCard} - ${item.DocNum}`, id: item.DocEntry }
                 })
-                updateBack(chat_id, { text: `Schetni tanlang`, btn: await dataConfirmBtnEmp(chat_id, btnList, 1, 'purchase'), step: 2301 })
+                updateBack(chat_id, { text: `Hisobni tanlang`, btn: await dataConfirmBtnEmp(chat_id, btnList, 1, 'purchase'), step: 2301 })
             }
 
             updateData(user.currentDataId, { purchaseEntry: data[1] })
@@ -531,7 +531,7 @@ let xorijiyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -577,7 +577,7 @@ let xorijiyXaridCallback = {
             else {
                 updateStep(chat_id, 26)
                 let btn = await dataConfirmBtnEmp(chat_id, list.accountList43, 1, 'account')
-                updateBack(chat_id, { text: `Schetni tanlang`, btn, step: 25 })
+                updateBack(chat_id, { text: `Hisobni tanlang`, btn, step: 25 })
             }
             updateData(user.currentDataId, { accountCode: data[1] })
         },
@@ -610,7 +610,7 @@ let xorijiyXaridCallback = {
             else {
                 updateStep(chat_id, 23)
                 let btn = await dataConfirmBtnEmp(chat_id, list.accountList43, 1, 'accountOneStep')
-                updateBack(chat_id, { text: `Schetni tanlang`, btn, step: 21 })
+                updateBack(chat_id, { text: `Hisobni tanlang`, btn, step: 21 })
             }
             updateData(user.currentDataId, { accountCodeOther: data[1] })
         },
@@ -622,7 +622,7 @@ let xorijiyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -644,7 +644,7 @@ let xorijiyXaridCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
-                return `Schetni tanlang`
+                return `Hisobni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -665,7 +665,7 @@ let xorijiyXaridCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
-                return `Schetni tanlang`
+                return `Hisobni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -778,7 +778,7 @@ let mahalliyXaridCallback = {
                 updateStep(chat_id, 44)
                 let pagination = { prev: 0, next: 10 }
                 let btn = await dataConfirmBtnEmp(chat_id, list.vendorList, 1, 'partnerSearch', pagination)
-                updateBack(chat_id, { text: `Поставщик (Yetkazib beruvchi) ni tanlang`, btn, step: 43 })
+                updateBack(chat_id, { text: `Yetkazib beruvchi ni tanlang`, btn, step: 43 })
             }
             updateData(user.currentDataId, { vendorId: data[1] })
         },
@@ -790,7 +790,7 @@ let mahalliyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -853,7 +853,7 @@ let mahalliyXaridCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
-                return `Schetni tanlang`
+                return `Hisobni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -871,7 +871,7 @@ let mahalliyXaridCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
-                return `Schetni tanlang`
+                return `Hisobni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -893,7 +893,7 @@ let mahalliyXaridCallback = {
             else {
                 updateStep(chat_id, 48)
                 let btn = await dataConfirmBtnEmp(chat_id, list?.accountList50.sort((a, b) => a.id - b.id), 1, 'account')
-                updateBack(chat_id, { text: `Schetni tanlang`, btn, step: 47 })
+                updateBack(chat_id, { text: `Hisobni tanlang`, btn, step: 47 })
             }
             updateData(user.currentDataId, { accountCode: data[1] })
         },
@@ -1053,7 +1053,7 @@ let othersCallback = {
             let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                 return { name: item, id: i }
             }), 2, 'accountType')
-            updateBack(chat_id, { text: `Schet turini tanlang`, btn, step: 63 })
+            updateBack(chat_id, { text: `Hisob turini tanlang`, btn, step: 63 })
             let b1Account = await b1Controller.getAccountNo(accountsList)
             let accountList = b1Account?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
@@ -1066,7 +1066,7 @@ let othersCallback = {
         },
         next: {
             text: async ({ chat_id, data }) => {
-                return `Schetni tanlang`
+                return `Hisobni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1086,7 +1086,7 @@ let othersCallback = {
             else {
                 updateStep(chat_id, 65)
                 let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
-                updateBack(chat_id, { text: `Schetni tanlang`, btn, step: 64 })
+                updateBack(chat_id, { text: `Hisobni tanlang`, btn, step: 64 })
             }
             updateData(user.currentDataId, { accountCodeOther: data[1] })
         },
@@ -1098,7 +1098,7 @@ let othersCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)Data registratsiya (To'lov sanasi) Yil.Oy.Kun : 2023.11.20 \n2)Data otneseniya (Hisobot To'lov sanasi) Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -1119,7 +1119,7 @@ let othersCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
-                return `Schet ni tanlang`
+                return `Hisob ni tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1140,7 +1140,7 @@ let othersCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
-                return `Schet turini tanlang`
+                return `Hisob turini tanlang`
             },
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
