@@ -83,12 +83,13 @@ class botConroller {
 
     async callback_query(msg, data, chat_id) {
         try {
+            // console.log(msg, data, chat_id)
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let callbackTree = { ...xorijiyXaridCallback, ...mahalliyXaridCallback, ...othersCallback, ...adminCallback }
             if (user) {
                 if (callbackTree[data[0]]) {
                     let callbackTreeList = [xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback]
-                    let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, msgText: msg.text, id: get(msg, 'message.message_id', 0) }))
+                    let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0) }))
                     execute = execute ? execute[data[0]] : {}
                     if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0) })) {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data }) : undefined
@@ -103,6 +104,7 @@ class botConroller {
                 }
             }
         } catch (err) {
+            console.log(err, ' bu err')
             throw new Error(err);
         }
     }

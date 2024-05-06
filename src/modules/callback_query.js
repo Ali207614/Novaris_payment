@@ -63,7 +63,7 @@ let xorijiyXaridCallback = {
                     let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
                     let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                     for (let i = 0; i < specialGroup.length; i++) {
-                        bot.sendMessage(specialGroup[i].id, dataConfirmText(info, '', chat_id), btnConfirmative).then((data) => {
+                        bot.sendMessage(specialGroup[i].id, dataConfirmText(info, '', chat_id)).then((data) => {
                         }).catch(e => {
                             if (get(e, 'response.body.error_code') == 403) {
                                 deleteGroup(specialGroup[i].id)
@@ -112,11 +112,7 @@ let xorijiyXaridCallback = {
                 return
             }
             else if (data[1] == '1') {
-                if (get(list, 'menuName') == 'Shartnoma') {
-                    updateData(data[2], { executer: { chat_id, status: true }, confirmative: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() }, confirmative: { status: true, date: new Date() } } })
-                } else {
-                    updateData(data[2], { confirmative: { chat_id, status: true }, stateTime: { ...list.stateTime, confirmative: { status: true, date: new Date() } } })
-                }
+
                 let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
                 let btnExecuter = await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmExecuter')
                 for (let i = 0; i < executerList.length; i++) {
@@ -131,11 +127,11 @@ let xorijiyXaridCallback = {
                 bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
                 // group
                 let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
-                let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
+                let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
                 for (let i = 0; i < specialGroup.length; i++) {
-                    bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id), btnExecuter).then((data) => {
+                    bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
                     }).catch(e => {
                         if (get(e, 'response.body.error_code') == 403) {
                             deleteGroup(specialGroup[i].id)
@@ -148,7 +144,7 @@ let xorijiyXaridCallback = {
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
             }
         },
-        middleware: ({ chat_id, id, data }) => {
+        middleware: ({ chat_id, data }) => {
             let list = infoData().find(item => item.id == data[2])
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
@@ -165,9 +161,10 @@ let xorijiyXaridCallback = {
                 }
                 if (data[1] == '1') {
                     if (get(list, 'menuName') == 'Shartnoma') {
+                        updateData(data[2], { executer: { chat_id, status: true }, confirmative: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() }, confirmative: { status: true, date: new Date() } } })
                         return `Tasdiqlandi ✅`
-                    }
-                    else {
+                    } else {
+                        updateData(data[2], { confirmative: { chat_id, status: true }, stateTime: { ...list.stateTime, confirmative: { status: true, date: new Date() } } })
                         return `Tasdiqlandi va Bajaruvchiga jo'natildi  ✅`
                     }
 
@@ -218,7 +215,7 @@ let xorijiyXaridCallback = {
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
             }
         },
-        middleware: ({ chat_id, id, data }) => {
+        middleware: ({ chat_id, data }) => {
             let list = infoData().find(item => item.id == data[2])
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
@@ -271,8 +268,8 @@ let xorijiyXaridCallback = {
                     // group
 
                     let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                    let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
-                    let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
+                    let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                    let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
                     for (let i = 0; i < specialGroup.length; i++) {
                         bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {

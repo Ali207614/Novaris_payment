@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": -4248252476,
+    "title": "FER | Test",
+    "type": "group",
+    "all_members_are_administrators": true,
+    "permissions": {
+      "3": ["2"],
+      "4": ["1"]
+    }
+  },
+  {
+    "id": -4226382446,
+    "title": "test",
+    "type": "group",
+    "all_members_are_administrators": true,
+    "permissions": {
+      "1": ["4"],
+      "4": ["1"]
+    }
+  }
+]
