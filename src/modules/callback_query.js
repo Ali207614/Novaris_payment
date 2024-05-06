@@ -61,9 +61,9 @@ let xorijiyXaridCallback = {
                     let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
                     let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
                     let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
-
+                    let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                     for (let i = 0; i < specialGroup.length; i++) {
-                        bot.sendMessage(specialGroup[i].id, dataConfirmText(info, '', chat_id)).then((data) => {
+                        bot.sendMessage(specialGroup[i].id, dataConfirmText(info, '', chat_id), btnConfirmative).then((data) => {
                         }).catch(e => {
                             if (get(e, 'response.body.error_code') == 403) {
                                 deleteGroup(specialGroup[i].id)
@@ -135,7 +135,7 @@ let xorijiyXaridCallback = {
                 let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
 
                 for (let i = 0; i < specialGroup.length; i++) {
-                    bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                    bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id), btnExecuter).then((data) => {
                     }).catch(e => {
                         if (get(e, 'response.body.error_code') == 403) {
                             deleteGroup(specialGroup[i].id)
@@ -148,8 +148,11 @@ let xorijiyXaridCallback = {
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
             }
         },
-        middleware: ({ chat_id, id }) => {
-            return true
+        middleware: ({ chat_id, id, data }) => {
+            let list = infoData().find(item => item.id == data[2])
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            return accessChatId.find(item => item == chat_id)
         },
         next: {
             text: async ({ chat_id, data }) => {
@@ -209,15 +212,17 @@ let xorijiyXaridCallback = {
                         bot.deleteMessage(chat_id, deleteMessage.message_id)
                     }
                 }
-
             }
             else if (data[1] == '2') {
                 updateStep(chat_id, 5000)
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
             }
         },
-        middleware: ({ chat_id, id }) => {
-            return true
+        middleware: ({ chat_id, id, data }) => {
+            let list = infoData().find(item => item.id == data[2])
+            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            return executerList.find(item => item == chat_id)
         },
         next: {
             text: async ({ chat_id, data }) => {

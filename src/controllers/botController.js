@@ -90,7 +90,7 @@ class botConroller {
                     let callbackTreeList = [xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback]
                     let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, msgText: msg.text, id: get(msg, 'message.message_id', 0) }))
                     execute = execute ? execute[data[0]] : {}
-                    if (get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, id: get(msg, 'message.message_id', 0) })) {
+                    if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0) })) {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data }) : undefined
                         if (execute?.next) {
                             let user = infoUser().find(item => item.chat_id == chat_id)
