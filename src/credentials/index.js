@@ -209,8 +209,8 @@ let SubMenu = () => {
                     },
                     // {
                     //     id: 2,
-                    //     name: "Document Type (Hisob,Yetkazib beruvchi)",
-                    //     message: 'Document type ni tanlang',
+                    //     name: "Hujjat turi (Hisob,Yetkazib beruvchi)",
+                    //     message: 'Hujjat turi ni tanlang',
                     //     btn: () => empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2),
                     //     step: '21'
                     // },
@@ -620,8 +620,8 @@ let SubMenu = () => {
                     },
                     // {
                     //     id: 2,
-                    //     name: "Document Type (Hisob,Yetkazib beruvchi)",
-                    //     message: 'Document type ni tanlang',
+                    //     name: "Hujjat turi (Hisob,Yetkazib beruvchi)",
+                    //     message: 'Hujjat turi ni tanlang',
                     //     btn: () => empDynamicBtn([`Hisob`, `Xodim`], 2),
                     //     step: '62'
                     // },
@@ -730,7 +730,7 @@ let SubMenu = () => {
 
                     let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Document Type', message: docType }, { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },

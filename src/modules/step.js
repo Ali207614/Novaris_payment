@@ -4,7 +4,7 @@ const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
 let { SubMenu, ocrdList, payType50 } = require("../credentials")
-const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson } = require("../helpers")
+const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 const { mainMenuByRoles } = require("../keyboards/keyboards")
@@ -943,6 +943,19 @@ let adminStep = {
             }
             bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
             updateUser(chat_id, { confirmationStatus: false })
+            // group
+            let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+            let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+            let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
+
+            for (let i = 0; i < specialGroup.length; i++) {
+                bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                }).catch(e => {
+                    if (get(e, 'response.body.error_code') == 403) {
+                        deleteGroup(specialGroup[i].id)
+                    }
+                })
+            }
 
         },
         middleware: ({ chat_id }) => {
@@ -979,6 +992,20 @@ let adminStep = {
 
             bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
             updateUser(chat_id, { confirmationStatus: false })
+
+            // group
+            let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+            let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+            let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
+
+            for (let i = 0; i < specialGroup.length; i++) {
+                bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                }).catch(e => {
+                    if (get(e, 'response.body.error_code') == 403) {
+                        deleteGroup(specialGroup[i].id)
+                    }
+                })
+            }
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)

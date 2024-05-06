@@ -263,7 +263,7 @@
         "step": 200
       },
       {
-        "text": "O'zgartirasizmi ?\n\nXodim : Jumaev Temur\nBajaruvchi : Gulyamov Bobur ✅\nID : 236\nMenu : To'lov/Xarajat\nSubMenu : Naqd/Karta hisobidan to'lov/xarajat\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nDocument Type : Schet(Hisob)\nSchet(Hisob) : 5090 - D777 kassasi (UZS)\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5010 - Korxona (UZS)\nValyuta : UZS\nValyuta kursi : 12 500 UZS\nSumma : 50 000 UZS\nHisob Nuqtasi : 777-DO'KON\nStatya DDS : false\nIzoh : Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov\n\n\n----------------------\nSapga qo'shildi ✅",
+        "text": "O'zgartirasizmi ?\n\nXodim : Jumaev Temur\nBajaruvchi : Gulyamov Bobur ✅\nID : 236\nMenu : To'lov/Xarajat\nSubMenu : Naqd/Karta hisobidan to'lov/xarajat\nSAP Document : Входящий платеж(Kiruvchi to'lov)\nHujjat turi : Schet(Hisob)\nSchet(Hisob) : 5090 - D777 kassasi (UZS)\nData registratsiya (To'lov To'lov sanasisi) : 2023.11.20\nData otneseniya (Hisobot To'lov sanasisi) : 2023.11.20\nTo'lov Usuli : Naqd\nSchet : 5010 - Korxona (UZS)\nValyuta : UZS\nValyuta kursi : 12 500 UZS\nSumma : 50 000 UZS\nHisob Nuqtasi : 777-DO'KON\nStatya DDS : false\nIzoh : Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov\n\n\n----------------------\nSapga qo'shildi ✅",
         "btn": {
           "reply_markup": {
             "inline_keyboard": [
@@ -273,7 +273,7 @@
                   "callback_data": "updateWaiting#1"
                 },
                 {
-                  "text": "Document Type (Schet,Поставщик)",
+                  "text": "Hujjat turi (Schet,Поставщик)",
                   "callback_data": "updateWaiting#2"
                 }
               ],

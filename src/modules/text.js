@@ -1188,7 +1188,7 @@ let xorijiyXaridBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Hujjat turi ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1226,7 +1226,7 @@ let xorijiyXaridBtn = {
                 try {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let list = infoData().find(item => item.id == user?.currentDataId)
-                    return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
+                    return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Hujjat turi ni tanlang"
                 }
                 catch (e) {
                     throw new Error(e)
@@ -1250,7 +1250,7 @@ let xorijiyXaridBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2), step: 21 })
+            updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2), step: 21 })
             updateData(user.currentDataId, { documentType: true, vendorId: "", purchase: false, vendorList: [], purchaseOrders: [] })
         },
         middleware: ({ chat_id }) => {
@@ -1276,7 +1276,7 @@ let xorijiyXaridBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2), step: 21 })
+            updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2), step: 21 })
             updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id }) => {
@@ -1598,7 +1598,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Hujjat turi ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1630,7 +1630,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Document Type ni tanlang"
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Hujjat turi ni tanlang"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1646,7 +1646,7 @@ let tolovHarajatBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 63)
-            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Hisob`, `(Xodim)`], 2), step: 62 })
+            updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `(Xodim)`], 2), step: 62 })
             updateData(user.currentDataId, { documentType: true, vendorId: "", purchase: false, vendorList: [], purchaseOrders: [] })
 
         },
@@ -1674,7 +1674,7 @@ let tolovHarajatBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 80)
-            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Hisob`, `(Xodim)`], 2), step: 62 })
+            updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `(Xodim)`], 2), step: 62 })
             updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id }) => {
@@ -1771,7 +1771,7 @@ let tolovHarajatBojBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 63)
-            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Hisob`, `Xodim`], 2), step: 62 })
+            updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `Xodim`], 2), step: 62 })
             updateData(user.currentDataId, { documentType: true, vendorId: "", purchase: false, vendorList: [], purchaseOrders: [] })
         },
         middleware: ({ chat_id }) => {
@@ -1798,7 +1798,7 @@ let tolovHarajatBojBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 80)
-            updateBack(chat_id, { text: "Document Type ni tanlang", btn: empDynamicBtn([`Hisob`, `(Xodim)`], 2), step: 62 })
+            updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `(Xodim)`], 2), step: 62 })
             updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id }) => {

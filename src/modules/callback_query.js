@@ -57,6 +57,19 @@ let xorijiyXaridCallback = {
                     return 'Menuni tanlang'
                 }
                 else if (data[1] == '1') {
+                    // group
+                    let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+                    let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                    let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
+
+                    for (let i = 0; i < specialGroup.length; i++) {
+                        bot.sendMessage(specialGroup[i].id, dataConfirmText(info, '', chat_id)).then((data) => {
+                        }).catch(e => {
+                            if (get(e, 'response.body.error_code') == 403) {
+                                deleteGroup(specialGroup[i].id)
+                            }
+                        })
+                    }
 
                     return `Tasdiqlovchiga jo'natildi`
                 }
@@ -116,6 +129,19 @@ let xorijiyXaridCallback = {
                     bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
                 }
                 bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+                // group
+                let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+                let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
+
+                for (let i = 0; i < specialGroup.length; i++) {
+                    bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                    }).catch(e => {
+                        if (get(e, 'response.body.error_code') == 403) {
+                            deleteGroup(specialGroup[i].id)
+                        }
+                    })
+                }
             }
             else if (data[1] == '2') {
                 updateStep(chat_id, 4000)
@@ -213,18 +239,7 @@ let xorijiyXaridCallback = {
                         str += `Jira\n${text}\n`
                     }
                     if (get(list, 'sap')) {
-                        let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                        let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
-                        let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
 
-                        for (let i = 0; i < specialGroup.length; i++) {
-                            bot.sendMessage(specialGroup[i].id, 'Success').then((data) => {
-                            }).catch(e => {
-                                if (get(e, 'response.body.error_code') == 403) {
-                                    deleteGroup(specialGroup[i].id)
-                                }
-                            })
-                        }
 
                         str += `Sapga qo'shildi ✅`
                     }
@@ -247,6 +262,22 @@ let xorijiyXaridCallback = {
                     }
 
                     bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+
+                    // group
+
+                    let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+                    let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                    let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
+
+                    for (let i = 0; i < specialGroup.length; i++) {
+                        bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                        }).catch(e => {
+                            if (get(e, 'response.body.error_code') == 403) {
+                                deleteGroup(specialGroup[i].id)
+                            }
+                        })
+                    }
+
                     return str || 'Bajarildi ✅'
 
                 }
