@@ -20,11 +20,11 @@ class botConroller {
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
             if (msg.text == "/start") {
-                if (get(msg, 'chat.type', '') == 'group' && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
+                if (['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                     writeGroup(get(msg, 'chat', {}))
                     bot.sendMessage(get(msg, 'chat.id'), "Qo'shildi ✅")
                 }
-                else if (get(msg, 'chat.type', '') != 'group') {
+                else if (!['group', 'supergroup'].includes(get(msg, 'chat.type', ''))) {
                     bot.sendMessage(
                         chat_id,
                         "Assalomu Aleykum",
@@ -41,7 +41,7 @@ class botConroller {
                 }
 
             }
-            else if (msg.text == '/delete' && get(msg, 'chat.type', '') == 'group' && infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
+            else if (msg.text == '/delete' && ['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                 deleteGroup(get(msg, 'chat.id'))
                 bot.sendMessage(get(msg, 'chat.id'), "O'chirildi ❌")
             }

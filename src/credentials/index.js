@@ -3,7 +3,7 @@ const b1Controller = require("../controllers/b1Controller")
 const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu, infoPermisson } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
-
+let moment = require('moment')
 let Menu = () => {
     return [
         {
@@ -304,7 +304,7 @@ let SubMenu = () => {
                     // accountCodeOther
                     let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
                     let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
                     if (!get(purchase, 'DocEntry')) {
                         info = info.filter(item => item.name != 'Zakupka')
                     }
@@ -313,7 +313,7 @@ let SubMenu = () => {
             },
             {
                 name: "Chetga pul chiqarish",
-                comment: `Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                 update: [
                     {
                         id: 1,
@@ -360,7 +360,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -407,6 +407,7 @@ let SubMenu = () => {
                 updateLine: 2,
                 lastStep: 52,
                 infoFn: ({ chat_id, id }) => {
+                    // boshlanish
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     let ddsList = Object.keys(DDS)?.filter(item => DDS[item].map(item => item.toString()).includes(get(data, 'accountCodeOther', '')))
@@ -420,7 +421,7 @@ let SubMenu = () => {
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
                     let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hisob', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hisob (qayerga)', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -580,7 +581,7 @@ let SubMenu = () => {
                     let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: `Mahalliy yetkazib beruvchilarga to'lov` }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Yetkazib beruvchi', message: vendorName }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: `Mahalliy yetkazib beruvchilarga to'lov` }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -609,7 +610,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd/Karta hisobidan to'lov/xarajat",
-                comment: `Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                 update: [
                     {
                         id: 1,
@@ -663,7 +664,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -730,13 +731,13 @@ let SubMenu = () => {
 
                     let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
             {
                 name: "Naqd/Click Bojxonaga oid xarajatlar",
-                comment: `Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                 update: [
                     {
                         id: 1,
@@ -803,7 +804,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `Sana:\n\nNaqd to'lov:\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n-Sotib olinayotgan tovar / xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka:\n- To'lov/Harajat jami summasi:\n- To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!:\n\n#tolov`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -863,7 +864,7 @@ let SubMenu = () => {
                     let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
                     let namesType = (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name)
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hisob', message: namesType }, { name: `To'lov sanasi`, message: get(data, 'startDate') }, { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hisob (qayerga)', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: get(data, 'dds', '❌') }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -1201,17 +1202,17 @@ for (let i = 31; i <= 59; i++) {
 
 let accounts50 = {
     'Naqd': {
-        'USD': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120],
-        'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090]
+        'USD': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036],
+        'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030]
     },
     'Karta': {
         'UZS': [5050, 5052, 5053, 5054, 5063, 5072]
     },
     'Terminal': {
-        'UZS': [5022, 5032, 5045, 5064, 5082, 5092]
+        'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037]
     },
     "O'tkazma": {
-        'UZS': [5023, 5034, 5046, 5065, 5083, 5093]
+        'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038]
     }
 }
 
@@ -1252,7 +1253,16 @@ let ocrdList = [
     {
         id: 'X',
         name: "Xitoy"
+    },
+    {
+        id: 'AN',
+        name: "Andijon"
+    },
+    {
+        id: 'SM',
+        name: "Samarqand"
     }
+
 ]
 
 
@@ -1268,7 +1278,9 @@ let accounts = {
         5931,
         5934,
         5935,
-        5936
+        5936,
+        5937,
+        5938
     ],
     'Oylik/Bonus': [
         6710,
@@ -1330,15 +1342,20 @@ let accounts = {
         9227,
         9228,
         9229,
-        9230
+        9230,
+        9226,
+        9227,
+        9231,
+        9232,
+        9230,
     ]
 }
 
 let subAccounts50 = {
-    'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090],
+    'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5025, 5030],
     'Karta': [5050, 5052, 5053, 5054, 5063, 5072],
-    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092],
-    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093]
+    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037],
+    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038]
 }
 
 
@@ -1444,8 +1461,8 @@ let excelFnFormatData = ({ main }) => {
             { name: 'SAP Document', message: paymentType || '' },
             { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType || '' },
             { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` },
-            { name: `To'lov sanasi`, message: get(data, 'startDate', '') },
-            { name: `Hisobot To'lov sanasi`, message: get(data, 'endDate', '') },
+            { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') },
+            { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') },
             { name: 'Ticket raqami', message: get(data, 'ticket', '') },
             { name: 'Hisob', message: `${accountName}` },
             { name: 'Valyuta', message: get(data, 'currency', '') },
