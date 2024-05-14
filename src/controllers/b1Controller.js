@@ -129,9 +129,6 @@ class b1Controller {
     async getAccount(arr, isPay = false) {
         try {
             let accountQuery = accountBuilderFn(arr)
-            if (isPay) {
-                accountQuery += ` and  T0.\"CurrTotal\" > 0`
-            }
             let data = await dbService.execute(accountQuery)
             return data
         }
@@ -204,37 +201,38 @@ class b1Controller {
         }
 
         console.log(body, ' bu body')
-
-        const axios = Axios.create({
-            baseURL: "https://66.45.245.130:50000/b1s/v1/",
-            timeout: 30000,
-            headers: {
-                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
-                'SessionId': get(getSession(), 'SessionId', '')
-            },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false,
-            }),
-        });
-        return axios
-            .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
-            .then(async ({ data }) => {
-                if (body.DocType != 'rAccount') {
-                    await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
-                }
-                return { status: true, data }
-            })
-            .catch(async (err) => {
-                if (get(err, 'response.status') == 401) {
-                    let token = await this.auth()
-                    if (token.status) {
-                        return await this.executePayments({ list, cred })
-                    }
-                    return { status: false, message: token.message }
-                } else {
-                    return { status: false, message: get(err, 'response.data.error.message.value') };
-                }
-            });
+        // "startDate": "2023.11.20",
+        // "endDate": "2023.11.20",
+        // const axios = Axios.create({
+        //     baseURL: "https://66.45.245.130:50000/b1s/v1/",
+        //     timeout: 30000,
+        //     headers: {
+        //         'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+        //         'SessionId': get(getSession(), 'SessionId', '')
+        //     },
+        //     httpsAgent: new https.Agent({
+        //         rejectUnauthorized: false,
+        //     }),
+        // });
+        // return axios
+        //     .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
+        //     .then(async ({ data }) => {
+        //         if (body.DocType != 'rAccount') {
+        //             await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
+        //         }
+        //         return { status: true, data }
+        //     })
+        //     .catch(async (err) => {
+        //         if (get(err, 'response.status') == 401) {
+        //             let token = await this.auth()
+        //             if (token.status) {
+        //                 return await this.executePayments({ list, cred })
+        //             }
+        //             return { status: false, message: token.message }
+        //         } else {
+        //             return { status: false, message: get(err, 'response.data.error.message.value') };
+        //         }
+        //     });
     }
 
 

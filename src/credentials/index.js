@@ -231,7 +231,7 @@ let SubMenu = () => {
                     {
                         id: 5,
                         name: "43% Hisob",
-                        message: `Hisobni tanlang`,
+                        message: `Hisob (qayerdan)`,
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let b1Account43 = await b1Controller.getAccount43()
@@ -749,7 +749,7 @@ let SubMenu = () => {
                     // {
                     //     id: 2,
                     //     name: "Hisob",
-                    //     message: 'Hisobni tanlang',
+                    //     message: 'Hisob (qayerdan)',
                     //     btn: async ({ chat_id }) => {
                     //         let user = infoUser().find(item => item.chat_id == chat_id)
                     //         let list = infoData().find(item => item.id == user?.currentDataId)

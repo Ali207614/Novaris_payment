@@ -1259,7 +1259,7 @@ let xorijiyXaridBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Hisob turini tanlang"
+                return "Hisob (qayerga)"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1656,7 +1656,7 @@ let tolovHarajatBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Hisob turini tanlang"
+                return "Hisob (qayerga)"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1719,7 +1719,7 @@ let tolovHarajatBojBtn = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
 
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisobni tanlang'
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob (qayerdan)'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1755,7 +1755,7 @@ let tolovHarajatBojBtn = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
 
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisobni tanlang'
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : 'Hisob (qayerdan)'
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1780,7 +1780,7 @@ let tolovHarajatBojBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Hisob turini tanlang"
+                return "Hisob (qayerga)"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)

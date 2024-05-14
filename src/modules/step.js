@@ -279,7 +279,7 @@ let xorijiyXaridStep = {
                     return `${jira.message}`
                 }
 
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `Hisobni tanlang`
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `Hisob (qayerdan)`
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -711,6 +711,7 @@ let tolovHarajatStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
+                    console.log(dateToCheck, isValid)
                     let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1

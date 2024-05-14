@@ -8,7 +8,7 @@
     "MobilePhone": "998333569256",
     "chat_id": 7113959453,
     "is_active": true,
-    "user_step": 702,
+    "user_step": 7001,
     "back": [
       {
         "text": "Asosiy Menu",
@@ -19,10 +19,57 @@
           "text": "Assalomu Aleykum"
         },
         "step": 1
+      },
+      {
+        "text": "Menuni tanlang",
+        "btn": {
+          "reply_markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "Xorijiy xarid",
+                  "callback_data": "menuGroup#1"
+                }
+              ],
+              [
+                {
+                  "text": "Mahalliy xarid",
+                  "callback_data": "menuGroup#2"
+                }
+              ],
+              [
+                {
+                  "text": "To'lov/Xarajat",
+                  "callback_data": "menuGroup#3"
+                }
+              ],
+              [
+                {
+                  "text": "Shartnoma",
+                  "callback_data": "menuGroup#4"
+                }
+              ],
+              [
+                {
+                  "text": "Narx chiqarish",
+                  "callback_data": "menuGroup#5"
+                }
+              ],
+              [
+                {
+                  "text": "Boshqa",
+                  "callback_data": "menuGroup#6"
+                }
+              ]
+            ],
+            "resize_keyboard": true
+          }
+        },
+        "step": 7000
       }
     ],
     "creationDate": "2024-03-13T08:50:07.338Z",
-    "lastMessageId": 54929,
+    "lastMessageId": 57001,
     "selectedAdminUserChatId": "652825438",
     "selectedAdminUserStatus": "executor",
     "update": false,
@@ -30,8 +77,8 @@
     "waitingUpdateStatus": false,
     "extraWaiting": false,
     "selectGroup": {
-      "menu": "6",
-      "subMenu": "4"
+      "menu": "3",
+      "subMenu": "2"
     }
   },
   {
@@ -66,7 +113,7 @@
     "creationDate": "2024-03-13T08:50:08.055Z",
     "update": false,
     "currentUserRole": "Bajaruvchi",
-    "lastMessageId": 54513,
+    "lastMessageId": 57129,
     "selectedInfoMenu": "Bajarilmagan so'rovlar",
     "notConfirmId": "8L1oQoyeHJ",
     "confirmationStatus": false,
@@ -82,12 +129,12 @@
     "MobilePhone": "998999102030",
     "chat_id": 5979205450,
     "is_active": true,
-    "user_step": 4000,
+    "user_step": 1,
     "back": [],
     "creationDate": "2024-03-13T08:50:14.016Z",
     "update": false,
     "currentUserRole": "Tasdiqlovchi",
-    "lastMessageId": 54499,
+    "lastMessageId": 57112,
     "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
     "notConfirmId": "CATQTR1liL",
     "confirmationStatus": false,
@@ -103,288 +150,14 @@
     "MobilePhone": "998946259256",
     "chat_id": 110697090,
     "is_active": true,
-    "user_step": 65,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 110697090,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xorijiy xarid"
-                },
-                {
-                  "text": "Mahalliy xarid"
-                },
-                {
-                  "text": "To'lov/Xarajat"
-                }
-              ],
-              [
-                {
-                  "text": "Shartnoma"
-                },
-                {
-                  "text": "Narx chiqarish"
-                },
-                {
-                  "text": "Boshqa"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 10
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Bank hisobidan to'lov/xarajat"
-                },
-                {
-                  "text": "Naqd/Karta hisobidan to'lov/xarajat"
-                }
-              ],
-              [
-                {
-                  "text": "Naqd/Click Bojxonaga oid xarajatlar"
-                },
-                {
-                  "text": "Bank Bojxonaga oid xarajatlar"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 60
-      },
-      {
-        "text": "Hujjatni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Chiquvchi to'lov"
-                },
-                {
-                  "text": "Kiruvchi to'lov"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 61
-      },
-      {
-        "text": "Hujjat turi ni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Hisob"
-                },
-                {
-                  "text": "(Xodim)"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 62
-      },
-      {
-        "text": "Hisob turini tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "AV/TMB",
-                  "callback_data": "accountType#0"
-                },
-                {
-                  "text": "Kassa farq",
-                  "callback_data": "accountType#1"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik/Bonus",
-                  "callback_data": "accountType#2"
-                },
-                {
-                  "text": "Qarz",
-                  "callback_data": "accountType#3"
-                }
-              ],
-              [
-                {
-                  "text": "Tovar qabuli",
-                  "callback_data": "accountType#4"
-                },
-                {
-                  "text": "Doimiy xarajat",
-                  "callback_data": "accountType#5"
-                }
-              ],
-              [
-                {
-                  "text": "Yetkazish",
-                  "callback_data": "accountType#6"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 63
-      },
-      {
-        "text": "Hisobni tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "9499 - Boshqa xarajatlar",
-                  "callback_data": "othersAccount#9499"
-                }
-              ],
-              [
-                {
-                  "text": "9465 - Kassa kamomadi boyicha foyda/zarar",
-                  "callback_data": "othersAccount#9465"
-                }
-              ],
-              [
-                {
-                  "text": "9462 - Yoqilg'i",
-                  "callback_data": "othersAccount#9462"
-                }
-              ],
-              [
-                {
-                  "text": "9461 - Xizmat safari xarajati",
-                  "callback_data": "othersAccount#9461"
-                }
-              ],
-              [
-                {
-                  "text": "9459 - Texnik xizmat",
-                  "callback_data": "othersAccount#9459"
-                }
-              ],
-              [
-                {
-                  "text": "9458 - Pul o'tkazish xarajati",
-                  "callback_data": "othersAccount#9458"
-                }
-              ],
-              [
-                {
-                  "text": "9457 - Dastur xarajati",
-                  "callback_data": "othersAccount#9457"
-                }
-              ],
-              [
-                {
-                  "text": "9455 - Ovqat",
-                  "callback_data": "othersAccount#9455"
-                }
-              ],
-              [
-                {
-                  "text": "9454 - Operatsion xarajatlar",
-                  "callback_data": "othersAccount#9454"
-                }
-              ],
-              [
-                {
-                  "text": "9453 - Moddiy yordam",
-                  "callback_data": "othersAccount#9453"
-                }
-              ],
-              [
-                {
-                  "text": "Next➡️",
-                  "callback_data": "paginationAccount#next#10"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 64
-      }
-    ],
+    "user_step": 10,
+    "back": [],
     "creationDate": "2024-03-13T08:50:19.619Z",
     "update": false,
     "currentUserRole": "Xodim",
-    "lastMessageId": 56720,
+    "lastMessageId": 57110,
     "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "currentDataId": "eQpRIJR5cl",
+    "currentDataId": "ovQFk83tit",
     "waitingUpdateStatus": false,
     "extraWaiting": false,
     "confirmationStatus": false,
