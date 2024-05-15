@@ -217,7 +217,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
                         btn: () => empDynamicBtn(),
                         step: '23'
                     },
@@ -325,7 +325,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -491,7 +491,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -629,7 +629,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -769,7 +769,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -1145,7 +1145,7 @@ let SubMenu = () => {
 
 let DDS = {
     "-": [5011, 5012, 5044, 5051, 5071, 3120, 5010, 5043, 5062, 5070, 5611],
-    "Agentlar yo'lkirasi": [9229, 9230],
+    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9230],
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
@@ -1157,13 +1157,13 @@ let DDS = {
     "Qarz(Tushum)": [6820, 4730, 4790, 4890, 7820],
     "Xorijiy yetkazib beruvchilarga to'lov": [5530],
     "Inventarizaatsiya": [5910],
-    "Kassa farqi": [5930, 5931, 5934, 5935, 5936, 9465],
+    "Kassa farqi": [5930, 5931, 5934, 5935, 5936, 9465, 5937, 5938],
     "Mahalliy yetkazib beruvchilarga to'lov": [6010],
     "Soliq(Xarajat)": [6410, 6411, 6412, 6413, 6414, 6415],
     "Oylik(Xarajat)": [6710, 9456],
     "Dividend(Xarajat)": [8710],
     "Bonus xodimlar(Xarajat)": [9150],
-    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224],
+    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224, 9226, 9227],
     "Asosiy vosita chiqib ketishidan foyda": [9310],
     "Boshqa tushumlar(Tushum)": [9390],
     "Adminstrativ xarajat": [9440],
@@ -1188,10 +1188,10 @@ let DDS = {
     "Xizmat safari xarajati": [9461],
     "Yoqilg'i(Xarajat)": [9462],
     "Kurs farqi": [9540, 9620],
-    "Naqd(Tushum)": [5020, 5021, 5030, 5031, 5040, 5041, 5060, 5061, 5080, 5081, 5090, 5091],
+    "Naqd(Tushum)": [5020, 5021, 5030, 5031, 5040, 5041, 5060, 5061, 5080, 5081, 5090, 5091, 5026, 5036, 5025, 5030,],
     "Karta(Tushum)": [5020, 5030, 5040, 5060, 5080, 5090],
-    "Terminal(Tushum)": [5022, 5032, 5045, 5064, 5082, 5092],
-    "O'tkazmalar(Tushum)": [5023, 5034, 5046, 5065, 5083, 5093],
+    "Terminal(Tushum)": [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037],
+    "O'tkazmalar(Tushum)": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038],
 }
 
 let accounts43 = []
@@ -1440,10 +1440,10 @@ let excelFnFormatData = ({ main }) => {
         let data = main[i]
         let paymentType = get(data, 'payment', true) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
         let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name || ''
-        let accountName = get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCode', 1))?.name || ''
+        let accountName = [...get(data, 'accountList43', []), ...get(data, 'accountList', []), ...get(data, 'accountList50', [])].find(item => item.id == get(data, 'accountCode', 1))?.name || ''
         let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
-
-        let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
+        let accountOtherName = ([...get(data, 'accountList43', []), ...get(data, 'accountList', []), ...get(data, 'accountList50', [])].find(item => item.id == get(data, 'accountCodeOther')))
+        let namesType = get(data, 'documentType') ? ([...get(data, 'accountList43', []), ...get(data, 'accountList', []), ...get(data, 'accountList50', [])].find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
         let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
         let empData = infoUser().find(item => item.chat_id == get(data, 'chat_id'))
         let empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
@@ -1464,7 +1464,8 @@ let excelFnFormatData = ({ main }) => {
             { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') },
             { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') },
             { name: 'Ticket raqami', message: get(data, 'ticket', '') },
-            { name: 'Hisob', message: `${accountName}` },
+            { name: 'Hisob(qayerdan)', message: `${accountName}` },
+            { name: 'Hisob(qayerga)', message: `${get(accountOtherName, 'name', '')}` },
             { name: 'Valyuta', message: get(data, 'currency', '') },
             { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) },
             { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) },
@@ -1472,6 +1473,9 @@ let excelFnFormatData = ({ main }) => {
             { name: 'Statya DDS', message: get(data, 'dds', '❌') },
             { name: 'Izoh', message: get(data, 'comment', '') }
         ]
+        if (!accountOtherName) {
+            info = info.filter(item => item.name != 'Hisob(qayerga)')
+        }
         if (!get(purchase, 'DocEntry')) {
             info = info.filter(item => item.name != 'Zakupka')
         }

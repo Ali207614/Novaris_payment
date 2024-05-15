@@ -194,7 +194,8 @@ let xorijiyXaridCallback = {
                 let deleteMessage = bot.sendMessage(chat_id, `Loading...`)
                 let count = 0;
                 if (get(cred, 'jira')) {
-                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred })
+                    let dataConfirmTextJira = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), '', chat_id)
+                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataConfirmTextJira })
                     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
                     count += 1
                     if (count == 2) {
@@ -514,7 +515,7 @@ let xorijiyXaridCallback = {
                     return (get(list, 'purchaseOrders', [])?.length) ? 'Zakupkani tanlang' : 'Mavjud emas'
                 }
                 updateData(user.currentDataId, { purchaseOrders: [], purchase: false })
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -564,7 +565,7 @@ let xorijiyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -655,7 +656,7 @@ let xorijiyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -823,7 +824,7 @@ let mahalliyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -1131,7 +1132,7 @@ let othersCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
                 `
             },
             btn: async ({ chat_id, data }) => {

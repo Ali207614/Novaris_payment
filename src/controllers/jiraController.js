@@ -3,6 +3,7 @@ const Axios = require("axios");
 const https = require("https");
 const { get } = require("lodash");
 const { jiraToken } = require("../config");
+const { dataConfirmText } = require("../keyboards/text");
 
 let authKey = `Basic ${Buffer.from(
     `nodirbek.quddusov@tisco.uz:${jiraToken}`
@@ -38,6 +39,7 @@ class jiraController {
                 'Content-Type': 'application/json',
             },
         });
+
         return axios
             .post(`issue/${issueKey}/comment`, { body: bodyData, public: true })
             .then(({ data }) => {
@@ -48,10 +50,11 @@ class jiraController {
             });
     }
 
-    jiraIntegrationResultObj = async ({ list, cred }) => {
+    jiraIntegrationResultObj = async ({ list, cred, dataConfirmTextJira }) => {
         let statusObj = {}
         if (get(cred, 'jira.operationsList.comment', false)) {
-            let jira = await this.updateTicketCommentById({ issueKey: list.ticket, bodyData: get(list, 'comment') })
+            // bodyData: get(list, 'comment')
+            let jira = await this.updateTicketCommentById({ issueKey: list.ticket, bodyData: dataConfirmTextJira, list })
             if (jira.status) {
                 statusObj = { ...statusObj, comment: 1 }
             }

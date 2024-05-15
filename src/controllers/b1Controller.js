@@ -176,6 +176,7 @@ class b1Controller {
             "CashAccount": get(list, 'accountCode'),
             "DocCurrency": get(list, 'currency'),
             "CashSum": Number(get(list, 'summa', 0)),
+            "JournalRemarks": `${get(list, 'ID', "")}`,
             "PaymentAccounts": []
         }
         if (get(list, "currency", '') != 'USD') {
@@ -201,38 +202,38 @@ class b1Controller {
         }
 
         console.log(body, ' bu body')
-        // "startDate": "2023.11.20",
-        // "endDate": "2023.11.20",
-        // const axios = Axios.create({
-        //     baseURL: "https://66.45.245.130:50000/b1s/v1/",
-        //     timeout: 30000,
-        //     headers: {
-        //         'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
-        //         'SessionId': get(getSession(), 'SessionId', '')
-        //     },
-        //     httpsAgent: new https.Agent({
-        //         rejectUnauthorized: false,
-        //     }),
-        // });
-        // return axios
-        //     .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
-        //     .then(async ({ data }) => {
-        //         if (body.DocType != 'rAccount') {
-        //             await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
-        //         }
-        //         return { status: true, data }
-        //     })
-        //     .catch(async (err) => {
-        //         if (get(err, 'response.status') == 401) {
-        //             let token = await this.auth()
-        //             if (token.status) {
-        //                 return await this.executePayments({ list, cred })
-        //             }
-        //             return { status: false, message: token.message }
-        //         } else {
-        //             return { status: false, message: get(err, 'response.data.error.message.value') };
-        //         }
-        //     });
+        // "startDate": "2024.01.31",
+        // "endDate": "2024.01.31",
+        const axios = Axios.create({
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            timeout: 30000,
+            headers: {
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        });
+        return axios
+            .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
+            .then(async ({ data }) => {
+                if (body.DocType != 'rAccount') {
+                    await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
+                }
+                return { status: true, data }
+            })
+            .catch(async (err) => {
+                if (get(err, 'response.status') == 401) {
+                    let token = await this.auth()
+                    if (token.status) {
+                        return await this.executePayments({ list, cred })
+                    }
+                    return { status: false, message: token.message }
+                } else {
+                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                }
+            });
     }
 
 
@@ -339,6 +340,7 @@ class b1Controller {
             "DocRate": Number(get(list, 'currencyRate', 7.12)),
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
             "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
+            "JournalRemarks": `${get(list, 'ID', "")}`,
             "PaymentInvoices": [
                 {
                     "AppliedFC": Number(get(list, 'summa', 0)),

@@ -144,7 +144,7 @@ let xorijiyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 23 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`, btn: empDynamicBtn(), step: 23 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -475,7 +475,7 @@ let mahalliyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 44 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`, btn: empDynamicBtn(), step: 44 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -691,7 +691,7 @@ let tolovHarajatStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2023.11.20 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2023.11.20`, btn: empDynamicBtn(), step: 65 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`, btn: empDynamicBtn(), step: 65 })
             }
         },
         middleware: ({ chat_id }) => {
