@@ -165,12 +165,12 @@ let SubMenu = () => {
             },
             {
                 name: 'Xorijiy xarid tovar buyurtmasi',
-                comment: "Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n",
+                comment: "1) Sana:\n2) Zakaz nomeri:\n3) Yetkazib beruvchi: \n4) Tovar nomi:\n5) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n6) Tovar summasi: 120000 Yuan\n7) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n8) Tayyor bo'lish muddati:\n9) Buyurtma necha kunda qilingan:\n10) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n11) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#24193MY(Zakaz nomeri)\n",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Xorijiy buyurtma.\n1) Ticket raqami: \n2) Sana:\n3) Zakaz nomeri:\n4) Yetkazib beruvchi: \n5) Tovar nomi:\n6) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n7) Tovar summasi: 120000 Yuan\n8) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n9) Tayyor bo'lish muddati:\n10) Buyurtma necha kunda qilingan:\n11) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n12) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n\n#zakaz\n13) #21059MY (Zakaz nomeri)\n`,
+                        message: `1) Sana:\n2) Zakaz nomeri:\n3) Yetkazib beruvchi: \n4) Tovar nomi:\n5) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n6) Tovar summasi: 120000 Yuan\n7) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n8) Tayyor bo'lish muddati:\n9) Buyurtma necha kunda qilingan:\n10) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n11) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#24193MY(Zakaz nomeri)\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -198,7 +198,7 @@ let SubMenu = () => {
             },
             {
                 name: "Xorijiy xarid to'lovi",
-                comment: `Sana:\n\nTicket raqami :\nXorijiy to'lov.\nTo'lov nomeri:\nTovar nomi:\nZakaz nomeri:\nKimga (Yetkazib beruvchi):\nTo'lovchi:\nTo'lov summasi:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)`,
+                comment: `Tovar nomi:\nZakaz nomeri:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)\n`,
                 update: [
                     {
                         id: 1,
@@ -280,7 +280,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `Sana:\n\nTicket raqami :\nXorijiy buyurtma.\nZakaz nomeri:\nYetkazib beruvchi:\nTovar nomi:\nZaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\nTovar summasi: 120000 Yuan\nTo'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin(..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\nTayyor bo'lish muddati:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#21059MY(Zakaz nomeri)`,
+                        message: `Tovar nomi:\nZakaz nomeri:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)\n`,
                         btn: () => empDynamicBtn(),
                         step: '29'
                     }

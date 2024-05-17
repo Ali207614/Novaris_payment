@@ -1982,7 +1982,7 @@ let narxChiqarishBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Shartnoma"
+                return "Narx chiqarish"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)

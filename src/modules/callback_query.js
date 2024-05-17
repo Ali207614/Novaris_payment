@@ -181,6 +181,7 @@ let xorijiyXaridCallback = {
     },
     "confirmExecuter": {
         selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
             if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
@@ -190,10 +191,11 @@ let xorijiyXaridCallback = {
                 return
             }
             else if (data[1] == '1') {
-                updateData(data[2], { jira: true, sapB1: true })
                 let deleteMessage = bot.sendMessage(chat_id, `Loading...`)
                 let count = 0;
-                let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), '', chat_id)
+
+                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+                let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
                 if (get(cred, 'jira')) {
                     let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
                     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
