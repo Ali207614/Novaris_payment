@@ -50,11 +50,11 @@ class jiraController {
             });
     }
 
-    jiraIntegrationResultObj = async ({ list, cred, dataConfirmTextJira }) => {
+    jiraIntegrationResultObj = async ({ list, cred, dataInfo = '' }) => {
         let statusObj = {}
         if (get(cred, 'jira.operationsList.comment', false)) {
             // bodyData: get(list, 'comment')
-            let jira = await this.updateTicketCommentById({ issueKey: list.ticket, bodyData: dataConfirmTextJira, list })
+            let jira = await this.updateTicketCommentById({ issueKey: list.ticket, bodyData: dataInfo, list })
             if (jira.status) {
                 statusObj = { ...statusObj, comment: 1 }
             }

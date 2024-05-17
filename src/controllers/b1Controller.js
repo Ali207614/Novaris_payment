@@ -158,10 +158,10 @@ class b1Controller {
         }
     }
 
-    async executePayments({ list = {}, cred = {} }) {
+    async executePayments({ list = {}, cred = {}, dataInfo = '' }) {
 
         if (get(list, 'purchase')) {
-            return await this.purchaseDownPayments({ list })
+            return await this.purchaseDownPayments({ list, dataInfo })
         }
         let DocType = {
             'account': 'rAccount',
@@ -177,7 +177,8 @@ class b1Controller {
             "DocCurrency": get(list, 'currency'),
             "CashSum": Number(get(list, 'summa', 0)),
             "JournalRemarks": `${get(list, 'ID', "")}`,
-            "PaymentAccounts": []
+            "PaymentAccounts": [],
+            "U_izoh": dataInfo
         }
         if (get(list, "currency", '') != 'USD') {
             body.DocRate = Number(get(list, 'currencyRate'))
@@ -227,7 +228,7 @@ class b1Controller {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        return await this.executePayments({ list, cred })
+                        return await this.executePayments({ list, cred, dataInfo })
                     }
                     return { status: false, message: token.message }
                 } else {
@@ -237,7 +238,7 @@ class b1Controller {
     }
 
 
-    async purchaseDownPayments({ list = {} }) {
+    async purchaseDownPayments({ list = {}, dataInfo = '' }) {
         let DocumentLines = get(list, 'purchaseOrders', []).filter(item => item.DocEntry == get(list, 'purchaseEntry')).map(item => {
             return { BaseLine: item.LineNum, BaseEntry: item.DocEntry, BaseType: 22 }
         })
@@ -268,13 +269,13 @@ class b1Controller {
         return axios
             .post(`PurchaseDownPayments`, body)
             .then(async ({ data }) => {
-                return await this.DownPayments({ list, data })
+                return await this.DownPayments({ list, data, dataInfo })
             })
             .catch(async (err) => {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        return await this.purchaseDownPayments({ list })
+                        return await this.purchaseDownPayments({ list, dataInfo })
                     }
                     return { status: false, message: token.message }
                 } else {
@@ -330,7 +331,7 @@ class b1Controller {
             });
     }
 
-    async DownPayments({ list = {}, data = {} }) {
+    async DownPayments({ list = {}, data = {}, dataInfo = '' }) {
         let body = {
             "CardCode": get(list, 'vendorId'),
             "DocType": "rSupplier",
@@ -341,6 +342,7 @@ class b1Controller {
             "DocDate": get(list, 'startDate', '').replace(/[.]/g, '-'),
             "TaxDate": get(list, 'endDate', '').replace(/[.]/g, '-'),
             "JournalRemarks": `${get(list, 'ID', "")}`,
+            "U_izoh": dataInfo,
             "PaymentInvoices": [
                 {
                     "AppliedFC": Number(get(list, 'summa', 0)),
@@ -369,7 +371,7 @@ class b1Controller {
                 if (get(err, 'response.status') == 401) {
                     let token = await this.auth()
                     if (token.status) {
-                        return await this.DownPayments({ list, data })
+                        return await this.DownPayments({ list, data, dataInfo })
                     }
                     return { status: false, message: token.message }
                 } else {

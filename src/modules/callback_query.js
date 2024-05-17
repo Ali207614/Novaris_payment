@@ -193,9 +193,9 @@ let xorijiyXaridCallback = {
                 updateData(data[2], { jira: true, sapB1: true })
                 let deleteMessage = bot.sendMessage(chat_id, `Loading...`)
                 let count = 0;
+                let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), '', chat_id)
                 if (get(cred, 'jira')) {
-                    let dataConfirmTextJira = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), '', chat_id)
-                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataConfirmTextJira })
+                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
                     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
                     count += 1
                     if (count == 2) {
@@ -203,7 +203,7 @@ let xorijiyXaridCallback = {
                     }
                 }
                 if (get(cred, 'b1.status')) {
-                    let b1MainStatus = await b1Controller.executePayments({ list, cred })
+                    let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
                     updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
                     count += 1
                     if (count == 2) {
