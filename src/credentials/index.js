@@ -978,13 +978,13 @@ let SubMenu = () => {
             {
                 name: "DQ Shartnoma shabloni",
                 comment: `Sana:\nOfisdan dogovor so'rash shabloni:\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: 
-                ( * * *** )\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
+                \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
                         message: `Sana:\nOfisdan dogovor so'rash shabloni:\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: 
-                        ( * * *** )\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
+                        \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     }
@@ -1144,7 +1144,13 @@ let SubMenu = () => {
 
 
 let DDS = {
-    "-": [5011, 5012, 5044, 5051, 5071, 3120, 5010, 5043, 5062, 5070, 5611],
+    "-": [5011, 5012, 5021, 5031, 5041,
+        5044, 5051, 5061, 5071, 5081,
+        5091, 3120, 5010, 5020, 5030,
+        5040, 5043, 5060, 5062, 5070,
+        5080, 5090, 5026, 5036, 5025,
+        5611, 5072, 5063, 5054, 5053,
+        5052, 5050],
     "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9230],
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
@@ -1336,8 +1342,6 @@ let accounts = {
         9221,
         9222,
         9223,
-        9224,
-        9225,
         9226,
         9227,
         9228,

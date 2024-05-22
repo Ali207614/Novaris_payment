@@ -233,7 +233,7 @@ let xorijiyXaridCallback = {
 
                 if (get(list, 'executer')) {
                     let executerUser = infoUser().find(item => item.chat_id == get(list, 'executer.chat_id'))
-                    let text = `${get(executerUser, 'LastName')} ${get(executerUser, 'FirstName')} Bajaruvchi ${get(list, 'confirmative.status') ? 'tasdiqlagan ✅' : 'bekor qilgan ❌'}`
+                    let text = `${get(executerUser, 'LastName')} ${get(executerUser, 'FirstName')} Bajaruvchi ${get(list, 'executer.status') ? 'tasdiqlagan ✅' : 'bekor qilgan ❌'}`
                     return text
                 }
                 if (data[1] == '1') {

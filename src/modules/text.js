@@ -1954,6 +1954,32 @@ let shartnomaBtn = {
                 return empDynamicBtn()
             },
         },
+    },
+    "DQ Shartnoma shabloni": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 61)
+            updateData(get(dataCurUser, 'id'), { subMenu: `DQ Shartnoma shabloni` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
+                return findComment
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
     }
 }
 
@@ -2650,7 +2676,7 @@ let infoAdminBtn = {
                 return "Vaqtni tanlang"
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                return empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
             },
         },
     },
@@ -2658,7 +2684,7 @@ let infoAdminBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, {
-                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
                 , step: 702
             })
         },
@@ -2668,7 +2694,7 @@ let infoAdminBtn = {
         },
         next: {
             file: async ({ chat_id }) => {
-                let data = infoData().filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                let data = infoData().filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY') && get(item, 'full')
                 )
                 let { objects, schema } = excelFnFormatData({ main: data })
                 await writeXlsxFile(objects, {
@@ -2686,7 +2712,7 @@ let infoAdminBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, {
-                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
                 , step: 702
             })
         },
@@ -2696,7 +2722,7 @@ let infoAdminBtn = {
         },
         next: {
             file: async ({ chat_id }) => {
-                let data = infoData().filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                let data = infoData().filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY') && get(item, 'full')
                 )
                 let { objects, schema } = excelFnFormatData({ main: data })
                 await writeXlsxFile(objects, {
@@ -2714,7 +2740,7 @@ let infoAdminBtn = {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, {
-                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 3)
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
                 , step: 702
             })
         },
@@ -2724,7 +2750,7 @@ let infoAdminBtn = {
         },
         next: {
             file: async ({ chat_id }) => {
-                let data = infoData().filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
+                let data = infoData().filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY') && get(item, 'full')
                 )
                 let { objects, schema } = excelFnFormatData({ main: data })
                 await writeXlsxFile(objects, {
@@ -2732,6 +2758,28 @@ let infoAdminBtn = {
                     filePath: path.join(process.cwd(), "data.xlsx")
                 })
                 return path.join(process.cwd(), "data.xlsx")
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "Tanlash": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, {
+                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
+                , step: 702
+            })
+            updateStep(chat_id, 9000)
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+        },
+        next: {
+            text: async ({ chat_id }) => {
+                return `Boshlanish sanasi Yil.Oy.Kun : 2024.01.31`
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()

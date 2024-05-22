@@ -347,8 +347,12 @@ function executerListFn() {
     return infoUser().filter(item => item.JobTitle == 'Bajaruvchi')
 }
 
-
+function parseDate(dateStr) {
+    const [year, month, day] = dateStr.split('.').map(Number);
+    return new Date(Date.UTC(year, month - 1, day)); // Date.UTC yil, oy (0-indexed), kun
+}
 module.exports = {
+    parseDate,
     updateUser,
     writeUser,
     infoUser,

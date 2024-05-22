@@ -3,13 +3,14 @@ const moment = require('moment')
 const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
-let { SubMenu, ocrdList, payType50 } = require("../credentials")
-const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup } = require("../helpers")
+let { SubMenu, ocrdList, payType50, excelFnFormatData } = require("../credentials")
+const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 const { mainMenuByRoles } = require("../keyboards/keyboards")
 const { dataConfirmText } = require("../keyboards/text")
-
+const path = require('path')
+const writeXlsxFile = require('write-excel-file/node')
 let xorijiyXaridStep = {
     "12": {
         selfExecuteFn: ({ chat_id, msgText }) => {
@@ -1018,6 +1019,89 @@ let adminStep = {
             },
             btn: async ({ chat_id, msgText }) => {
                 return mainMenuByRoles({ chat_id })
+            },
+        },
+    },
+    "9000": {
+        selfExecuteFn: async ({ chat_id, msgText }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: `Boshlanish sanasi Yil.Oy.Kun : 2024.01.31`, btn: empDynamicBtn(), step: 9000 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 9000
+        },
+        next: {
+            text: async ({ chat_id, msgText }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                msgText = msgText.replace(`Boshlanish sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.split(' ').filter(item => item).join('')
+                const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
+                const dateToCheck = moment(msgText.replace(/\D/g, '')).format();
+                const isValid = isValidDate(dateToCheck);
+                let isV = new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L'))
+
+                if (isValid && msgText.replace(/\D/g, '').length == 8 && isV) {
+                    updateUser(chat_id, { excelStart: msgText })
+                    updateStep(chat_id, 9001)
+                    return "Tugash sanasi Yil.Oy.Kun : 2024.01.31"
+                }
+                return `Data formatida xatolik bor Qaytadan kiriting`
+            },
+            btn: async ({ chat_id, msgText }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "9001": {
+        selfExecuteFn: async ({ chat_id, msgText }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            updateBack(chat_id, { text: `Tugash sanasi Yil.Oy.Kun : 2024.01.31`, btn: empDynamicBtn(), step: 9001 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 9001
+        },
+        next: {
+            text: async ({ chat_id, msgText }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                msgText = msgText.replace(`Tugash sanasi Yil.Oy.Kun :`, '')
+                msgText = msgText.split(' ').filter(item => item).join('')
+                const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
+                const dateToCheck = moment(msgText.replace(/\D/g, '')).format();
+                const isValid = isValidDate(dateToCheck);
+                let isV = new Date(moment(get(user, 'excelStart', '').replace(/\D/g, '')).format('L')) <= new Date(moment(dateToCheck).format('L'))
+                if (isValid && msgText.replace(/\D/g, '').length == 8 && isV) {
+                    updateUser(chat_id, { excelEnd: msgText })
+                    updateStep(chat_id, 9002)
+
+                    const startDate = parseDate(get(user, 'excelStart', ''));
+                    const endDate = parseDate(msgText);
+                    let data = infoData().filter(item => {
+                        let creationDate = parseDate(moment(item.creationDate).format('YYYY.MM.DD'))
+                        return (creationDate >= startDate && creationDate <= endDate)
+                    }
+                    )
+
+                    if (data.length == 0) {
+                        return 'Mavjud emas'
+                    }
+                    let { objects, schema } = excelFnFormatData({ main: data })
+                    writeXlsxFile(objects, {
+                        schema,
+                        filePath: path.join(process.cwd(), "data.xlsx")
+                    }).then(data => {
+                        bot.sendDocument(chat_id, path.join(process.cwd(), "data.xlsx"))
+                    }).catch(e => {
+                        return "Exelga yuklashda muommo"
+                    })
+
+                    return `Boshlanish sanasi : ${moment(get(user, 'excelStart', '').replace(/\D/g, '')).format('L')}\nTugash sanasi : ${moment(msgText.replace(/\D/g, '')).format('L')}`
+                }
+                return `Data formatida xatolik bor Qaytadan kiriting`
+            },
+            btn: async ({ chat_id, msgText }) => {
+                return empDynamicBtn()
             },
         },
     },
