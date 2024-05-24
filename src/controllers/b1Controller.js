@@ -10,7 +10,7 @@ class b1Controller {
 
     async auth() {
         let obj = {
-            "CompanyDB": "TEST311223",
+            "CompanyDB": "NOVARIS_SAP",
             "UserName": "manager",
             "Password": "w2e3r4Q!"
         }
