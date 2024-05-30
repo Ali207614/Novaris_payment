@@ -82,8 +82,9 @@ let payType50 = [
 
 let SubMenu = () => {
     let newSubMenus = {}
-    for (let i = 0; i < infoSubMenu().length; i++) {
-        let item = infoSubMenu()[i]
+    let subMenuList = infoSubMenu()
+    for (let i = 0; i < subMenuList.length; i++) {
+        let item = subMenuList[i]
         if (newSubMenus[item.menuId]?.length) {
             newSubMenus[item.menuId].push({
                 ...item, menuId: Number(item.menuId), infoFn: eval(item.infoFn), update: [{ ...item.update[0], btn: eval(item.update[0].btn) }]

@@ -1,1 +1,252 @@
-[]
+[
+    {
+        "id": "vyuh7RhTNk",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-05-30T19:57:57.157Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 16,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 1
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 2
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 3
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 4
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 5
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 6
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 7
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 8
+            },
+            {
+                "name": "5026 - AN kassasi (USD)",
+                "id": "5026",
+                "num": 9
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 10
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 11
+            },
+            {
+                "name": "5036 - SM kassasi (USD)",
+                "id": "5036",
+                "num": 12
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 13
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 14
+            }
+        ],
+        "accountCode": "5041",
+        "summa": "100000",
+        "currencyRate": "12440.000000",
+        "comment": "-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):",
+        "point": "O",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "confirmativeSendlist": [
+            {
+                "messageId": 71126,
+                "chatId": "561932032"
+            }
+        ],
+        "stateTime": {
+            "create": "2024-05-30T19:58:24.551Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-05-30T19:58:26.727Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        }
+    },
+    {
+        "id": "cJZNRmzm8p",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-05-30T19:59:31.991Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 17,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 1
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 2
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 3
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 4
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 5
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 6
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 7
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 8
+            },
+            {
+                "name": "5026 - AN kassasi (USD)",
+                "id": "5026",
+                "num": 9
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 10
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 11
+            },
+            {
+                "name": "5036 - SM kassasi (USD)",
+                "id": "5036",
+                "num": 12
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 13
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 14
+            }
+        ],
+        "accountCode": "5031",
+        "summa": "100000",
+        "currencyRate": "12440.000000",
+        "comment": "-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):",
+        "point": "O",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "confirmativeSendlist": [
+            {
+                "messageId": 71158,
+                "chatId": "561932032"
+            }
+        ],
+        "stateTime": {
+            "create": "2024-05-30T19:59:59.567Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-05-30T20:00:01.208Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        }
+    }
+]

@@ -31,6 +31,22 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
         return "O'zgartirildi ✅"
     }
     let result = `${firstText}\n\n`
+
+
+    let sort = ['ID', 'SubMenu', 'Ticket raqami', 'SAP Document', "To'lov sanasi", "Hisobot To'lov sanasi", "Hisob (qayerdan)", 'Yetkazib beruvchi', "Hisob (qayerga)", 'Zakupka', "Statya DDS", "To'lov Usuli", "Summa", "Valyuta kursi", "Hisob Nuqtasi", "Izoh"]
+
+    list = list.filter(item => !['Hujjat turi', 'Menu', 'Valyuta'].includes(item.name)).map(item => {
+        let findIndex = sort.findIndex(el => el.trim().toLowerCase() == get(item, 'name', '').trim().toLowerCase())
+        if (findIndex == -1) {
+            return item
+        }
+        return { ...item, sort: findIndex }
+    }).sort((a, b) => a.sort - b.sort)
+
+
+    for (let i = 0; i < list.length; i++) {
+        result += `${list[i].name} : ${list[i].message}\n`
+    }
     if (empName) {
         result += `Xodim : ${empName}\n`
     }
@@ -41,10 +57,6 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     if (get(executor, 'chat_id')) {
         let executUser = infoUser().find(item => item.chat_id == get(executor, 'chat_id'))
         result += `Bajaruvchi : ${get(executUser, 'LastName')} ${get(executUser, 'FirstName')} ${get(executor, 'status') ? '✅' : '❌'}\n`
-    }
-
-    for (let i = 0; i < list.length; i++) {
-        result += `${list[i].name} : ${list[i].message}\n`
     }
     if (notConfirmMessage != 'Bekor qilinganlik sababi : ') {
         result += `\n\n----------------------\n${notConfirmMessage}`

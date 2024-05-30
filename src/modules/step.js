@@ -712,7 +712,6 @@ let tolovHarajatStep = {
                     const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                     const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
                     const isValid = isValidDate(dateToCheck);
-                    console.log(dateToCheck, isValid)
                     let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
                     if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
                         count += 1
