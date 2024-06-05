@@ -669,7 +669,7 @@ let tolovHarajatStep = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let data = infoData().find(item => item.id == user.currentDataId)
             updateData(user.currentDataId, { comment: msgText })
-            let findComment = SubMenu()[get(data, 'menu', 3)].find(item => item.name == data.subMenu)?.comment
+            let findComment = SubMenu()[get(data, 'menu', 3)].find(item => item.name == get(data, 'subMenu'))?.comment
             updateBack(chat_id, { text: findComment, btn: empDynamicBtn(), step: 61 })
         },
         middleware: ({ chat_id }) => {
@@ -680,7 +680,7 @@ let tolovHarajatStep = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                let info = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                let info = SubMenu()[get(list, 'menu', 3)].find(item => item.name == get(list, 'subMenu')).infoFn({ chat_id })
                 return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
             },
             btn: async ({ chat_id, }) => {

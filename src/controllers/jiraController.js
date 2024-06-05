@@ -6,8 +6,9 @@ const { jiraToken } = require("../config");
 const { dataConfirmText } = require("../keyboards/text");
 
 let authKey = `Basic ${Buffer.from(
-    `nodirbek.quddusov@tisco.uz:${jiraToken}`
+    `ferrotelegrambot@gmail.com:${jiraToken}`
 ).toString('base64')}`
+// ferrotelegrambot@gmail.com
 class jiraController {
     getTicketById = async ({ issueKey }) => {
         const axios = Axios.create({

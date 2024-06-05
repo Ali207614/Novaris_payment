@@ -1156,10 +1156,9 @@ let DDS = {
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
-    "Yuk tushirish xarajati": [1512],
+    "Yuk tushirish xarajati": [1512, 1514],
     "Deklarant xarajati": [1513],
     "Logistika xarajati": [1514],
-    "Yuk tushirish xarajati": [1514],
     "Qarz (Xarajat)": [6820, 4730, 4790, 4890, 7820],
     "Qarz(Tushum)": [6820, 4730, 4790, 4890, 7820],
     "Xorijiy yetkazib beruvchilarga to'lov": [5530],
@@ -1203,7 +1202,7 @@ let DDS = {
 
 let accounts43 = []
 
-for (let i = 31; i <= 59; i++) {
+for (let i = 31; i <= 67; i++) {
     accounts43.push(`43${i}`)
 }
 
@@ -1427,13 +1426,13 @@ const confDataCred = () => {
             )
         },
         "Tasdiqlanib , bajarilmagan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'confirmative.chat_id') == chat_id && get(item, 'executer.status') == false),
         "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executer),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'confirmative.chat_id') == chat_id && !item.executer),
         "Rad etilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false && get(item, 'confirmative.chat_id') == chat_id),
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status'))
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'confirmative.chat_id') == chat_id && get(item, 'executer.status'))
     }
     return mainDataCred
 }

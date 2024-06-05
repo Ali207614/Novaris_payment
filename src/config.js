@@ -7,7 +7,7 @@ let conn_params = {
     uid: 'SYSTEM',
     pwd: 'GrvYL8YX',
 };
-let jiraToken = 'ATATT3xFfGF07HpGwaRH3zDiYxJJ3DTYa6y4vxLP3EN7eijyQdrG90NitT3ZCtU4ees0TxlW60VG00FW8d_9ujKziHy7KQhFqdPgjamm2x9qyPC9q21MUN7HClluixc8lZO5dXdXHVUUPxBtUk7_m4FAjEahno1Z-6NbxBiQt-5TdUHWpUF0sCA=6FDB20C2'
+let jiraToken = 'ATATT3xFfGF03KuknJ3pr_bErcKptVcFHzSc7E-SihdqZEqlMJ3rGKSICUD8ALXkXxGagDapxfwOkk1bbNtiJqRxAz9g68XR_m_guM9j88gfx1K2bIKwchWZnM-LWUTJBlEKrM38nlbVoyT1336kN7ESxPU5sRdcl63ZJzBz6O0xIKI4mk6wa9s=829302D7'
 
 let bot = new TelegramAPi(token, {
     polling: true,
