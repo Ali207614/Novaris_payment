@@ -1,7 +1,7 @@
 [
   {
     "menuId": "7",
-    "name": "Ish vaqtidan tashqari ishlash",
+    "name": "OFIS | Ish vaqtidan tashqari ishlash",
     "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana",
     "update": [
       {
@@ -19,5 +19,45 @@
     "status": true,
     "id": 1,
     "creationDate": "2024-05-27T05:51:43.354Z"
+  },
+  {
+    "menuId": "7",
+    "name": "SAVDO | Ish vaqtidan tashqari ishlash",
+    "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana",
+    "update": [
+      {
+        "id": 1,
+        "name": "Izoh",
+        "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana",
+        "step": "13"
+      }
+    ],
+    "updateLine": 1,
+    "lastStep": 62,
+    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+    "isDelete": false,
+    "status": true,
+    "id": 2,
+    "creationDate": "2024-06-12T13:58:18.202Z"
+  },
+  {
+    "menuId": "7",
+    "name": "OMBOR | Ish vaqtidan tashqari ishlash",
+    "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana",
+    "update": [
+      {
+        "id": 1,
+        "name": "Izoh",
+        "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana",
+        "step": "13"
+      }
+    ],
+    "updateLine": 1,
+    "lastStep": 62,
+    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+    "isDelete": false,
+    "status": true,
+    "id": 3,
+    "creationDate": "2024-06-12T13:59:00.043Z"
   }
 ]

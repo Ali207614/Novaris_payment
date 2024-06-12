@@ -1208,17 +1208,17 @@ for (let i = 31; i <= 67; i++) {
 
 let accounts50 = {
     'Naqd': {
-        'USD': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036],
-        'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030]
+        'USD': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086],
+        'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085]
     },
     'Karta': {
         'UZS': [5050, 5052, 5053, 5054, 5063, 5072]
     },
     'Terminal': {
-        'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037]
+        'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087]
     },
     "O'tkazma": {
-        'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038]
+        'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088]
     }
 }
 
@@ -1286,7 +1286,9 @@ let accounts = {
         5935,
         5936,
         5937,
-        5938
+        5938,
+        5939,
+        5933
     ],
     'Oylik/Bonus': [
         6710,
@@ -1352,14 +1354,18 @@ let accounts = {
         9231,
         9232,
         9230,
+        9233,
+        9234,
+        9235,
+        9236,
     ]
 }
 
 let subAccounts50 = {
-    'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5025, 5030],
+    'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5025, 5076, 5086, 5075, 5085],
     'Karta': [5050, 5052, 5053, 5054, 5063, 5072],
-    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037],
-    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038]
+    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087],
+    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088]
 }
 
 
@@ -1426,13 +1432,13 @@ const confDataCred = () => {
             )
         },
         "Tasdiqlanib , bajarilmagan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'confirmative.chat_id') == chat_id && get(item, 'executer.status') == false),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false),
         "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'confirmative.chat_id') == chat_id && !item.executer),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executer),
         "Rad etilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false && get(item, 'confirmative.chat_id') == chat_id),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false),
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'confirmative.chat_id') == chat_id && get(item, 'executer.status'))
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status'))
     }
     return mainDataCred
 }

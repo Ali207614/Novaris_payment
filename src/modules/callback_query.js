@@ -1031,6 +1031,7 @@ let mahalliyXaridCallback = {
                     let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                         return { name: item, id: i }
                     })
+                    console.log(isDds, get(list, 'accountCodeOther', ''))
                     let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                     updateData(user.currentDataId, { ddsList })
                     let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id,
