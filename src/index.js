@@ -23,12 +23,15 @@ const start = async () => {
         const connection = hanaClient.createConnection();
         connection.connect(conn_params, async (err) => {
             if (err) {
-                console.log(err)
                 bot.sendMessage("561932032", `Connection error ${err}`);
             } else {
                 bot.on("text", async (msg) => {
-                    let chat_id = msg.chat.id;
-                    await botController.text(msg, chat_id)
+                    try {
+                        let chat_id = msg.chat.id;
+                        await botController.text(msg, chat_id)
+                    } catch (err) {
+                        bot.sendMessage(personalChatId, `${err} err text`);
+                    }
                 });
 
                 bot.on("callback_query", async (msg) => {

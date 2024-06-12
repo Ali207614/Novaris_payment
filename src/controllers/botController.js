@@ -1,9 +1,10 @@
 const { get } = require("lodash");
 let { bot } = require("../config");
 const {
-    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup
+    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup, infoPermisson
 } = require("../helpers");
 const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
+const { userInfoText } = require("../keyboards/text");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
@@ -40,6 +41,12 @@ class botConroller {
                     }
                 }
 
+            }
+            else if (msg.text == '/info') {
+                if (user) {
+                    let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\nAdmin`
+                    bot.sendMessage(chat_id, get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id }))
+                }
             }
             else if (msg.text == '/delete' && ['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                 deleteGroup(get(msg, 'chat.id'))
@@ -122,9 +129,11 @@ class botConroller {
                     user_step: 1,
                     back: []
                 });
-                writePermisson({
-                    chat_id
-                })
+                if (!infoPermisson().find(el => el.chat_id == chat_id)) {
+                    writePermisson({
+                        chat_id
+                    })
+                }
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
                 bot.sendMessage(
                     chat_id,

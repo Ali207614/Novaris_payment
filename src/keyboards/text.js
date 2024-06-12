@@ -1,7 +1,7 @@
 const { get } = require("lodash")
 const { bot } = require("../config")
-const { SubMenu } = require("../credentials")
-const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData, updateData } = require("../helpers")
+const { SubMenu, Menu } = require("../credentials")
+const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData, updateData, infoPermisson } = require("../helpers")
 const { dataConfirmBtnEmp } = require("./inline_keyboards")
 const moment = require('moment')
 const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '') => {
@@ -111,9 +111,37 @@ const confirmativeUpdateMessage = async ({ user, list, chat_id }) => {
     }
 }
 
+const userInfoText = ({ user = {}, chat_id = 0 }) => {
+    let obj = {
+        '1': { name: "Xodim", key: 'permissonMenuEmp' },
+        '2': { name: "Tasdiqlovchi", key: 'permissonMenuAffirmative' },
+        '3': { name: "Bajaruvchi", key: 'permissonMenuExecutor' }
+    }
+    let text = ``
+    if (get(user, 'LastName', '')) {
+        text += `ID: ${get(user, 'EmployeeID', 1)}\n`
+        text += `${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n`
+    }
+    let infoPermissonData = infoPermisson().find(item => get(item, 'chat_id') == chat_id)
+    if (infoPermissonData) {
+        get(infoPermissonData, 'roles', []).sort((a, b) => a - b).forEach(element => {
+            text += `\n${get(obj, `[${element}].name`, '')}\n\n`
+            let menu = Menu().filter(item => Object.keys(get(infoPermissonData, `${[obj[element].key]}`, {})).includes(get(item, 'id', 0).toString())).reduce((a, b) => {
+                let subMenu = SubMenu()[get(b, 'id', 1)].reduce((x, y) => {
+                    return x + `   --- ${get(y, 'name', '')}  ${(get(infoPermissonData, `${[obj[element].key]}.${get(b, 'id')}`, []).includes(get(y, 'id', 0).toString()) ? '✅' : '❌')}\n`
+                }, '')
+                return a + `---${get(b, 'name', '')}\n${subMenu}`
+            }, '')
+            text += `${Object.keys(get(infoPermissonData, `${[obj[element].key]}`, {})).length ? menu : ''}`
+        });
+    }
+    return text
+}
+
 
 module.exports = {
     dataConfirmText,
     ticketAddText,
-    adminMenusInfo
+    adminMenusInfo,
+    userInfoText
 }

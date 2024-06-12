@@ -5,7 +5,7 @@ const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles, affirmativeKeyboard, executorKeyboard } = require("../keyboards/keyboards");
 const ShortUniqueId = require('short-unique-id');
 const { randomUUID } = new ShortUniqueId({ length: 10 });
-const { dataConfirmText, adminMenusInfo } = require("../keyboards/text");
+const { dataConfirmText, adminMenusInfo, userInfoText } = require("../keyboards/text");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const b1Controller = require("../controllers/b1Controller");
 const { bot } = require("../config");
@@ -2374,14 +2374,14 @@ let adminBtn = {
                 return "Menular"
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info"], 2)
+                return empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
             },
         },
     },
     "Menular qo'shish": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info"], 2)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 703)
         },
@@ -2395,6 +2395,31 @@ let adminBtn = {
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn(["Asosiy Menu", "Sub Menu"], 2)
+            },
+        },
+    },
+    "Xodim menulari": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
+            updateBack(chat_id, { text: "Menular", btn, step: 702 })
+            updateStep(chat_id, 703)
+
+            let allUser = infoUser()
+            for (let i = 0; i < allUser.length; i++) {
+                bot.sendMessage(chat_id, userInfoText({ user: allUser[i], chat_id: allUser[i].chat_id }))
+            }
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Xodim menulari"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
             },
         },
     },
@@ -2490,7 +2515,7 @@ let updateAdminBtn = {
     "Menular o'zgartirish": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info"], 2)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 800)
             updateUser(chat_id, { adminType: 'update' })
@@ -2575,7 +2600,7 @@ let deleteAdminBtn = {
     "Menular o'chirish": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info"], 2)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", "Xodim menulari"], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 801)
             updateUser(chat_id, { adminType: 'delete' })
@@ -2612,7 +2637,7 @@ let changeStatusAdminBtn = {
     "Menular status": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info"], 2)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", "Xodim menulari"], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 801)
             updateUser(chat_id, { adminType: 'change' })

@@ -202,9 +202,6 @@ class b1Controller {
             }
         }
 
-        console.log(body, ' bu body')
-        // "startDate": "2024.01.31",
-        // "endDate": "2024.01.31",
         const axios = Axios.create({
             baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
