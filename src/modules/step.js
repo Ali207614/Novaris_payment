@@ -364,7 +364,7 @@ let xorijiyXaridStep = {
             text: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.comment
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : SubMenu()[get(list, 'menu', 1)].find(item => item.name == get(list, 'subMenu'))?.comment
             },
             btn: async ({ chat_id, msgText }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -935,14 +935,15 @@ let adminStep = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
+            let newText = `${'🔴'.repeat(14)}\n`
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
             let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqlamadi ❌ ID:${list.ID}`
             for (let i = 0; i < confirmativeList.length; i++) {
-                bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
+                bot.sendMessage(confirmativeList[i], newText + dataConfirmText(info, text, chat_id))
             }
-            bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+            bot.sendMessage(list.chat_id, newText + dataConfirmText(info, text, chat_id))
             updateUser(chat_id, { confirmationStatus: false })
             // group
             let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
@@ -950,7 +951,7 @@ let adminStep = {
             let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
             for (let i = 0; i < specialGroup.length; i++) {
-                bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                bot.sendMessage(specialGroup[i].id, newText + dataConfirmText(info, text, chat_id)).then((data) => {
                 }).catch(e => {
                     if (get(e, 'response.body.error_code') == 403) {
                         deleteGroup(specialGroup[i].id)
@@ -978,20 +979,21 @@ let adminStep = {
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
+            let newText = `${'🔴'.repeat(14)}\n`
 
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
             let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi tasdiqlamadi ❌ ID:${list.ID}`
             for (let i = 0; i < confirmativeList.length; i++) {
-                bot.sendMessage(confirmativeList[i], dataConfirmText(info, text, chat_id))
+                bot.sendMessage(confirmativeList[i], newText + dataConfirmText(info, text, chat_id))
             }
 
             let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
             for (let i = 0; i < executerList.length; i++) {
-                bot.sendMessage(executerList[i], dataConfirmText(info, text, chat_id))
+                bot.sendMessage(executerList[i], newText + dataConfirmText(info, text, chat_id))
             }
 
-            bot.sendMessage(list.chat_id, dataConfirmText(info, text, chat_id))
+            bot.sendMessage(list.chat_id, newText + dataConfirmText(info, text, chat_id))
             updateUser(chat_id, { confirmationStatus: false })
 
             // group
@@ -1000,7 +1002,7 @@ let adminStep = {
             let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
             for (let i = 0; i < specialGroup.length; i++) {
-                bot.sendMessage(specialGroup[i].id, dataConfirmText(info, text, chat_id)).then((data) => {
+                bot.sendMessage(specialGroup[i].id, newText + dataConfirmText(info, text, chat_id)).then((data) => {
                 }).catch(e => {
                     if (get(e, 'response.body.error_code') == 403) {
                         deleteGroup(specialGroup[i].id)

@@ -15,7 +15,7 @@ class b1Controller {
             "Password": "w2e3r4Q!"
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -34,7 +34,7 @@ class b1Controller {
 
     async getEmpInfo(phone = '') {
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -203,7 +203,7 @@ class b1Controller {
         }
 
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -253,7 +253,7 @@ class b1Controller {
             DocumentLines
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -300,7 +300,7 @@ class b1Controller {
 
 
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -349,7 +349,7 @@ class b1Controller {
             ]
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
