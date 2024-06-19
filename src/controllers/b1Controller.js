@@ -7,7 +7,6 @@ const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE
 const { saveSession, getSession } = require("../helpers");
 
 class b1Controller {
-
     async auth() {
         let obj = {
             "CompanyDB": "NOVARIS_SAP",

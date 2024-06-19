@@ -1704,7 +1704,7 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser.menuName == 'Xorijiy xarid') })
+            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -1741,7 +1741,7 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser.menuName == 'Xorijiy xarid') })
+            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
