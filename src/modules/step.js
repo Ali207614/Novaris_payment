@@ -935,7 +935,7 @@ let adminStep = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
-            let newText = `${'🔴'.repeat(14)}\n`
+            let newText = `${'🔴'.repeat(10)}\n`
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
@@ -979,7 +979,7 @@ let adminStep = {
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
-            let newText = `${'🔴'.repeat(14)}\n`
+            let newText = `${'🔴'.repeat(10)}\n`
 
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
             let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)

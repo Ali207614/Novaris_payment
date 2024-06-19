@@ -29,7 +29,7 @@ let xorijiyXaridCallback = {
                 let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                 let confirmativeSendlist = []
                 for (let i = 0; i < accessChatId.length; i++) {
-                    let isOverTime = (get(list, 'menu', '') == 7 && get(list, 'menuName', '') == 'Overtime') ? `🟠`.repeat(14) : `🟡`.repeat(14)
+                    let isOverTime = (get(list, 'menu', '') == 7 && get(list, 'menuName', '') == 'Overtime') ? `🟠`.repeat(10) : `🟡`.repeat(10)
                     let text = `${isOverTime}\n` + dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
                     let send = await bot.sendMessage(accessChatId[i], text, btnConfirmative)
                     confirmativeSendlist.push({ messageId: send.message_id, chatId: accessChatId[i] })
@@ -65,7 +65,7 @@ let xorijiyXaridCallback = {
                     let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
                     let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                     for (let i = 0; i < specialGroup.length; i++) {
-                        let isOverTime = (get(list, 'menu', '') == 7 && get(list, 'menuName', '') == 'Overtime') ? `🟠`.repeat(14) : `🟡`.repeat(14)
+                        let isOverTime = (get(list, 'menu', '') == 7 && get(list, 'menuName', '') == 'Overtime') ? `🟠`.repeat(10) : `🟡`.repeat(10)
                         let text = `${isOverTime}\n` + dataConfirmText(info, '', chat_id)
                         bot.sendMessage(specialGroup[i].id, text).then((data) => {
                         }).catch(e => {
@@ -141,7 +141,8 @@ let xorijiyXaridCallback = {
                     return text
                 }
                 if (data[1] == '1') {
-                    let newText = `${'🟢'.repeat(14)}\n`
+                    let newText = `${'🟢'.repeat(10)}\n`
+                    let newTextExecutor = `${'🟣'.repeat(10)}\n`
 
                     if (get(list, 'menuName') == 'Shartnoma') {
                         updateData(data[2], { executer: { chat_id, status: true }, confirmative: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() }, confirmative: { status: true, date: new Date() } } })
@@ -153,7 +154,7 @@ let xorijiyXaridCallback = {
                     let btnExecuter = await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmExecuter')
                     for (let i = 0; i < executerList.length; i++) {
 
-                        bot.sendMessage(executerList[i], newText + dataConfirmText(info, 'Bajarasizmi ?', chat_id), btnExecuter)
+                        bot.sendMessage(executerList[i], newTextExecutor + dataConfirmText(info, 'Bajarasizmi ?', chat_id), btnExecuter)
                     }
 
                     let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
@@ -248,7 +249,7 @@ let xorijiyXaridCallback = {
                 }
                 if (data[1] == '1') {
 
-                    let newText = `${'🔵'.repeat(14)}\n`
+                    let newText = `${'🔵'.repeat(10)}\n`
                     updateData(data[2], { executer: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
                     let str = ''
                     if (get(list, 'ticketAdd')) {
