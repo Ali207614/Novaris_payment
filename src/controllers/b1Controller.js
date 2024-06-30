@@ -10,11 +10,11 @@ class b1Controller {
     async auth() {
         let obj = {
             "CompanyDB": "NOVARIS_SAP",
-            "UserName": "manager",
-            "Password": "w2e3r4Q!"
+            "UserName": "Fin7",
+            "Password": "1234"
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -30,10 +30,9 @@ class b1Controller {
             return { status: false, message: get(err, 'response.data.error.message.value') }
         });
     }
-
     async getEmpInfo(phone = '') {
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -60,7 +59,6 @@ class b1Controller {
                 }
             });
     }
-
     async getPartner(name = "", groupList) {
         try {
             let sql = PARTNERSEARCH + ` and T0.\"GroupCode\" in  (${groupList.map(item => `'${item}'`)})`
@@ -80,7 +78,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async cashFlow(name = "") {
         try {
             let data = await dbService.executeParam(CASHFLOW, [name])
@@ -90,7 +87,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async getAccount43() {
         try {
             const { accounts43 } = require("../credentials");
@@ -102,7 +98,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async getPurchaseOrder({ cardCode }) {
         try {
             let data = await dbService.executeParam(GETPURCHASEORDER, [cardCode])
@@ -112,8 +107,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
-
     async getAccount15({ status = false }) {
         try {
             let account = status ? '5530' : `15%`
@@ -124,7 +117,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async getAccount(arr, isPay = false) {
         try {
             let accountQuery = accountBuilderFn(arr)
@@ -135,7 +127,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async getAccountNo(arr) {
         try {
             let accountQuery = accountBuilderFnNo(arr)
@@ -146,7 +137,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async getCurrentRate(cur = 'UZS', date = '') {
         try {
             let data = await dbService.executeParam(CURRENTRATE, [cur, moment(date).format('DD.MM.YY')])
@@ -156,7 +146,6 @@ class b1Controller {
             throw new Error(e)
         }
     }
-
     async executePayments({ list = {}, cred = {}, dataInfo = '' }) {
 
         if (get(list, 'purchase')) {
@@ -202,7 +191,7 @@ class b1Controller {
         }
 
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -232,8 +221,6 @@ class b1Controller {
                 }
             });
     }
-
-
     async purchaseDownPayments({ list = {}, dataInfo = '' }) {
         let DocumentLines = get(list, 'purchaseOrders', []).filter(item => item.DocEntry == get(list, 'purchaseEntry')).map(item => {
             return { BaseLine: item.LineNum, BaseEntry: item.DocEntry, BaseType: 22 }
@@ -252,7 +239,7 @@ class b1Controller {
             DocumentLines
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -299,7 +286,7 @@ class b1Controller {
 
 
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -326,7 +313,6 @@ class b1Controller {
                 }
             });
     }
-
     async DownPayments({ list = {}, data = {}, dataInfo = '' }) {
         let body = {
             "CardCode": get(list, 'vendorId'),
@@ -348,7 +334,7 @@ class b1Controller {
             ]
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -375,7 +361,6 @@ class b1Controller {
                 }
             });
     }
-
 }
 
 module.exports = new b1Controller();

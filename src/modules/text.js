@@ -1980,7 +1980,139 @@ let shartnomaBtn = {
                 return empDynamicBtn()
             },
         },
-    }
+    },
+
+    "SM Shartnoma shabloni": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 61)
+            updateData(get(dataCurUser, 'id'), { subMenu: `SM Shartnoma shabloni` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
+                return findComment
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "AN Shartnoma shabloni": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 61)
+            updateData(get(dataCurUser, 'id'), { subMenu: `AN Shartnoma shabloni` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
+                return findComment
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "NM Shartnoma shabloni": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 61)
+            updateData(get(dataCurUser, 'id'), { subMenu: `NM Shartnoma shabloni` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
+                return findComment
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "UR Shartnoma shabloni": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 61)
+            updateData(get(dataCurUser, 'id'), { subMenu: `UR Shartnoma shabloni` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
+                return findComment
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+    "JZ Shartnoma shabloni": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 61)
+            updateData(get(dataCurUser, 'id'), { subMenu: `JZ Shartnoma shabloni` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
+                return findComment
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
+
 }
 
 
