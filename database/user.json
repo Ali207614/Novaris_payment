@@ -1,2969 +1,3166 @@
 [
-  {
-    "EmployeeID": 183,
-    "LastName": "Ergashev",
-    "FirstName": "Akrom",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977514040",
-    "chat_id": 7043921122,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-08T13:26:04.736Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 155655,
-    "currentDataId": "RygJ5GdtAT",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 178,
-    "LastName": "Ferro",
-    "FirstName": "Admin",
-    "JobTitle": "Admin",
-    "SalesPersonCode": null,
-    "MobilePhone": "998333569256",
-    "chat_id": 7113959453,
-    "is_active": true,
-    "user_step": 702,
-    "back": [
-      {
-        "text": "Asosiy Menu",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}],[{\"text\":\"Menular\"},{\"text\":\"Gruppalar\"}]]}",
-          "chat_id": 7113959453,
-          "text": "Assalomu Aleykum"
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-06-08T13:26:22.512Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "lastMessageId": 154809,
-    "selectedAdminUserChatId": "688272621",
-    "selectedAdminUserStatus": "executor",
-    "pagination": {
-      "next": "10",
-      "prev": 0
-    },
-    "newSubMenu": {},
-    "adminType": "update",
-    "updatePaginationMenu": 2,
-    "updateMenu": {
-      "menuType": "2",
-      "menuId": "2",
-      "mainMenuId": 7,
-      "key": "1"
-    },
-    "lastAdminSteps": {
-      "btn": {
-        "reply_markup": {
-          "inline_keyboard": [
-            [
-              {
-                "text": "Sub Menu nomi",
-                "callback_data": "updateAdminMenu#1#2"
-              },
-              {
-                "text": "Kommentariya",
-                "callback_data": "updateAdminMenu#2#2"
-              }
-            ]
-          ],
-          "resize_keyboard": true
+    {
+        "EmployeeID": 183,
+        "LastName": "Ergashev",
+        "FirstName": "Akrom",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977514040",
+        "chat_id": 7043921122,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-08T13:26:04.736Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 155655,
+        "currentDataId": "RygJ5GdtAT",
+        "pagination": {
+            "next": 10,
+            "prev": 0
         }
-      },
-      "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Overtime\nSub Menu Nomi : DO'KON | Ish vaqtidan tashqari ishlash\nKommentariya : Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana\nYaratilagan Sana : June 12, 2024\n",
-      "step": 802
     },
-    "excelStart": "2024.06.13",
-    "excelEnd": "2024.06.14",
-    "newMenu": {},
-    "selectGroup": {
-      "menu": "7",
-      "subMenu": "3"
+    {
+        "EmployeeID": 178,
+        "LastName": "Ferro",
+        "FirstName": "Admin",
+        "JobTitle": "Admin",
+        "SalesPersonCode": null,
+        "MobilePhone": "998333569256",
+        "chat_id": 7113959453,
+        "is_active": true,
+        "user_step": 702,
+        "back": [
+            {
+                "text": "Asosiy Menu",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}],[{\"text\":\"Menular\"},{\"text\":\"Gruppalar\"}]]}",
+                    "chat_id": 7113959453,
+                    "text": "Assalomu Aleykum"
+                },
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-06-08T13:26:22.512Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "lastMessageId": 154809,
+        "selectedAdminUserChatId": "688272621",
+        "selectedAdminUserStatus": "executor",
+        "pagination": {
+            "next": "10",
+            "prev": 0
+        },
+        "newSubMenu": {},
+        "adminType": "update",
+        "updatePaginationMenu": 2,
+        "updateMenu": {
+            "menuType": "2",
+            "menuId": "2",
+            "mainMenuId": 7,
+            "key": "1"
+        },
+        "lastAdminSteps": {
+            "btn": {
+                "reply_markup": {
+                    "inline_keyboard": [
+                        [
+                            {
+                                "text": "Sub Menu nomi",
+                                "callback_data": "updateAdminMenu#1#2"
+                            },
+                            {
+                                "text": "Kommentariya",
+                                "callback_data": "updateAdminMenu#2#2"
+                            }
+                        ]
+                    ],
+                    "resize_keyboard": true
+                }
+            },
+            "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Overtime\nSub Menu Nomi : DO'KON | Ish vaqtidan tashqari ishlash\nKommentariya : Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\nQuyidagi xodimlarga qo'shimcha ishlashga ruxsat berishingizni so'rayman:\n\nQo'shimcha ish vaqti:\n\nSababi:\n\nBu ishni boshqa vaqtga ko'chirish yoki kechiktirish korxonaga ko'proq ziyon olib kelishini tasdiqlayman\n#overtime #sana\nYaratilagan Sana : June 12, 2024\n",
+            "step": 802
+        },
+        "excelStart": "2024.06.13",
+        "excelEnd": "2024.06.14",
+        "newMenu": {},
+        "selectGroup": {
+            "menu": "7",
+            "subMenu": "3"
+        }
+    },
+    {
+        "EmployeeID": 70,
+        "LastName": "Islomov",
+        "FirstName": "Ibrohim",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998935341566",
+        "chat_id": 688272621,
+        "is_active": true,
+        "user_step": 300,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 688272621,
+                    "text": "Bajaruvchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 688272621,
+                    "text": "Bajaruvchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 688272621,
+                    "text": "Bajaruvchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 688272621,
+                    "text": "Bajaruvchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            }
+        ],
+        "creationDate": "2024-06-08T13:27:48.386Z",
+        "currentUserRole": "Bajaruvchi",
+        "update": false,
+        "lastMessageId": 158865,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "Nh2hp5VBLx",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Bajarilmagan so'rovlar",
+        "notConfirmId": "mVVZ9mgDI6",
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 23,
+        "LastName": "Vasilov",
+        "FirstName": "Akmal",
+        "JobTitle": "Buxgalter",
+        "SalesPersonCode": null,
+        "MobilePhone": "998909303033",
+        "chat_id": 251065,
+        "is_active": true,
+        "user_step": 300,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 251065,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi"
+                                },
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 746227,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            }
+        ],
+        "creationDate": "2024-06-08T13:33:56.858Z",
+        "currentUserRole": "Tasdiqlovchi",
+        "update": false,
+        "lastMessageId": 156990,
+        "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
+        "notConfirmId": "JV6W4Xdi9R",
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "Xn8lwOeNEJ",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 177,
+        "LastName": "Majidov",
+        "FirstName": "Abdulloh",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998999702030",
+        "chat_id": 7019028659,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-08T13:54:56.559Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 117159,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "gHNwF0guce",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 11,
+        "LastName": "To'laganov",
+        "FirstName": "MuhammadRasul",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998996042030",
+        "chat_id": 786967146,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-08T14:11:13.695Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 154157,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "mN1nPcKHTJ",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 9,
+        "LastName": "Usmonov",
+        "FirstName": "Behzod",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977524040",
+        "chat_id": 937011370,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-08T14:11:18.858Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 158279,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "hcQAI2V3VI",
+        "confirmationStatus": false,
+        "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "notConfirmId": "MnrLpSQeDF"
+    },
+    {
+        "EmployeeID": 78,
+        "LastName": "To'xtamurodov",
+        "FirstName": "Bahodir",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998998069745",
+        "chat_id": 5085172423,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-08T15:50:53.974Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 157886,
+        "selectedInfoMenu": "Bajarilmagan so'rovlar",
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "I58LbRvK7V",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": true,
+        "notConfirmId": "chmGLWF7RT"
+    },
+    {
+        "EmployeeID": 25,
+        "LastName": "Qudratov",
+        "FirstName": "Abduqodir",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977398080",
+        "chat_id": 5851534752,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-08T16:15:03.514Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 158694,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "dtJh2FBoZe",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 103,
+        "LastName": "Sultonov",
+        "FirstName": "Doston",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998338909907",
+        "chat_id": 6266887116,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-09T01:20:38.954Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 152380,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "ByyN219EhZ",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 5,
+        "LastName": "Gulyamov",
+        "FirstName": "Bobur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998933906073",
+        "chat_id": 746227,
+        "is_active": true,
+        "user_step": 300,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 746227,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            }
+        ],
+        "creationDate": "2024-06-09T10:21:11.940Z",
+        "currentUserRole": "Tasdiqlovchi",
+        "update": false,
+        "lastMessageId": 158742,
+        "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
+        "notConfirmId": "pgrNoNh9zo",
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false
+    },
+    {
+        "EmployeeID": 55,
+        "LastName": "Ikromov",
+        "FirstName": "Azamat",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998947442030",
+        "chat_id": 6037639220,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-09T11:07:46.009Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 158682,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "maIjefFsPZ",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 45,
+        "LastName": "Xikmatov",
+        "FirstName": "Shuhrat",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998948182030",
+        "chat_id": 6331632910,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-09T11:19:34.285Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 158160,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "SH16kwulOG",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 31,
+        "LastName": "Qudratov",
+        "FirstName": "Zokir",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998997902030",
+        "chat_id": 7023692839,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-09T12:18:20.989Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 158118,
+        "currentDataId": "VMzI7V9onG",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 77,
+        "LastName": "Mo'minov",
+        "FirstName": "Mirvohid",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998997672030",
+        "chat_id": 6673989877,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T03:58:25.702Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 156854,
+        "currentDataId": "K9eReUmiuG",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 95,
+        "LastName": "Vahobov",
+        "FirstName": "Izzatilla",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998910759999",
+        "chat_id": 446062727,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T05:01:45.993Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 151636,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "MvHbGvizUD",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 7,
+        "LastName": "To'lanov",
+        "FirstName": "To'lqin",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998974416060",
+        "chat_id": 410687462,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T05:17:25.598Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 152274,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "4pkfeD6jn1",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 19,
+        "LastName": "Jumaev",
+        "FirstName": "Temur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998909592034",
+        "chat_id": 652825438,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T05:30:17.673Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 149325,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "Xx86fqKC98",
+        "pagination": {
+            "next": "10",
+            "prev": 0
+        },
+        "confirmationStatus": false,
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 28,
+        "LastName": "Qoraxonov",
+        "FirstName": "Qahramon",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977086205",
+        "chat_id": 458059132,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T05:45:14.914Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 129456,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "u7U3JYdGOX",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 156,
+        "LastName": "Quddusov",
+        "FirstName": "Nodirbek",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977476363",
+        "chat_id": 2091077081,
+        "is_active": true,
+        "user_step": 4000,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-06-10T05:46:51.502Z",
+        "currentUserRole": "Tasdiqlovchi",
+        "update": false,
+        "lastMessageId": 149609,
+        "notConfirmId": "AynMj5qjvC",
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 69,
+        "LastName": "Bakirov",
+        "FirstName": "Abdurahmon",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977469090",
+        "chat_id": 529325930,
+        "is_active": true,
+        "user_step": 2,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-06-10T06:56:02.945Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 154193,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "z6qOZVh47l",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 154,
+        "LastName": "Kamalov",
+        "FirstName": "Inoyatxo'ja",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998974246060",
+        "chat_id": 5275596885,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T07:35:38.914Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 154191,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "gEMNworZJI",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 27,
+        "LastName": "Bo'riboyev",
+        "FirstName": "Nodirbek",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998337012363",
+        "chat_id": 460705367,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T08:15:32.882Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 154789,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "ASsksAanQh",
+        "notConfirmId": "clbHOBemnG",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanmagan so'rovlar"
+    },
+    {
+        "EmployeeID": 173,
+        "LastName": "Dadaxonova",
+        "FirstName": "Sayyora",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998909544450",
+        "chat_id": 364591081,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T09:02:31.069Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 115083,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "UiIuEF6LGE",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 128,
+        "LastName": "Mirvaliyev",
+        "FirstName": "Mira'zam",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998974343233",
+        "chat_id": 5038420242,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T09:23:33.915Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 156560,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "u7jFNlxTT6",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false,
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 74,
+        "LastName": "Baymatova",
+        "FirstName": "Madina",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998903191416",
+        "chat_id": 1077527554,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T09:25:46.087Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 149420,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "acBVRRDtgL",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlovchi rad etgan so'rovlar"
+    },
+    {
+        "EmployeeID": 65,
+        "LastName": "Maxkamxo'jayev",
+        "FirstName": "Bositxon",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998935664547",
+        "chat_id": 5141482022,
+        "is_active": true,
+        "user_step": 50,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 5141482022,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "To'lov/Xarajat"
+                                },
+                                {
+                                    "text": "Boshqa"
+                                },
+                                {
+                                    "text": "Overtime"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 10
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Naqd/Karta hisobidan to'lov/xarajat"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 60
+            },
+            {
+                "text": "Hujjatni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Chiquvchi to'lov"
+                                },
+                                {
+                                    "text": "Kiruvchi to'lov"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 61
+            },
+            {
+                "text": "Hujjat turi ni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Hisob"
+                                },
+                                {
+                                    "text": "(Xodim)"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 62
+            },
+            {
+                "text": "Hisob (qayerga)",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "AV/TMB",
+                                    "callback_data": "accountType#0"
+                                },
+                                {
+                                    "text": "Kassa farq",
+                                    "callback_data": "accountType#1"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik/Bonus",
+                                    "callback_data": "accountType#2"
+                                },
+                                {
+                                    "text": "Qarz",
+                                    "callback_data": "accountType#3"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Tovar qabuli",
+                                    "callback_data": "accountType#4"
+                                },
+                                {
+                                    "text": "Doimiy xarajat",
+                                    "callback_data": "accountType#5"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Yetkazish",
+                                    "callback_data": "accountType#6"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 63
+            },
+            {
+                "text": "Hisob (qayerdan)",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "9812 - YAIT (ЕСП)",
+                                    "callback_data": "othersAccount#9812"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9810 - Foyda solig'i",
+                                    "callback_data": "othersAccount#9810"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9499 - Boshqa xarajatlar",
+                                    "callback_data": "othersAccount#9499"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9465 - Kassa kamomadi boyicha foyda/zarar",
+                                    "callback_data": "othersAccount#9465"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9462 - Yoqilg'i",
+                                    "callback_data": "othersAccount#9462"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9461 - Xizmat safari xarajati",
+                                    "callback_data": "othersAccount#9461"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9459 - Texnik xizmat",
+                                    "callback_data": "othersAccount#9459"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9458 - Pul o'tkazish xarajati",
+                                    "callback_data": "othersAccount#9458"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9457 - Dastur xarajati",
+                                    "callback_data": "othersAccount#9457"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "9455 - Ovqat",
+                                    "callback_data": "othersAccount#9455"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Next➡️",
+                                    "callback_data": "paginationAccount#next#10"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 64
+            },
+            {
+                "text": "1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 65
+            },
+            {
+                "text": "To'lov usullarini tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Naqd",
+                                    "callback_data": "payType#Naqd"
+                                },
+                                {
+                                    "text": "Karta",
+                                    "callback_data": "payType#Karta"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 45
+            },
+            {
+                "text": "To'lov usullarini tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "USD",
+                                    "callback_data": "currency#USD"
+                                },
+                                {
+                                    "text": "UZS",
+                                    "callback_data": "currency#UZS"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 46
+            },
+            {
+                "text": "Hisob (qayerdan)",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "5010 - Korxona (UZS)",
+                                    "callback_data": "account#5010"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5020 - D12 kassasi (UZS)",
+                                    "callback_data": "account#5020"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5025 - AN kassasi (UZS)",
+                                    "callback_data": "account#5025"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5030 - D64 kassasi (UZS)",
+                                    "callback_data": "account#5030"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5035 - SM kassasi (UZS)",
+                                    "callback_data": "account#5035"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5040 - Q01 kassasi (UZS)",
+                                    "callback_data": "account#5040"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5043 - Korxona R (UZS)",
+                                    "callback_data": "account#5043"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5060 - Ombor kassasi (UZS)",
+                                    "callback_data": "account#5060"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5062 - Dis kassa (UZS)",
+                                    "callback_data": "account#5062"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5070 - Ofis kassa (UZS)",
+                                    "callback_data": "account#5070"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Next➡️",
+                                    "callback_data": "paginationAccounts#next#10"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 47
+            },
+            {
+                "text": "Summani yozing",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 48
+            }
+        ],
+        "creationDate": "2024-06-10T09:57:55.443Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 158887,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "gJTLeKiuUx",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlangan , bajarilmagan so'rovlar"
+    },
+    {
+        "EmployeeID": 94,
+        "LastName": "Malikov",
+        "FirstName": "Ibrohim",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998999902030",
+        "chat_id": 5768009327,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T10:29:41.108Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 155227,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "JXVupqDvKC",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 61,
+        "LastName": "Mirahmatov",
+        "FirstName": "Mirhayot",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998900038864",
+        "chat_id": 462941849,
+        "is_active": true,
+        "user_step": 2,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-06-10T10:44:32.528Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 123591,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "v5ocuq92ua",
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 68,
+        "LastName": "Qudratov",
+        "FirstName": "Kamoliddin",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998994412030",
+        "chat_id": 5875510102,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T11:00:16.260Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 147237,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "rzk5Tnknaf"
+    },
+    {
+        "EmployeeID": 21,
+        "LastName": "Sobirxo'jaev",
+        "FirstName": "Ibrohimxo'ja",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998900001954",
+        "chat_id": 5455478466,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T11:33:51.307Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 158615,
+        "currentDataId": "Ft7O3MND9p",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Bajarilmagan so'rovlar",
+        "notConfirmId": "saAAfLqhtq"
+    },
+    {
+        "EmployeeID": 97,
+        "LastName": "Habibullayev",
+        "FirstName": "Ravshanbek",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998998782030",
+        "chat_id": 5400746099,
+        "is_active": true,
+        "user_step": 4000,
+        "back": [],
+        "creationDate": "2024-06-10T13:02:37.984Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 156317,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "hMIYesTUFI",
+        "notConfirmId": "KbFnc9y9NG",
+        "confirmationStatus": false,
+        "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 98,
+        "LastName": "Daniyarova",
+        "FirstName": "Farida",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998992072030",
+        "chat_id": 6185671189,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-10T15:05:46.106Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 151293,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "wgufq2H5gO",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 143,
+        "LastName": "Risqiyev",
+        "FirstName": "Abdulaziz",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977298080",
+        "chat_id": 5586079193,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-11T03:44:29.969Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 144448,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "rubhi7HIeJ",
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 174,
+        "LastName": "Rustamova",
+        "FirstName": "Shirin",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998988092030",
+        "chat_id": 5696937832,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-11T07:18:56.187Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 152099,
+        "currentDataId": "ixREwlSKyr",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 175,
+        "LastName": "Hayitov",
+        "FirstName": "Artur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998988082030",
+        "chat_id": 6791623976,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-11T07:22:02.374Z",
+        "lastMessageId": 147450,
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "currentDataId": "LxqJykYK6H",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 34,
+        "LastName": "Qudratov",
+        "FirstName": "Muhammad",
+        "JobTitle": null,
+        "SalesPersonCode": 21,
+        "MobilePhone": "998977489090",
+        "chat_id": 6198633019,
+        "is_active": true,
+        "user_step": 200,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 6198633019,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlovchi rad etgan so'rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi rad etgan so'rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 3
+            }
+        ],
+        "creationDate": "2024-06-11T07:40:37.194Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 100675,
+        "currentDataId": "A4dTHg6HIK",
+        "selectedInfoMenu": "Tasdiqlovchi rad etgan so'rovlar"
+    },
+    {
+        "EmployeeID": 149,
+        "LastName": "Luqmonov",
+        "FirstName": "Bobur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998974456060",
+        "chat_id": 5321901669,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-11T09:16:54.747Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 147864,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "iP4LbcvKQN",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 16,
+        "LastName": "Azimov",
+        "FirstName": "Baxtiazim",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998991131363",
+        "chat_id": 612324473,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-06-11T09:19:54.375Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 138686,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "01HxOCHfeK",
+        "confirmationStatus": false,
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 182,
+        "LastName": "Ergashev",
+        "FirstName": "Azimjon",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977268080",
+        "chat_id": 1477835496,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-11T11:10:28.005Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 153557,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "9mxc2pguIZ",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 80,
+        "LastName": "Amanullayev",
+        "FirstName": "Fattoh",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998913087478",
+        "chat_id": 122724702,
+        "is_active": true,
+        "user_step": 4000,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 122724702,
+                    "text": "Tasdiqlovchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 122724702,
+                    "text": "Bajaruvchi"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 300
+            }
+        ],
+        "creationDate": "2024-06-11T13:55:12.232Z",
+        "lastMessageId": 153688,
+        "currentUserRole": "Bajaruvchi",
+        "update": false,
+        "selectedInfoMenu": "Bajarilmagan so'rovlar",
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "LwtQv7Y1ZU",
+        "notConfirmId": "DCeD7ugkv4"
+    },
+    {
+        "EmployeeID": 59,
+        "LastName": "Zokirov",
+        "FirstName": "Oybek",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998337020308",
+        "chat_id": 7190042608,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-12T07:19:18.465Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 157548,
+        "currentDataId": "kCiHm16ar3",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 149,
+        "LastName": "Luqmonov",
+        "FirstName": "Bobur",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977584040",
+        "chat_id": 6879017369,
+        "is_active": true,
+        "user_step": 60,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 6879017369,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "To'lov/Xarajat"
+                                },
+                                {
+                                    "text": "Shartnoma"
+                                },
+                                {
+                                    "text": "Boshqa"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Overtime"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 10
+            }
+        ],
+        "creationDate": "2024-06-12T08:34:00.588Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 156682,
+        "currentDataId": "skUIFmxzNv",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 170,
+        "LastName": "Madaminov",
+        "FirstName": "Muhammadali",
+        "SalesPersonCode": null,
+        "MobilePhone": "998903367448",
+        "chat_id": 561932032,
+        "is_active": true,
+        "user_step": 200,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlanishi kutilayotgan so’rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajarilishi kutilaytogan so’rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 3
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 200
+            },
+            {
+                "text": "O'zgartirasizmi ?\n\nID : 2072\nSubMenu : OFIS | Ish vaqtidan tashqari ishlash\nIzoh : azgina ko'p ishladim qo'shib beringlar pul\nXodim : Madaminov Muhammadali\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Izoh",
+                                    "callback_data": "updateWaiting#1"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "updateWaiting#0#undefined"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 201
+            },
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Tasdiqlanishi kutilayotgan so’rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajarilishi kutilaytogan so’rovlar"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 3
+            },
+            {
+                "text": "Sanani tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Kunlik"
+                                },
+                                {
+                                    "text": "Haftalik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Oylik"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 200
+            }
+        ],
+        "creationDate": "2024-06-12T19:59:45.379Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "lastMessageId": 1048,
+        "currentUserRole": "Xodim",
+        "currentDataId": "dqPo0Kqlwa",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
+        "notConfirmId": "Cc1nAG8Y1o",
+        "selectGroup": {
+            "menu": "6",
+            "subMenu": "4"
+        }
+    },
+    {
+        "EmployeeID": 72,
+        "LastName": "Murodov",
+        "FirstName": "Kamoliddin",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977568080",
+        "chat_id": 6009074292,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-13T10:25:00.471Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 158527,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "RcttfZ6Ec3",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        }
+    },
+    {
+        "EmployeeID": 148,
+        "LastName": "Valiyev",
+        "FirstName": "Baxtiyor",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998977689090",
+        "chat_id": 6640547880,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-13T11:31:50.266Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 150969,
+        "currentDataId": "bS1HDQDFZU"
+    },
+    {
+        "EmployeeID": 144,
+        "LastName": "Vaxobjonov",
+        "FirstName": "Abror",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998995702030",
+        "chat_id": 1761091411,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-13T12:30:36.741Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 129253,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "FyLSUMFsyd",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false
+    },
+    {
+        "EmployeeID": 190,
+        "LastName": "Shoikromov",
+        "FirstName": "Abdulaziz",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998998192030",
+        "chat_id": 7413089210,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-13T13:07:15.634Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 157025,
+        "currentDataId": "k2wPiTY5zM",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 49,
+        "LastName": "Otaxonov",
+        "FirstName": "Otabek",
+        "JobTitle": null,
+        "SalesPersonCode": 50,
+        "MobilePhone": "998993012030",
+        "chat_id": 5527819479,
+        "is_active": true,
+        "user_step": 2,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            }
+        ],
+        "creationDate": "2024-06-14T11:34:50.993Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 117227,
+        "currentDataId": "sK7nJ2gI5L"
+    },
+    {
+        "EmployeeID": 51,
+        "LastName": "Otabekov",
+        "FirstName": "Abdurashid",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998998552030",
+        "chat_id": 5521198682,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-15T09:07:46.116Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 154865,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "GU7RIuOYah",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 136,
+        "LastName": "Mo'minov",
+        "FirstName": "Mirzohid",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998887120681",
+        "chat_id": 1020757475,
+        "is_active": true,
+        "user_step": 60,
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 1020757475,
+                    "text": "Xodim"
+                },
+                "step": 2
+            },
+            {
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "To'lov/Xarajat"
+                                },
+                                {
+                                    "text": "Boshqa"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 10
+            }
+        ],
+        "creationDate": "2024-06-18T06:51:46.940Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 156782,
+        "currentDataId": "WuCch9JT7n",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlangan , bajarilgan so'rovlar"
+    },
+    {
+        "EmployeeID": 145,
+        "LastName": "Sherboyev",
+        "FirstName": "Shoxjahon",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998998402030",
+        "chat_id": 282880330,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-18T11:12:58.338Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 122975,
+        "currentDataId": "ixfsU5UM3c"
+    },
+    {
+        "EmployeeID": 53,
+        "LastName": "Muhammedov",
+        "FirstName": "Mavlon",
+        "JobTitle": null,
+        "SalesPersonCode": 63,
+        "MobilePhone": "998974146060",
+        "chat_id": 1771438419,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-18T13:45:36.254Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 124349,
+        "currentDataId": "NCoub1Vzyj"
+    },
+    {
+        "EmployeeID": 100,
+        "LastName": "Yusupov",
+        "FirstName": "Shahzod",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998903739330",
+        "chat_id": 1657005147,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-19T05:31:54.493Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 156622,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "UBB4TNAPJf",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "confirmationStatus": false,
+        "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
+    },
+    {
+        "EmployeeID": 186,
+        "LastName": "Hasanov",
+        "FirstName": "Habibulloh",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998999112030",
+        "chat_id": 6360150060,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-20T10:56:41.907Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 130194,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "dJgEedAMwy"
+    },
+    {
+        "EmployeeID": 82,
+        "LastName": "Abdurahmonov",
+        "FirstName": "Abdumalik",
+        "JobTitle": null,
+        "SalesPersonCode": 69,
+        "MobilePhone": "998996022030",
+        "chat_id": 5840799071,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-28T09:41:17.460Z",
+        "currentUserRole": "Xodim",
+        "update": false,
+        "lastMessageId": 153275,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentDataId": "efAmLRhcpB"
+    },
+    {
+        "EmployeeID": 192,
+        "LastName": "Shakarov",
+        "FirstName": "Muzaffar",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998998822030",
+        "chat_id": 7217274188,
+        "is_active": true,
+        "user_step": 1,
+        "back": [],
+        "creationDate": "2024-06-28T11:59:41.573Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false
+    },
+    {
+        "EmployeeID": 136,
+        "LastName": "Mo'minov",
+        "FirstName": "Mirzohid",
+        "JobTitle": null,
+        "SalesPersonCode": null,
+        "MobilePhone": "998994642030",
+        "chat_id": 6802047475,
+        "is_active": true,
+        "user_step": 10,
+        "back": [],
+        "creationDate": "2024-06-29T06:10:21.762Z",
+        "update": false,
+        "confirmationStatus": false,
+        "waitingUpdateStatus": false,
+        "extraWaiting": false,
+        "currentUserRole": "Xodim",
+        "lastMessageId": 157384,
+        "currentDataId": "PHpUq9VZIH",
+        "pagination": {
+            "next": 10,
+            "prev": 0
+        },
+        "selectedInfoMenu": "Tasdiqlovchi rad etgan so'rovlar"
     }
-  },
-  {
-    "EmployeeID": 70,
-    "LastName": "Islomov",
-    "FirstName": "Ibrohim",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998935341566",
-    "chat_id": 688272621,
-    "is_active": true,
-    "user_step": 300,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Bajaruvchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 688272621,
-          "text": "Bajaruvchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Bajaruvchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 688272621,
-          "text": "Bajaruvchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Bajaruvchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 688272621,
-          "text": "Bajaruvchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Bajaruvchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 688272621,
-          "text": "Bajaruvchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      }
-    ],
-    "creationDate": "2024-06-08T13:27:48.386Z",
-    "currentUserRole": "Bajaruvchi",
-    "update": false,
-    "lastMessageId": 158865,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "Nh2hp5VBLx",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Bajarilmagan so'rovlar",
-    "notConfirmId": "mVVZ9mgDI6",
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 23,
-    "LastName": "Vasilov",
-    "FirstName": "Akmal",
-    "JobTitle": "Buxgalter",
-    "SalesPersonCode": null,
-    "MobilePhone": "998909303033",
-    "chat_id": 251065,
-    "is_active": true,
-    "user_step": 300,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 251065,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi"
-                },
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 746227,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      }
-    ],
-    "creationDate": "2024-06-08T13:33:56.858Z",
-    "currentUserRole": "Tasdiqlovchi",
-    "update": false,
-    "lastMessageId": 156990,
-    "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
-    "notConfirmId": "JV6W4Xdi9R",
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "Xn8lwOeNEJ",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 177,
-    "LastName": "Majidov",
-    "FirstName": "Abdulloh",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998999702030",
-    "chat_id": 7019028659,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-08T13:54:56.559Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 117159,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "gHNwF0guce",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 11,
-    "LastName": "To'laganov",
-    "FirstName": "MuhammadRasul",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998996042030",
-    "chat_id": 786967146,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-08T14:11:13.695Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 154157,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "mN1nPcKHTJ",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 9,
-    "LastName": "Usmonov",
-    "FirstName": "Behzod",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977524040",
-    "chat_id": 937011370,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-08T14:11:18.858Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 158279,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "hcQAI2V3VI",
-    "confirmationStatus": false,
-    "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "notConfirmId": "MnrLpSQeDF"
-  },
-  {
-    "EmployeeID": 78,
-    "LastName": "To'xtamurodov",
-    "FirstName": "Bahodir",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998998069745",
-    "chat_id": 5085172423,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-08T15:50:53.974Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 157886,
-    "selectedInfoMenu": "Bajarilmagan so'rovlar",
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "I58LbRvK7V",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": true,
-    "notConfirmId": "chmGLWF7RT"
-  },
-  {
-    "EmployeeID": 25,
-    "LastName": "Qudratov",
-    "FirstName": "Abduqodir",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977398080",
-    "chat_id": 5851534752,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-08T16:15:03.514Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 158694,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "dtJh2FBoZe",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 103,
-    "LastName": "Sultonov",
-    "FirstName": "Doston",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998338909907",
-    "chat_id": 6266887116,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-09T01:20:38.954Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 152380,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "ByyN219EhZ",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 5,
-    "LastName": "Gulyamov",
-    "FirstName": "Bobur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998933906073",
-    "chat_id": 746227,
-    "is_active": true,
-    "user_step": 300,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Bajaruvchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 746227,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      }
-    ],
-    "creationDate": "2024-06-09T10:21:11.940Z",
-    "currentUserRole": "Tasdiqlovchi",
-    "update": false,
-    "lastMessageId": 158742,
-    "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
-    "notConfirmId": "pgrNoNh9zo",
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  },
-  {
-    "EmployeeID": 55,
-    "LastName": "Ikromov",
-    "FirstName": "Azamat",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998947442030",
-    "chat_id": 6037639220,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-09T11:07:46.009Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 158682,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "maIjefFsPZ",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 45,
-    "LastName": "Xikmatov",
-    "FirstName": "Shuhrat",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998948182030",
-    "chat_id": 6331632910,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-09T11:19:34.285Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 158160,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "SH16kwulOG",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 31,
-    "LastName": "Qudratov",
-    "FirstName": "Zokir",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998997902030",
-    "chat_id": 7023692839,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-09T12:18:20.989Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 158118,
-    "currentDataId": "VMzI7V9onG",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 77,
-    "LastName": "Mo'minov",
-    "FirstName": "Mirvohid",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998997672030",
-    "chat_id": 6673989877,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T03:58:25.702Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 156854,
-    "currentDataId": "K9eReUmiuG",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 95,
-    "LastName": "Vahobov",
-    "FirstName": "Izzatilla",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998910759999",
-    "chat_id": 446062727,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T05:01:45.993Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 151636,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "MvHbGvizUD",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 7,
-    "LastName": "To'lanov",
-    "FirstName": "To'lqin",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998974416060",
-    "chat_id": 410687462,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T05:17:25.598Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 152274,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "4pkfeD6jn1",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 19,
-    "LastName": "Jumaev",
-    "FirstName": "Temur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998909592034",
-    "chat_id": 652825438,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T05:30:17.673Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 149325,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "Xx86fqKC98",
-    "pagination": {
-      "next": "10",
-      "prev": 0
-    },
-    "confirmationStatus": false,
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 28,
-    "LastName": "Qoraxonov",
-    "FirstName": "Qahramon",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977086205",
-    "chat_id": 458059132,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T05:45:14.914Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 129456,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "u7U3JYdGOX",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 156,
-    "LastName": "Quddusov",
-    "FirstName": "Nodirbek",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977476363",
-    "chat_id": 2091077081,
-    "is_active": true,
-    "user_step": 4000,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-06-10T05:46:51.502Z",
-    "currentUserRole": "Tasdiqlovchi",
-    "update": false,
-    "lastMessageId": 149609,
-    "notConfirmId": "AynMj5qjvC",
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 69,
-    "LastName": "Bakirov",
-    "FirstName": "Abdurahmon",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977469090",
-    "chat_id": 529325930,
-    "is_active": true,
-    "user_step": 2,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-06-10T06:56:02.945Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 154193,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "z6qOZVh47l",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 154,
-    "LastName": "Kamalov",
-    "FirstName": "Inoyatxo'ja",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998974246060",
-    "chat_id": 5275596885,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T07:35:38.914Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 154191,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "gEMNworZJI",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 27,
-    "LastName": "Bo'riboyev",
-    "FirstName": "Nodirbek",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998337012363",
-    "chat_id": 460705367,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T08:15:32.882Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 154789,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "ASsksAanQh",
-    "notConfirmId": "clbHOBemnG",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanmagan so'rovlar"
-  },
-  {
-    "EmployeeID": 173,
-    "LastName": "Dadaxonova",
-    "FirstName": "Sayyora",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998909544450",
-    "chat_id": 364591081,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T09:02:31.069Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 115083,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "UiIuEF6LGE",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 128,
-    "LastName": "Mirvaliyev",
-    "FirstName": "Mira'zam",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998974343233",
-    "chat_id": 5038420242,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T09:23:33.915Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 156560,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "u7jFNlxTT6",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false,
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 74,
-    "LastName": "Baymatova",
-    "FirstName": "Madina",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998903191416",
-    "chat_id": 1077527554,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T09:25:46.087Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 149420,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "acBVRRDtgL",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlovchi rad etgan so'rovlar"
-  },
-  {
-    "EmployeeID": 65,
-    "LastName": "Maxkamxo'jayev",
-    "FirstName": "Bositxon",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998935664547",
-    "chat_id": 5141482022,
-    "is_active": true,
-    "user_step": 50,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 5141482022,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "To'lov/Xarajat"
-                },
-                {
-                  "text": "Boshqa"
-                },
-                {
-                  "text": "Overtime"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 10
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Naqd/Karta hisobidan to'lov/xarajat"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 60
-      },
-      {
-        "text": "Hujjatni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Chiquvchi to'lov"
-                },
-                {
-                  "text": "Kiruvchi to'lov"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 61
-      },
-      {
-        "text": "Hujjat turi ni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Hisob"
-                },
-                {
-                  "text": "(Xodim)"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 62
-      },
-      {
-        "text": "Hisob (qayerga)",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "AV/TMB",
-                  "callback_data": "accountType#0"
-                },
-                {
-                  "text": "Kassa farq",
-                  "callback_data": "accountType#1"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik/Bonus",
-                  "callback_data": "accountType#2"
-                },
-                {
-                  "text": "Qarz",
-                  "callback_data": "accountType#3"
-                }
-              ],
-              [
-                {
-                  "text": "Tovar qabuli",
-                  "callback_data": "accountType#4"
-                },
-                {
-                  "text": "Doimiy xarajat",
-                  "callback_data": "accountType#5"
-                }
-              ],
-              [
-                {
-                  "text": "Yetkazish",
-                  "callback_data": "accountType#6"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 63
-      },
-      {
-        "text": "Hisob (qayerdan)",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "9812 - YAIT (ЕСП)",
-                  "callback_data": "othersAccount#9812"
-                }
-              ],
-              [
-                {
-                  "text": "9810 - Foyda solig'i",
-                  "callback_data": "othersAccount#9810"
-                }
-              ],
-              [
-                {
-                  "text": "9499 - Boshqa xarajatlar",
-                  "callback_data": "othersAccount#9499"
-                }
-              ],
-              [
-                {
-                  "text": "9465 - Kassa kamomadi boyicha foyda/zarar",
-                  "callback_data": "othersAccount#9465"
-                }
-              ],
-              [
-                {
-                  "text": "9462 - Yoqilg'i",
-                  "callback_data": "othersAccount#9462"
-                }
-              ],
-              [
-                {
-                  "text": "9461 - Xizmat safari xarajati",
-                  "callback_data": "othersAccount#9461"
-                }
-              ],
-              [
-                {
-                  "text": "9459 - Texnik xizmat",
-                  "callback_data": "othersAccount#9459"
-                }
-              ],
-              [
-                {
-                  "text": "9458 - Pul o'tkazish xarajati",
-                  "callback_data": "othersAccount#9458"
-                }
-              ],
-              [
-                {
-                  "text": "9457 - Dastur xarajati",
-                  "callback_data": "othersAccount#9457"
-                }
-              ],
-              [
-                {
-                  "text": "9455 - Ovqat",
-                  "callback_data": "othersAccount#9455"
-                }
-              ],
-              [
-                {
-                  "text": "Next➡️",
-                  "callback_data": "paginationAccount#next#10"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 64
-      },
-      {
-        "text": "1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 65
-      },
-      {
-        "text": "To'lov usullarini tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "Naqd",
-                  "callback_data": "payType#Naqd"
-                },
-                {
-                  "text": "Karta",
-                  "callback_data": "payType#Karta"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 45
-      },
-      {
-        "text": "To'lov usullarini tanlang",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "USD",
-                  "callback_data": "currency#USD"
-                },
-                {
-                  "text": "UZS",
-                  "callback_data": "currency#UZS"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 46
-      },
-      {
-        "text": "Hisob (qayerdan)",
-        "btn": {
-          "reply_markup": {
-            "inline_keyboard": [
-              [
-                {
-                  "text": "5010 - Korxona (UZS)",
-                  "callback_data": "account#5010"
-                }
-              ],
-              [
-                {
-                  "text": "5020 - D12 kassasi (UZS)",
-                  "callback_data": "account#5020"
-                }
-              ],
-              [
-                {
-                  "text": "5025 - AN kassasi (UZS)",
-                  "callback_data": "account#5025"
-                }
-              ],
-              [
-                {
-                  "text": "5030 - D64 kassasi (UZS)",
-                  "callback_data": "account#5030"
-                }
-              ],
-              [
-                {
-                  "text": "5035 - SM kassasi (UZS)",
-                  "callback_data": "account#5035"
-                }
-              ],
-              [
-                {
-                  "text": "5040 - Q01 kassasi (UZS)",
-                  "callback_data": "account#5040"
-                }
-              ],
-              [
-                {
-                  "text": "5043 - Korxona R (UZS)",
-                  "callback_data": "account#5043"
-                }
-              ],
-              [
-                {
-                  "text": "5060 - Ombor kassasi (UZS)",
-                  "callback_data": "account#5060"
-                }
-              ],
-              [
-                {
-                  "text": "5062 - Dis kassa (UZS)",
-                  "callback_data": "account#5062"
-                }
-              ],
-              [
-                {
-                  "text": "5070 - Ofis kassa (UZS)",
-                  "callback_data": "account#5070"
-                }
-              ],
-              [
-                {
-                  "text": "Next➡️",
-                  "callback_data": "paginationAccounts#next#10"
-                }
-              ]
-            ],
-            "resize_keyboard": true
-          }
-        },
-        "step": 47
-      },
-      {
-        "text": "Summani yozing",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 48
-      }
-    ],
-    "creationDate": "2024-06-10T09:57:55.443Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 158887,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "gJTLeKiuUx",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlangan , bajarilmagan so'rovlar"
-  },
-  {
-    "EmployeeID": 94,
-    "LastName": "Malikov",
-    "FirstName": "Ibrohim",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998999902030",
-    "chat_id": 5768009327,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T10:29:41.108Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 155227,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "JXVupqDvKC",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 61,
-    "LastName": "Mirahmatov",
-    "FirstName": "Mirhayot",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998900038864",
-    "chat_id": 462941849,
-    "is_active": true,
-    "user_step": 2,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-06-10T10:44:32.528Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 123591,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "v5ocuq92ua",
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 68,
-    "LastName": "Qudratov",
-    "FirstName": "Kamoliddin",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998994412030",
-    "chat_id": 5875510102,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T11:00:16.260Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 147237,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "rzk5Tnknaf"
-  },
-  {
-    "EmployeeID": 21,
-    "LastName": "Sobirxo'jaev",
-    "FirstName": "Ibrohimxo'ja",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998900001954",
-    "chat_id": 5455478466,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T11:33:51.307Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 158615,
-    "currentDataId": "Ft7O3MND9p",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Bajarilmagan so'rovlar",
-    "notConfirmId": "saAAfLqhtq"
-  },
-  {
-    "EmployeeID": 97,
-    "LastName": "Habibullayev",
-    "FirstName": "Ravshanbek",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998998782030",
-    "chat_id": 5400746099,
-    "is_active": true,
-    "user_step": 4000,
-    "back": [],
-    "creationDate": "2024-06-10T13:02:37.984Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 156317,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "hMIYesTUFI",
-    "notConfirmId": "KbFnc9y9NG",
-    "confirmationStatus": false,
-    "selectedInfoMenu": "Tasdiqlanmagan so'rovlar",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 98,
-    "LastName": "Daniyarova",
-    "FirstName": "Farida",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998992072030",
-    "chat_id": 6185671189,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-10T15:05:46.106Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 151293,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "wgufq2H5gO",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 143,
-    "LastName": "Risqiyev",
-    "FirstName": "Abdulaziz",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977298080",
-    "chat_id": 5586079193,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-11T03:44:29.969Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 144448,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "rubhi7HIeJ",
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 174,
-    "LastName": "Rustamova",
-    "FirstName": "Shirin",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998988092030",
-    "chat_id": 5696937832,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-11T07:18:56.187Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 152099,
-    "currentDataId": "ixREwlSKyr",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 175,
-    "LastName": "Hayitov",
-    "FirstName": "Artur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998988082030",
-    "chat_id": 6791623976,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-11T07:22:02.374Z",
-    "lastMessageId": 147450,
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "currentDataId": "LxqJykYK6H",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 34,
-    "LastName": "Qudratov",
-    "FirstName": "Muhammad",
-    "JobTitle": null,
-    "SalesPersonCode": 21,
-    "MobilePhone": "998977489090",
-    "chat_id": 6198633019,
-    "is_active": true,
-    "user_step": 200,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 6198633019,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Tasdiqlovchi rad etgan so'rovlar"
-                }
-              ],
-              [
-                {
-                  "text": "Bajaruvchi rad etgan so'rovlar"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 3
-      }
-    ],
-    "creationDate": "2024-06-11T07:40:37.194Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 100675,
-    "currentDataId": "A4dTHg6HIK",
-    "selectedInfoMenu": "Tasdiqlovchi rad etgan so'rovlar"
-  },
-  {
-    "EmployeeID": 149,
-    "LastName": "Luqmonov",
-    "FirstName": "Bobur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998974456060",
-    "chat_id": 5321901669,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-11T09:16:54.747Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 147864,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "iP4LbcvKQN",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 16,
-    "LastName": "Azimov",
-    "FirstName": "Baxtiazim",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998991131363",
-    "chat_id": 612324473,
-    "is_active": true,
-    "user_step": 1,
-    "back": [],
-    "creationDate": "2024-06-11T09:19:54.375Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 138686,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "01HxOCHfeK",
-    "confirmationStatus": false,
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 182,
-    "LastName": "Ergashev",
-    "FirstName": "Azimjon",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977268080",
-    "chat_id": 1477835496,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-11T11:10:28.005Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 153557,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "9mxc2pguIZ",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 80,
-    "LastName": "Amanullayev",
-    "FirstName": "Fattoh",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998913087478",
-    "chat_id": 122724702,
-    "is_active": true,
-    "user_step": 4000,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Bajaruvchi"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Tasdiqlanmagan so'rovlar\"},{\"text\":\"Tasdiqlanib , bajarilmagan so'rovlar\"}],[{\"text\":\"Tasdiqlanib , bajarilishi kutilayotgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 122724702,
-          "text": "Tasdiqlovchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Bajaruvchi"
-                },
-                {
-                  "text": "Tasdiqlovchi"
-                }
-              ],
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Bajarilmagan so'rovlar\"},{\"text\":\"Bajarilgan so'rovlar\"}],[{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 122724702,
-          "text": "Bajaruvchi"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sanani tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Kunlik"
-                },
-                {
-                  "text": "Haftalik"
-                }
-              ],
-              [
-                {
-                  "text": "Oylik"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 300
-      }
-    ],
-    "creationDate": "2024-06-11T13:55:12.232Z",
-    "lastMessageId": 153688,
-    "currentUserRole": "Bajaruvchi",
-    "update": false,
-    "selectedInfoMenu": "Bajarilmagan so'rovlar",
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "LwtQv7Y1ZU",
-    "notConfirmId": "DCeD7ugkv4"
-  },
-  {
-    "EmployeeID": 59,
-    "LastName": "Zokirov",
-    "FirstName": "Oybek",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998337020308",
-    "chat_id": 7190042608,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-12T07:19:18.465Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 157548,
-    "currentDataId": "kCiHm16ar3",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 149,
-    "LastName": "Luqmonov",
-    "FirstName": "Bobur",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977584040",
-    "chat_id": 6879017369,
-    "is_active": true,
-    "user_step": 60,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 6879017369,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "To'lov/Xarajat"
-                },
-                {
-                  "text": "Shartnoma"
-                },
-                {
-                  "text": "Boshqa"
-                }
-              ],
-              [
-                {
-                  "text": "Overtime"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 10
-      }
-    ],
-    "creationDate": "2024-06-12T08:34:00.588Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 156682,
-    "currentDataId": "skUIFmxzNv",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 170,
-    "LastName": "Madaminov",
-    "FirstName": "Muhammadali",
-    "SalesPersonCode": null,
-    "MobilePhone": "998903367448",
-    "chat_id": 561932032,
-    "is_active": true,
-    "user_step": 1,
-    "back": [],
-    "creationDate": "2024-06-12T19:59:45.379Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "lastMessageId": 144398,
-    "currentUserRole": "Xodim",
-    "currentDataId": "pwqVhdGVI4",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanmagan so'rovlar"
-  },
-  {
-    "EmployeeID": 72,
-    "LastName": "Murodov",
-    "FirstName": "Kamoliddin",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977568080",
-    "chat_id": 6009074292,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-13T10:25:00.471Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 158527,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "RcttfZ6Ec3",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    }
-  },
-  {
-    "EmployeeID": 148,
-    "LastName": "Valiyev",
-    "FirstName": "Baxtiyor",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998977689090",
-    "chat_id": 6640547880,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-13T11:31:50.266Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 150969,
-    "currentDataId": "bS1HDQDFZU"
-  },
-  {
-    "EmployeeID": 144,
-    "LastName": "Vaxobjonov",
-    "FirstName": "Abror",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998995702030",
-    "chat_id": 1761091411,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-13T12:30:36.741Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 129253,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "FyLSUMFsyd",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false
-  },
-  {
-    "EmployeeID": 190,
-    "LastName": "Shoikromov",
-    "FirstName": "Abdulaziz",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998998192030",
-    "chat_id": 7413089210,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-13T13:07:15.634Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 157025,
-    "currentDataId": "k2wPiTY5zM",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 49,
-    "LastName": "Otaxonov",
-    "FirstName": "Otabek",
-    "JobTitle": null,
-    "SalesPersonCode": 50,
-    "MobilePhone": "998993012030",
-    "chat_id": 5527819479,
-    "is_active": true,
-    "user_step": 2,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      }
-    ],
-    "creationDate": "2024-06-14T11:34:50.993Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 117227,
-    "currentDataId": "sK7nJ2gI5L"
-  },
-  {
-    "EmployeeID": 51,
-    "LastName": "Otabekov",
-    "FirstName": "Abdurashid",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998998552030",
-    "chat_id": 5521198682,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-15T09:07:46.116Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 154865,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "GU7RIuOYah",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 136,
-    "LastName": "Mo'minov",
-    "FirstName": "Mirzohid",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998887120681",
-    "chat_id": 1020757475,
-    "is_active": true,
-    "user_step": 60,
-    "back": [
-      {
-        "text": "Assalomu Aleykum",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xodim"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 1
-      },
-      {
-        "text": "So'rovlar",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-          "chat_id": 1020757475,
-          "text": "Xodim"
-        },
-        "step": 2
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "To'lov/Xarajat"
-                },
-                {
-                  "text": "Boshqa"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 10
-      }
-    ],
-    "creationDate": "2024-06-18T06:51:46.940Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 156782,
-    "currentDataId": "WuCch9JT7n",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlangan , bajarilgan so'rovlar"
-  },
-  {
-    "EmployeeID": 145,
-    "LastName": "Sherboyev",
-    "FirstName": "Shoxjahon",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998998402030",
-    "chat_id": 282880330,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-18T11:12:58.338Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 122975,
-    "currentDataId": "ixfsU5UM3c"
-  },
-  {
-    "EmployeeID": 53,
-    "LastName": "Muhammedov",
-    "FirstName": "Mavlon",
-    "JobTitle": null,
-    "SalesPersonCode": 63,
-    "MobilePhone": "998974146060",
-    "chat_id": 1771438419,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-18T13:45:36.254Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 124349,
-    "currentDataId": "NCoub1Vzyj"
-  },
-  {
-    "EmployeeID": 100,
-    "LastName": "Yusupov",
-    "FirstName": "Shahzod",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998903739330",
-    "chat_id": 1657005147,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-19T05:31:54.493Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 156622,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "UBB4TNAPJf",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "confirmationStatus": false,
-    "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar"
-  },
-  {
-    "EmployeeID": 186,
-    "LastName": "Hasanov",
-    "FirstName": "Habibulloh",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998999112030",
-    "chat_id": 6360150060,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-20T10:56:41.907Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 130194,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "dJgEedAMwy"
-  },
-  {
-    "EmployeeID": 82,
-    "LastName": "Abdurahmonov",
-    "FirstName": "Abdumalik",
-    "JobTitle": null,
-    "SalesPersonCode": 69,
-    "MobilePhone": "998996022030",
-    "chat_id": 5840799071,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-28T09:41:17.460Z",
-    "currentUserRole": "Xodim",
-    "update": false,
-    "lastMessageId": 153275,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentDataId": "efAmLRhcpB"
-  },
-  {
-    "EmployeeID": 192,
-    "LastName": "Shakarov",
-    "FirstName": "Muzaffar",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998998822030",
-    "chat_id": 7217274188,
-    "is_active": true,
-    "user_step": 1,
-    "back": [],
-    "creationDate": "2024-06-28T11:59:41.573Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false
-  },
-  {
-    "EmployeeID": 136,
-    "LastName": "Mo'minov",
-    "FirstName": "Mirzohid",
-    "JobTitle": null,
-    "SalesPersonCode": null,
-    "MobilePhone": "998994642030",
-    "chat_id": 6802047475,
-    "is_active": true,
-    "user_step": 10,
-    "back": [],
-    "creationDate": "2024-06-29T06:10:21.762Z",
-    "update": false,
-    "confirmationStatus": false,
-    "waitingUpdateStatus": false,
-    "extraWaiting": false,
-    "currentUserRole": "Xodim",
-    "lastMessageId": 157384,
-    "currentDataId": "PHpUq9VZIH",
-    "pagination": {
-      "next": 10,
-      "prev": 0
-    },
-    "selectedInfoMenu": "Tasdiqlovchi rad etgan so'rovlar"
-  }
 ]

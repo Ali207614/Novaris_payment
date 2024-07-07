@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { get } = require("lodash");
 const path = require("path");
+const { bot } = require('../config')
 
 function infoUser() {
     let docs = fs.readFileSync(
@@ -351,6 +352,20 @@ function parseDate(dateStr) {
     const [year, month, day] = dateStr.split('.').map(Number);
     return new Date(Date.UTC(year, month - 1, day)); // Date.UTC yil, oy (0-indexed), kun
 }
+
+async function sendMessageHelper(...arg) {
+    let file = arg.find(item => get(item, 'file'))
+    if (file && get(file, 'file.send') && get(file, 'file.document')) {
+        let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
+        return await bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {
+            caption: text,
+            reply_markup: btn?.reply_markup
+        })
+    }
+
+    return await bot.sendMessage(...arg)
+}
+
 module.exports = {
     parseDate,
     updateUser,
@@ -388,4 +403,5 @@ module.exports = {
     deleteGroup,
     updateGroup,
     infoGroup,
+    sendMessageHelper
 }

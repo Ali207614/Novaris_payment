@@ -1,10 +1,12 @@
 const { get } = require("lodash");
 let { bot } = require("../config");
+const { SubMenu } = require("../credentials");
 const {
-    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup, infoPermisson
+    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup, infoPermisson, updateData, infoData, sendMessageHelper
 } = require("../helpers");
+const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
-const { userInfoText } = require("../keyboards/text");
+const { userInfoText, dataConfirmText } = require("../keyboards/text");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
@@ -23,10 +25,10 @@ class botConroller {
             if (msg.text == "/start") {
                 if (['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                     writeGroup(get(msg, 'chat', {}))
-                    bot.sendMessage(get(msg, 'chat.id'), "Qo'shildi ✅")
+                    sendMessageHelper(get(msg, 'chat.id'), "Qo'shildi ✅")
                 }
                 else if (!['group', 'supergroup'].includes(get(msg, 'chat.type', ''))) {
-                    bot.sendMessage(
+                    sendMessageHelper(
                         chat_id,
                         "Assalomu Aleykum",
                         !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
@@ -45,12 +47,12 @@ class botConroller {
             else if (msg.text == '/info') {
                 if (user) {
                     let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\nAdmin`
-                    bot.sendMessage(chat_id, get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id }))
+                    sendMessageHelper(chat_id, get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id }))
                 }
             }
             else if (msg.text == '/delete' && ['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                 deleteGroup(get(msg, 'chat.id'))
-                bot.sendMessage(get(msg, 'chat.id'), "O'chirildi ❌")
+                sendMessageHelper(get(msg, 'chat.id'), "O'chirildi ❌")
             }
             else if (
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
@@ -62,7 +64,7 @@ class botConroller {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
                     if (execute?.next) {
                         let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
-                            bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
+                            sendMessageHelper(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
                         let lastMessageId = await botInfo
                         updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
                     }
@@ -77,7 +79,7 @@ class botConroller {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text }) : undefined
                     if (execute?.next) {
                         let botInfo = await execute?.next?.file ? await bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
-                            await bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
+                            await sendMessageHelper(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
                         updateUser(chat_id, { lastMessageId: botInfo.message_id })
                     }
                 }
@@ -104,7 +106,7 @@ class botConroller {
                         if (execute?.next) {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let botInfo = await execute?.next?.update ? bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +user.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) }) : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
-                                bot.sendMessage(chat_id, await execute?.next?.text({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined))
+                                sendMessageHelper(chat_id, await execute?.next?.text({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined))
                             let botId = await botInfo
                             updateUser(chat_id, { lastMessageId: botId.message_id })
                         }
@@ -120,7 +122,7 @@ class botConroller {
     async contact(msg, chat_id) {
         try {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
-            let deleteMessage = await bot.sendMessage(chat_id, 'Loading...')
+            let deleteMessage = await sendMessageHelper(chat_id, 'Loading...')
             let sap_user = await b1Controller.getEmpInfo(phone);
             if (get(sap_user, "status") && get(sap_user, "data.value")?.length) {
                 writeUser({
@@ -136,14 +138,45 @@ class botConroller {
                     })
                 }
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
-                bot.sendMessage(
+                sendMessageHelper(
                     chat_id,
                     "Foydalanuvchi tasdiqlandi ✅",
                     mainMenuByRoles({ chat_id })
                 );
             } else {
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
-                bot.sendMessage(chat_id, "Foydalanuvchi tasdiqlanmadi ❌", option);
+                sendMessageHelper(chat_id, "Foydalanuvchi tasdiqlanmadi ❌", option);
+            }
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+    async document(msg, chat_id) {
+        try {
+            let file = get(msg, 'document', {})
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == user.currentDataId)
+            if (get(list, 'file.active')) {
+                updateData(get(list, 'id'), { file: { active: false, send: true, document: file } })
+                let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                const button = {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [
+                                { text: 'Ha', callback_data: 'confirmEmp#1' },
+                                { text: 'Bekor qilish', callback_data: 'confirmEmp#2' }
+                            ],
+                            [
+                                { text: "O'zgartirish", callback_data: 'confirmEmp#3' },
+                            ]
+                        ]
+                    }
+                };
+                let botInfo = await bot.sendDocument(chat_id, get(file, 'file_id'), {
+                    caption: dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id),
+                    reply_markup: button.reply_markup
+                })
+                updateUser(chat_id, { lastMessageId: botInfo.message_id })
             }
         } catch (err) {
             throw new Error(err);
