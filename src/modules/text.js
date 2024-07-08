@@ -535,12 +535,12 @@ let executorBtn = {
 
 let executeBtn = {
     "Orqaga": {
+        document: true,
         selfExecuteFn: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (get(user, 'confirmationStatus')) {
                 return
             }
-           
             updateStep(chat_id, get(user, `back[${user.back.length - 1}].step`, 1))
         },
         middleware: ({ chat_id }) => {

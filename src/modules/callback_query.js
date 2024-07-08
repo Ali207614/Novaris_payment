@@ -11,6 +11,7 @@ const { dataConfirmText, ticketAddText } = require("../keyboards/text");
 let moment = require('moment')
 let xorijiyXaridCallback = {
     "confirmEmp": {
+        document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
@@ -351,8 +352,6 @@ let xorijiyXaridCallback = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             updateStep(chat_id, user.user_step + 1)
-            console.log(data, ' bu self')
-
             if (data[1] != 0) {
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                 let updateList = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
@@ -360,13 +359,10 @@ let xorijiyXaridCallback = {
                 updateBack(chat_id, { text: dataConfirmText(info, "O'zgartirasizmi ?", chat_id), btn, step: user.user_step })
                 updateData(user.currentDataId, { lastStep: updateList.lastStep, lastBtn: await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp') })
             }
-            console.log(data, ' buyam self')
 
         },
         middleware: ({ chat_id, id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            console.log(user)
-            console.log(get(user, 'lastMessageId', 1), id)
             return get(user, 'lastMessageId', 1) == id
         },
         next: {
@@ -382,7 +378,6 @@ let xorijiyXaridCallback = {
                 let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu).update
                 let update = updateList.find(item => item.id == data[1])
                 updateStep(chat_id, update.step)
-                console.log(data, ' bu text')
                 return update.message
 
             },
@@ -405,8 +400,6 @@ let xorijiyXaridCallback = {
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
             let btn = dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${list.id}` }], 2, 'waiting')
             updateStep(chat_id, 201)
-            updateBack(chat_id, { text: dataConfirmText(info, `Kutilayotgan So'rovlar`, chat_id), btn, step: 200 })
-
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -439,7 +432,6 @@ let xorijiyXaridCallback = {
                     let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                     let updateList = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
                     let btn = await dataConfirmBtnEmp(chat_id, [...updateList.update, { name: "Bekor qilish", id: `0#${data[2]}` }], updateList.updateLine, 'updateWaiting')
-                    updateBack(chat_id, { text: dataConfirmText(info, "O'zgartirasizmi ?", chat_id), btn, step: user.user_step })
                     updateData(user.currentDataId, { lastStep: 200, lastBtn: await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${user.currentDataId}` }], 2, 'Waiting') })
                 }
             }
@@ -460,7 +452,7 @@ let xorijiyXaridCallback = {
                         let info = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu).infoFn({ chat_id })
                         let btn = dataConfirmText(info, "Kutilayotgan So'rovlar ?", chat_id)
                         updateUser(chat_id, { update: false, waitingUpdateStatus: false })
-                        return btn
+                        return "Bekor qilindi"
                     }
                     let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu).update
                     let update = updateList.find(item => item.id == data[1])
@@ -478,7 +470,7 @@ let xorijiyXaridCallback = {
                     let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu)
                     if (data[1] == '0') {
                         updateStep(chat_id, updateList.lastStep)
-                        return await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${user.currentDataId}` }], 2, 'Waiting')
+                        return empDynamicBtn()
                     }
                     let update = updateList.update.find(item => item.id == data[1])
                     let btn = await update.btn({ chat_id })
