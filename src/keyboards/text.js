@@ -4,6 +4,7 @@ const { SubMenu, Menu } = require("../credentials")
 const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData, updateData, infoPermisson } = require("../helpers")
 const { dataConfirmBtnEmp } = require("./inline_keyboards")
 const moment = require('moment')
+
 const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '') => {
     let user = infoUser().find(item => item.chat_id == chat_id)
     let newErrStr = ''
@@ -22,13 +23,15 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     }
     if (get(user, 'waitingUpdateStatus')) {
         confirmativeUpdateMessage({ user, list, chat_id })
-        updateUser(chat_id, { waitingUpdateStatus: false, extraWaiting: true })
+        updateUser(chat_id, { waitingUpdateStatus: false, extraWaiting: true, update: false })
         updateData(user.currentDataId, {
             stateTime: {
                 update: new Date()
             }
         })
+
         return "O'zgartirildi ✅"
+
     }
     let result = `${firstText}\n\n`
 

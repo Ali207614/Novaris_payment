@@ -2573,7 +2573,7 @@
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
         "is_active": true,
-        "user_step": 200,
+        "user_step": 52,
         "back": [
             {
                 "text": "Assalomu Aleykum",
@@ -2603,7 +2603,7 @@
                 "step": 2
             },
             {
-                "text": "So'rovlar",
+                "text": "Sub Menuni tanlang",
                 "btn": {
                     "parse_mode": "Markdown",
                     "reply_markup": {
@@ -2611,42 +2611,21 @@
                         "keyboard": [
                             [
                                 {
-                                    "text": "Tasdiqlanishi kutilayotgan so’rovlar"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Bajarilishi kutilaytogan so’rovlar"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Orqaga"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 3
-            },
-            {
-                "text": "Sanani tanlang",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Kunlik"
+                                    "text": "Xorijiy xarid"
                                 },
                                 {
-                                    "text": "Haftalik"
+                                    "text": "To'lov/Xarajat"
+                                },
+                                {
+                                    "text": "Narx chiqarish"
                                 }
                             ],
                             [
                                 {
-                                    "text": "Oylik"
+                                    "text": "Boshqa"
+                                },
+                                {
+                                    "text": "Overtime"
                                 }
                             ],
                             [
@@ -2657,75 +2636,90 @@
                         ]
                     }
                 },
-                "step": 200
+                "step": 10
             },
             {
-                "text": "O'zgartirasizmi ?\n\nID : 2072\nSubMenu : OFIS | Ish vaqtidan tashqari ishlash\nIzoh : azgina ko'p ishladim qo'shib beringlar pul\nXodim : Madaminov Muhammadali\n",
+                "text": "Sub Menuni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xorijiy xarid tovar buyurtmasi"
+                                },
+                                {
+                                    "text": "Xorijiy xarid to'lovi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Chetga pul chiqarish"
+                                },
+                                {
+                                    "text": "Chetga pul chiqarish (Bank)"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 11
+            },
+            {
+                "text": "Hujjatni tanlang",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Chiquvchi to'lov"
+                                },
+                                {
+                                    "text": "Kiruvchi to'lov"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 90
+            },
+            {
+                "text": "Hisob (qayerdan)",
                 "btn": {
                     "reply_markup": {
                         "inline_keyboard": [
                             [
                                 {
-                                    "text": "Izoh",
-                                    "callback_data": "updateWaiting#1"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Bekor qilish",
-                                    "callback_data": "updateWaiting#0#undefined"
+                                    "text": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                                    "callback_data": "othersAccount#5530"
                                 }
                             ]
                         ],
                         "resize_keyboard": true
                     }
                 },
-                "step": 201
+                "step": 64
             },
             {
-                "text": "Assalomu Aleykum",
+                "text": "1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31",
                 "btn": {
                     "parse_mode": "Markdown",
                     "reply_markup": {
                         "resize_keyboard": true,
                         "keyboard": [
-                            [
-                                {
-                                    "text": "Xodim"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 1
-            },
-            {
-                "text": "So'rovlar",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-                    "chat_id": 561932032,
-                    "text": "Xodim"
-                },
-                "step": 2
-            },
-            {
-                "text": "So'rovlar",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Tasdiqlanishi kutilayotgan so’rovlar"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Bajarilishi kutilaytogan so’rovlar"
-                                }
-                            ],
                             [
                                 {
                                     "text": "Orqaga"
@@ -2734,28 +2728,134 @@
                         ]
                     }
                 },
-                "step": 3
+                "step": 65
             },
             {
-                "text": "Sanani tanlang",
+                "text": "To'lov usullarini tanlang",
                 "btn": {
-                    "parse_mode": "Markdown",
                     "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
+                        "inline_keyboard": [
                             [
                                 {
-                                    "text": "Kunlik"
+                                    "text": "Naqd",
+                                    "callback_data": "payType#Naqd"
                                 },
                                 {
-                                    "text": "Haftalik"
+                                    "text": "Karta",
+                                    "callback_data": "payType#Karta"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 45
+            },
+            {
+                "text": "To'lov usullarini tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "USD",
+                                    "callback_data": "currency#USD"
+                                },
+                                {
+                                    "text": "UZS",
+                                    "callback_data": "currency#UZS"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 46
+            },
+            {
+                "text": "Hisob (qayerdan)",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "3120 - Oldindan to'langan xizmat haqi",
+                                    "callback_data": "account#3120"
                                 }
                             ],
                             [
                                 {
-                                    "text": "Oylik"
+                                    "text": "5011 - Korxona (USD)",
+                                    "callback_data": "account#5011"
                                 }
                             ],
+                            [
+                                {
+                                    "text": "5012 - Korxona-2 (USD)",
+                                    "callback_data": "account#5012"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5021 - D12 kassasi (USD)",
+                                    "callback_data": "account#5021"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5026 - AN kassasi (USD)",
+                                    "callback_data": "account#5026"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5031 - D64 kassasi (USD)",
+                                    "callback_data": "account#5031"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5036 - SM kassasi (USD)",
+                                    "callback_data": "account#5036"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5041 - Q01 kassasi (USD)",
+                                    "callback_data": "account#5041"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5044 - Korxona R (USD)",
+                                    "callback_data": "account#5044"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "5051 - Misafir kassasi (USD)",
+                                    "callback_data": "account#5051"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Next➡️",
+                                    "callback_data": "paginationAccounts#next#10"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 47
+            },
+            {
+                "text": "Summani yozing",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
                             [
                                 {
                                     "text": "Orqaga"
@@ -2764,7 +2864,185 @@
                         ]
                     }
                 },
-                "step": 200
+                "step": 48
+            },
+            {
+                "text": "-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Orqaga"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 50
+            },
+            {
+                "text": "Hisob nuqtasini tanlang",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "12-do'kon",
+                                    "callback_data": "point#12"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "64-do'kon",
+                                    "callback_data": "point#64"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "777-DO'KON",
+                                    "callback_data": "point#777"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "DISTRIBYUTSIYA",
+                                    "callback_data": "point#D"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "KORXONA",
+                                    "callback_data": "point#KORXONA"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Ombor",
+                                    "callback_data": "point#O"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "OFIS",
+                                    "callback_data": "point#OFIS"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Qo'qon",
+                                    "callback_data": "point#Q"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Xitoy",
+                                    "callback_data": "point#X"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Andijon",
+                                    "callback_data": "point#AN"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Next➡️",
+                                    "callback_data": "paginationPoint#next#10"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 51
+            },
+            {
+                "text": "Tasdiqlaysizmi ?\n\nID : 2080\nSubMenu : Chetga pul chiqarish\nSAP Document : Chiquvchi to'lov\nTo'lov sanasi : 31.01.2024\nHisobot To'lov sanasi : 31.01.2024\nHisob (qayerdan) : 5041 - Q01 kassasi (USD)\nHisob (qayerga) : 5530 - Yo'ldagi pullar (Chetga chiqarilgan)\nStatya DDS : Xorijiy yetkazib beruvchilarga to'lov\nTo'lov Usuli : Naqd\nSumma : 100 $\nValyuta kursi : 12 440 UZS\nHisob Nuqtasi : KORXONA\nIzoh : Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa)\nXodim : Madaminov Muhammadali\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Ha",
+                                    "callback_data": "confirmEmp#1"
+                                },
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "confirmEmp#2"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "O'zgartirish",
+                                    "callback_data": "confirmEmp#3"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 53
+            },
+            {
+                "text": "O'zgartirasizmi ?\n\nID : 2080\nSubMenu : Chetga pul chiqarish\nSAP Document : Chiquvchi to'lov\nTo'lov sanasi : 31.01.2024\nHisobot To'lov sanasi : 31.01.2024\nHisob (qayerdan) : 5041 - Q01 kassasi (USD)\nHisob (qayerga) : 5530 - Yo'ldagi pullar (Chetga chiqarilgan)\nStatya DDS : Xorijiy yetkazib beruvchilarga to'lov\nTo'lov Usuli : Naqd\nSumma : 100 $\nValyuta kursi : 12 440 UZS\nHisob Nuqtasi : KORXONA\nIzoh : Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa)\nXodim : Madaminov Muhammadali\n",
+                "btn": {
+                    "reply_markup": {
+                        "inline_keyboard": [
+                            [
+                                {
+                                    "text": "Sap Document",
+                                    "callback_data": "update#1"
+                                },
+                                {
+                                    "text": "Sana",
+                                    "callback_data": "update#3"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Valyuta kursi",
+                                    "callback_data": "update#7"
+                                },
+                                {
+                                    "text": "Summa",
+                                    "callback_data": "update#8"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Izoh",
+                                    "callback_data": "update#9"
+                                },
+                                {
+                                    "text": "Hisob Nuqtasi",
+                                    "callback_data": "update#10"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "To'lov usullari , Valyuta , Hisob",
+                                    "callback_data": "update#4"
+                                },
+                                {
+                                    "text": "Statya DDS",
+                                    "callback_data": "update#11"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bekor qilish",
+                                    "callback_data": "update#0"
+                                }
+                            ]
+                        ],
+                        "resize_keyboard": true
+                    }
+                },
+                "step": 54
             }
         ],
         "creationDate": "2024-06-12T19:59:45.379Z",
@@ -2772,19 +3050,19 @@
         "confirmationStatus": false,
         "waitingUpdateStatus": false,
         "extraWaiting": false,
-        "lastMessageId": 1048,
         "currentUserRole": "Xodim",
-        "currentDataId": "dqPo0Kqlwa",
+        "currentDataId": "Asd3bmW4kj",
         "pagination": {
             "next": 10,
             "prev": 0
         },
         "selectedInfoMenu": "Tasdiqlanishi kutilayotgan so’rovlar",
-        "notConfirmId": "Cc1nAG8Y1o",
+        "notConfirmId": "5OYZJasgFK",
         "selectGroup": {
             "menu": "6",
             "subMenu": "4"
-        }
+        },
+        "lastMessageId": 1853
     },
     {
         "EmployeeID": 72,

@@ -73,7 +73,7 @@
         "is_delete": false,
         "ID": 2071,
         "subMenu": "Yangi tovar nomi",
-        "comment": "test5",
+        "comment": "olma",
         "file": {
             "active": false
         },
@@ -84,7 +84,21 @@
             }
         ],
         "stateTime": {
-            "create": "2024-07-07T19:25:06.696Z"
+            "update": "2024-07-08T11:39:26.561Z"
+        },
+        "lastStep": 200,
+        "lastBtn": {
+            "parse_mode": "Markdown",
+            "reply_markup": {
+                "resize_keyboard": true,
+                "keyboard": [
+                    [
+                        {
+                            "text": "Xodim"
+                        }
+                    ]
+                ]
+            }
         }
     },
     {
@@ -99,15 +113,7 @@
         "subMenu": "OFIS | Ish vaqtidan tashqari ishlash",
         "comment": "salom",
         "file": {
-            "active": false,
-            "send": true,
-            "document": {
-                "file_name": "5-61 Zohid (2).xlsx",
-                "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "file_id": "BQACAgIAAxkBAAID6WaK7X3b1Wjx_9wl25NjB1N9nFfbAAL0UgACOx1ZSMA-KTLqBERJNQQ",
-                "file_unique_id": "AgAD9FIAAjsdWUg",
-                "file_size": 7799
-            }
+            "active": false
         },
         "confirmativeSendlist": [
             {
@@ -130,6 +136,503 @@
                         }
                     ]
                 ]
+            }
+        }
+    },
+    {
+        "id": "f9QxDil0IL",
+        "menu": 7,
+        "menuName": "Overtime",
+        "chat_id": 561932032,
+        "creationDate": "2024-07-08T11:39:45.099Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 2074,
+        "subMenu": "OFIS | Ish vaqtidan tashqari ishlash",
+        "comment": "test",
+        "file": {
+            "active": false
+        },
+        "lastStep": 62,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 1356,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-07-08T11:40:12.661Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-07-08T11:40:19.374Z"
+            },
+            "executor": {
+                "status": false,
+                "date": "2024-07-08T11:40:27.877Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "accountList50": [],
+        "accountList": [],
+        "executer": {
+            "chat_id": 561932032,
+            "status": false
+        },
+        "notConfirmMessage": "xato file jo'natgansiz"
+    },
+    {
+        "id": "8thMExQxhh",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-07-08T11:49:13.605Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 2077,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5076 - NM kassasi (USD)",
+                "id": "5076",
+                "num": 1
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 2
+            },
+            {
+                "name": "5086 - UR kassasi (USD)",
+                "id": "5086",
+                "num": 3
+            },
+            {
+                "name": "5036 - SM kassasi (USD)",
+                "id": "5036",
+                "num": 4
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 5
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 6
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 7
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 8
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 9
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 10
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 11
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 12
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 13
+            },
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 14
+            },
+            {
+                "name": "5026 - AN kassasi (USD)",
+                "id": "5026",
+                "num": 15
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 16
+            }
+        ],
+        "accountCode": "5041",
+        "summa": "1000",
+        "currencyRate": "12440.000000",
+        "comment": "salom",
+        "point": "Q",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "file": {
+            "active": false,
+            "send": true,
+            "document": {
+                "file_name": "5-61 Zohid (2).xlsx",
+                "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "file_id": "BQACAgIAAxkBAAIFsmaL0li5wXEn3GPU1vZHHYmVJiOiAAK9SwACEm9gSFbv4nm18-dcNQQ",
+                "file_unique_id": "AgADvUsAAhJvYEg",
+                "file_size": 7799
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 1472,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "update": "2024-07-08T12:11:42.929Z"
+        },
+        "lastStep": 200,
+        "lastBtn": {
+            "parse_mode": "Markdown",
+            "reply_markup": {
+                "resize_keyboard": true,
+                "keyboard": [
+                    [
+                        {
+                            "text": "Xodim"
+                        }
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "id": "nAoe6E34LE",
+        "menu": 6,
+        "menuName": "Boshqa",
+        "chat_id": 561932032,
+        "creationDate": "2024-07-08T12:12:07.333Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 2078,
+        "subMenu": "Yangi tovar nomi",
+        "comment": "test",
+        "file": {
+            "active": false,
+            "send": true,
+            "document": {
+                "file_name": "5-61 Zohid (2).xlsx",
+                "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "file_id": "BQACAgIAAxkBAAIGz2aL16O2QmcovaTx7UvqSygiSfw3AAIDTAACEm9gSIrGMFNwhdeJNQQ",
+                "file_unique_id": "AgADA0wAAhJvYEg",
+                "file_size": 7799
+            }
+        },
+        "lastStep": 62,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 1776,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-07-08T12:23:48.587Z"
+        }
+    },
+    {
+        "id": "5OYZJasgFK",
+        "menu": 6,
+        "menuName": "Boshqa",
+        "chat_id": 561932032,
+        "creationDate": "2024-07-08T12:26:38.832Z",
+        "full": true,
+        "is_delete": false,
+        "ID": 2079,
+        "subMenu": "Yangi tovar nomi",
+        "comment": "test",
+        "file": {
+            "active": false,
+            "send": true,
+            "document": {
+                "file_name": "5-61 Zohid (2).xlsx",
+                "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "file_id": "BQACAgIAAxkBAAIHD2aL2wpGE0yKIv2om1uA2D7Js27CAAI2TAACEm9gSHcttTIqDeEHNQQ",
+                "file_unique_id": "AgADNkwAAhJvYEg",
+                "file_size": 7799
+            }
+        },
+        "lastStep": 62,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 1813,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-07-08T12:27:06.978Z",
+            "confirmative": {
+                "status": false,
+                "date": "2024-07-08T12:27:12.559Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": false
+        },
+        "accountList43": [],
+        "accountList50": [],
+        "accountList": [],
+        "notConfirmMessage": "bekor"
+    },
+    {
+        "id": "Asd3bmW4kj",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-07-08T12:30:29.341Z",
+        "full": false,
+        "is_delete": false,
+        "ID": 2080,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5076 - NM kassasi (USD)",
+                "id": "5076",
+                "num": 1
+            },
+            {
+                "name": "5031 - D64 kassasi (USD)",
+                "id": "5031",
+                "num": 2
+            },
+            {
+                "name": "5086 - UR kassasi (USD)",
+                "id": "5086",
+                "num": 3
+            },
+            {
+                "name": "5036 - SM kassasi (USD)",
+                "id": "5036",
+                "num": 4
+            },
+            {
+                "name": "5012 - Korxona-2 (USD)",
+                "id": "5012",
+                "num": 5
+            },
+            {
+                "name": "5041 - Q01 kassasi (USD)",
+                "id": "5041",
+                "num": 6
+            },
+            {
+                "name": "3120 - Oldindan to'langan xizmat haqi",
+                "id": "3120",
+                "num": 7
+            },
+            {
+                "name": "5044 - Korxona R (USD)",
+                "id": "5044",
+                "num": 8
+            },
+            {
+                "name": "5051 - Misafir kassasi (USD)",
+                "id": "5051",
+                "num": 9
+            },
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 10
+            },
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 11
+            },
+            {
+                "name": "5011 - Korxona (USD)",
+                "id": "5011",
+                "num": 12
+            },
+            {
+                "name": "5026 - AN kassasi (USD)",
+                "id": "5026",
+                "num": 13
+            },
+            {
+                "name": "5091 - D777 kassasi (USD)",
+                "id": "5091",
+                "num": 14
+            },
+            {
+                "name": "5081 - Distribyutsiya (USD)",
+                "id": "5081",
+                "num": 15
+            },
+            {
+                "name": "5021 - D12 kassasi (USD)",
+                "id": "5021",
+                "num": 16
+            }
+        ],
+        "accountCode": "5041",
+        "summa": "200",
+        "currencyRate": "12440.000000",
+        "comment": "Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa)",
+        "point": "KORXONA",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "file": {
+            "active": false,
+            "send": true,
+            "document": {
+                "file_name": "5-61 Zohid (2).xlsx",
+                "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "file_id": "BQACAgIAAxkBAAIHOGaL3AYxoGH4cICqvPK8dTO1zzvNAAJFTAACEm9gSDs19FNsvbNONQQ",
+                "file_unique_id": "AgADRUwAAhJvYEg",
+                "file_size": 7799
+            }
+        },
+        "lastStep": 52,
+        "lastBtn": {
+            "reply_markup": {
+                "inline_keyboard": [
+                    [
+                        {
+                            "text": "Ha",
+                            "callback_data": "confirmEmp#1"
+                        },
+                        {
+                            "text": "Bekor qilish",
+                            "callback_data": "confirmEmp#2"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "O'zgartirish",
+                            "callback_data": "confirmEmp#3"
+                        }
+                    ]
+                ],
+                "resize_keyboard": true
             }
         }
     }

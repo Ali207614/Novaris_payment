@@ -351,6 +351,8 @@ let xorijiyXaridCallback = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             updateStep(chat_id, user.user_step + 1)
+            console.log(data, ' bu self')
+
             if (data[1] != 0) {
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                 let updateList = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
@@ -358,13 +360,18 @@ let xorijiyXaridCallback = {
                 updateBack(chat_id, { text: dataConfirmText(info, "O'zgartirasizmi ?", chat_id), btn, step: user.user_step })
                 updateData(user.currentDataId, { lastStep: updateList.lastStep, lastBtn: await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp') })
             }
+            console.log(data, ' buyam self')
+
         },
         middleware: ({ chat_id, id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
+            console.log(user)
+            console.log(get(user, 'lastMessageId', 1), id)
             return get(user, 'lastMessageId', 1) == id
         },
         next: {
             text: ({ chat_id, data }) => {
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let actData = infoData().find(item => item.id == user.currentDataId)
                 if (data[1] == '0') {
@@ -375,6 +382,7 @@ let xorijiyXaridCallback = {
                 let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu).update
                 let update = updateList.find(item => item.id == data[1])
                 updateStep(chat_id, update.step)
+                console.log(data, ' bu text')
                 return update.message
 
             },

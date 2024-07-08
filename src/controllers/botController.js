@@ -63,13 +63,19 @@ class botConroller {
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
                     if (execute?.next) {
-                        let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
-                            sendMessageHelper(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
+                        let data = {}
+                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text })
+                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined
+                        let currentUser = infoUser().find((item) => item.chat_id === chat_id)
+                        if (get(currentUser, 'update')) {
+                            data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
+                        }
+                        let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), btnBot) :
+                            sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
                         let lastMessageId = await botInfo
                         updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
                     }
                 }
-
             }
             else if (
                 stepTree[get(user, 'user_step', '1').toString()]
@@ -78,8 +84,16 @@ class botConroller {
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.tex })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text }) : undefined
                     if (execute?.next) {
-                        let botInfo = await execute?.next?.file ? await bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined) :
-                            await sendMessageHelper(chat_id, await execute?.next?.text({ chat_id, msgText: msg.text }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined)
+                        let data = {}
+                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text })
+                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined
+                        let currentUser = infoUser().find((item) => item.chat_id === chat_id)
+                        if (get(currentUser, 'update')) {
+                            data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
+                        }
+
+                        let botInfo = await execute?.next?.file ? await bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, msgText: msg.text }), btnBot) :
+                            await sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
                         updateUser(chat_id, { lastMessageId: botInfo.message_id })
                     }
                 }
@@ -104,9 +118,15 @@ class botConroller {
                     if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0) })) {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data }) : undefined
                         if (execute?.next) {
-                            let user = infoUser().find(item => item.chat_id == chat_id)
-                            let botInfo = await execute?.next?.update ? bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +user.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) }) : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
-                                sendMessageHelper(chat_id, await execute?.next?.text({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined))
+                            let dataInfo = {}
+                            let textBot = await execute?.next?.text({ chat_id, data })
+                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined
+                            let currentUser = infoUser().find(item => item.chat_id == chat_id)
+                            if (get(currentUser, 'update')) {
+                                dataInfo = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
+                            }
+                            let botInfo = await execute?.next?.update ? bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +currentUser.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) }) : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
+                                sendMessageHelper(chat_id, textBot, btnBot, { file: get(dataInfo, 'file', {}) }))
                             let botId = await botInfo
                             updateUser(chat_id, { lastMessageId: botId.message_id })
                         }

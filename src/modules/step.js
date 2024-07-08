@@ -128,7 +128,6 @@ let xorijiyXaridStep = {
                 })
                 updateData(user?.currentDataId, { vendorList })
             }
-
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
