@@ -107,7 +107,6 @@ class botConroller {
 
     async callback_query(msg, data, chat_id) {
         try {
-            // console.log(msg, data, chat_id)
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let callbackTree = { ...xorijiyXaridCallback, ...mahalliyXaridCallback, ...othersCallback, ...adminCallback }
             if (user) {
@@ -179,7 +178,7 @@ class botConroller {
             if (get(list, 'file.active')) {
                 updateData(get(list, 'id'), { file: { active: false, send: true, document: file } })
                 let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
-                const button = {
+                let button = {
                     reply_markup: {
                         inline_keyboard: [
                             [
@@ -192,9 +191,12 @@ class botConroller {
                         ]
                     }
                 };
+                if (get(user, 'waitingUpdateStatus')) {
+                    button = {}
+                }
                 let botInfo = await bot.sendDocument(chat_id, get(file, 'file_id'), {
                     caption: dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id),
-                    reply_markup: button.reply_markup
+                    reply_markup: button?.reply_markup
                 })
                 updateUser(chat_id, { lastMessageId: botInfo.message_id })
             }

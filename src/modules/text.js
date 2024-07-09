@@ -155,8 +155,13 @@ let confirmativeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const today = moment().startOf('day');
+            const tomorrow = moment(today).add(1, 'days');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(today, tomorrow, null, '[)');
+            }).sort((a, b) => a.ID - b.ID)
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
 
@@ -176,36 +181,7 @@ let confirmativeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length) {
-        //             await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
-        //             let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
-        //             for (let i = 1; i < mainData.length; i++) {
-        //                 let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-        //                 let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
-        //                 sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined))
-        //             }
-        //             return dataConfirmText(info, `So'rovlar`)
-        //         }
-        //         return 'Mavjud emas'
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = confDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar") {
-        //             let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative'))
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-        //     },
-        // },
+        
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -213,10 +189,13 @@ let confirmativeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item =>
-                moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
-                ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const startOfWeek = moment().startOf('isoWeek');
+            const endOfWeek = moment().endOf('isoWeek');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(startOfWeek, endOfWeek, null, '[]');
+            }).sort((a, b) => a.ID - b.ID);
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
 
@@ -275,8 +254,13 @@ let confirmativeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const startOfMonth = moment().startOf('month');
+            const endOfMonth = moment().endOf('month');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');
+            }).sort((a, b) => a.ID - b.ID);
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
@@ -401,8 +385,15 @@ let executorBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const today = moment().startOf('day');
+            const tomorrow = moment(today).add(1, 'days');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(today, tomorrow, null, '[)');
+            }).sort((a, b) => a.ID - b.ID)
+
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
 
@@ -422,22 +413,7 @@ let executorBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Bajaruvchi'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
 
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = execDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-        //             let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter'))
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-        //     },
-        // },
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -445,10 +421,13 @@ let executorBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item =>
-                moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
-                ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const startOfWeek = moment().startOf('isoWeek');
+            const endOfWeek = moment().endOf('isoWeek');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(startOfWeek, endOfWeek, null, '[]');
+            }).sort((a, b) => a.ID - b.ID);
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
 
@@ -468,22 +447,7 @@ let executorBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Bajaruvchi'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
-
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = execDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-        //             let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter'))
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-        //     },
-        // },
+      
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -491,8 +455,13 @@ let executorBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const startOfMonth = moment().startOf('month');
+            const endOfMonth = moment().endOf('month');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');
+            }).sort((a, b) => a.ID - b.ID);
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
@@ -512,22 +481,7 @@ let executorBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Bajaruvchi'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
-
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = execDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar") {
-        //             let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmExecuter'))
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-        //     },
-        // },
+      
     },
 
 }
@@ -545,7 +499,7 @@ let executeBtn = {
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            return true
+            return get(user, 'back', []).length
         },
         next: {
             text: ({ chat_id }) => {
@@ -791,8 +745,16 @@ let executeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+
+            const today = moment().startOf('day');
+            const tomorrow = moment(today).add(1, 'days');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(today, tomorrow, null, '[)');
+            }).sort((a, b) => a.ID - b.ID)
+
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
                 for (let i = 0; i < mainData.length; i++) {
@@ -810,38 +772,6 @@ let executeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length) {
-        //             await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
-        //             let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
-        //             for (let i = 1; i < mainData.length; i++) {
-        //                 let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-        //                 let file = get(mainData, `${[i]}.file`, {})
-        //                 console.log(file, ' bu file')
-        //                 sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file })
-        //             }
-        //             return dataConfirmText(info, `So'rovlar`)
-        //         }
-        //         return 'Mavjud emas'
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar') {
-        //             let btn = dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-
-        //     },
-        // },
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -849,10 +779,15 @@ let executeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item =>
-                moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
-                ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+
+            const startOfWeek = moment().startOf('isoWeek');
+            const endOfWeek = moment().endOf('isoWeek');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(startOfWeek, endOfWeek, null, '[]');
+            }).sort((a, b) => a.ID - b.ID);
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
                 for (let i = 0; i < mainData.length; i++) {
@@ -869,37 +804,7 @@ let executeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item =>
-        //             moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
-        //             ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length) {
-        //             await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
-        //             let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
-        //             for (let i = 1; i < mainData.length; i++) {
-        //                 let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-        //                 sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined))
-        //             }
-        //             return dataConfirmText(info, `So'rovlar`)
-        //         }
-        //         return 'Mavjud emas'
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = empDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar') {
-        //             let btn = dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-        //     },
-        // },
+     
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -907,8 +812,15 @@ let executeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            mainData = mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-            ).sort((a, b) => a.ID - b.ID)
+            const startOfMonth = moment().startOf('month');
+            const endOfMonth = moment().endOf('month');
+
+            mainData = mainData.filter(item => {
+                const creationDate = moment(item.creationDate);
+                return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');
+            }).sort((a, b) => a.ID - b.ID);
+
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
@@ -926,35 +838,7 @@ let executeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
-        // next: {
-        //     text: async ({ chat_id }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length) {
-        //             await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
-        //             let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
-        //             for (let i = 1; i < mainData.length; i++) {
-        //                 let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-        //                 sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined))
-        //             }
-        //             return dataConfirmText(info, `So'rovlar`)
-        //         }
-        //         return 'Mavjud emas'
-        //     },
-        //     btn: ({ chat_id, }) => {
-        //         let user = infoUser().find(item => item.chat_id == chat_id)
-        //         let mainData = empDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-        //         mainData = mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-        //         )
-        //         if (mainData.length && get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar') {
-        //             let btn = dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[0].id}` }], 2, 'Waiting')
-        //             return btn
-        //         }
-        //         return empDynamicBtn()
-        //     },
-        // },
+   
     },
 }
 
@@ -1607,6 +1491,7 @@ let tolovHarajatBtn = {
         },
     },
     "Hisob": {
+        document: true,
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)

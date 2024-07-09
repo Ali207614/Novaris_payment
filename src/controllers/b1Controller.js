@@ -14,7 +14,7 @@ class b1Controller {
             "Password": "1234"
         }
         const axios = Axios.create({
-            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -32,7 +32,7 @@ class b1Controller {
     }
     async getEmpInfo(phone = '') {
         const axios = Axios.create({
-            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -149,7 +149,7 @@ class b1Controller {
     async executePayments({ list = {}, cred = {}, dataInfo = '' }) {
 
         if (get(list, 'purchase')) {
-            // return await this.purchaseDownPayments({ list, dataInfo })
+            return await this.purchaseDownPayments({ list, dataInfo })
         }
         let DocType = {
             'account': 'rAccount',
@@ -191,37 +191,36 @@ class b1Controller {
 
         console.log(body)
 
-        // const axios = Axios.create({
-        //     baseURL: "https://66.45.245.130:50000/b1s/v1/",
-        //     timeout: 30000,
-        //     headers: {
-        //         'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
-        //         'SessionId': get(getSession(), 'SessionId', '')
-        //     },
-        //     httpsAgent: new https.Agent({
-        //         rejectUnauthorized: false,
-        //     }),
-        // });
-        return { status: true, data }
-        // return axios
-        //     .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
-        //     .then(async ({ data }) => {
-        //         if (body.DocType != 'rAccount') {
-        //             await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
-        //         }
-        //         return { status: true, data }
-        //     })
-        //     .catch(async (err) => {
-        //         if (get(err, 'response.status') == 401) {
-        //             let token = await this.auth()
-        //             if (token.status) {
-        //                 return await this.executePayments({ list, cred, dataInfo })
-        //             }
-        //             return { status: false, message: token.message }
-        //         } else {
-        //             return { status: false, message: get(err, 'response.data.error.message.value') };
-        //         }
-        //     });
+        const axios = Axios.create({
+            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            timeout: 30000,
+            headers: {
+                'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
+                'SessionId': get(getSession(), 'SessionId', '')
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        });
+        return axios
+            .post(get(list, 'payment') ? `IncomingPayments` : `VendorPayments`, body)
+            .then(async ({ data }) => {
+                if (body.DocType != 'rAccount') {
+                    await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
+                }
+                return { status: true, data }
+            })
+            .catch(async (err) => {
+                if (get(err, 'response.status') == 401) {
+                    let token = await this.auth()
+                    if (token.status) {
+                        return await this.executePayments({ list, cred, dataInfo })
+                    }
+                    return { status: false, message: token.message }
+                } else {
+                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                }
+            });
     }
     async purchaseDownPayments({ list = {}, dataInfo = '' }) {
         let DocumentLines = get(list, 'purchaseOrders', []).filter(item => item.DocEntry == get(list, 'purchaseEntry')).map(item => {
@@ -241,7 +240,7 @@ class b1Controller {
             DocumentLines
         }
         const axios = Axios.create({
-            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -288,7 +287,7 @@ class b1Controller {
 
 
         const axios = Axios.create({
-            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -336,7 +335,7 @@ class b1Controller {
             ]
         }
         const axios = Axios.create({
-            baseURL: "https://66.45.245.130:50000/b1s/v1/",
+            baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),

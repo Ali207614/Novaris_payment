@@ -315,9 +315,10 @@ function updateData(id, data) {
 function writeData(data) {
     let main = infoData();
     let { ID } = infoID()
+    let currentDate = new Date();
     fs.writeFileSync(
         path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify([...main, { ...data, creationDate: new Date(), full: false, is_delete: false, ID }], null, 4)
+        JSON.stringify([...main, { ...data, creationDate: formatLocalDateToISOString(currentDate), full: false, is_delete: false, ID }], null, 4)
     );
     updateID(+ID + 1)
 }
@@ -364,6 +365,26 @@ async function sendMessageHelper(...arg) {
     }
 
     return await bot.sendMessage(...arg)
+}
+
+function formatLocalDateToISOString(date) {
+    const pad = (n) => (n < 10 ? '0' + n : n);
+
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+    const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
+
+    // Get the timezone offset in hours and minutes
+    const offset = -date.getTimezoneOffset();
+    const offsetSign = offset >= 0 ? '+' : '-';
+    const offsetHours = pad(Math.floor(Math.abs(offset) / 60));
+    const offsetMinutes = pad(Math.abs(offset) % 60);
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}${offsetSign}${offsetHours}:${offsetMinutes}`;
 }
 
 module.exports = {

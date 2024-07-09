@@ -115,6 +115,18 @@ let SubMenu = () => {
                         message: 'Ticket raqamini kiriting',
                         btn: () => empDynamicBtn(),
                         step: '12'
+                    },
+                    {
+                        id: 3,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 jira: {
@@ -128,6 +140,7 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+
                     return info
                 }
             },
@@ -148,6 +161,18 @@ let SubMenu = () => {
                         message: 'Ticket raqamini kiriting',
                         btn: () => empDynamicBtn(),
                         step: '12'
+                    },
+                    {
+                        id: 3,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 jira: {
@@ -181,6 +206,18 @@ let SubMenu = () => {
                         message: 'Ticket raqamini kiriting',
                         btn: () => empDynamicBtn(),
                         step: '12'
+                    },
+                    {
+                        id: 3,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 2,
@@ -284,6 +321,18 @@ let SubMenu = () => {
                         message: `Tovar nomi:\nZakaz nomeri:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)\n`,
                         btn: () => empDynamicBtn(),
                         step: '29'
+                    },
+                    {
+                        id: 10,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 jira: {
@@ -399,6 +448,18 @@ let SubMenu = () => {
                         },
                         step: '52'
                     },
+                    {
+                        id: 12,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
                 ],
                 b1: {
                     status: true,
@@ -408,12 +469,11 @@ let SubMenu = () => {
                 updateLine: 2,
                 lastStep: 52,
                 infoFn: ({ chat_id, id }) => {
-                    // boshlanish
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     let ddsList = Object.keys(DDS)?.filter(item => DDS[item].map(item => item.toString()).includes(get(data, 'accountCodeOther', '')))
                     if (!ddsList.includes(get(data, 'dds'))) {
-                        // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0] : false })
+
                         data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     }
 
@@ -436,6 +496,18 @@ let SubMenu = () => {
                         message: `Sana:\nNaqd to'lov.\n-To'lov/Harajat sababi:\n-Yetkazib beruvchi:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi: Bahodir aka\n-To'lov/Harajat jami summasi:\n-To'lov summasi: \n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#tolov\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -459,6 +531,18 @@ let SubMenu = () => {
                         message: `Sana:\n\nMahalliy Buyurtma\n- Buyurtma raqami:\n-Yetkazib beruvchi:\n-Tovar nomi:\n-Bo’nak(zaklad) summasi: Yo'q/1000$.\nBo’nak to’lov sanasi:\n-Tovar summasi: 12000$.\n- Tovar to’lov sanasi:\n-To'lov kelishuv sharti: Oldindan to’lov/Kechiktirilgan to’lov\n#mbuyurtma\n#21059AT(Buyurtma raqami)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n- Tasdiqlovchi: `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -565,6 +649,18 @@ let SubMenu = () => {
                         },
                         step: '52'
                     },
+                    {
+                        id: 12,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
                 ],
                 b1: {
                     status: true,
@@ -598,6 +694,18 @@ let SubMenu = () => {
                         message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 3,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -703,6 +811,18 @@ let SubMenu = () => {
                         },
                         step: '52'
                     },
+                    {
+                        id: 12,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
                 ],
                 b1: {
                     status: true,
@@ -842,6 +962,18 @@ let SubMenu = () => {
                         },
                         step: '52'
                     },
+                    {
+                        id: 12,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
                 ],
                 b1: {
                     status: true,
@@ -879,6 +1011,18 @@ let SubMenu = () => {
                         message: `Sana:\n\nBank to'lov.\n- To'lov/Harajat sababi:\n- Yetkazib beruvchi:\n- Sotib olinayotgan tovar / xizmat yoki harajat nom:\n- To'lovchi: Bolter\n- To'lov/Harajat jami summasi:\n- To'lov summasi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#btolov `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -902,6 +1046,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -923,6 +1079,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -944,6 +1112,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -965,6 +1145,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -988,6 +1180,18 @@ let SubMenu = () => {
                         \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1010,6 +1214,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSM\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1031,6 +1247,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaAN\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1052,6 +1280,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaNM\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1073,6 +1313,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaUR\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1094,6 +1346,18 @@ let SubMenu = () => {
                         message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaJZ\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1117,6 +1381,18 @@ let SubMenu = () => {
                         message: `Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ibrohim\nTekshirdi: Temur\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#Chnarx \n#prixod (sana)\n#xitoy\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1138,6 +1414,18 @@ let SubMenu = () => {
                         message: `Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ne'mat\nTekshirdi: Nodirxo'ja\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#Chnarx \n#prixod (sana)\n#mahalliy\n#M21445AT(zakaz nomeri)\n\n `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1161,6 +1449,18 @@ let SubMenu = () => {
                         message: `#XATO\nSababi: Tovar nomi va nima o'zgarish bo'lgani\n12 do'kon sap - 0 real - 0\n64 do'kon sap - 0 real - 0\n777 do'kon sap - 0 real - 0\nOmbor sap - 0 real - 0\nDis sap - 0 real - 0\nKim qilgan: Sklad nomi\nO'zgartirish kerak: SAP da pt/vt qilish kerak\nTasdiqlovchi:  \n `,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1182,6 +1482,18 @@ let SubMenu = () => {
                         message: `Kimdan:12/00 do'kondan\nTovar nomi: Anker sariq 20x200 dan 320 dona\nOlingan narx: 1.36$\nSotish narxi: 1.6$\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: Rasul aka\n#dxarid\n\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1203,6 +1515,18 @@ let SubMenu = () => {
                         message: `Sana:\nKimga: Mijoz ismi\nTovar 1: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 2: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 3: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nUmumiy buyurtma summasi: 6025$\nUmumiy chegirma summasi: 25$\n---------------------------------------\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#chegirma\n\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1224,6 +1548,18 @@ let SubMenu = () => {
                         message: `Shtrix kodi:\nNomi:\nAlternativ nomi:\nGuruhi:\nIchki guruh:\nTipi:\nO'lchov birligi:\nBrendi:\nRazmeri:\nPachka/Korobkasi:\nBruttosi:\nTara:\nCBN:\nSvoystva: Xitoy yoki Mahalliy\nMRP: Ha/Yo'q\nИнтервал заказа: (nechi oylik zakaz qilishi)\nВремя подготовки: (kelish vaqti)\nДопустимое отклонение в днях: 7/14 kun\"\n`,
                         btn: () => empDynamicBtn(),
                         step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
                     }
                 ],
                 updateLine: 1,
@@ -1258,7 +1594,7 @@ let DDS = {
         5080, 5090, 5026, 5036, 5035, 5025,
         5611, 5072, 5063, 5054, 5053,
         5052, 5050],
-    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9230],
+    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9234, 9236, 9238],
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
@@ -1269,13 +1605,13 @@ let DDS = {
     "Qarz(Tushum)": [6820, 4730, 4790, 4890, 7820],
     "Xorijiy yetkazib beruvchilarga to'lov": [5530],
     "Inventarizaatsiya": [5910],
-    "Kassa farqi": [5930, 5931, 5934, 5935, 5936, 9465, 5937, 5938],
+    "Kassa farqi": [5930, 5931, 5934, 5935, 5936, 9465, 5937, 5938, 5933, 5939, 5941],
     "Mahalliy yetkazib beruvchilarga to'lov": [6010],
     "Soliq(Xarajat)": [6410, 6411, 6412, 6413, 6414, 6415],
     "Oylik(Xarajat)": [6710, 9456],
     "Dividend(Xarajat)": [8710],
     "Bonus xodimlar(Xarajat)": [9150],
-    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224, 9226, 9227],
+    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224, 9226, 9227, 9233, 9235, 9237],
     "Asosiy vosita chiqib ketishidan foyda": [9310],
     "Boshqa tushumlar(Tushum)": [9390],
     "Adminstrativ xarajat": [9440],
@@ -1300,34 +1636,39 @@ let DDS = {
     "Xizmat safari xarajati": [9461],
     "Yoqilg'i(Xarajat)": [9462],
     "Kurs farqi": [9540, 9620],
-    "Naqd(Tushum)": [5020, 5021, 5030, 5031, 5040, 5041, 5060, 5061, 5080, 5081, 5090, 5091, 5026, 5030],
+    "Naqd(Tushum)": [5020, 5021, 5031, 5040, 5041, 5060, 5061, 5080, 5081, 5090, 5091, 5026, 5036, 5025, 5030, 5075, 5076, 5085, 5086, 5095, 5096],
     "Karta(Tushum)": [5020, 5030, 5040, 5060, 5080, 5090],
-    "Terminal(Tushum)": [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037],
-    "O'tkazmalar(Tushum)": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038],
+    "Terminal(Tushum)": [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5097, 5077, 5087],
+    "O'tkazmalar(Tushum)": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5098, 5088, 5078],
 }
 
 let accounts43 = []
 
-for (let i = 31; i <= 69; i++) {
+for (let i = 31; i <= 70; i++) {
     accounts43.push(`43${i}`)
 }
 
 let accounts50 = {
     'Naqd': {
-        'USD': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086],
-        'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035]
+        'USD': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086, 5096],
+        'UZS': [5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035, 5095, 5073]
     },
     'Karta': {
         'UZS': [5050, 5052, 5053, 5054, 5063, 5072]
     },
     'Terminal': {
-        'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087]
+        'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097]
     },
     "O'tkazma": {
-        'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088]
+        'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
     }
 }
-
+let subAccounts50 = {
+    'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5035, 5025, 5076, 5086, 5075, 5085, 5096, 5095, 5073],
+    'Karta': [5050, 5052, 5053, 5054, 5063, 5072],
+    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097],
+    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
+}
 
 let ocrdList = [
     {
@@ -1405,7 +1746,8 @@ let accounts = {
         5937,
         5938,
         5939,
-        5933
+        5933,
+        5941
     ],
     'Oylik/Bonus': [
         6710,
@@ -1477,15 +1819,12 @@ let accounts = {
         9234,
         9235,
         9236,
+        9237,
+        9238
     ]
 }
 
-let subAccounts50 = {
-    'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5035, 5025, 5076, 5086, 5075, 5085],
-    'Karta': [5050, 5052, 5053, 5054, 5063, 5072],
-    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087],
-    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088]
-}
+
 
 
 let selectedUserStatus = {

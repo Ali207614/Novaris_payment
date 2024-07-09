@@ -348,6 +348,7 @@ let xorijiyXaridCallback = {
         },
     },
     "update": {
+        document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
@@ -423,6 +424,7 @@ let xorijiyXaridCallback = {
         },
     },
     "updateWaiting": {
+        document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
             try {
                 let user = infoUser().find(item => item.chat_id == chat_id)
@@ -474,7 +476,7 @@ let xorijiyXaridCallback = {
                     }
                     let update = updateList.update.find(item => item.id == data[1])
                     let btn = await update.btn({ chat_id })
-                    updateUser(chat_id, { waitingUpdateStatus: true })
+                    updateUser(chat_id, { waitingUpdateStatus: true, back: [] })
                     updateData(user.currentDataId, { lastBtn: mainMenuByRoles({ chat_id }) })
                     return btn
                 }
@@ -485,6 +487,8 @@ let xorijiyXaridCallback = {
         },
     },
     "pagination": {
+        document: true,
+
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -628,6 +632,8 @@ let xorijiyXaridCallback = {
         },
     },
     "paginationPurchase": {
+        document: true,
+
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -719,6 +725,8 @@ let xorijiyXaridCallback = {
         },
     },
     "paginationAccounts": {
+        document: true,
+
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -741,6 +749,8 @@ let xorijiyXaridCallback = {
         },
     },
     "paginationOneSetp": {
+        document: true,
+
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -831,6 +841,8 @@ let xorijiyXaridCallback = {
 
 let mahalliyXaridCallback = {
     "paginationPoint": {
+        document: true,
+
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -887,6 +899,7 @@ let mahalliyXaridCallback = {
         },
     },
     "payType": {
+        document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
@@ -915,6 +928,7 @@ let mahalliyXaridCallback = {
         },
     },
     "currency": {
+        document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
@@ -947,6 +961,7 @@ let mahalliyXaridCallback = {
         },
     },
     "paginationAccounts": {
+        document: true,
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -1134,16 +1149,7 @@ let mahalliyXaridCallback = {
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
-            // else {
-            //     let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
-            //         return { name: item, id: i }
-            //     })
-            //     let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
-            //     updateData(user.currentDataId, { ddsList })
-            //     let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id,
-            //         ddsList, 2, 'dds')
-            //     updateBack(chat_id, { text: `Statya DDS ni tanlang`, btn, step: 52 })
-            // }
+        
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1163,12 +1169,13 @@ let mahalliyXaridCallback = {
                 if (data[1] == 1) {
                     return empDynamicBtn()
                 }
-                return await dataConfirmBtnEmp(chat_id,
+                let btn = await dataConfirmBtnEmp(chat_id,
                     [
                         { name: 'Ha', id: 1, },
                         { name: 'Bekor qilish', id: 2 },
                         { name: "O'zgartirish", id: 3 }
                     ], 2, 'confirmEmp')
+                return btn
             },
         },
     },
@@ -1176,6 +1183,7 @@ let mahalliyXaridCallback = {
 
 let othersCallback = {
     "accountType": {
+        document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user?.currentDataId)
@@ -1243,6 +1251,7 @@ let othersCallback = {
         },
     },
     "paginationAccount": {
+        document: true,
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
@@ -1264,6 +1273,7 @@ let othersCallback = {
         },
     },
     "paginationAccountType": {
+        document: true,
         selfExecuteFn: ({ chat_id, data }) => {
         },
         middleware: ({ chat_id }) => {
