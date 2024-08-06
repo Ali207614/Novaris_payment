@@ -237,27 +237,27 @@ let xorijiyXaridCallback = {
                 return
             }
             else if (data[1] == '1') {
-                let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
-                let count = 0;
+                // let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
+                // let count = 0;
 
-                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
-                let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
-                if (get(cred, 'jira')) {
-                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
-                    updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
-                    count += 1
-                    if (count == 2) {
-                        bot.deleteMessage(chat_id, deleteMessage.message_id)
-                    }
-                }
-                if (get(cred, 'b1.status')) {
-                    let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
-                    updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
-                    count += 1
-                    if (count == 2) {
-                        bot.deleteMessage(chat_id, deleteMessage.message_id)
-                    }
-                }
+                // let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+                // let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
+                // if (get(cred, 'jira')) {
+                //     let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
+                //     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
+                //     count += 1
+                //     if (count == 2) {
+                //         bot.deleteMessage(chat_id, deleteMessage.message_id)
+                //     }
+                // }
+                // if (get(cred, 'b1.status')) {
+                //     let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+                //     updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
+                //     count += 1
+                //     if (count == 2) {
+                //         bot.deleteMessage(chat_id, deleteMessage.message_id)
+                //     }
+                // }
             }
             else if (data[1] == '2') {
                 updateStep(chat_id, 5000)
@@ -284,55 +284,56 @@ let xorijiyXaridCallback = {
                     return text
                 }
                 if (data[1] == '1') {
+                    return `Qo'shimcha file jo'natasizmi ?`
 
-                    let newText = `${'🔵'.repeat(10)}\n`
-                    updateData(data[2], { executer: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
-                    let str = ''
-                    if (get(list, 'ticketAdd')) {
-                        let text = ticketAddText(list.ticketStatusObj)
-                        str += `Jira\n${text}\n`
-                    }
-                    if (get(list, 'sap')) {
+                    // let newText = `${'🔵'.repeat(10)}\n`
+                    // updateData(data[2], { executer: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
+                    // let str = ''
+                    // if (get(list, 'ticketAdd')) {
+                    //     let text = ticketAddText(list.ticketStatusObj)
+                    //     str += `Jira\n${text}\n`
+                    // }
+                    // if (get(list, 'sap')) {
 
 
-                        str += `Sapga qo'shildi ✅`
-                    }
-                    else if (get(list, 'sap') === false) {
-                        str += `Sapga qo'shilmadi ❌ ${get(list, 'sapErrorMessage', '')}`
-                    }
-                    if (str) {
-                        updateData(list.id, { SapJiraMessage: str })
-                    }
-                    let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                    let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
-                    for (let i = 0; i < executerList.length; i++) {
-                        sendMessageHelper(executerList[i], newText + dataConfirmText(info, text, chat_id), { file })
-                    }
+                    //     str += `Sapga qo'shildi ✅`
+                    // }
+                    // else if (get(list, 'sap') === false) {
+                    //     str += `Sapga qo'shilmadi ❌ ${get(list, 'sapErrorMessage', '')}`
+                    // }
+                    // if (str) {
+                    //     updateData(list.id, { SapJiraMessage: str })
+                    // }
+                    // let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                    // let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+                    // for (let i = 0; i < executerList.length; i++) {
+                    //     sendMessageHelper(executerList[i], newText + dataConfirmText(info, text, chat_id), { file })
+                    // }
 
-                    let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                    // let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
 
-                    for (let i = 0; i < confirmativeList.length; i++) {
-                        sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
-                    }
+                    // for (let i = 0; i < confirmativeList.length; i++) {
+                    //     sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
+                    // }
 
-                    sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
+                    // sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
 
-                    // group
+                    // // group
 
-                    let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                    let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
-                    let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
+                    // let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+                    // let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                    // let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
-                    for (let i = 0; i < specialGroup.length; i++) {
-                        sendMessageHelper(specialGroup[i].id, newText + dataConfirmText(info, text, chat_id), { file }).then((data) => {
-                        }).catch(e => {
-                            if (get(e, 'response.body.error_code') == 403) {
-                                deleteGroup(specialGroup[i].id)
-                            }
-                        })
-                    }
+                    // for (let i = 0; i < specialGroup.length; i++) {
+                    //     sendMessageHelper(specialGroup[i].id, newText + dataConfirmText(info, text, chat_id), { file }).then((data) => {
+                    //     }).catch(e => {
+                    //         if (get(e, 'response.body.error_code') == 403) {
+                    //             deleteGroup(specialGroup[i].id)
+                    //         }
+                    //     })
+                    // }
 
-                    return str || 'Bajarildi ✅'
+                    // return str || 'Bajarildi ✅'
 
                 }
                 if (data[1] == '2') {
@@ -343,6 +344,10 @@ let xorijiyXaridCallback = {
                 }
             },
             btn: async ({ chat_id, data }) => {
+                console.log(data, ' bu data')
+                if (data[1] == '1') {
+                    return await dataConfirmBtnEmp(chat_id, [{ name: "Ha", id: `1#${data[2]}` }, { name: "Yo'q", id: `2#${data[2]}` }], 2, 'lastFile')
+                }
                 return mainMenuByRoles({ chat_id })
             },
         },
@@ -392,6 +397,108 @@ let xorijiyXaridCallback = {
                 }
                 let update = updateList.update.find(item => item.id == data[1])
                 return await update.btn({ chat_id })
+            },
+        },
+    },
+    "lastFile": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == data[2])
+            let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+            if (data[1] == 1) {
+                updateUser(chat_id, { lastFile: { currentDataId: data[2] } })
+            }
+            else {
+                updateUser(chat_id, { lastFile: {} })
+                let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
+                let count = 0;
+
+                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+                let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
+                if (get(cred, 'jira')) {
+                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
+                    updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
+                    count += 1
+                    if (count == 2) {
+                        bot.deleteMessage(chat_id, deleteMessage.message_id)
+                    }
+                }
+                if (get(cred, 'b1.status')) {
+                    let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+                    updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
+                    count += 1
+                    if (count == 2) {
+                        bot.deleteMessage(chat_id, deleteMessage.message_id)
+                    }
+                }
+            }
+        },
+        middleware: ({ chat_id, id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'lastMessageId', 1) == id
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                if (data[1] == '1') {
+                    return `File jo'nating`
+                }
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == data[2])
+                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
+                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                let file = get(list, 'file', {})
+
+                let newText = `${'🔵'.repeat(10)}\n`
+                updateData(data[2], { executer: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
+                let str = ''
+                if (get(list, 'ticketAdd')) {
+                    let text = ticketAddText(list.ticketStatusObj)
+                    str += `Jira\n${text}\n`
+                }
+                if (get(list, 'sap')) {
+
+
+                    str += `Sapga qo'shildi ✅`
+                }
+                else if (get(list, 'sap') === false) {
+                    str += `Sapga qo'shilmadi ❌ ${get(list, 'sapErrorMessage', '')}`
+                }
+                if (str) {
+                    updateData(list.id, { SapJiraMessage: str })
+                }
+                let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+                for (let i = 0; i < executerList.length; i++) {
+                    sendMessageHelper(executerList[i], newText + dataConfirmText(info, text, chat_id), { file })
+                }
+
+                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+
+                for (let i = 0; i < confirmativeList.length; i++) {
+                    sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
+                }
+
+                sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
+
+                // group
+
+                let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+                let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
+
+                for (let i = 0; i < specialGroup.length; i++) {
+                    sendMessageHelper(specialGroup[i].id, newText + dataConfirmText(info, text, chat_id), { file }).then((data) => {
+                    }).catch(e => {
+                        if (get(e, 'response.body.error_code') == 403) {
+                            deleteGroup(specialGroup[i].id)
+                        }
+                    })
+                }
+
+                return str || 'Bajarildi ✅'
+            },
+            btn: async ({ chat_id, data }) => {
+                return empDynamicBtn()
             },
         },
     },
@@ -1149,7 +1256,7 @@ let mahalliyXaridCallback = {
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
-        
+
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)

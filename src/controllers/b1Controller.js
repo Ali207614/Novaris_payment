@@ -8,13 +8,19 @@ const { saveSession, getSession } = require("../helpers");
 
 class b1Controller {
     async auth() {
+        // let obj = {
+        //     "CompanyDB": "NOVARIS_SAP",
+        //     "UserName": "Fin7",
+        //     "Password": "1234"
+        // }
+
         let obj = {
-            "CompanyDB": "NOVARIS_SAP",
-            "UserName": "Fin7",
-            "Password": "1234"
+            "CompanyDB": "TEST311223",
+            "UserName": "manager",
+            "Password": "w2e3r4Q!"
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false,
@@ -32,7 +38,7 @@ class b1Controller {
     }
     async getEmpInfo(phone = '') {
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -176,8 +182,9 @@ class b1Controller {
             if (body.DocType != 'rSupplier' && !get(list, 'vendorId')) {
                 body.PaymentAccounts = [{ "ProfitCenter2": get(list, 'point', ''), "AccountCode": get(list, 'accountCodeOther'), 'SumPaid': Number(get(list, 'summa', 0)) }]
             }
+        let notDDS = ['5011', '5012', '5044', '5051', '5071', '3120', '5010', '5043', '5062', '5070', '5611']
 
-        if (get(cred, 'b1.cashFlow', false) && !DDS['-'].map(item => item.toString()).includes(get(list, 'DDS', get(list, 'dds', '')).toString())) {
+        if (get(cred, 'b1.cashFlow', false) && !notDDS.includes(get(list, 'DDS', get(list, 'dds', '')).toString())) {
             let cashflow = await this.cashFlow(get(list, 'DDS', get(list, 'dds')))
             if (cashflow.length) {
                 body.CashFlowAssignments = [
@@ -189,10 +196,11 @@ class b1Controller {
             }
         }
 
+
         console.log(body)
 
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -240,7 +248,7 @@ class b1Controller {
             DocumentLines
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -287,7 +295,7 @@ class b1Controller {
 
 
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),
@@ -335,7 +343,7 @@ class b1Controller {
             ]
         }
         const axios = Axios.create({
-            baseURL: "https://192.168.1.3:50000/b1s/v1/",
+            baseURL: "https://66.45.245.130:50000/b1s/v1/",
             timeout: 30000,
             headers: {
                 'Cookie': get(getSession(), 'Cookie[0]', '') + get(getSession(), 'Cookie[1]', ''),

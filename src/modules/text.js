@@ -169,7 +169,7 @@ let confirmativeBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -181,7 +181,7 @@ let confirmativeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
-        
+
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -196,6 +196,7 @@ let confirmativeBtn = {
                 const creationDate = moment(item.creationDate);
                 return creationDate.isBetween(startOfWeek, endOfWeek, null, '[]');
             }).sort((a, b) => a.ID - b.ID);
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
 
@@ -203,7 +204,7 @@ let confirmativeBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -214,38 +215,6 @@ let confirmativeBtn = {
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
-        },
-        next: {
-            text: async ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData = mainData.filter(item =>
-                    moment(item.creationDate).format('MM') >= moment(new Date()).subtract(7, 'days').format('MM') &&
-                    ((moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM')) || (moment(item.creationDate).subtract(1, 'month').format('MM') == moment(new Date()).subtract(7, 'days').format('MM'))) && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-                )
-                if (mainData.length) {
-                    await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
-                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
-                    for (let i = 1; i < mainData.length; i++) {
-                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
-                        sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined))
-                    }
-                    return dataConfirmText(info, `So'rovlar`)
-                }
-                return 'Mavjud emas'
-            },
-            btn: ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let mainData = confDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData = mainData.filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-                )
-                if (mainData.length && get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar") {
-                    let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative'))
-                    return btn
-                }
-                return empDynamicBtn()
-            },
         },
     },
     "Oylik": {
@@ -268,7 +237,7 @@ let confirmativeBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -279,36 +248,6 @@ let confirmativeBtn = {
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
-        },
-        next: {
-            text: async ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-                )
-                if (mainData.length) {
-                    await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
-                    let info = SubMenu()[get(mainData[0], 'menu', 1)].find(item => item.name == mainData[0].subMenu).infoFn({ chat_id: mainData[0].chat_id, id: mainData[0].id })
-                    for (let i = 1; i < mainData.length; i++) {
-                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
-                        sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined))
-                    }
-                    return dataConfirmText(info, `So'rovlar`)
-                }
-                return 'Mavjud emas'
-            },
-            btn: ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let mainData = confDataCred()[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-                mainData.filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY')
-                )
-                if (mainData.length && get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar") {
-                    let btn = (dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[0].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[0].id}` }], 2, 'confirmConfirmative'))
-                    return btn
-                }
-                return empDynamicBtn()
-            },
         },
     },
 }
@@ -401,7 +340,7 @@ let executorBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -435,7 +374,7 @@ let executorBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -447,7 +386,7 @@ let executorBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Bajaruvchi'
         },
-      
+
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -469,7 +408,7 @@ let executorBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -481,7 +420,7 @@ let executorBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Bajaruvchi'
         },
-      
+
     },
 
 }
@@ -515,7 +454,12 @@ let executeBtn = {
                     return
                 }
                 let btnBack = get(user, `back[${user.back.length - 1}].btn`)
-                updateUser(chat_id, { back: user.back.filter((item, i) => i != user.back.length - 1) })
+
+
+                updateUser(chat_id, {
+                    back: user.back.filter((item, i) => i != user.back.length - 1),
+                    lastFile: { ...get(user, 'lastFile'), currentDataId: '' }
+                })
                 return await btnBack
             },
         },
@@ -760,7 +704,7 @@ let executeBtn = {
                 for (let i = 0; i < mainData.length; i++) {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu)?.infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
 
                 }
@@ -793,7 +737,7 @@ let executeBtn = {
                 for (let i = 0; i < mainData.length; i++) {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -804,7 +748,7 @@ let executeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
-     
+
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id }) => {
@@ -827,7 +771,7 @@ let executeBtn = {
                 for (let i = 0; i < mainData.length; i++) {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file })
+                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                     await sleepNow(300)
                 }
                 return
@@ -838,7 +782,7 @@ let executeBtn = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
-   
+
     },
 }
 

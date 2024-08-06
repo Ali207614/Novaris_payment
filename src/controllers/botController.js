@@ -6,7 +6,7 @@ const {
 } = require("../helpers");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
-const { userInfoText, dataConfirmText } = require("../keyboards/text");
+const { userInfoText, dataConfirmText, ticketAddText } = require("../keyboards/text");
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
@@ -36,7 +36,8 @@ class botConroller {
                     if (get(user, "user_step")) {
                         updateUser(chat_id, {
                             back: [], update: false, confirmationStatus: false, waitingUpdateStatus: false,
-                            extraWaiting: false
+                            extraWaiting: false,
+                            lastFile: { ...get(user, 'lastFile'), currentDataId: '' }
                         })
                         updateStep(chat_id, 1)
                         deleteAllInvalidData({ chat_id })
@@ -63,6 +64,7 @@ class botConroller {
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
                     if (execute?.next) {
+
                         let data = {}
                         let textBot = await execute?.next?.text({ chat_id, msgText: msg.text })
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
@@ -70,6 +72,7 @@ class botConroller {
                         if (get(currentUser, 'update') && !execute?.document) {
                             data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                         }
+
                         let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), btnBot) :
                             sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
                         let lastMessageId = await botInfo
@@ -170,12 +173,106 @@ class botConroller {
             throw new Error(err);
         }
     }
+
+    async sendDocument(chat_id, dataId) {
+        let user = infoUser().find(item => item.chat_id == chat_id)
+        let list = infoData().find(item => item.id == dataId)
+        let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: dataId })
+        let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+        let file = get(list, 'file', {})
+
+        let newText = `${'🔵'.repeat(10)}\n`
+        updateData(dataId, { executer: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
+        let str = ''
+        if (get(list, 'ticketAdd')) {
+            let text = ticketAddText(list.ticketStatusObj)
+            str += `Jira\n${text}\n`
+        }
+        if (get(list, 'sap')) {
+
+
+            str += `Sapga qo'shildi ✅`
+        }
+        else if (get(list, 'sap') === false) {
+            str += `Sapga qo'shilmadi ❌ ${get(list, 'sapErrorMessage', '')}`
+        }
+        if (str) {
+            updateData(list.id, { SapJiraMessage: str })
+        }
+        let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+        let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+        for (let i = 0; i < executerList.length; i++) {
+            sendMessageHelper(executerList[i], newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
+        }
+
+        let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+
+        for (let i = 0; i < confirmativeList.length; i++) {
+            sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
+        }
+
+        sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
+
+        // group
+
+        let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
+        let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+        let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
+
+        for (let i = 0; i < specialGroup.length; i++) {
+            sendMessageHelper(specialGroup[i].id, newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') }).then((data) => {
+            }).catch(e => {
+                if (get(e, 'response.body.error_code') == 403) {
+                    deleteGroup(specialGroup[i].id)
+                }
+            })
+        }
+
+        bot.sendMessage(chat_id, str || 'Bajarildi ✅')
+        return
+    }
+
+    async helperDocument(chat_id, dataId) {
+        let user = infoUser().find(item => item.chat_id == chat_id)
+        let list = infoData().find(item => item.id == dataId)
+        let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+        let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
+        let count = 0;
+
+        let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+        let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: list.id }), text, chat_id)
+        if (get(cred, 'jira')) {
+            let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
+            updateData(list.id, { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
+            count += 1
+            if (count == 2) {
+                bot.deleteMessage(chat_id, deleteMessage.message_id)
+            }
+        }
+        if (get(cred, 'b1.status')) {
+            let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+            updateData(list.id, { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
+            count += 1
+            if (count == 2) {
+                bot.deleteMessage(chat_id, deleteMessage.message_id)
+            }
+        }
+
+        await this.sendDocument(chat_id, dataId)
+    }
+
     async document(msg, chat_id) {
         try {
             let file = get(msg, 'document', {})
             let user = infoUser().find(item => item.chat_id == chat_id)
-            let list = infoData().find(item => item.id == user.currentDataId)
+            if (get(user, 'lastFile.currentDataId')) {
+                updateData(get(user, 'lastFile.currentDataId'), { lastFile: { file } })
+                await this.helperDocument(chat_id, get(user, 'lastFile.currentDataId'))
+                return
+            }
+            let list = infoData().find(item => item.id == user?.currentDataId)
             if (get(list, 'file.active')) {
+                console.log('bu joyga tushdi')
                 updateData(get(list, 'id'), { file: { active: false, send: true, document: file } })
                 let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                 let button = {
@@ -199,8 +296,10 @@ class botConroller {
                     reply_markup: button?.reply_markup
                 })
                 updateUser(chat_id, { lastMessageId: botInfo.message_id })
+                return
             }
         } catch (err) {
+            console.log(err, ' bu err')
             throw new Error(err);
         }
     }

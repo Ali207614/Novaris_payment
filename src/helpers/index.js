@@ -356,6 +356,25 @@ function parseDate(dateStr) {
 
 async function sendMessageHelper(...arg) {
     let file = arg.find(item => get(item, 'file'))
+    let lastFile = arg.find(item => get(item, 'lastFile'))
+    if (get(lastFile, 'lastFile.file')) {
+        let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
+        const mediaGroup = [
+            {
+                media: get(file, 'file.document.file_id'),
+                type: 'document',
+
+            },
+            {
+                media: get(lastFile, 'lastFile.file.file_id'),
+                type: 'document',
+                caption: text,
+            },
+        ]
+
+        await bot.sendMediaGroup(561932032, mediaGroup.filter(item => get(item, 'media')));
+        return
+    }
     if (file && get(file, 'file.send') && get(file, 'file.document')) {
         let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
         return await bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {

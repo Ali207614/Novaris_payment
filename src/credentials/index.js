@@ -139,7 +139,7 @@ let SubMenu = () => {
                 infoFn: ({ chat_id, id }) => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Izoh', message: data?.comment }]
 
                     return info
                 }
@@ -185,7 +185,7 @@ let SubMenu = () => {
                 infoFn: ({ chat_id, id }) => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Izoh', message: data?.comment }]
                     return info
                 }
             },
@@ -230,7 +230,7 @@ let SubMenu = () => {
                 infoFn: ({ chat_id, id }) => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Ticket raqami', message: data.ticket }, { name: 'Izoh', message: data.comment }]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Izoh', message: data?.comment }]
                     return info
                 }
             },
@@ -719,7 +719,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd/Karta hisobidan to'lov/xarajat",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -773,7 +773,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1644,7 +1644,7 @@ let DDS = {
 
 let accounts43 = []
 
-for (let i = 31; i <= 70; i++) {
+for (let i = 31; i <= 75; i++) {
     accounts43.push(`43${i}`)
 }
 

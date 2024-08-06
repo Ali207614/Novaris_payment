@@ -79,7 +79,7 @@ let xorijiyXaridStep = {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
             else {
-                let findComment = SubMenu()[get(data, 'menu', 1)].find(item => item.name == data.subMenu)?.comment
+                let findComment = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.comment
                 updateStep(chat_id, 14)
                 updateBack(chat_id, { text: findComment, btn: empDynamicBtn(), step: 13 })
             }
