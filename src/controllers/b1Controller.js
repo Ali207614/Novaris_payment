@@ -8,17 +8,17 @@ const { saveSession, getSession } = require("../helpers");
 
 class b1Controller {
     async auth() {
-        // let obj = {
-        //     "CompanyDB": "NOVARIS_SAP",
-        //     "UserName": "Fin7",
-        //     "Password": "1234"
-        // }
-
         let obj = {
-            "CompanyDB": "TEST311223",
-            "UserName": "manager",
-            "Password": "w2e3r4Q!"
+            "CompanyDB": "NOVARIS_SAP",
+            "UserName": "Fin7",
+            "Password": "1234"
         }
+
+        // let obj = {
+        //     "CompanyDB": "TEST311223",
+        //     "UserName": "manager",
+        //     "Password": "w2e3r4Q!"
+        // }
         const axios = Axios.create({
             baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
