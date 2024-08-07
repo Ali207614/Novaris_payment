@@ -1845,15 +1845,15 @@ const empDataCred = () => {
         "Tasdiqlanishi kutilayotgan so’rovlar":
             ({ chat_id }) => infoData().filter(item => item.full && !item?.confirmative && item.chat_id == chat_id),
         "Bajarilishi kutilaytogan so’rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && !item?.executer && get(item, 'confirmative.status') && item.chat_id == chat_id),
+            ({ chat_id }) => infoData().filter(item => item.full && !item?.executor && get(item, 'confirmative.status') && item.chat_id == chat_id),
         "Tasdiqlangan , bajarilmagan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item?.executer && item.chat_id == chat_id),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item?.executor && item.chat_id == chat_id),
         "Tasdiqlangan , bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'executer.status') && get(item, 'confirmative.status') && item.chat_id == chat_id),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'executor.status') && get(item, 'confirmative.status') && item.chat_id == chat_id),
         "Tasdiqlovchi rad etgan so'rovlar":
             ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false && item.chat_id == chat_id),
         "Bajaruvchi rad etgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'executer.status') == false && get(item, 'confirmative.status') && item.chat_id == chat_id)
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'executor.status') == false && get(item, 'confirmative.status') && item.chat_id == chat_id)
     }
     return mainDataCred
 }
@@ -1866,13 +1866,13 @@ const execDataCred = () => {
                 return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
             }))
             return infoData().filter(item => item?.full
-                && get(item, 'confirmative.status') && !get(item, 'executer')
+                && get(item, 'confirmative.status') && !get(item, 'executor')
                 && (permissonMenuExecutor[item.menu] ? permissonMenuExecutor[item.menu].includes(item?.subMenu) : false))
         },
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') && get(item, 'executer.chat_id') == chat_id),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') && get(item, 'executor.chat_id') == chat_id),
         "Rad etilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false && get(item, 'executer.chat_id') == chat_id)
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') == false && get(item, 'executor.chat_id') == chat_id)
     }
     return mainDataCred
 }
@@ -1890,13 +1890,13 @@ const confDataCred = () => {
             )
         },
         "Tasdiqlanib , bajarilmagan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status') == false),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') == false),
         "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executer),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executor),
         "Rad etilgan so'rovlar":
             ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false),
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executer.status'))
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status'))
     }
     return mainDataCred
 }
@@ -1915,10 +1915,10 @@ let excelFnFormatData = ({ main }) => {
         let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
         let empData = infoUser().find(item => item.chat_id == get(data, 'chat_id'))
         let empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
-        let executor = get(data, 'executer', {})
+        let executor = get(data, 'executor', {})
         let confirmative = get(data, 'confirmative', {})
         let confirmUser = confirmative ? infoUser().find(item => item.chat_id == get(data, 'confirmative.chat_id')) : {}
-        let executUser = executor ? infoUser().find(item => item.chat_id == get(data, 'executer.chat_id')) : {}
+        let executUser = executor ? infoUser().find(item => item.chat_id == get(data, 'executor.chat_id')) : {}
         let info = [
             { name: 'ID', message: data?.ID || 1 },
             { name: 'Menu', message: get(data, 'menuName', '') },
@@ -1947,31 +1947,29 @@ let excelFnFormatData = ({ main }) => {
         if (!get(purchase, 'DocEntry')) {
             info = info.filter(item => item.name != 'Zakupka')
         }
-        if (schema.length == 0) {
-            info.forEach(el => {
-                let obj = {
-                    column: el.name,
-                    type: String,
-                    value: student => {
-                        return `${student[el.name]}`
-                    },
-                    align: 'center',
-                    alignVertical: 'center',
-                    span: 2,
-                }
-                // 
-                if (el.name == 'Tasdiqlovchi' && (get(confirmative, 'status') === false || get(confirmative, 'status') === true)) {
-                    obj['backgroundColor'] = get(confirmative, 'status') ? "#00AB66" : "#FF0000"
-                }
-                if (el.name == 'Bajaruvchi' && (get(executor, 'status') === false || get(executor, 'status') === true)) {
-                    obj['backgroundColor'] = get(executor, 'status') ? "#00AB66" : "#FF0000"
-                }
-                if (el.name == 'Izoh') {
-                    obj['height'] = 100
-                }
-                schema.push(obj)
-            })
-        }
+        info.forEach(el => {
+            let obj = {
+                column: el.name,
+                type: String,
+                value: student => {
+                    return `${student[el.name]}`
+                },
+                align: 'center',
+                alignVertical: 'center',
+                span: 2,
+            }
+            // 
+            if (el.name == 'Tasdiqlovchi' && (get(confirmative, 'status') === false || get(confirmative, 'status') === true)) {
+                obj['backgroundColor'] = (get(confirmative, 'status') ? "#00AB66" : "#FF0000")
+            }
+            if (el.name == 'Bajaruvchi' && (get(executor, 'status') === false || get(executor, 'status') === true)) {
+                obj['backgroundColor'] = (get(executor, 'status') ? "#00AB66" : "#FF0000")
+            }
+            if (el.name == 'Izoh') {
+                obj['height'] = 100
+            }
+            schema.push(obj)
+        })
 
         let resultObj = {}
         info.forEach(el => {

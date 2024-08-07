@@ -2645,8 +2645,16 @@ let infoAdminBtn = {
         },
         next: {
             file: async ({ chat_id }) => {
-                let data = infoData().filter(item => moment(item.creationDate).format('DD') == moment(new Date()).format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY') && get(item, 'full')
-                )
+
+                const today = moment().startOf('day');
+                const tomorrow = moment(today).add(1, 'days');
+
+                let data = infoData().filter(item => {
+                    const creationDate = moment(item.creationDate);
+                    return creationDate.isBetween(today, tomorrow, null, '[)') && get(item, 'full');
+                }).sort((a, b) => a.ID - b.ID)
+
+
                 let { objects, schema } = excelFnFormatData({ main: data })
                 await writeXlsxFile(objects, {
                     schema,
@@ -2673,8 +2681,16 @@ let infoAdminBtn = {
         },
         next: {
             file: async ({ chat_id }) => {
-                let data = infoData().filter(item => moment(item.creationDate).format('DD') >= moment(new Date()).subtract(7, "days").format('DD') && moment(item.creationDate).format('MM') == moment(new Date()).subtract(7, 'days').format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY') && get(item, 'full')
-                )
+
+                const startOfMonth = moment().startOf('isoWeek');
+                const endOfMonth = moment().endOf('isoWeek');
+
+                let data = infoData().filter(item => {
+                    const creationDate = moment(item.creationDate);
+                    return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]') && get(item, 'full');
+                }).sort((a, b) => a.ID - b.ID);
+
+
                 let { objects, schema } = excelFnFormatData({ main: data })
                 await writeXlsxFile(objects, {
                     schema,
@@ -2683,7 +2699,7 @@ let infoAdminBtn = {
                 return path.join(process.cwd(), "data.xlsx")
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn()
+                return
             },
         },
     },
@@ -2701,8 +2717,15 @@ let infoAdminBtn = {
         },
         next: {
             file: async ({ chat_id }) => {
-                let data = infoData().filter(item => moment(item.creationDate).format('MM') == moment(new Date()).format('MM') && moment(item.creationDate).format('YYYY') == moment(new Date()).format('YYYY') && get(item, 'full')
-                )
+                const startOfMonth = moment().startOf('month');
+                const endOfMonth = moment().endOf('month');
+
+                let data = infoData().filter(item => {
+                    const creationDate = moment(item.creationDate);
+                    return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]') && get(item, 'full');
+                }).sort((a, b) => a.ID - b.ID);
+
+
                 let { objects, schema } = excelFnFormatData({ main: data })
                 await writeXlsxFile(objects, {
                     schema,
@@ -2711,7 +2734,7 @@ let infoAdminBtn = {
                 return path.join(process.cwd(), "data.xlsx")
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn()
+                return
             },
         },
     },

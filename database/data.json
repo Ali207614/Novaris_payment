@@ -1,93 +1,33 @@
 [
     {
-        "id": "Uyowlmz2Wr",
+        "id": "YSLF6HcfnI",
         "menu": 5,
         "menuName": "Narx chiqarish",
         "chat_id": 561932032,
-        "creationDate": "2024-08-06T17:45:38.787+05:00",
+        "creationDate": "2024-08-07T15:34:10.004+05:00",
         "full": true,
         "is_delete": false,
-        "ID": 2795,
+        "ID": 2800,
         "subMenu": "Narx chiqarishni tasdiqlash xitoy",
-        "comment": "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ibrohim\nTekshirdi: Temur\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#Chnarx \n#prixod (sana)\n#xitoy",
-        "file": {
-            "active": false,
-            "send": true,
-            "document": {
-                "file_name": "Registratsiyadn o.docx",
-                "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "file_id": "BQACAgIAAxkBAAIPYmayGvxeZs1xIF3nG3DdThbvPr0zAAJAVAACUb-QSZeE7iivs7W7NQQ",
-                "file_unique_id": "AgADQFQAAlG_kEk",
-                "file_size": 12674
-            }
-        },
-        "confirmativeSendlist": [
-            {
-                "messageId": 3940,
-                "chatId": 561932032
-            }
-        ],
-        "stateTime": {
-            "create": "2024-08-06T12:45:51.932Z",
-            "confirmative": {
-                "status": true,
-                "date": "2024-08-06T12:45:53.438Z"
-            },
-            "executor": {
-                "status": true,
-                "date": "2024-08-06T12:46:02.424Z"
-            }
-        },
-        "confirmative": {
-            "chat_id": 561932032,
-            "status": true
-        },
-        "accountList43": [],
-        "accountList50": [],
-        "accountList": [],
-        "lastFile": {
-            "file": {
-                "file_name": "Registratsiyadn o.docx",
-                "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                "file_id": "BQACAgIAAxkBAAIPbGayGwotW93-h6p3v9HlgwxnCU29AAJCVAACUb-QSdgEYvz_OoEBNQQ",
-                "file_unique_id": "AgADQlQAAlG_kEk",
-                "file_size": 12674
-            }
-        },
-        "executer": {
-            "chat_id": 561932032,
-            "status": true
-        }
-    },
-    {
-        "id": "YpivSvlsiW",
-        "menu": 5,
-        "menuName": "Narx chiqarish",
-        "chat_id": 561932032,
-        "creationDate": "2024-08-06T18:00:04.458+05:00",
-        "full": true,
-        "is_delete": false,
-        "ID": 2796,
-        "subMenu": "Narx chiqarishni tasdiqlash xitoy",
-        "comment": "Sana: \nNarx chiqarish.\nTovar: DYUBEL GVOZD DMAX\nJavobgar: Ibrohim\nTekshirdi: Temur\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#Chnarx \n#prixod (sana)\n#xitoy",
+        "comment": "salom",
         "file": {
             "active": false
         },
         "confirmativeSendlist": [
             {
-                "messageId": 4036,
+                "messageId": 4353,
                 "chatId": 561932032
             }
         ],
         "stateTime": {
-            "create": "2024-08-06T13:00:14.036Z",
+            "create": "2024-08-07T10:34:15.572Z",
             "confirmative": {
                 "status": true,
-                "date": "2024-08-06T13:00:15.442Z"
+                "date": "2024-08-07T10:34:16.679Z"
             },
             "executor": {
                 "status": true,
-                "date": "2024-08-06T13:00:21.891Z"
+                "date": "2024-08-07T10:34:19.300Z"
             }
         },
         "confirmative": {
@@ -97,48 +37,40 @@
         "accountList43": [],
         "accountList50": [],
         "accountList": [],
-        "executer": {
+        "executor": {
             "chat_id": 561932032,
             "status": true
         }
     },
     {
-        "id": "wv7DfJlrL6",
-        "menu": 5,
-        "menuName": "Narx chiqarish",
+        "id": "7udhf9qzPB",
+        "menu": 6,
+        "menuName": "Boshqa",
         "chat_id": 561932032,
-        "creationDate": "2024-08-06T18:01:00.467+05:00",
+        "creationDate": "2024-08-07T15:34:30.450+05:00",
         "full": true,
         "is_delete": false,
-        "ID": 2797,
-        "subMenu": "Narx chiqarishni tasdiqlash xitoy",
-        "comment": "Test",
+        "ID": 2801,
+        "subMenu": "Chegirma",
+        "comment": "Sana:\nKimga: Mijoz ismi\nTovar 1: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 2: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nTovar 3: \nSotish narxi: 1.6$\nChegirma bilan narxi: 1,56$\n---------------------------------------\nUmumiy buyurtma summasi: 6025$\nUmumiy chegirma summasi: 25$\n---------------------------------------\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi: \n#chegirma",
         "file": {
-            "active": false,
-            "send": true,
-            "document": {
-                "file_name": "Bek Topi Golib Ulugbek.xlsx",
-                "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                "file_id": "BQACAgIAAxkBAAIP8GayHp-y6wOqYRDSxK6gc8Jl8ekvAAKNTQACPGOISGLg9BAGrgLlNQQ",
-                "file_unique_id": "AgADjU0AAjxjiEg",
-                "file_size": 7340
-            }
+            "active": false
         },
         "confirmativeSendlist": [
             {
-                "messageId": 4082,
+                "messageId": 4379,
                 "chatId": 561932032
             }
         ],
         "stateTime": {
-            "create": "2024-08-06T13:01:22.954Z",
+            "create": "2024-08-07T10:34:40.567Z",
             "confirmative": {
                 "status": true,
-                "date": "2024-08-06T13:01:24.470Z"
+                "date": "2024-08-07T10:34:41.989Z"
             },
             "executor": {
-                "status": true,
-                "date": "2024-08-06T13:01:52.129Z"
+                "status": false,
+                "date": "2024-08-07T10:34:44.208Z"
             }
         },
         "confirmative": {
@@ -148,32 +80,10 @@
         "accountList43": [],
         "accountList50": [],
         "accountList": [],
-        "lastFile": {
-            "file": {
-                "file_name": "IMG_5281.JPG",
-                "mime_type": "image/jpeg",
-                "thumbnail": {
-                    "file_id": "AAMCAgADGQEAAg_6ZrIev5iuV05Yr5H9IliqxqXFx2cAAoFUAAJRv5BJz6VirtCEb5YBAAdtAAM1BA",
-                    "file_unique_id": "AQADgVQAAlG_kEly",
-                    "file_size": 3414,
-                    "width": 320,
-                    "height": 67
-                },
-                "thumb": {
-                    "file_id": "AAMCAgADGQEAAg_6ZrIev5iuV05Yr5H9IliqxqXFx2cAAoFUAAJRv5BJz6VirtCEb5YBAAdtAAM1BA",
-                    "file_unique_id": "AQADgVQAAlG_kEly",
-                    "file_size": 3414,
-                    "width": 320,
-                    "height": 67
-                },
-                "file_id": "BQACAgIAAxkBAAIP-mayHr-YrldOWK-R_SJYqsalxcdnAAKBVAACUb-QSc-lYq7QhG-WNQQ",
-                "file_unique_id": "AgADgVQAAlG_kEk",
-                "file_size": 30090
-            }
-        },
-        "executer": {
+        "executor": {
             "chat_id": 561932032,
-            "status": true
-        }
+            "status": false
+        },
+        "notConfirmMessage": "sa"
     }
 ]

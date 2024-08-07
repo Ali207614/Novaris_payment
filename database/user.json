@@ -3717,73 +3717,22 @@
         "SalesPersonCode": null,
         "MobilePhone": "998903367448",
         "chat_id": 561932032,
+        "JobTitle": "Admin",
         "is_active": true,
-        "user_step": 200,
+        "user_step": 702,
         "back": [
             {
-                "text": "Assalomu Aleykum",
+                "text": "Asosiy Menu",
                 "btn": {
                     "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Tasdiqlovchi"
-                                },
-                                {
-                                    "text": "Xodim"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Bajaruvchi"
-                                }
-                            ]
-                        ]
-                    }
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"Foydalanuvchilar\"},{\"text\":\"Ma'lumotlar\"}],[{\"text\":\"Menular\"},{\"text\":\"Gruppalar\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Assalomu Aleykum"
                 },
                 "step": 1
             },
             {
-                "text": "So'rovlar",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
-                    "chat_id": 561932032,
-                    "text": "Xodim"
-                },
-                "step": 2
-            },
-            {
-                "text": "So'rovlar",
-                "btn": {
-                    "parse_mode": "Markdown",
-                    "reply_markup": {
-                        "resize_keyboard": true,
-                        "keyboard": [
-                            [
-                                {
-                                    "text": "Tasdiqlangan , bajarilmagan so'rovlar"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Tasdiqlangan , bajarilgan so'rovlar"
-                                }
-                            ],
-                            [
-                                {
-                                    "text": "Orqaga"
-                                }
-                            ]
-                        ]
-                    }
-                },
-                "step": 3
-            },
-            {
-                "text": "Sanani tanlang",
+                "text": "Ma'lumotlar",
                 "btn": {
                     "parse_mode": "Markdown",
                     "reply_markup": {
@@ -3795,11 +3744,14 @@
                                 },
                                 {
                                     "text": "Haftalik"
+                                },
+                                {
+                                    "text": "Oylik"
                                 }
                             ],
                             [
                                 {
-                                    "text": "Oylik"
+                                    "text": "Tanlash"
                                 }
                             ],
                             [
@@ -3810,7 +3762,7 @@
                         ]
                     }
                 },
-                "step": 200
+                "step": 702
             }
         ],
         "creationDate": "2024-06-12T19:59:45.379Z",
@@ -3818,17 +3770,18 @@
         "confirmationStatus": false,
         "waitingUpdateStatus": false,
         "extraWaiting": false,
-        "lastMessageId": 4107,
+        "lastMessageId": 4410,
         "currentUserRole": "Xodim",
-        "currentDataId": "wv7DfJlrL6",
+        "currentDataId": "7udhf9qzPB",
         "pagination": {
             "next": 10,
             "prev": 0
         },
-        "selectedInfoMenu": "Tasdiqlangan , bajarilgan so'rovlar",
+        "selectedInfoMenu": "Bajarilgan so'rovlar",
         "lastFile": {
             "currentDataId": ""
-        }
+        },
+        "notConfirmId": "7udhf9qzPB"
     },
     {
         "EmployeeID": 72,

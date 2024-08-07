@@ -345,7 +345,7 @@ function deleteAllInvalidData({ chat_id }) {
 function confirmativeListFn() {
     return infoUser().filter(item => item.JobTitle == 'Tasdiqlovchi')
 }
-function executerListFn() {
+function executorListFn() {
     return infoUser().filter(item => item.JobTitle == 'Bajaruvchi')
 }
 
@@ -420,7 +420,7 @@ module.exports = {
     deleteAllInvalidData,
     formatterCurrency,
     confirmativeListFn,
-    executerListFn,
+    executorListFn,
     updateID,
     infoID,
     updatePermisson,

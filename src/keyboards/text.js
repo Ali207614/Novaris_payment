@@ -16,7 +16,7 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
         let userData = infoData().find(item => item.ID == get(list, '[0].message', ''))
         let empData = infoUser().find(item => item.chat_id == get(userData, 'chat_id'))
         empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
-        executor = get(userData, 'executer', {})
+        executor = get(userData, 'executor', {})
         confirmative = get(userData, 'confirmative', {})
         newErrStr = get(userData, 'SapJiraMessage', '')
         notConfirmMessage += get(userData, 'notConfirmMessage', '')

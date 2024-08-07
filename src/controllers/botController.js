@@ -66,7 +66,7 @@ class botConroller {
                     if (execute?.next) {
 
                         let data = {}
-                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text })
+                        let textBot = await execute?.next?.text ? await execute?.next?.text({ chat_id, msgText: msg.text }) : ''
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
                         let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined
                         if (get(currentUser, 'update') && !execute?.document) {
@@ -182,7 +182,7 @@ class botConroller {
         let file = get(list, 'file', {})
 
         let newText = `${'🔵'.repeat(10)}\n`
-        updateData(dataId, { executer: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
+        updateData(dataId, { executor: { chat_id, status: true }, stateTime: { ...list.stateTime, executor: { status: true, date: new Date() } } })
         let str = ''
         if (get(list, 'ticketAdd')) {
             let text = ticketAddText(list.ticketStatusObj)
@@ -199,10 +199,10 @@ class botConroller {
         if (str) {
             updateData(list.id, { SapJiraMessage: str })
         }
-        let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+        let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
         let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
-        for (let i = 0; i < executerList.length; i++) {
-            sendMessageHelper(executerList[i], newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
+        for (let i = 0; i < executorList.length; i++) {
+            sendMessageHelper(executorList[i], newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
         }
 
         let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
@@ -272,7 +272,6 @@ class botConroller {
             }
             let list = infoData().find(item => item.id == user?.currentDataId)
             if (get(list, 'file.active')) {
-                console.log('bu joyga tushdi')
                 updateData(get(list, 'id'), { file: { active: false, send: true, document: file } })
                 let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
                 let button = {

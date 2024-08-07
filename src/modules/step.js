@@ -1072,9 +1072,9 @@ let adminStep = {
                 sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
             }
 
-            let executerList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-            for (let i = 0; i < executerList.length; i++) {
-                sendMessageHelper(executerList[i], newText + dataConfirmText(info, text, chat_id), { file })
+            let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            for (let i = 0; i < executorList.length; i++) {
+                sendMessageHelper(executorList[i], newText + dataConfirmText(info, text, chat_id), { file })
             }
 
             sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
