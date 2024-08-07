@@ -59,5 +59,65 @@
     "status": true,
     "id": 3,
     "creationDate": "2024-06-12T13:59:00.043Z"
+  },
+  {
+    "menuId": "8",
+    "name": "Disga tovarlarni qaytarish",
+    "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat",
+    "update": [
+      {
+        "id": 1,
+        "name": "Izoh",
+        "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat",
+        "step": "13"
+      }
+    ],
+    "updateLine": 1,
+    "lastStep": 62,
+    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+    "isDelete": false,
+    "status": true,
+    "id": 4,
+    "creationDate": "2024-07-16T14:00:58.444Z"
+  },
+  {
+    "menuId": "8",
+    "name": "Omborga tovarlarni qaytarish",
+    "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat",
+    "update": [
+      {
+        "id": 1,
+        "name": "Izoh",
+        "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat",
+        "step": "13"
+      }
+    ],
+    "updateLine": 1,
+    "lastStep": 62,
+    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+    "isDelete": false,
+    "status": true,
+    "id": 5,
+    "creationDate": "2024-07-16T14:01:28.174Z"
+  },
+  {
+    "menuId": "8",
+    "name": "Do'konga tovarlarni qaytarish",
+    "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat",
+    "update": [
+      {
+        "id": 1,
+        "name": "Izoh",
+        "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat",
+        "step": "13"
+      }
+    ],
+    "updateLine": 1,
+    "lastStep": 62,
+    "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+    "isDelete": false,
+    "status": true,
+    "id": 6,
+    "creationDate": "2024-07-16T14:03:34.071Z"
   }
 ]

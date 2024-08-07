@@ -1901,6 +1901,29 @@ const confDataCred = () => {
     return mainDataCred
 }
 
+const styles = {
+    correct: {
+        fill: {
+            type: 'pattern',
+            patternType: 'solid',
+            fgColor: { rgb: '00FF00' } // Green
+        },
+        font: {
+            color: { rgb: 'FFFFFF' } // White text
+        }
+    },
+    incorrect: {
+        fill: {
+            type: 'pattern',
+            patternType: 'solid',
+            fgColor: { rgb: 'FF0000' } // Red
+        },
+        font: {
+            color: { rgb: 'FFFFFF' } // White text
+        }
+    }
+};
+
 let excelFnFormatData = ({ main }) => {
     let objects = []
     let schema = []
@@ -1924,8 +1947,8 @@ let excelFnFormatData = ({ main }) => {
             { name: 'Menu', message: get(data, 'menuName', '') },
             { name: 'SubMenu', message: get(data, 'subMenu', '') },
             { name: 'Xodim', message: empName },
-            { name: 'Tasdiqlovchi', message: `${get(confirmUser, 'LastName', '')} ${get(confirmUser, 'FirstName', '')}` },
-            { name: 'Bajaruvchi', message: `${get(executUser, 'LastName', '')} ${get(executUser, 'FirstName', '')}` },
+            { name: 'Tasdiqlovchi', message: `${get(confirmUser, 'LastName', '')} ${get(confirmUser, 'FirstName', '')} ${get(confirmative, 'status') ? "✅" : "❌"}` },
+            { name: 'Bajaruvchi', message: `${get(executUser, 'LastName', '')} ${get(executUser, 'FirstName', '')} ${get(executor, 'status') ? "✅" : "❌"}` },
             { name: 'SAP Document', message: paymentType || '' },
             { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType || '' },
             { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` },
@@ -1947,29 +1970,33 @@ let excelFnFormatData = ({ main }) => {
         if (!get(purchase, 'DocEntry')) {
             info = info.filter(item => item.name != 'Zakupka')
         }
-        info.forEach(el => {
-            let obj = {
-                column: el.name,
-                type: String,
-                value: student => {
-                    return `${student[el.name]}`
-                },
-                align: 'center',
-                alignVertical: 'center',
-                span: 2,
-            }
-            // 
-            if (el.name == 'Tasdiqlovchi' && (get(confirmative, 'status') === false || get(confirmative, 'status') === true)) {
-                obj['backgroundColor'] = (get(confirmative, 'status') ? "#00AB66" : "#FF0000")
-            }
-            if (el.name == 'Bajaruvchi' && (get(executor, 'status') === false || get(executor, 'status') === true)) {
-                obj['backgroundColor'] = (get(executor, 'status') ? "#00AB66" : "#FF0000")
-            }
-            if (el.name == 'Izoh') {
-                obj['height'] = 100
-            }
-            schema.push(obj)
-        })
+        if (schema.length == 0) {
+            info.forEach(el => {
+                let obj = {
+                    column: el.name,
+                    type: String,
+                    value: student => {
+                        return `${student[el.name]}`
+                    },
+                    align: 'center',
+                    alignVertical: 'center',
+                    span: 2,
+                }
+                // if (el.name == 'Tasdiqlovchi' && (get(confirmative, 'status') === false || get(confirmative, 'status') === true)) {
+                //     obj['backgroundColor'] = get(confirmative, 'status') ? "#00AB66" : "#FF0000"
+                // }
+
+                // if (el.name == 'Bajaruvchi' && (get(executor, 'status') === false || get(executor, 'status') === true)) {
+                //     obj['backgroundColor'] = get(executor, 'status') ? "#00AB66" : "#FF0000"
+                // }
+
+                if (el.name == 'Izoh') {
+                    obj['height'] = 100
+                }
+                schema.push(obj)
+            })
+        }
+
 
         let resultObj = {}
         info.forEach(el => {

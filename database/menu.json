@@ -5,5 +5,12 @@
     "isDelete": false,
     "creationDate": "2024-05-27T05:50:44.698Z",
     "id": 7
+  },
+  {
+    "name": "Tovarlarni qaytarish",
+    "status": true,
+    "isDelete": false,
+    "creationDate": "2024-07-16T13:57:25.885Z",
+    "id": 8
   }
 ]
