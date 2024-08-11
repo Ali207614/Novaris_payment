@@ -189,8 +189,6 @@ class botConroller {
             str += `Jira\n${text}\n`
         }
         if (get(list, 'sap')) {
-
-
             str += `Sapga qo'shildi ✅`
         }
         else if (get(list, 'sap') === false) {

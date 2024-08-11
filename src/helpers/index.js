@@ -372,7 +372,7 @@ async function sendMessageHelper(...arg) {
             },
         ]
 
-        await bot.sendMediaGroup(561932032, mediaGroup.filter(item => get(item, 'media')));
+        await bot.sendMediaGroup(chat_id, mediaGroup.filter(item => get(item, 'media')));
         return
     }
     if (file && get(file, 'file.send') && get(file, 'file.document')) {

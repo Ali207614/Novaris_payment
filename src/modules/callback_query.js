@@ -236,29 +236,6 @@ let xorijiyXaridCallback = {
             if (get(list, 'executor')) {
                 return
             }
-            else if (data[1] == '1') {
-                // let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
-                // let count = 0;
-
-                // let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
-                // let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
-                // if (get(cred, 'jira')) {
-                //     let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
-                //     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
-                //     count += 1
-                //     if (count == 2) {
-                //         bot.deleteMessage(chat_id, deleteMessage.message_id)
-                //     }
-                // }
-                // if (get(cred, 'b1.status')) {
-                //     let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
-                //     updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
-                //     count += 1
-                //     if (count == 2) {
-                //         bot.deleteMessage(chat_id, deleteMessage.message_id)
-                //     }
-                // }
-            }
             else if (data[1] == '2') {
                 updateStep(chat_id, 5000)
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
@@ -289,6 +266,10 @@ let xorijiyXaridCallback = {
                 }
             },
             btn: async ({ chat_id, data }) => {
+                let list = infoData().find(item => item.id == data[2])
+                if (get(list, 'executor')) {
+                    return mainMenuByRoles({ chat_id })
+                }
                 if (data[1] == '1') {
                     return await dataConfirmBtnEmp(chat_id, [{ name: "Ha", id: `1#${data[2]}` }, { name: "Yo'q", id: `2#${data[2]}` }], 2, 'lastFile')
                 }
