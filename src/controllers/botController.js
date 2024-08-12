@@ -296,7 +296,6 @@ class botConroller {
                 return
             }
         } catch (err) {
-            console.log(err, ' bu err')
             throw new Error(err);
         }
     }

@@ -758,7 +758,6 @@ let executeBtn = {
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const startOfMonth = moment().startOf('month');
             const endOfMonth = moment().endOf('month');
-
             mainData = mainData.filter(item => {
                 const creationDate = moment(item.creationDate);
                 return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');

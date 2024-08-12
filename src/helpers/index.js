@@ -355,35 +355,45 @@ function parseDate(dateStr) {
 }
 
 async function sendMessageHelper(...arg) {
-    let file = arg.find(item => get(item, 'file'))
-    let lastFile = arg.find(item => get(item, 'lastFile'))
-    if (get(lastFile, 'lastFile.file')) {
-        let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
-        const mediaGroup = [
-            {
-                media: get(file, 'file.document.file_id'),
-                type: 'document',
-
-            },
-            {
-                media: get(lastFile, 'lastFile.file.file_id'),
-                type: 'document',
+    try {
+        let file = arg.find(item => get(item, 'file'))
+        let lastFile = arg.find(item => get(item, 'lastFile'))
+        if (get(lastFile, 'lastFile.file')) {
+            let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
+            const mediaGroup = [
+                {
+                    media: get(file, 'file.document.file_id'),
+                    type: 'document',
+                },
+                {
+                    media: get(lastFile, 'lastFile.file.file_id'),
+                    type: 'document',
+                    caption: text,
+                },
+            ]
+            bot.sendMediaGroup(chat_id, mediaGroup.filter(item => get(item, 'media'))).then(() => {
+            }).catch(e => {
+                bot.sendMessage(chat_id, text)
+            })
+            return
+        }
+        if (file && get(file, 'file.send') && get(file, 'file.document')) {
+            let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
+            bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {
                 caption: text,
-            },
-        ]
+                reply_markup: btn?.reply_markup
+            }).then((data) => {
+                return data
+            }).catch(e => {
+                bot.sendMessage(chat_id, text)
+            })
+            return
+        }
 
-        await bot.sendMediaGroup(chat_id, mediaGroup.filter(item => get(item, 'media')));
-        return
+        return await bot.sendMessage(...arg)
+    } catch (e) {
+        console.log(e, ' bu err bu ')
     }
-    if (file && get(file, 'file.send') && get(file, 'file.document')) {
-        let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
-        return await bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {
-            caption: text,
-            reply_markup: btn?.reply_markup
-        })
-    }
-
-    return await bot.sendMessage(...arg)
 }
 
 function formatLocalDateToISOString(date) {

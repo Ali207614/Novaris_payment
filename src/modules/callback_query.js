@@ -35,7 +35,8 @@ let xorijiyXaridCallback = {
                     let isOverTime = (get(list, 'menu', '') == 7 && get(list, 'menuName', '') == 'Overtime') ? `🟠`.repeat(10) : `🟡`.repeat(10)
                     let text = `${isOverTime}\n` + dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
                     let send = await sendMessageHelper(accessChatId[i], text, btnConfirmative, { file })
-                    confirmativeSendlist.push({ messageId: send.message_id, chatId: accessChatId[i] })
+                    console.log(send, ' bu send')
+                    confirmativeSendlist.push({ messageId: send?.message_id, chatId: accessChatId[i] })
                 }
                 updateData(user.currentDataId, { confirmativeSendlist })
             }
