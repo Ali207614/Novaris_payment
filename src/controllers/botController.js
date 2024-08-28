@@ -76,7 +76,7 @@ class botConroller {
                         let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), btnBot) :
                             sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
                         let lastMessageId = await botInfo
-                        updateUser(chat_id, { lastMessageId: lastMessageId.message_id })
+                        updateUser(chat_id, { lastMessageId: lastMessageId?.message_id })
                     }
                 }
             }
@@ -97,7 +97,7 @@ class botConroller {
 
                         let botInfo = await execute?.next?.file ? await bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, msgText: msg.text }), btnBot) :
                             await sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
-                        updateUser(chat_id, { lastMessageId: botInfo.message_id })
+                        updateUser(chat_id, { lastMessageId: botInfo?.message_id })
                     }
                 }
             }

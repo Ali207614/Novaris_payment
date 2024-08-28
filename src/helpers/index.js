@@ -372,22 +372,21 @@ async function sendMessageHelper(...arg) {
                 },
             ]
             bot.sendMediaGroup(chat_id, mediaGroup.filter(item => get(item, 'media'))).then(() => {
-            }).catch(e => {
-                bot.sendMessage(chat_id, text)
+            }).catch(async (e) => {
+                return await bot.sendMessage(chat_id, text)
             })
             return
         }
         if (file && get(file, 'file.send') && get(file, 'file.document')) {
             let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
-            bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {
+            return await bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {
                 caption: text,
                 reply_markup: btn?.reply_markup
             }).then((data) => {
                 return data
-            }).catch(e => {
-                bot.sendMessage(chat_id, text)
+            }).catch(async e => {
+                return await bot.sendMessage(chat_id, text)
             })
-            return
         }
 
         return await bot.sendMessage(...arg)

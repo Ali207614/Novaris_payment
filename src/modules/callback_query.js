@@ -13,6 +13,7 @@ let xorijiyXaridCallback = {
     "confirmEmp": {
         document: true,
         selfExecuteFn: async ({ chat_id, data }) => {
+            console.log(data, ' bu compfir')
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             if (get(list, 'full')) {
@@ -43,6 +44,8 @@ let xorijiyXaridCallback = {
         },
         middleware: ({ chat_id, id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
+            console.log('middle tushdi')
+            console.log(get(user, 'lastMessageId', 1) == id)
             return get(user, 'lastMessageId', 1) == id
         },
         next: {
@@ -314,6 +317,7 @@ let xorijiyXaridCallback = {
 
             },
             btn: async ({ chat_id, data }) => {
+                console.log(data, ' bu data update')
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let actData = infoData().find(item => item.id == user.currentDataId)
                 let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu)
