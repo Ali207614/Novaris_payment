@@ -3,7 +3,7 @@ const TelegramAPi = require("node-telegram-bot-api");
 let token = `5902250488:AAEXcOm02e6PohBxNLL-s-7rczUrrcpLTEI`
 // 66.45.245.130
 let conn_params = {
-    serverNode: '66.45.245.130:30015',
+    serverNode: '192.168.1.3:30015',
     uid: 'SYSTEM',
     pwd: 'GrvYL8YX',
 };
