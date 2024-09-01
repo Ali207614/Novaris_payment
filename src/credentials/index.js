@@ -191,12 +191,12 @@ let SubMenu = () => {
             },
             {
                 name: 'Xorijiy xarid tovar buyurtmasi',
-                comment: "1) Sana:\n2) Zakaz nomeri:\n3) Yetkazib beruvchi: \n4) Tovar nomi:\n5) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n6) Tovar summasi: 120000 Yuan\n7) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n8) Tayyor bo'lish muddati:\n9) Buyurtma necha kunda qilingan:\n10) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n11) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#24193MY(Zakaz nomeri)\n",
+                comment: "1) Sana:\n2) Zakaz nomeri: \n3) Yetkazib beruvchi:\n4) Tovar nomi:\n5) Zaklad summasi:\n6) Tovar summasi:\n7) To'lov kelishuv sharti: \n8) Tayyor bo'lish muddati:\n9) Buyurtma necha kunda qilingan:\n10) Brend qilinishi yoki qilinmasligi: FERRO/TISCO\n11) To'lov usuli: RMB / USD\n\n12) Izoh: \n\n#zakaz\n#24462IO(zakaz nomeri)",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `1) Sana:\n2) Zakaz nomeri:\n3) Yetkazib beruvchi: \n4) Tovar nomi:\n5) Zaklad summasi: Yo'q/1000 Yuan (to'lov sanasi bilan)\n6) Tovar summasi: 120000 Yuan\n7) To'lov kelishuv sharti: Tovar yo'lga chiqishidan oldin to'lanadi/ovar yo'lga chiqqandan keyin (..) kun ichida xto'lanadi/Tovar yetib kelgandan keyin to'lanadi.\n8) Tayyor bo'lish muddati:\n9) Buyurtma necha kunda qilingan:\n10) Brend qilinishi yoki qilinmasligi: FERRO/TISCO/Yo'q\n\n11) Izoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#zakaz\n#24193MY(Zakaz nomeri)\n`,
+                        message: `1) Sana:\n2) Zakaz nomeri: \n3) Yetkazib beruvchi:\n4) Tovar nomi:\n5) Zaklad summasi:\n6) Tovar summasi:\n7) To'lov kelishuv sharti: \n8) Tayyor bo'lish muddati:\n9) Buyurtma necha kunda qilingan:\n10) Brend qilinishi yoki qilinmasligi: FERRO/TISCO\n11) To'lov usuli: RMB/USD\n\n12) Izoh:\n\n#zakaz\n#24462IO(zakaz nomeri)`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1038,12 +1038,12 @@ let SubMenu = () => {
         4: [
             {
                 name: "D12 Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n`,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma12\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1071,12 +1071,12 @@ let SubMenu = () => {
             },
             {
                 name: "D64 Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n `,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma64\n\n@XusravRasulov\n@TolanovTolqin `,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1104,12 +1104,12 @@ let SubMenu = () => {
             },
             {
                 name: "D777 Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n ",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n `,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnoma777\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1137,12 +1137,12 @@ let SubMenu = () => {
             },
             {
                 name: "Distribyutsiya Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n ",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n `,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaDis\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1171,13 +1171,13 @@ let SubMenu = () => {
             {
                 name: "DQ Shartnoma shabloni",
                 comment: `Sana:\nOfisdan dogovor so'rash shabloni:\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: 
-                \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
+                \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01\n\n@XusravRasulov\n@TolanovTolqin`,
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
                         message: `Sana:\nOfisdan dogovor so'rash shabloni:\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: 
-                        \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01`,
+                        \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1206,12 +1206,12 @@ let SubMenu = () => {
 
             {
                 name: "SM Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSM\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSM\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSM\n`,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSM\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1239,12 +1239,12 @@ let SubMenu = () => {
             },
             {
                 name: "AN Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaAN\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaAN\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaAN\n`,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaAN\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1272,12 +1272,12 @@ let SubMenu = () => {
             },
             {
                 name: "NM Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaNM\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaNM\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaNM\n`,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaNM\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1305,12 +1305,12 @@ let SubMenu = () => {
             },
             {
                 name: "UR Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaUR\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaUR\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaUR\n`,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaUR\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1338,12 +1338,12 @@ let SubMenu = () => {
             },
             {
                 name: "JZ Shartnoma shabloni",
-                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaJZ\n",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaJZ\n\n@XusravRasulov\n@TolanovTolqin",
                 update: [
                     {
                         id: 1,
                         name: "Izoh",
-                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaJZ\n`,
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN:\n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaJZ\n\n@XusravRasulov\n@TolanovTolqin`,
                         btn: () => empDynamicBtn(),
                         step: '13'
                     },
@@ -1644,7 +1644,7 @@ let DDS = {
 
 let accounts43 = []
 
-for (let i = 31; i <= 78; i++) {
+for (let i = 31; i <= 79; i++) {
     accounts43.push(`43${i}`)
 }
 
@@ -1863,7 +1863,7 @@ const execDataCred = () => {
         "Bajarilmagan so'rovlar": ({ chat_id }) => {
             let permission = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonMenuExecutor = Object.fromEntries(Object.entries(get(permission, 'permissonMenuExecutor', {})).map(item => {
-                return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
+                return [item[0], item[1].map(el => SubMenu()[item[0]]?.find(s => s.id == el)?.name)]
             }))
             return infoData().filter(item => item?.full
                 && get(item, 'confirmative.status') && !get(item, 'executor')
@@ -1882,7 +1882,7 @@ const confDataCred = () => {
         "Tasdiqlanmagan so'rovlar": ({ chat_id }) => {
             let permission = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonMenuAffirmative = Object.fromEntries(Object.entries(get(permission, 'permissonMenuAffirmative', {})).map(item => {
-                return [item[0], item[1].map(el => SubMenu()[item[0]].find(s => s.id == el).name)]
+                return [item[0], item[1].map(el => SubMenu()[item[0]]?.find(s => s.id == el)?.name)]
             }))
             return infoData().filter(item => item?.full
                 && !get(item, 'confirmative')
