@@ -4,9 +4,7 @@
         "title": "FER| XARAJAT NAZORATI",
         "type": "supergroup",
         "permissions": {
-            "1": [
-                "5"
-            ],
+            "1": [],
             "2": [],
             "3": []
         }
@@ -26,10 +24,7 @@
         "title": "FERRO| MOLIYA NAZORATI",
         "type": "supergroup",
         "permissions": {
-            "3": [
-                "3",
-                "4"
-            ]
+            "3": []
         }
     },
     {
@@ -119,6 +114,10 @@
                 "2",
                 "3",
                 "4"
+            ],
+            "3": [
+                "4",
+                "3"
             ]
         }
     },
