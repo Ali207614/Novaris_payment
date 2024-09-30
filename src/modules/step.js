@@ -621,9 +621,9 @@ let mahalliyXaridStep = {
                 updateStep(chat_id, 49)
                 updateBack(chat_id, { text: `Summani yozing`, btn: empDynamicBtn(), step: 48 })
             }
-            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
+            let data = await b1Controller.getCurrentRate(get(list, 'currency', 'UZS'), get(list, 'startDate', ''))
             let rate = get(data, '[0].Rate', 12500)
-            updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: get(list, 'currencyRate', rate) })
+            updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: rate || get(list, 'currencyRate') })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
