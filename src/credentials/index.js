@@ -750,7 +750,7 @@ let SubMenu = () => {
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
                             let list = infoData().find(item => item.id == user.currentDataId)
-                            let data = await b1Controller.getCurrentRate('UZS', get(list, 'startDate', ''))
+                            let data = await b1Controller.getCurrentRate(get(list, 'currency', 'UZS'), get(list, 'startDate', ''))
                             let rate = data[0]?.Rate
                             if (rate) {
                                 updateData(user.currentDataId, { currencyRate: rate })
@@ -758,7 +758,7 @@ let SubMenu = () => {
                             else {
                                 rate = list?.currencyRate
                             }
-                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn()
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, get(list, 'currency', 'UZS')), id: get(list, 'currency', 'UZS') }], 1, 'rate') : empDynamicBtn()
                             return btn
                         },
                         step: '49'
@@ -852,7 +852,7 @@ let SubMenu = () => {
 
                     let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, 'UZS') }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, get(data, 'currency', 'UZS')) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },

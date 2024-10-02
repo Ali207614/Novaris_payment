@@ -644,7 +644,7 @@ let mahalliyXaridStep = {
                 }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, 'UZS'), id: 'UZS' }], 1, 'rate') : empDynamicBtn())
+                let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, get(list, 'currency', 'UZS')), id: 'UZS' }], 1, 'rate') : empDynamicBtn())
                 updateUser(chat_id, { update: false })
                 return btn
             },
