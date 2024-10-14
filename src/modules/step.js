@@ -321,9 +321,12 @@ let xorijiyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
-            if (msgText.replace(/\D/g, '').length != msgText.length) {
+            const regex = /^\d+(\.\d+)?$/;
+
+            if (!regex.test(msgText)) {
                 return
             }
+
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 30))
             }
@@ -334,7 +337,7 @@ let xorijiyXaridStep = {
             }
             let data = await b1Controller.getCurrentRate('CNY', get(list, 'startDate', ''))
             let rate = get(data, '[0].Rate', 12500)
-            updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: get(list, 'currencyRate', rate) })
+            updateData(user.currentDataId, { summa: msgText, currencyRate: get(list, 'currencyRate', rate) })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -342,17 +345,26 @@ let xorijiyXaridStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
-                if (msgText.replace(/\D/g, '').length != msgText.length) {
+
+                const regex = /^\d+(\.\d+)?$/;
+
+                if (!regex.test(msgText)) {
                     return 'Format xato yozilgan qaytadan yozing.'
                 }
+
+                // if (msgText.replace(/\D/g, '').length != msgText.length) {
+                // }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : (list?.currencyRate ? `Kursni yozing yoki sistemni kursni tanlang` : 'Kursni yozing')
             },
             btn: async ({ chat_id, msgText }) => {
-                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                const regex = /^\d+(\.\d+)?$/;
+
+                if (!regex.test(msgText)) {
                     return
                 }
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, 'CNY'), id: 'CNY' }], 1, 'rate') : empDynamicBtn())
@@ -611,9 +623,13 @@ let mahalliyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
-            if (msgText.replace(/\D/g, '').length != msgText.length) {
+            const regex = /^\d+(\.\d+)?$/;
+
+            if (!regex.test(msgText)) {
                 return
             }
+
+
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
@@ -621,9 +637,10 @@ let mahalliyXaridStep = {
                 updateStep(chat_id, 49)
                 updateBack(chat_id, { text: `Summani yozing`, btn: empDynamicBtn(), step: 48 })
             }
-            let data = await b1Controller.getCurrentRate(get(list, 'currency', 'UZS'), get(list, 'startDate', ''))
+            let cur = get(list, 'currency', 'UZS') == 'CNY' ? 'CNY' : 'UZS'
+            let data = await b1Controller.getCurrentRate(cur, get(list, 'startDate', ''))
             let rate = get(data, '[0].Rate', 12500)
-            updateData(user.currentDataId, { summa: msgText.replace(/\D/g, ''), currencyRate: rate || get(list, 'currencyRate') })
+            updateData(user.currentDataId, { summa: msgText, currencyRate: rate || get(list, 'currencyRate') })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -631,20 +648,28 @@ let mahalliyXaridStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
-                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                const regex = /^\d+(\.\d+)?$/;
+
+                if (!regex.test(msgText)) {
                     return 'Format xato yozilgan qaytadan yozing.'
                 }
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 2)].find(item => item.name == list?.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : (list?.currencyRate ? `Kursni yozing yoki sistemni kursni tanlang` : 'Kursni yozing')
             },
             btn: async ({ chat_id, msgText }) => {
-                if (msgText.replace(/\D/g, '').length != msgText.length) {
+                const regex = /^\d+(\.\d+)?$/;
+
+                if (!regex.test(msgText)) {
                     return
                 }
+
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, get(list, 'currency', 'UZS')), id: 'UZS' }], 1, 'rate') : empDynamicBtn())
+                let cur = get(list, 'currency', 'UZS') == 'CNY' ? 'CNY' : 'UZS'
+
+                let btn = user?.update ? list.lastBtn : (list?.currencyRate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+list?.currencyRate, cur), id: 'UZS' }], 1, 'rate') : empDynamicBtn())
                 updateUser(chat_id, { update: false })
                 return btn
             },
@@ -1057,7 +1082,7 @@ let adminStep = {
         },
     },
     "5000": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
+        selfExecuteFn: ({ chat_id, msgText, isGroup, groupChatId }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
@@ -1093,8 +1118,16 @@ let adminStep = {
                     }
                 })
             }
+
+            if (isGroup) {
+                sendMessageHelper(groupChatId, `Jo'natildi`)
+                return
+            }
         },
-        middleware: ({ chat_id }) => {
+        middleware: ({ chat_id, isGroup, groupChatId }) => {
+            if (isGroup) {
+                adminStep['5000'].next = {}
+            }
             let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 5000
         },

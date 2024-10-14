@@ -16,6 +16,11 @@ const jiraController = require("./jiraController");
 class botConroller {
     async text(msg, chat_id) {
         try {
+            let isGroup = ['group', 'supergroup'].includes(get(msg, 'chat.type', ''))
+            let groupChatId = get(msg, 'chat.id')
+            if (['group', 'supergroup'].includes(get(msg, 'chat.type', ''))) {
+                chat_id = get(msg, 'from.id')
+            }
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let btnTree = {
                 ...firtBtnExecutor(), ...confirmativeBtn,
@@ -43,7 +48,6 @@ class botConroller {
                         deleteAllInvalidData({ chat_id })
                     }
                 }
-
             }
             else if (msg.text == '/info') {
                 if (user) {
@@ -59,22 +63,22 @@ class botConroller {
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
             ) {
                 let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, executorBtn, newBtnExecuter()]
-                let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text }))
+                let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text, isGroup, groupChatId }))
                 execute = execute ? execute[msg.text] : {}
-                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text })) {
-                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id }) : undefined
-                    if (execute?.next) {
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId })) {
+                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, isGroup, groupChatId }) : undefined
+                    if (Object.values(get(execute, 'next', {})).length) {
 
                         let data = {}
-                        let textBot = await execute?.next?.text ? await execute?.next?.text({ chat_id, msgText: msg.text }) : ''
+                        let textBot = await execute?.next?.text ? await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId }) : ''
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
-                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined
+                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text, isGroup, groupChatId }) : undefined
                         if (get(currentUser, 'update') && !execute?.document) {
                             data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                         }
 
-                        let botInfo = await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id }), btnBot) :
-                            sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
+                        let botInfo = await execute?.next?.file ? bot.sendDocument((isGroup ? groupChatId : chat_id), await execute?.next?.file({ chat_id }), btnBot) :
+                            sendMessageHelper((isGroup ? groupChatId : chat_id), textBot, btnBot, { file: get(data, 'file', {}) })
                         let lastMessageId = await botInfo
                         updateUser(chat_id, { lastMessageId: lastMessageId?.message_id })
                     }
@@ -84,51 +88,57 @@ class botConroller {
                 stepTree[get(user, 'user_step', '1').toString()]
             ) {
                 let execute = stepTree[get(user, 'user_step', '1').toString()]
-                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.tex })) {
-                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text }) : undefined
-                    if (execute?.next) {
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId })) {
+                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId }) : undefined
+                    if (Object.values(get(execute, 'next', {})).length) {
                         let data = {}
-                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text })
+                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId })
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
-                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text }) : undefined
+                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text, isGroup, groupChatId }) : undefined
                         if (get(currentUser, 'update') && !execute?.document) {
                             data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                         }
 
-                        let botInfo = await execute?.next?.file ? await bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, msgText: msg.text }), btnBot) :
-                            await sendMessageHelper(chat_id, textBot, btnBot, { file: get(data, 'file', {}) })
+                        let botInfo = await execute?.next?.file ? await bot.sendDocument((isGroup ? groupChatId : chat_id), await execute?.next?.file({ chat_id, msgText: msg.text }), btnBot) :
+                            await sendMessageHelper((isGroup ? groupChatId : chat_id), textBot, btnBot, { file: get(data, 'file', {}) })
                         updateUser(chat_id, { lastMessageId: botInfo?.message_id })
                     }
                 }
             }
         }
         catch (err) {
-            console.log(err, ' bu err 2')
             throw new Error(err);
         }
     }
 
     async callback_query(msg, data, chat_id) {
         try {
+            let isGroup = ['group', 'supergroup'].includes(get(msg, 'message.chat.type', ''))
+            let groupChatId = get(msg, 'message.chat.id')
+            if (['group', 'supergroup'].includes(get(msg, 'message.chat.type'))) {
+                chat_id = get(msg, 'from.id')
+            }
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let callbackTree = { ...xorijiyXaridCallback, ...mahalliyXaridCallback, ...othersCallback, ...adminCallback }
             if (user) {
                 if (callbackTree[data[0]]) {
                     let callbackTreeList = [xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback]
-                    let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0) }))
+                    let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId }))
                     execute = execute ? execute[data[0]] : {}
-                    if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0) })) {
-                        await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data }) : undefined
-                        if (execute?.next) {
+                    if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId })) {
+                        await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data, isGroup, groupChatId, id: get(msg, 'message.message_id', 0) }) : undefined
+                        if (Object.values(get(execute, 'next', {})).length) {
                             let dataInfo = {}
-                            let textBot = await execute?.next?.text({ chat_id, data })
+                            let textBot = await execute?.next?.text({ chat_id, data, isGroup, groupChatId })
                             let currentUser = infoUser().find(item => item.chat_id == chat_id)
-                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined
+                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, isGroup, groupChatId }) : undefined
                             if (get(currentUser, 'update') && !execute?.document) {
                                 dataInfo = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                             }
-                            let botInfo = await execute?.next?.update ? bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +currentUser.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) }) : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
-                                sendMessageHelper(chat_id, textBot, btnBot, { file: get(dataInfo, 'file', {}) }))
+                            let botInfo = await execute?.next?.update ?
+                                bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +currentUser.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) })
+                                : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
+                                    sendMessageHelper((isGroup ? groupChatId : chat_id), textBot, btnBot, { file: get(dataInfo, 'file', {}) }))
                             let botId = await botInfo
                             updateUser(chat_id, { lastMessageId: botId.message_id })
                         }
@@ -136,7 +146,6 @@ class botConroller {
                 }
             }
         } catch (err) {
-            console.log(err, ' bu err')
             throw new Error(err);
         }
     }
@@ -261,6 +270,7 @@ class botConroller {
 
     async document(msg, chat_id) {
         try {
+            console.log(msg, chat_id)
             let file = get(msg, 'document', {})
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (get(user, 'lastFile.currentDataId')) {
