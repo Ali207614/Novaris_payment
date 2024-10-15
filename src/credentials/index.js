@@ -1983,14 +1983,6 @@ let excelFnFormatData = ({ main }) => {
                     alignVertical: 'center',
                     span: 2,
                 }
-                // if (el.name == 'Tasdiqlovchi' && (get(confirmative, 'status') === false || get(confirmative, 'status') === true)) {
-                //     obj['backgroundColor'] = get(confirmative, 'status') ? "#00AB66" : "#FF0000"
-                // }
-
-                // if (el.name == 'Bajaruvchi' && (get(executor, 'status') === false || get(executor, 'status') === true)) {
-                //     obj['backgroundColor'] = get(executor, 'status') ? "#00AB66" : "#FF0000"
-                // }
-
                 if (el.name == 'Izoh') {
                     obj['height'] = 100
                 }

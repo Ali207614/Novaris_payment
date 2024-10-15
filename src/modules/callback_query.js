@@ -111,7 +111,7 @@ let xorijiyXaridCallback = {
         },
     },
     "confirmConfirmative": {
-        selfExecuteFn: async ({ chat_id, data }) => {
+        selfExecuteFn: async ({ chat_id, data, isGroup, groupChatId, id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
 
@@ -121,6 +121,9 @@ let xorijiyXaridCallback = {
             else if (data[1] == '2') {
                 updateStep(chat_id, 4000)
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
+            }
+            else if (data[1] == '1') {
+
             }
         },
         middleware: ({ chat_id, data }) => {
@@ -143,6 +146,7 @@ let xorijiyXaridCallback = {
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
                 let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
                 let file = get(list, 'file', {})
+
                 if (get(list, 'confirmative')) {
                     let confirmativeUser = infoUser().find(item => item.chat_id == get(list, 'confirmative.chat_id'))
                     let text = `${get(confirmativeUser, 'LastName')} ${get(confirmativeUser, 'FirstName')} Tasdiqlovchi ${get(list, 'confirmative.status') ? 'tasdiqlagan ✅' : 'bekor qilgan ❌'}`
@@ -376,13 +380,12 @@ let xorijiyXaridCallback = {
             let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
             if (data[1] == 1) {
                 updateUser(chat_id, { lastFile: { currentDataId: data[2] } })
-                if (isGroup) {
-                    sendMessageHelper(groupChatId, `File jo'nating`)
-                }
+
             }
             else {
                 updateUser(chat_id, { lastFile: {} })
-                let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
+
+                let deleteMessage = sendMessageHelper((isGroup ? groupChatId : chat_id), `Loading...`)
                 let count = 0;
 
                 let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
@@ -392,27 +395,27 @@ let xorijiyXaridCallback = {
                     updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
                     count += 1
                     if (count == 2) {
-                        bot.deleteMessage(chat_id, deleteMessage.message_id)
+                        bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
                     }
+                    return
                 }
                 if (get(cred, 'b1.status')) {
                     let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
                     updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
                     count += 1
                     if (count == 2) {
-                        bot.deleteMessage(chat_id, deleteMessage.message_id)
+                        bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
                     }
+                    return
                 }
+                bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
+
+
             }
         },
         middleware: ({ data, chat_id, id, isGroup, groupChatId }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            if (isGroup) {
-                if (data[1] == '1') {
-                    xorijiyXaridCallback['lastFile'].next = {}
-                }
-                return true
-            }
+
             return get(user, 'lastMessageId', 1) == id
         },
         next: {

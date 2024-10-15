@@ -137,9 +137,10 @@ class botConroller {
                             }
                             let botInfo = await execute?.next?.update ?
                                 bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +currentUser.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) })
-                                : (await execute?.next?.file ? bot.sendDocument(chat_id, await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
+                                : (await execute?.next?.file ? bot.sendDocument((isGroup ? groupChatId : chat_id), await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
                                     sendMessageHelper((isGroup ? groupChatId : chat_id), textBot, btnBot, { file: get(dataInfo, 'file', {}) }))
                             let botId = await botInfo
+
                             updateUser(chat_id, { lastMessageId: botId.message_id })
                         }
                     }
@@ -270,10 +271,27 @@ class botConroller {
 
     async document(msg, chat_id) {
         try {
-            console.log(msg, chat_id)
+            console.log(chat_id, ' bu 1')
+            let isGroup = ['group', 'supergroup'].includes(get(msg, 'chat.type', ''))
+            let groupChatId = get(msg, 'chat.id')
+            if (['group', 'supergroup'].includes(get(msg, 'chat.type'))) {
+                chat_id = get(msg, 'from.id')
+            }
+            console.log(chat_id, ' bu 2')
+
             let file = get(msg, 'document', {})
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (get(user, 'lastFile.currentDataId')) {
+
+                if (isGroup) {
+                    let list = infoData().find(item => item.id == get(user, 'lastFile.currentDataId'))
+                    let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                    let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                    if (!executorList.find(item => item == chat_id)) {
+                        bot.sendMessage(groupChatId, 'Mumkin emas ❌')
+                        return
+                    }
+                }
                 updateData(get(user, 'lastFile.currentDataId'), { lastFile: { file } })
                 await this.helperDocument(chat_id, get(user, 'lastFile.currentDataId'))
                 return

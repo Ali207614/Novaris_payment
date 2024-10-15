@@ -1,1 +1,346 @@
-[]
+[
+    {
+        "id": "wll9h7fvfm",
+        "menu": 6,
+        "menuName": "Boshqa",
+        "chat_id": 561932032,
+        "creationDate": "2024-10-15T22:02:36.410+05:00",
+        "full": true,
+        "is_delete": false,
+        "ID": 11724,
+        "subMenu": "Chegirma",
+        "comment": "ishlar qalay",
+        "file": {
+            "active": false
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 7373,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-10-15T17:02:44.026Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-10-15T17:02:46.067Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-10-15T17:03:25.943Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "accountList50": [],
+        "accountList": [],
+        "lastFile": {
+            "file": {
+                "file_name": "Remote Desktop Redirected Printer Doc (1).pdf",
+                "mime_type": "application/pdf",
+                "thumbnail": {
+                    "file_id": "AAMCAgADGQEAAhzYZw6gXTF9KXqjzeIgofD3kMJ0EBcAAvVcAAISZXhIYMeAynd5qBoBAAdtAAM2BA",
+                    "file_unique_id": "AQAD9VwAAhJleEhy",
+                    "file_size": 3237,
+                    "width": 226,
+                    "height": 320
+                },
+                "thumb": {
+                    "file_id": "AAMCAgADGQEAAhzYZw6gXTF9KXqjzeIgofD3kMJ0EBcAAvVcAAISZXhIYMeAynd5qBoBAAdtAAM2BA",
+                    "file_unique_id": "AQAD9VwAAhJleEhy",
+                    "file_size": 3237,
+                    "width": 226,
+                    "height": 320
+                },
+                "file_id": "BQACAgIAAxkBAAIc2GcOoF0xfSl6o83iIKHw95DCdBAXAAL1XAACEmV4SGDHgMp3eagaNgQ",
+                "file_unique_id": "AgAD9VwAAhJleEg",
+                "file_size": 98634
+            }
+        },
+        "executor": {
+            "chat_id": 561932032,
+            "status": true
+        }
+    },
+    {
+        "id": "ftEnNsCliF",
+        "menu": 6,
+        "menuName": "Boshqa",
+        "chat_id": 561932032,
+        "creationDate": "2024-10-15T22:03:32.553+05:00",
+        "full": true,
+        "is_delete": false,
+        "ID": 11725,
+        "subMenu": "Chegirma",
+        "comment": "salom",
+        "file": {
+            "active": false
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 7402,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-10-15T17:03:37.909Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-10-15T17:03:40.970Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-10-15T17:03:43.748Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "accountList50": [],
+        "accountList": [],
+        "executor": {
+            "chat_id": 561932032,
+            "status": true
+        }
+    },
+    {
+        "id": "U1Jjw8Mrcv",
+        "menu": 6,
+        "menuName": "Boshqa",
+        "chat_id": 561932032,
+        "creationDate": "2024-10-15T22:06:27.030+05:00",
+        "full": true,
+        "is_delete": false,
+        "ID": 11727,
+        "subMenu": "Chegirma",
+        "comment": "salom",
+        "file": {
+            "active": false
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 7441,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-10-15T17:06:33.096Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-10-15T17:06:38.363Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-10-15T17:06:41.876Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "accountList50": [],
+        "accountList": [],
+        "executor": {
+            "chat_id": 561932032,
+            "status": true
+        }
+    },
+    {
+        "id": "tvk7pgTMOg",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-10-15T22:06:57.281+05:00",
+        "full": true,
+        "is_delete": false,
+        "ID": 11728,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5071 - Ofis kassa (USD)",
+                "id": "5071",
+                "num": 12
+            }
+        ],
+        "accountCode": "5071",
+        "summa": "100",
+        "currencyRate": "12440.000000",
+        "comment": "test",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "file": {
+            "active": false,
+            "send": true,
+            "document": {
+                "file_name": "Remote Desktop Redirected Printer Doc (1).pdf",
+                "mime_type": "application/pdf",
+                "thumbnail": {
+                    "file_id": "AAMCAgADGQEAAh05Zw6hUTUk_51wmXtwpmgLdzPsDSgAAsJiAAJSWHlIlzQIJOtIWpIBAAdtAAM2BA",
+                    "file_unique_id": "AQADwmIAAlJYeUhy",
+                    "file_size": 3237,
+                    "width": 226,
+                    "height": 320
+                },
+                "thumb": {
+                    "file_id": "AAMCAgADGQEAAh05Zw6hUTUk_51wmXtwpmgLdzPsDSgAAsJiAAJSWHlIlzQIJOtIWpIBAAdtAAM2BA",
+                    "file_unique_id": "AQADwmIAAlJYeUhy",
+                    "file_size": 3237,
+                    "width": 226,
+                    "height": 320
+                },
+                "file_id": "BQACAgIAAxkBAAIdOWcOoVE1JP-dcJl7cKZoC3cz7A0oAALCYgACUlh5SJc0CCTrSFqSNgQ",
+                "file_unique_id": "AgADwmIAAlJYeUg",
+                "file_size": 98634
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 7483,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-10-15T17:08:27.416Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-10-15T17:08:30.654Z"
+            },
+            "executor": {
+                "status": false,
+                "date": "2024-10-15T17:08:34.632Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "executor": {
+            "chat_id": 561932032,
+            "status": false
+        },
+        "notConfirmMessage": "xatolik bor"
+    },
+    {
+        "id": "dnFN7RCxU6",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-10-15T22:17:43.506+05:00",
+        "full": true,
+        "is_delete": false,
+        "ID": 11730,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "USD",
+        "accountList50": [
+            {
+                "name": "5061 - Ombor kassasi (USD)",
+                "id": "5061",
+                "num": 10
+            }
+        ],
+        "accountCode": "5061",
+        "summa": "100",
+        "currencyRate": "12440.000000",
+        "comment": "test",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "dds": "Xorijiy yetkazib beruvchilarga to'lov",
+        "file": {
+            "active": false,
+            "send": true,
+            "document": {
+                "file_name": "Remote Desktop Redirected Printer Doc (1).pdf",
+                "mime_type": "application/pdf",
+                "thumbnail": {
+                    "file_id": "AAMCAgADGQEAAh18Zw6j5We3EcjTkqOZ7FhpgbqLPiMAAthiAAJSWHlIiZf7VZzIHDMBAAdtAAM2BA",
+                    "file_unique_id": "AQAD2GIAAlJYeUhy",
+                    "file_size": 3237,
+                    "width": 226,
+                    "height": 320
+                },
+                "thumb": {
+                    "file_id": "AAMCAgADGQEAAh18Zw6j5We3EcjTkqOZ7FhpgbqLPiMAAthiAAJSWHlIiZf7VZzIHDMBAAdtAAM2BA",
+                    "file_unique_id": "AQAD2GIAAlJYeUhy",
+                    "file_size": 3237,
+                    "width": 226,
+                    "height": 320
+                },
+                "file_id": "BQACAgIAAxkBAAIdfGcOo-VntxHI05KjmexYaYG6iz4jAALYYgACUlh5SImX-1WcyBwzNgQ",
+                "file_unique_id": "AgAD2GIAAlJYeUg",
+                "file_size": 98634
+            }
+        },
+        "confirmativeSendlist": [
+            {
+                "messageId": 7550,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-10-15T17:18:33.353Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-10-15T17:18:35.881Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-10-15T17:18:47.035Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "sapB1": false,
+        "sap": true,
+        "executor": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
+    }
+]

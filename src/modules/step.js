@@ -1052,7 +1052,7 @@ let adminStep = {
                 sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
             }
             sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
-            updateUser(chat_id, { confirmationStatus: false })
+            updateUser(chat_id, { confirmationStatus: false, user_step: 1 })
             // group
             let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
             let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
@@ -1103,7 +1103,7 @@ let adminStep = {
             }
 
             sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
-            updateUser(chat_id, { confirmationStatus: false })
+            updateUser(chat_id, { confirmationStatus: false, user_step: 1 })
 
             // group
             let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
