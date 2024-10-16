@@ -490,21 +490,57 @@
         "chat_id": 561932032,
         "is_active": true,
         "user_step": 10,
-        "back": [],
+        "back": [
+            {
+                "text": "Assalomu Aleykum",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": {
+                        "resize_keyboard": true,
+                        "keyboard": [
+                            [
+                                {
+                                    "text": "Xodim"
+                                },
+                                {
+                                    "text": "Tasdiqlovchi"
+                                }
+                            ],
+                            [
+                                {
+                                    "text": "Bajaruvchi"
+                                }
+                            ]
+                        ]
+                    }
+                },
+                "step": 1
+            },
+            {
+                "text": "So'rovlar",
+                "btn": {
+                    "parse_mode": "Markdown",
+                    "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+                    "chat_id": 561932032,
+                    "text": "Xodim"
+                },
+                "step": 2
+            }
+        ],
         "creationDate": "2024-10-10T06:56:02.286Z",
         "currentUserRole": "Xodim",
         "update": false,
-        "lastMessageId": 7562,
         "confirmationStatus": false,
         "waitingUpdateStatus": false,
         "extraWaiting": false,
         "lastFile": {},
-        "currentDataId": "dnFN7RCxU6",
+        "currentDataId": "PhSuQ6bnsK",
         "pagination": {
             "next": 10,
             "prev": 0
         },
         "selectedInfoMenu": "Bajarilmagan so'rovlar",
-        "notConfirmId": "tvk7pgTMOg"
+        "notConfirmId": "tvk7pgTMOg",
+        "lastMessageId": 7757
     }
 ]

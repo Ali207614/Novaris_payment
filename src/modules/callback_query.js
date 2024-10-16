@@ -1106,7 +1106,7 @@ let mahalliyXaridCallback = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             if (user?.update) {
-                updateStep(chat_id, get(list, 'lastStep', 0))
+                updateStep(chat_id, get(list, 'lastStep', 1))
             }
             else {
                 updateStep(chat_id, 50)
@@ -1137,9 +1137,9 @@ let mahalliyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
-
-            if (user?.update) {
-                updateStep(chat_id, get(list, 'lastStep', 0))
+            console.log(list, ' bu list')
+            if (user?.update || get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) {
+                updateStep(chat_id, get(list, 'lastStep', 1))
             }
             else {
                 updateStep(chat_id, 52)
@@ -1157,7 +1157,7 @@ let mahalliyXaridCallback = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
-                return user?.update ? dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id) : 'Statya DDS ni tanlang'
+                return (user?.update || get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) ? dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id) : 'Statya DDS ni tanlang'
             },
             btn: async ({ chat_id, data }) => {
                 try {
@@ -1166,9 +1166,16 @@ let mahalliyXaridCallback = {
                     let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
                         return { name: item, id: i }
                     })
+                    console.log(list.lastBtn)
                     let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
                     updateData(user.currentDataId, { ddsList })
-                    let btn = user?.update ? list.lastBtn : await dataConfirmBtnEmp(chat_id,
+                    let lastBtn = await dataConfirmBtnEmp(chat_id,
+                        [
+                            { name: 'Ha', id: 1, },
+                            { name: 'Bekor qilish', id: 2 },
+                            { name: "O'zgartirish", id: 3 }
+                        ], 2, 'confirmEmp')
+                    let btn = (user?.update || get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) ? lastBtn : await dataConfirmBtnEmp(chat_id,
                         ddsList, 2, 'dds')
 
                     return btn
@@ -1184,7 +1191,7 @@ let mahalliyXaridCallback = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
             if (user?.update) {
-                updateStep(chat_id, get(list, 'lastStep', 0))
+                updateStep(chat_id, get(list, 'lastStep', 1))
             }
             else {
                 updateStep(chat_id, 53)
@@ -1233,7 +1240,7 @@ let mahalliyXaridCallback = {
             }
 
             if (user?.update) {
-                updateStep(chat_id, get(list, 'lastStep', 0))
+                updateStep(chat_id, get(list, 'lastStep', 1))
             }
 
         },

@@ -342,5 +342,76 @@
             "status": true
         },
         "SapJiraMessage": "Sapga qo'shildi ✅"
+    },
+    {
+        "id": "PhSuQ6bnsK",
+        "menu": 1,
+        "menuName": "Xorijiy xarid",
+        "chat_id": 561932032,
+        "creationDate": "2024-10-16T12:27:24.688+05:00",
+        "full": true,
+        "is_delete": false,
+        "ID": 11738,
+        "subMenu": "Chetga pul chiqarish",
+        "accountList": [
+            {
+                "name": "5530 - Yo'ldagi pullar (Chetga chiqarilgan)",
+                "id": "5530",
+                "num": 1
+            }
+        ],
+        "payment": false,
+        "accountCodeOther": "5530",
+        "startDate": "2024.01.31",
+        "endDate": "2024.01.31",
+        "payType": "Naqd",
+        "currency": "CNY",
+        "accountList50": [
+            {
+                "name": "4383 - Avans YIC Almaz Koronka Zavod",
+                "id": "4383",
+                "num": 3
+            }
+        ],
+        "accountCode": "4383",
+        "summa": "100",
+        "currencyRate": "7.150000",
+        "comment": "test",
+        "point": "OFIS",
+        "ddsList": [
+            {
+                "name": "Xorijiy yetkazib beruvchilarga to'lov",
+                "id": 0
+            }
+        ],
+        "confirmativeSendlist": [
+            {
+                "messageId": 7738,
+                "chatId": 561932032
+            }
+        ],
+        "stateTime": {
+            "create": "2024-10-16T07:27:59.177Z",
+            "confirmative": {
+                "status": true,
+                "date": "2024-10-16T07:28:03.423Z"
+            },
+            "executor": {
+                "status": true,
+                "date": "2024-10-16T07:28:10.999Z"
+            }
+        },
+        "confirmative": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "accountList43": [],
+        "sapB1": false,
+        "sap": true,
+        "executor": {
+            "chat_id": 561932032,
+            "status": true
+        },
+        "SapJiraMessage": "Sapga qo'shildi ✅"
     }
 ]

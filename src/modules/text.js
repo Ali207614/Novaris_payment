@@ -223,13 +223,18 @@ let confirmativeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            const startOfMonth = moment().startOf('month');
-            const endOfMonth = moment().endOf('month');
 
-            mainData = mainData.filter(item => {
-                const creationDate = moment(item.creationDate);
-                return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');
-            }).sort((a, b) => a.ID - b.ID);
+            const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
+            const endOfToday = moment().endOf('day');
+
+            mainData = mainData
+                .filter(item => {
+                    const creationDate = moment(item.creationDate);
+                    return creationDate.isBetween(startOfLast30Days, endOfToday, null, '[]');
+                })
+                .sort((a, b) => a.ID - b.ID);
+
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
@@ -394,13 +399,18 @@ let executorBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            const startOfMonth = moment().startOf('month');
-            const endOfMonth = moment().endOf('month');
+            const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
+            const endOfToday = moment().endOf('day');
 
-            mainData = mainData.filter(item => {
-                const creationDate = moment(item.creationDate);
-                return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');
-            }).sort((a, b) => a.ID - b.ID);
+            mainData = mainData
+                .filter(item => {
+                    const creationDate = moment(item.creationDate);
+                    return creationDate.isBetween(startOfLast30Days, endOfToday, null, '[]');
+                })
+                .sort((a, b) => a.ID - b.ID);
+
+
+
             if (mainData.length) {
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
@@ -756,12 +766,15 @@ let executeBtn = {
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
-            const startOfMonth = moment().startOf('month');
-            const endOfMonth = moment().endOf('month');
-            mainData = mainData.filter(item => {
-                const creationDate = moment(item.creationDate);
-                return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]');
-            }).sort((a, b) => a.ID - b.ID);
+            const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
+            const endOfToday = moment().endOf('day');
+
+            mainData = mainData
+                .filter(item => {
+                    const creationDate = moment(item.creationDate);
+                    return creationDate.isBetween(startOfLast30Days, endOfToday, null, '[]');
+                })
+                .sort((a, b) => a.ID - b.ID);
 
 
             if (mainData.length) {
