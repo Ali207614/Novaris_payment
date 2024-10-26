@@ -157,7 +157,7 @@ let xorijiyXaridCallback = {
                     let newTextExecutor = `${'🟣'.repeat(10)}\n`
 
                     let cleanedData = {
-                        accountList43: get(list, 'accountList43', []).filter(item => get(item, 'id') == get(list, 'accountCodeOther')),
+                        accountList43: get(list, 'accountList43', []).filter(item => get(item, 'id') == (get(list, 'accountCodeOther') || list?.accountCode)),
                         accountList50: get(list, 'accountList50', []).filter(item => get(item, 'id') == get(list, 'accountCode')),
                         accountList: get(list, 'accountList', []).filter(item => get(item, 'id') == get(list, 'accountCodeOther'))
                     }
@@ -375,42 +375,45 @@ let xorijiyXaridCallback = {
     },
     "lastFile": {
         selfExecuteFn: async ({ chat_id, data, isGroup, groupChatId }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            let list = infoData().find(item => item.id == data[2])
-            let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
-            if (data[1] == 1) {
-                updateUser(chat_id, { lastFile: { currentDataId: data[2] } })
+            try {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == data[2])
+                let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+                if (data[1] == 1) {
+                    updateUser(chat_id, { lastFile: { currentDataId: data[2] } })
 
-            }
-            else {
-                updateUser(chat_id, { lastFile: {} })
+                }
+                else {
+                    updateUser(chat_id, { lastFile: {} })
 
-                let deleteMessage = sendMessageHelper((isGroup ? groupChatId : chat_id), `Loading...`)
-                let count = 0;
+                    let deleteMessage = sendMessageHelper((isGroup ? groupChatId : chat_id), `Loading...`)
+                    let count = 0;
 
-                let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
-                let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
-                if (get(cred, 'jira')) {
-                    let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
-                    updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
-                    count += 1
-                    if (count == 2) {
-                        bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
+                    let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
+                    let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
+                    if (get(cred, 'jira')) {
+
+                        let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
+                        updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
+                        count += 1
+                        if (count == 2) {
+                            bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
+                        }
                     }
+                    if (get(cred, 'b1.status')) {
+
+                        let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+                        updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
+                        count += 1
+                        if (count == 2) {
+                            bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
+                        }
+                    }
+                    bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
                     return
                 }
-                if (get(cred, 'b1.status')) {
-                    let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
-                    updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
-                    count += 1
-                    if (count == 2) {
-                        bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
-                    }
-                    return
-                }
-                bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
-
-
+            } catch (e) {
+                console.log('bu eee', e)
             }
         },
         middleware: ({ data, chat_id, id, isGroup, groupChatId }) => {
@@ -1137,7 +1140,6 @@ let mahalliyXaridCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
-            console.log(list, ' bu list')
             if (user?.update || get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) {
                 updateStep(chat_id, get(list, 'lastStep', 1))
             }
@@ -1157,7 +1159,10 @@ let mahalliyXaridCallback = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
-                return (user?.update || get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) ? dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id) : 'Statya DDS ni tanlang'
+                if (get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) {
+                    return `File jo'natasizmi ?`
+                }
+                return (user?.update) ? dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id) : 'Statya DDS ni tanlang'
             },
             btn: async ({ chat_id, data }) => {
                 try {
@@ -1174,6 +1179,14 @@ let mahalliyXaridCallback = {
                             { name: 'Bekor qilish', id: 2 },
                             { name: "O'zgartirish", id: 3 }
                         ], 2, 'confirmEmp')
+                    if (get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) {
+                        return await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile')
+                    }
                     let btn = (user?.update || get(list, 'accountCode', '').toString().slice(0, 2).includes('43')) ? lastBtn : await dataConfirmBtnEmp(chat_id,
                         ddsList, 2, 'dds')
 
