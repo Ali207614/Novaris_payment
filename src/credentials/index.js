@@ -852,7 +852,7 @@ let SubMenu = () => {
 
                     let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
 
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, get(data, 'currency', 'UZS')) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, get(data, 'currency', 'UZS') == 'CNY' ? 'CNY' : "UZS") }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -1031,6 +1031,145 @@ let SubMenu = () => {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
                     let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                    return info
+                }
+            },
+            {
+                name: "Naqd/Karta hisobiga tushum",
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                update: [
+                    {
+                        id: 1,
+                        name: "Sap Document",
+                        message: `Hujjatni tanlang`,
+                        btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
+                        step: '61'
+                    },
+                    // {
+                    //     id: 2,
+                    //     name: "Hujjat turi (Hisob,Yetkazib beruvchi)",
+                    //     message: 'Hujjat turi ni tanlang',
+                    //     btn: () => empDynamicBtn([`Hisob`, `Xodim`], 2),
+                    //     step: '62'
+                    // },
+                    {
+                        id: 3,
+                        name: "Sana",
+                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        btn: () => empDynamicBtn(),
+                        step: '44'
+                    },
+
+                    {
+                        id: 7,
+                        name: "Valyuta kursi",
+                        message: `Valyuta kursi `,
+                        btn: async ({ chat_id }) => {
+                            let user = infoUser().find(item => item.chat_id == chat_id)
+                            let list = infoData().find(item => item.id == user.currentDataId)
+                            let data = await b1Controller.getCurrentRate(get(list, 'currency', 'UZS'), get(list, 'startDate', ''))
+                            let rate = data[0]?.Rate
+                            if (rate) {
+                                updateData(user.currentDataId, { currencyRate: rate })
+                            }
+                            else {
+                                rate = list?.currencyRate
+                            }
+                            let btn = rate ? await dataConfirmBtnEmp(chat_id, [{ name: formatterCurrency(+rate, get(list, 'currency', 'UZS')), id: get(list, 'currency', 'UZS') }], 1, 'rate') : empDynamicBtn()
+                            return btn
+                        },
+                        step: '49'
+                    },
+                    {
+                        id: 8,
+                        name: "Summa",
+                        message: `Summani yozing`,
+                        btn: () => empDynamicBtn(),
+                        step: '48'
+                    },
+                    {
+                        id: 9,
+                        name: "Izoh",
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        btn: () => empDynamicBtn(),
+                        step: '50'
+                    },
+                    {
+                        id: 10,
+                        name: "Hisob Nuqtasi",
+                        message: `Hisob Nuqtasini tanlang`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, ocrdList, 1, 'point'),
+                        step: '51'
+                    },
+                    {
+                        id: 4,
+                        name: "To'lov usullari , Valyuta , Hisob",
+                        message: `To'lov usullarini tanlang`,
+                        btn: async ({ chat_id }) => {
+                            let btnList = payType50
+                            return await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
+                        },
+                        step: '45'
+                    },
+                    {
+                        id: 11,
+                        name: "Statya DDS",
+                        message: `Statya DDS ni tanlang`,
+                        btn: async ({ chat_id }) => {
+                            let user = infoUser().find(item => item.chat_id == chat_id)
+                            let list = infoData().find(item => item.id == user.currentDataId)
+                            let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(list, 'accountCodeOther', ''))).map((item, i) => {
+                                return { name: item, id: i }
+                            })
+                            let ddsList = isDds.length ? isDds : ((get(list, "DDS") ? [{ name: get(list, 'DDS'), id: '-3' }] : (get(list, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
+
+                            return await dataConfirmBtnEmp(chat_id,
+                                ddsList, 2, 'dds')
+                        },
+                        step: '52'
+                    },
+                    {
+                        id: 12,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
+                ],
+                b1: {
+                    status: true,
+                    cashFlow: true,
+                },
+                updateLine: 2,
+                lastStep: 52,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+
+                    let isDds = Object.keys(DDS)?.filter(item => DDS[item].find(el => el == get(data, 'accountCodeOther', ''))).map((item, i) => {
+                        return { name: item, id: i }
+                    })
+                    let ddsList = isDds.length ? isDds : ((get(data, "DDS") ? [{ name: get(data, 'DDS'), id: '-3' }] : (get(data, 'payment') ? [{ name: 'Qarz(Tushum)', id: '-1' }] : [{ name: 'Qarz (Xarajat)', id: '-2' }])))
+                    if (!ddsList.includes(get(data, 'dds'))) {
+                        // updateData((id ? id : user.currentDataId), { dds: ddsList?.length == 1 ? ddsList[0].name : false })
+                        data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    }
+
+                    let paymentType = get(data, 'payment', false) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
+                    let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name
+                    let accountName = get(data, 'accountList50', []).find(item => item.id == get(data, 'accountCode', 1))?.name
+                    let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
+                    let docType = get(data, 'documentType') ? 'Hisob' : 'Xodim'
+                    let namesType = get(data, 'documentType') ? (get(data, 'accountList', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
+
+                    let ddsName = get(data, 'documentType') ? get(data, 'dds', '❌') : (get(data, 'payment') ? 'Qarz(Tushum)' : 'Qarz (Xarajat)')
+
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: 'Hujjat turi', message: docType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: `To'lov Usuli`, message: data?.payType }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, get(data, 'currency', 'UZS') == 'CNY' ? 'CNY' : "UZS") }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Hisob Nuqtasi', message: pointName }, { name: 'Statya DDS', message: ddsName }, { name: 'Izoh', message: data?.comment },]
                     return info
                 }
             },
@@ -1655,7 +1794,7 @@ let accounts50 = {
         'CNY': accounts43
     },
     'Karta': {
-        'UZS': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058],
+        'UZS': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
     },
     'Terminal': {
         'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097]
@@ -1666,7 +1805,7 @@ let accounts50 = {
 }
 let subAccounts50 = {
     'Naqd': [5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5035, 5025, 5076, 5086, 5075, 5085, 5096, 5095, 5073],
-    'Karta': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058],
+    'Karta': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
     'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097],
     "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
 }
@@ -1770,6 +1909,7 @@ let accounts = {
         5910
     ],
     "Doimiy xarajat": [
+        3110,
         3120,
         5530,
         5611,
@@ -1822,7 +1962,7 @@ let accounts = {
         9236,
         9237,
         9238
-    ]
+    ],
 }
 
 
