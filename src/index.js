@@ -23,6 +23,7 @@ const start = async () => {
                         let chat_id = msg.chat.id;
                         await botController.text(msg, chat_id)
                     } catch (err) {
+                        // console.log(err)
                         sendMessageHelper(personalChatId, `${err} err text`);
                     }
                 });

@@ -26,5 +26,19 @@
         "isDelete": false,
         "creationDate": "2024-08-31T12:50:36.268Z",
         "id": 10
+    },
+    {
+        "name": "Verifix tasdiqlatish",
+        "status": true,
+        "isDelete": false,
+        "creationDate": "2024-12-04T03:41:02.952Z",
+        "id": 11
+    },
+    {
+        "name": "test",
+        "status": true,
+        "isDelete": true,
+        "creationDate": "2024-12-07T00:15:19.585Z",
+        "id": 12
     }
 ]

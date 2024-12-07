@@ -159,5 +159,225 @@
         "status": true,
         "id": 8,
         "creationDate": "2024-08-31T12:51:07.169Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Distributsiya agent",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #DA",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #DA",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 9,
+        "creationDate": "2024-12-04T03:45:23.676Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Distributsiya haydovchi",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #DH",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #DH",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 10,
+        "creationDate": "2024-12-04T03:47:05.171Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Distributsiya ombor",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #DO",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #DO",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 11,
+        "creationDate": "2024-12-04T03:47:27.650Z"
+    },
+    {
+        "menuId": "11",
+        "name": "HR",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #HR",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #HR",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 12,
+        "creationDate": "2024-12-04T03:48:29.353Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Ofis-buxgalteriya",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFB",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFB",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 13,
+        "creationDate": "2024-12-04T03:49:36.007Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Ofis-moliya",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFM",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFM",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 14,
+        "creationDate": "2024-12-04T03:50:15.544Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Ofis-xaridlar",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFX",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFX",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 15,
+        "creationDate": "2024-12-04T03:50:38.578Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Ofis-marketing",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFMar",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFMar",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 16,
+        "creationDate": "2024-12-04T03:51:42.114Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Ombor",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #O",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #O",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 17,
+        "creationDate": "2024-12-04T03:52:03.509Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Savdo",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #S",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #S",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 18,
+        "creationDate": "2024-12-04T03:52:27.920Z"
+    },
+    {
+        "menuId": "11",
+        "name": "Rahbarlar",
+        "comment": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFR",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Iltimos so'rov malumotlarini to'g'irlab yuboring!\n\nSana:\n\nKelish(vaqt):\nKetish(vaqt):\n\nIsm-familiya:\n\nUrilmagan sababi:\n\n#verifix #OFR",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n                            let user = infoUser().find(item => item.chat_id == chat_id)\n                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n                            return info\n                        }",
+        "isDelete": false,
+        "status": true,
+        "id": 19,
+        "creationDate": "2024-12-06T11:29:47.515Z"
     }
 ]
