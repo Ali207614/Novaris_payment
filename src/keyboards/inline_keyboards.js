@@ -45,7 +45,8 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         'updateMenus': 'paginationUpdateMenus',
         "selectMenus": 'paginationSelectMenus',
         "purchase": 'paginationPurchase',
-        "selectGroup": "paginationSelectGroup"
+        "selectGroup": "paginationSelectGroup",
+        "empMenu": 'paginationEmpMenu'
     }
 
     if (result.length > 10) {

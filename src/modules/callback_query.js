@@ -1470,6 +1470,7 @@ let adminCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+            console.log(data)
             if (SubMenu()[data[1]]) {
                 let menuList = Menu().map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''}` }
@@ -1519,6 +1520,39 @@ let adminCallback = {
                 }
                 return empDynamicBtn()
             },
+        },
+    },
+    "paginationEmpMenu": {
+        selfExecuteFn: async ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step') == 702
+        },
+        next: {
+            text: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                return `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`
+
+            },
+            btn: async ({ chat_id, data }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                let name = get(user, 'selectedAdminUserStatus', '')[0].toUpperCase() + get(user, 'selectedAdminUserStatus', '').slice(1)
+                console.log(name, ` permissonMenu${name}`)
+                let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, `permissonMenu${name}`, {})[item.id]?.length ? '✅' : ''}` }
+                })
+                if (get(user, 'selectedAdminUserStatus') == 'executor') {
+                    menuList = menuList.filter(item => item.id != 4)
+                }
+                return dataConfirmBtnEmp(chat_id,
+                    menuList
+                    , 1, 'empMenu', pagination)
+            },
+            update: true
+
         },
     },
     "subMenu": {
