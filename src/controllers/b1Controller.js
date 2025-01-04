@@ -135,6 +135,7 @@ class b1Controller {
     }
     async getAccountNo(arr) {
         try {
+            // true
             let accountQuery = accountBuilderFnNo(arr)
             let data = await dbService.execute(accountQuery)
             return data

@@ -2,13 +2,18 @@ const { get, isEmpty, update } = require("lodash");
 const { bot } = require("../config");
 const b1Controller = require("../controllers/b1Controller");
 const jiraController = require("../controllers/jiraController");
-let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb, newMenu, payType50 } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executorListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup, sendMessageHelper } = require("../helpers");
+let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb, newMenu, payType50, accounts43 } = require("../credentials");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executorListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup, sendMessageHelper, infoAccountPermisson, writePermissonAccount } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { mainMenuByRoles } = require("../keyboards/keyboards");
 const { dataConfirmText, ticketAddText } = require("../keyboards/text");
-let moment = require('moment')
+let moment = require('moment');
+const { boshqaBtn } = require("./text");
+
+
+const sleepNow = (delay) =>
+    new Promise((resolve) => setTimeout(resolve, delay));
 let xorijiyXaridCallback = {
     "confirmEmp": {
         document: true,
@@ -139,7 +144,6 @@ let xorijiyXaridCallback = {
         },
         next: {
             text: async ({ chat_id, data, isGroup, groupChatId }) => {
-                console.log(isGroup, groupChatId)
 
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
@@ -1032,6 +1036,15 @@ let mahalliyXaridCallback = {
             let accountList50 = b1Account50?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
+
+
+            if (infoAccountPermisson()[get(list, 'menu')]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+
+                accountList50 = accountList50.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
+            }
+
+
             updateData(user?.currentDataId, { currency: data[1], accountList50 })
         },
         middleware: ({ chat_id }) => {
@@ -1299,10 +1312,19 @@ let othersCallback = {
                 return { name: item, id: i }
             }), 2, 'accountType')
             updateBack(chat_id, { text: `Hisob (qayerga)`, btn, step: 63 })
+
+            if (infoAccountPermisson()[get(list, 'menu')]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+                accountsList = accountsList.filter(item => !notAcc.includes(item.toString()))
+            }
+
+
             let b1Account = await b1Controller.getAccountNo(accountsList)
             let accountList = b1Account?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
+
+
             updateData(user?.currentDataId, { accountType: Object.keys(accountsObj)[data[1]], accountList })
         },
         middleware: ({ chat_id }) => {
@@ -1401,6 +1423,280 @@ let othersCallback = {
             },
             update: true
         },
+    },
+
+
+
+    "accountMenu": {
+        selfExecuteFn: async ({ chat_id, data, id }) => {
+            await updateUser(chat_id, { selectAccountMenu: { id: data[1], menuId: data[2] } })
+            let arr = [
+                { id: 1, name: 'accounts43' },
+                { id: 2, name: "accounts50" },
+                { id: 3, name: "accounts94" },
+                { id: 4, name: "accounts15" },
+            ]
+            let btn = await dataConfirmBtnEmp(chat_id, arr, 1, 'accountListMenu')
+            bot.editMessageText("Schetlarni tanlang", {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "backAccountMenu": {
+        selfExecuteFn: async ({ chat_id, data, id }) => {
+            let arr = [
+                { id: 1, name: 'accounts43' },
+                { id: 2, name: "accounts50" },
+                { id: 3, name: "accounts94" },
+                { id: 4, name: "accounts15" },
+            ]
+            let btn = await dataConfirmBtnEmp(chat_id, arr, 1, 'accountListMenu')
+            bot.editMessageText("Schetlarni tanlang", {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "accountListMenu": {
+        selfExecuteFn: async ({ chat_id, data, id, user }) => {
+
+            let name = await Object.values(SubMenu()).flat().find(item => get(item, 'id') == get(user, 'selectAccountMenu.id') && get(item, 'menuId') == get(user, 'selectAccountMenu.menuId'))?.name || ''
+            await updateUser(chat_id, { selectAccountListMenu: data[1] })
+            let btnList = []
+            if (data[1] == 1) {
+                btnList = accounts43.sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
+            }
+            else if (data[1] == 2) {
+                btnList = Object.values(subAccounts50).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
+            }
+            else if (data[1] == 3) {
+                btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
+            }
+            else if (data[1] == 4) {
+                let b1Account15 = await b1Controller.getAccount15({ status: false })
+                btnList = await b1Account15.sort((a, b) => Number(a.AcctCode) - Number(b.AcctCode)).map(item => ({ id: `${item.AcctCode}#${data[1]})}`, name: item.AcctName }))
+            }
+            let per = await infoAccountPermisson();
+            let menuId = get(user, 'selectAccountMenu.menuId');
+            let accountId = get(user, 'selectAccountMenu.id');
+
+            if (!per[menuId]) per[menuId] = {}; // Agar `menuId` mavjud bo'lmasa, uni yaratish
+            if (!per[menuId][accountId]) per[menuId][accountId] = []; // Agar `accountId` mavjud bo'lmasa, uni yaratish
+
+            if (per[menuId][accountId]?.length) {
+                btnList = btnList.map(item => {
+                    let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
+                    return {
+                        id: `${item.id}#${data[3] || ''}#${data[4] || ''}`,
+                        name: `${item.name} ${isTrue ? '❌' : '✅'}`,
+                    };
+                });
+            } else {
+                btnList = btnList.map(item => {
+                    let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
+                    return {
+                        id: `${item.id}#${data[3] || ''}#${data[4] || ''}`,
+                        name: `${item.name} ${isTrue ? '❌' : '✅'}`,
+                    };
+                });
+            }
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'selectAccountMenu')
+            await bot.editMessageText(`Schetlarni tanlang\n📁: ${name}`, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "selectAccountMenu": {
+        selfExecuteFn: async ({ chat_id, data, id, user }) => {
+            let name = Object.values(SubMenu()).flat().find(item => get(item, 'id') == get(user, 'selectAccountMenu.id') && get(item, 'menuId') == get(user, 'selectAccountMenu.menuId'))?.name || ''
+            let btnList = []
+            if (get(user, 'selectAccountListMenu') == 1) {
+                btnList = accounts43.sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
+            }
+            else if (get(user, 'selectAccountListMenu') == 2) {
+                btnList = Object.values(subAccounts50).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
+            }
+            else if (get(user, 'selectAccountListMenu') == 3) {
+                btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
+            }
+            else if (get(user, 'selectAccountListMenu') == 4) {
+                let b1Account15 = await b1Controller.getAccount15({ status: false })
+
+                btnList = await b1Account15.sort((a, b) => Number(a.AcctCode) - Number(b.AcctCode)).map(item => ({ id: `${item.AcctCode}#${get(user, 'selectAccountListMenu')}`, name: item.AcctName }))
+
+            }
+
+
+
+            let per = await infoAccountPermisson();
+            let menuId = get(user, 'selectAccountMenu.menuId');
+            let accountId = get(user, 'selectAccountMenu.id');
+
+            if (!per[menuId]) per[menuId] = {}; // Agar `menuId` mavjud bo'lmasa, uni yaratish
+            if (!per[menuId][accountId]) per[menuId][accountId] = []; // Agar `accountId` mavjud bo'lmasa, uni yaratish
+
+            if (per[menuId][accountId]?.length) {
+                // `accountId`dagi ruxsatlarni yangilash
+                if (per[menuId][accountId].includes(data[1])) {
+                    per[menuId][accountId] = per[menuId][accountId].filter(item => item != data[1])
+                }
+                else {
+                    per[menuId][accountId].push(data[1])
+                }
+                await writePermissonAccount(per);
+
+                btnList = btnList.map(item => {
+                    let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
+                    return {
+                        id: `${item.id}#${data[3] || ''}#${data[4] || ''}`,
+                        name: `${item.name} ${isTrue ? '❌' : '✅'}`,
+                    };
+                });
+            } else {
+                // Ruxsat yo'q, yangi qo'shish
+                per[menuId][accountId] = [data[1]];
+                await writePermissonAccount(per);
+                btnList = btnList.map(item => {
+                    let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
+                    console.log(isTrue, per[menuId][accountId], item.id)
+                    return {
+                        id: `${item.id}#${data[3] || ''}#${data[4] || ''}`,
+                        name: `${item.name} ${isTrue ? '❌' : '✅'}`,
+                    };
+                });
+            }
+            let pagination = {}
+            if (data[3] && data[4]) {
+                pagination = data[3] == 'prev' ? { prev: +data[4] - 10, next: data[4] } : { prev: data[4], next: +data[4] + 10 }
+            }
+            else {
+                pagination = undefined
+            }
+
+
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'selectAccountMenu', pagination)
+            await bot.editMessageText(`Schetlarni tanlang\n📁: ${name} `, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "backCategory": {
+        selfExecuteFn: async ({ chat_id, data, id }) => {
+            let btnList = Object.values(SubMenu()).flat().filter(item => get(item, 'update', []).length > 2).map(item => ({ id: `${item.id}#${item.menuId}`, name: item.name }))
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountMenu')
+            bot.editMessageText("Menularni tanlang", {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "paginationAccountMenu": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return 'Menularni tanlang'
+            },
+            btn: async ({ chat_id, data }) => {
+                let btnList = Object.values(SubMenu()).flat().filter(item => get(item, 'update', []).length > 2).map(item => ({ id: `${item.id} #${item.menuId} `, name: item.name }))
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+
+                let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountMenu', pagination)
+
+                return btn
+            },
+            update: true
+        },
+    },
+    "paginationSelectAccountMenu": {
+        selfExecuteFn: async ({ chat_id, data, user, id }) => {
+            console.log(get(user, 'selectAccountListMenu'), ' bu pag')
+            let name = Object.values(SubMenu()).flat().find(item => get(item, 'id') == get(user, 'selectAccountMenu.id') && get(item, 'menuId') == get(user, 'selectAccountMenu.menuId'))?.name || ''
+            let btnList = []
+            if (get(user, 'selectAccountListMenu', '') == 1) {
+                btnList = accounts43.sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
+            }
+            else if (get(user, 'selectAccountListMenu', '') == 2) {
+                btnList = Object.values(subAccounts50).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
+            }
+            else if (get(user, 'selectAccountListMenu', '') == 3) {
+                btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
+            }
+            else if (get(user, 'selectAccountListMenu') == 4) {
+                let b1Account15 = await b1Controller.getAccount15({ status: false })
+
+                btnList = await b1Account15.sort((a, b) => Number(a.AcctCode) - Number(b.AcctCode)).map(item => ({ id: `${item.AcctCode}#${get(user, 'selectAccountListMenu')}`, name: item.AcctName }))
+
+            }
+
+            let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+
+
+            let per = await infoAccountPermisson();
+            let menuId = get(user, 'selectAccountMenu.menuId');
+            let accountId = get(user, 'selectAccountMenu.id');
+
+            if (!per[menuId]) per[menuId] = {}; // Agar `menuId` mavjud bo'lmasa, uni yaratish
+            if (!per[menuId][accountId]) per[menuId][accountId] = []; // Agar `accountId` mavjud bo'lmasa, uni yaratish
+
+            if (per[menuId][accountId]?.length) {
+                btnList = btnList.map(item => {
+                    let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
+                    return {
+                        id: `${item.id}#${data[1] || ''}#${data[2] || ''}`,
+                        name: `${item.name} ${isTrue ? '❌' : '✅'}`,
+                    };
+                });
+            } else {
+                btnList = btnList.map(item => {
+                    let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
+                    return {
+                        id: `${item.id}#${data[1] || ''}#${data[2] || ''}`,
+                        name: `${item.name} ${isTrue ? '❌' : '✅'}`,
+                    };
+                });
+            }
+
+
+
+
+            // console.log(btnList)
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'selectAccountMenu', pagination)
+            await bot.editMessageText(`Schetlarni tanlang\n📁: ${name} `, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
     }
 }
 
@@ -1419,7 +1715,7 @@ let adminCallback = {
         next: {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == data[1])
-                return `${user?.LastName} ${user?.FirstName}`
+                return `${user?.LastName} ${user?.FirstName} `
 
             },
             btn: async ({ chat_id, data }) => {
@@ -1449,15 +1745,15 @@ let adminCallback = {
                 return dataConfirmBtnEmp(chat_id,
                     [
                         {
-                            name: `Xodim ${get(infoPermissonData, 'roles', []).includes('1') ? '✅' : ''}`,
+                            name: `Xodim ${get(infoPermissonData, 'roles', []).includes('1') ? '✅' : ''} `,
                             id: 1
                         },
                         {
-                            name: `Tasdiqlovchi ${get(infoPermissonData, 'roles', []).includes('2') ? '✅' : ''}`,
+                            name: `Tasdiqlovchi ${get(infoPermissonData, 'roles', []).includes('2') ? '✅' : ''} `,
                             id: 2
                         },
                         {
-                            name: `Bajaruvchi ${get(infoPermissonData, 'roles', []).includes('3') ? '✅' : ''}`,
+                            name: `Bajaruvchi ${get(infoPermissonData, 'roles', []).includes('3') ? '✅' : ''} `,
                             id: 3
                         }
                     ]
@@ -1474,7 +1770,7 @@ let adminCallback = {
             if (SubMenu()[data[1]]) {
                 updateUser(chat_id, { selectAdminMenuId: data[1] })
                 let menuList = Menu().map(item => {
-                    return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''}` }
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''} ` }
                 })
                 if (get(user, 'selectedAdminUserStatus') == 'executor') {
                     menuList = menuList.filter(item => item.id != 4)
@@ -1486,7 +1782,7 @@ let adminCallback = {
             }
             else {
                 let menuList = Menu().map(item => {
-                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''}` }
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''} ` }
                 })
 
                 updateBack(chat_id, {
@@ -1514,9 +1810,9 @@ let adminCallback = {
                 if (SubMenu()[data[1]]) {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]] : []
+                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]] : []
                     return dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
-                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '}`, id: `${data[1]}#${item.id}` }
+                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '} `, id: `${data[1]} #${item.id} ` }
                     }), 1, 'subMenu')
                 }
                 return empDynamicBtn()
@@ -1543,10 +1839,10 @@ let adminCallback = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 if (SubMenu()[get(user, 'selectAdminMenuId', '')]) {
                     let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[get(user, 'selectAdminMenuId', '')]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[get(user, 'selectAdminMenuId', '')] : []
+                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[get(user, 'selectAdminMenuId', '')]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[get(user, 'selectAdminMenuId', '')] : []
                     let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                     return dataConfirmBtnEmp(chat_id, SubMenu()[get(user, 'selectAdminMenuId', '')].map((item, i) => {
-                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '}`, id: `${get(user, 'selectAdminMenuId', '')}#${item.id}` }
+                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '} `, id: `${get(user, 'selectAdminMenuId', '')} #${item.id} ` }
                     }), 1, 'subMenu', pagination)
                 }
                 return empDynamicBtn()
@@ -1573,7 +1869,7 @@ let adminCallback = {
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let name = get(user, 'selectedAdminUserStatus', '')[0].toUpperCase() + get(user, 'selectedAdminUserStatus', '').slice(1)
                 let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
-                    return { ...item, name: `${item.name} ${get(infoPermissonData, `permissonMenu${name}`, {})[item.id]?.length ? '✅' : ''}` }
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, `permissonMenu${name}`, {})[item.id]?.length ? '✅' : ''} ` }
                 })
                 if (get(user, 'selectedAdminUserStatus') == 'executor') {
                     menuList = menuList.filter(item => item.id != 4)
@@ -1590,7 +1886,7 @@ let adminCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-            let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})
+            let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})
             if (infPermisson[data[1]]?.length) {
                 infPermisson[data[1]] = infPermisson[data[1]].find(item => item == data[2]) ? infPermisson[data[1]].filter(item => item != data[2]) : [...infPermisson[data[1]], data[2]]
             }
@@ -1601,7 +1897,7 @@ let adminCallback = {
             updatePermisson(get(user, 'selectedAdminUserChatId'), Object.fromEntries([[selectedUserStatus[get(user, 'selectedAdminUserStatus')], infPermisson]]))
             infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
             let menuList = Menu().map(item => {
-                return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''}` }
+                return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''} ` }
             })
             if (get(user, 'selectedAdminUserStatus') == 'executor') {
                 menuList = menuList.filter(item => item.id != 4)
@@ -1622,9 +1918,9 @@ let adminCallback = {
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]] : []
+                let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]] : []
                 return dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
-                    return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '}`, id: `${data[1]}#${item.id}` }
+                    return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '} `, id: `${data[1]} #${item.id} ` }
                 }), 1, 'subMenu')
             },
             update: true
@@ -1646,7 +1942,7 @@ let adminCallback = {
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let btn = await dataConfirmBtnEmp(chat_id, user.map(item => {
                     return {
-                        name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
+                        name: `${item.LastName} ${item.FirstName} `, id: item.chat_id
                     }
                 }), 1, 'adminUsers', pagination)
                 return btn
@@ -1697,11 +1993,11 @@ let adminCallback = {
                         updateLine: 1,
                         lastStep: 62,
                         infoFn: `({ chat_id, id }) => {
-                            let user = infoUser().find(item => item.chat_id == chat_id)
-                            let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
-                            let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
-                            return info
-                        }`
+    let user = infoUser().find(item => item.chat_id == chat_id)
+    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+    return info
+} `
                     }
                 )
             }

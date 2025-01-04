@@ -159,6 +159,9 @@ const adminKeyboard = {
                 },
                 {
                     text: "Gruppalar"
+                },
+                {
+                    text: "Schet"
                 }
             ]
         ],

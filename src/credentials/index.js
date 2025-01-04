@@ -1,6 +1,6 @@
 const { get, update } = require("lodash")
 const b1Controller = require("../controllers/b1Controller")
-const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu, infoPermisson } = require("../helpers")
+const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu, infoPermisson, infoAccountPermisson } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 let moment = require('moment')
@@ -272,10 +272,16 @@ let SubMenu = () => {
                         message: `Hisob (qayerdan)`,
                         btn: async ({ chat_id }) => {
                             let user = infoUser().find(item => item.chat_id == chat_id)
+                            let list = infoData().find(item => item.id == user?.currentDataId)
                             let b1Account43 = await b1Controller.getAccount43()
                             let accountList43 = b1Account43.map((item, i) => {
                                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                             })
+
+                            if (infoAccountPermisson()[get(list, 'menu')]) {
+                                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+                                accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
+                            }
                             updateData(user?.currentDataId, { accountList43 })
                             return await dataConfirmBtnEmp(chat_id, accountList43.sort((a, b) => a.id - b.id), 1, 'account')
                         },
@@ -1804,7 +1810,7 @@ let accounts50 = {
     }
 }
 let subAccounts50 = {
-    'Naqd': [5016, 5017, 5011, 5012, 5021, 5031, 5041, 5042, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5010, 5020, 5030, 5040, 5043, 5060, 5062, 5070, 5080, 5090, 5026, 5036, 5035, 5025, 5076, 5086, 5075, 5085, 5096, 5095, 5073],
+    'Naqd': [5017, 5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086, 5096, 5016, 5010, 5020, 5030, 5040, 5042, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035, 5095, 5073],
     'Karta': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
     'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097],
     "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]

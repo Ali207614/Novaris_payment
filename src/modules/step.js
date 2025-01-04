@@ -245,6 +245,13 @@ let xorijiyXaridStep = {
             let accountList43 = b1Account43?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
+
+
+            if (infoAccountPermisson()[get(data, 'menu')]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(data, 'menu')]).flat()
+                accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
+            }
+
             updateData(user?.currentDataId, { ticket: msgText, accountList43 })
         },
         middleware: ({ chat_id }) => {
@@ -271,6 +278,12 @@ let xorijiyXaridStep = {
                         let accountList43 = b1Account43?.map((item, i) => {
                             return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                         })
+
+                        if (infoAccountPermisson()[get(list, 'menu')]) {
+                            let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+                            accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
+                        }
+
                         updateData(user?.currentDataId, { ticket: msgText, accountList43 })
                         xorijiyXaridStep['24'].next.btn = async () => {
                             if (list?.accountList43?.length) {

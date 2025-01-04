@@ -47,5 +47,12 @@
         "isDelete": true,
         "creationDate": "2024-12-08T17:44:43.726Z",
         "id": 13
+    },
+    {
+        "name": "Pul o'tkazmani 1ga 1 tasdiqlatish",
+        "status": true,
+        "isDelete": false,
+        "creationDate": "2024-12-16T09:45:18.794Z",
+        "id": 14
     }
 ]

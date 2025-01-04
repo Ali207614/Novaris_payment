@@ -126,12 +126,12 @@ class botConroller {
                     let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId }))
                     execute = execute ? execute[data[0]] : {}
                     if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId })) {
-                        await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data, isGroup, groupChatId, id: get(msg, 'message.message_id', 0) }) : undefined
+                        await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data, isGroup, groupChatId, id: get(msg, 'message.message_id', 0), user }) : undefined
                         if (Object.values(get(execute, 'next', {})).length) {
                             let dataInfo = {}
                             let textBot = await execute?.next?.text({ chat_id, data, isGroup, groupChatId })
                             let currentUser = infoUser().find(item => item.chat_id == chat_id)
-                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, isGroup, groupChatId }) : undefined
+                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, isGroup, groupChatId, user }) : undefined
                             if (get(currentUser, 'update') && !execute?.document) {
                                 dataInfo = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                             }

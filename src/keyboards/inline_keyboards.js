@@ -47,9 +47,20 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         "purchase": 'paginationPurchase',
         "selectGroup": "paginationSelectGroup",
         "empMenu": 'paginationEmpMenu',
-        "subMenu": 'paginationSubMenu'
+        "subMenu": 'paginationSubMenu',
+        "accountMenu": 'paginationAccountMenu',
+        "selectAccountMenu": 'paginationSelectAccountMenu'
     }
-
+    let backCb = {
+        'accountListMenu': {
+            text: 'Menuga qaytish',
+            cb: 'backCategory'
+        },
+        'selectAccountMenu': {
+            text: 'Schetga qaytish',
+            cb: 'backAccountMenu'
+        }
+    }
     if (result.length > 10) {
         let paginationBtn = [
             prev == 0 ? undefined : { text: '⬅️Prev', callback_data: `${objCb[cbName]}#prev#${prev}` },
@@ -57,6 +68,15 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         ]
 
         arr.push(paginationBtn.filter(item => item))
+    }
+
+    if (backCb[cbName]) {
+        arr.push([
+            {
+                text: '⬅️⬅️' + backCb[cbName].text,
+                callback_data: backCb[cbName].cb
+            }
+        ])
     }
     let keyboard = {
         reply_markup: {

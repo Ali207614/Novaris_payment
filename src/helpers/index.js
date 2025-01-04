@@ -56,6 +56,24 @@ function infoGroup() {
     docs = docs ? JSON.parse(docs) : {};
     return docs
 }
+
+
+function infoAccountPermisson() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "accountsPermisson.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : {};
+    return docs
+}
+
+function writePermissonAccount(userData) {
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "accountsPermisson.json"),
+        JSON.stringify(userData, null, 4)
+    );
+}
+
 function writeGroup(userData) {
     let users = infoGroup();
     fs.writeFileSync(
@@ -452,5 +470,7 @@ module.exports = {
     deleteGroup,
     updateGroup,
     infoGroup,
-    sendMessageHelper
+    sendMessageHelper,
+    infoAccountPermisson,
+    writePermissonAccount
 }
