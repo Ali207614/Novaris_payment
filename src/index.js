@@ -37,9 +37,12 @@ const start = async () => {
                 });
 
                 bot.on("callback_query", async (msg) => {
+                    let chat_id = msg.message.chat.id;
+                    let data = msg.data.split("#");
                     try {
-                        let chat_id = msg.message.chat.id;
-                        let data = msg.data.split("#");
+                        if (data.length) {
+                            data = data.map(item => item.trim())
+                        }
                         await botController.callback_query(msg, data, chat_id)
                     } catch (err) {
                         sendMessageHelper(personalChatId, `${err} err callback`);

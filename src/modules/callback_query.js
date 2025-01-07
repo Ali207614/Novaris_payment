@@ -1810,9 +1810,9 @@ let adminCallback = {
                 if (SubMenu()[data[1]]) {
                     let user = infoUser().find(item => item.chat_id == chat_id)
                     let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]] : []
+                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]] : []
                     return dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
-                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '} `, id: `${data[1]} #${item.id} ` }
+                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ''} `, id: `${data[1]}#${item.id}` }
                     }), 1, 'subMenu')
                 }
                 return empDynamicBtn()
@@ -1886,7 +1886,7 @@ let adminCallback = {
         selfExecuteFn: async ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-            let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})
+            let infPermisson = infoPermissonData[selectedUserStatus[get(user, 'selectedAdminUserStatus')]] || {}
             if (infPermisson[data[1]]?.length) {
                 infPermisson[data[1]] = infPermisson[data[1]].find(item => item == data[2]) ? infPermisson[data[1]].filter(item => item != data[2]) : [...infPermisson[data[1]], data[2]]
             }
@@ -1894,8 +1894,8 @@ let adminCallback = {
                 infPermisson = { ...infPermisson, ...Object.fromEntries([[data[1], [data[2]]]]) }
             }
             deleteBack(chat_id, 702)
-            updatePermisson(get(user, 'selectedAdminUserChatId'), Object.fromEntries([[selectedUserStatus[get(user, 'selectedAdminUserStatus')], infPermisson]]))
-            infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+            await updatePermisson(get(user, 'selectedAdminUserChatId'), Object.fromEntries([[selectedUserStatus[get(user, 'selectedAdminUserStatus')], infPermisson]]))
+            infoPermissonData = await infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
             let menuList = Menu().map(item => {
                 return { ...item, name: `${item.name} ${get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[item.id]?.length ? '✅' : ''} ` }
             })
@@ -1905,6 +1905,7 @@ let adminCallback = {
             updateBack(chat_id, {
                 text: `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`, btn: await dataConfirmBtnEmp(chat_id, menuList, 1, 'empMenu'), step: 702
             })
+
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1914,14 +1915,16 @@ let adminCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 return `${selectedUserStatusUzb[get(user, 'selectedAdminUserStatus')]} uchun menuni tanlang`
+
             },
             btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[data[1]] : []
-                return dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
-                    return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '} `, id: `${data[1]} #${item.id} ` }
+                let user = await infoUser().find(item => item.chat_id == chat_id)
+                let infoPermissonData = await infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+                let infPermisson = infoPermissonData[selectedUserStatus[get(user, 'selectedAdminUserStatus')]][data[1]]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[data[1]] : []
+                return await dataConfirmBtnEmp(chat_id, SubMenu()[data[1]]?.map((item, i) => {
+                    return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ''} `, id: `${data[1]}#${item.id}` }
                 }), 1, 'subMenu')
+
             },
             update: true
         },
