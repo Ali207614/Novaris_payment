@@ -96,7 +96,7 @@ class b1Controller {
     async getAccount43() {
         try {
             const { accounts43, DDS } = require("../credentials");
-            let accountQuery = accountBuilderFn(accounts43)
+            let accountQuery = accountBuilderFn(accounts43())
             let data = await dbService.execute(accountQuery)
             return data
         }

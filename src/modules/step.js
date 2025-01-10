@@ -4,7 +4,7 @@ const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
 let { SubMenu, ocrdList, payType50, excelFnFormatData } = require("../credentials")
-const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate, sendMessageHelper } = require("../helpers")
+const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate, sendMessageHelper, infoAccountPermisson, infoAccountList, writeInfoAccountList } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 const { mainMenuByRoles } = require("../keyboards/keyboards")
@@ -949,6 +949,93 @@ let adminStep = {
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
             },
+        },
+    },
+    "2222": {
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
+            let accountsList = await infoAccountList()
+
+
+            if (accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')].find(item => item == msgText) && get(user, 'adminAccountStatus')) {
+                await sendMessageHelper(chat_id, "Ma'lumot allaqachon mavjud")
+                return
+            }
+            else if (!accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')].find(item => item == msgText) && !get(user, 'adminAccountStatus')) {
+                await sendMessageHelper(chat_id, "Ma'lumot topilmadi")
+                return
+            }
+
+
+            if (get(user, 'adminAccountStatus')) {
+                accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')] = [...new Set([...accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')], msgText])]
+                await writeInfoAccountList(accountsList)
+                await sendMessageHelper(chat_id, "Ma'lumot muvaffaqiyatli yozildi✅")
+            }
+            else {
+                accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')] = [...new Set([...accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')].filter(item => item != msgText)])]
+                await writeInfoAccountList(accountsList)
+                await sendMessageHelper(chat_id, "Ma'lumot muvaffaqiyatli O'chirildi❌")
+            }
+
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 2222
+        },
+    },
+    "2223": {
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
+            let accountsList = await infoAccountList()
+
+
+            if (accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')][get(user, 'accountListAdmin.currency')].find(item => item == msgText) && get(user, 'adminAccountStatus')) {
+                await sendMessageHelper(chat_id, "Ma'lumot allaqachon mavjud")
+                return
+            }
+            else if (!accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')][get(user, 'accountListAdmin.currency')].find(item => item == msgText) && !get(user, 'adminAccountStatus')) {
+                await sendMessageHelper(chat_id, "Ma'lumot topilmadi")
+                return
+            }
+
+
+            if (get(user, 'adminAccountStatus')) {
+                accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')][get(user, 'accountListAdmin.currency')] = [...new Set([...accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')][get(user, 'accountListAdmin.currency')], msgText])]
+                await writeInfoAccountList(accountsList)
+                await sendMessageHelper(chat_id, "Ma'lumot muvaffaqiyatli yozildi✅")
+            }
+            else {
+                accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')][get(user, 'accountListAdmin.currency')] = [...new Set([...accountsList[get(user, 'accountListAdmin.name')][get(user, 'accountListAdmin.group')][get(user, 'accountListAdmin.currency')].filter(item => item != msgText)])]
+                await writeInfoAccountList(accountsList)
+                await sendMessageHelper(chat_id, "Ma'lumot muvaffaqiyatli O'chirildi❌")
+            }
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 2223
+        },
+    },
+    "2224": {
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
+            let accountsList = await infoAccountList()
+            if (accountsList[get(user, 'accountListAdmin.name')].find(item => item == msgText) && get(user, 'adminAccountStatus')) {
+                await sendMessageHelper(chat_id, "Ma'lumot allaqachon mavjud")
+                return
+            }
+            else if (!accountsList[get(user, 'accountListAdmin.name')].find(item => item == msgText) && !get(user, 'adminAccountStatus')) {
+                await sendMessageHelper(chat_id, "Ma'lumot topilmadi")
+                return
+            }
+            if (get(user, 'adminAccountStatus')) {
+                accountsList[get(user, 'accountListAdmin.name')] = [...new Set([...accountsList[get(user, 'accountListAdmin.name')], msgText])]
+                await writeInfoAccountList(accountsList)
+                await sendMessageHelper(chat_id, "Ma'lumot muvaffaqiyatli yozildi✅")
+            }
+            else {
+                accountsList[get(user, 'accountListAdmin.name')] = [...new Set([...accountsList[get(user, 'accountListAdmin.name')].filter(item => item != msgText)])]
+                await writeInfoAccountList(accountsList)
+                await sendMessageHelper(chat_id, "Ma'lumot muvaffaqiyatli O'chirildi❌")
+            }
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 2224
         },
     },
     "706": {

@@ -1,9 +1,14 @@
 const { get, update } = require("lodash")
 const b1Controller = require("../controllers/b1Controller")
-const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu, infoPermisson, infoAccountPermisson } = require("../helpers")
+const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu, infoPermisson, infoAccountPermisson, infoAccountList } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 let moment = require('moment')
+
+
+
+
+
 let Menu = () => {
     return [
         {
@@ -1787,33 +1792,59 @@ let DDS = {
     "O'tkazmalar(Tushum)": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5098, 5088, 5078],
 }
 
-let accounts43 = []
+function accounts43() {
+    // let arr = []
+    // for (let i = 31; i <= 99; i++) {
+    //     arr.push(`43${i}`)
+    // }
+    // return arr
 
-for (let i = 31; i <= 99; i++) {
-    accounts43.push(`43${i}`)
+    return infoAccountList()['accounts43']
 }
 
-let accounts50 = {
-    'Naqd': {
-        'USD': [5017, 5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086, 5096],
-        'UZS': [5016, 5010, 5020, 5030, 5040, 5042, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035, 5095, 5073],
-        'CNY': accounts43
-    },
-    'Karta': {
-        'UZS': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
-    },
-    'Terminal': {
-        'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097]
-    },
-    "O'tkazma": {
-        'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
+
+function accounts50() {
+    return {
+        'Naqd': {
+            'USD': infoAccountList()['accounts50']['Naqd']['USD'],
+            'UZS': infoAccountList()['accounts50']['Naqd']['UZS'],
+            'CNY': accounts43()
+        },
+        'Karta': {
+            'UZS': infoAccountList()['accounts50']['Karta']['UZS']
+        },
+        'Terminal': {
+            'UZS': infoAccountList()['accounts50']['Terminal']['UZS']
+        },
+        "O'tkazma": {
+            'UZS': infoAccountList()['accounts50'][`O'tkazma`]['UZS']
+        }
     }
+    // return {
+    //     'Naqd': {
+    //         'USD': [5017, 5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086, 5096],
+    //         'UZS': [5016, 5010, 5020, 5030, 5040, 5042, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035, 5095, 5073],
+    //         'CNY': accounts43()
+    //     },
+    //     'Karta': {
+    //         'UZS': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
+    //     },
+    //     'Terminal': {
+    //         'UZS': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097]
+    //     },
+    //     "O'tkazma": {
+    //         'UZS': [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
+    //     }
+    // }
 }
-let subAccounts50 = {
-    'Naqd': [5017, 5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086, 5096, 5016, 5010, 5020, 5030, 5040, 5042, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035, 5095, 5073],
-    'Karta': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
-    'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097],
-    "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
+
+function subAccounts50() {
+    return {
+        'Naqd': [5017, 5011, 5012, 5021, 5031, 5041, 5044, 5051, 5061, 5071, 5081, 5091, 3120, 5026, 5036, 5076, 5086, 5096, 5016, 5010, 5020, 5030, 5040, 5042, 5043, 5060, 5062, 5070, 5080, 5090, 5025, 5030, 5075, 5085, 5035, 5095, 5073],
+        'Karta': [5050, 5052, 5053, 5054, 5063, 5072, 5056, 5057, 5058, 5055],
+        'Terminal': [5022, 5032, 5045, 5064, 5082, 5092, 5027, 5037, 5077, 5087, 5097],
+        "O'tkazma": [5023, 5034, 5046, 5065, 5083, 5093, 5028, 5038, 5078, 5088, 5098]
+    }
 }
 
 let ocrdList = [
@@ -1876,101 +1907,17 @@ let ocrdList = [
 ]
 
 
-let accounts = {
-    'AV/TMB': [
-        '0820',
-        '0830',
-        9310,
-        9460
-    ],
-    'Kassa farq': [
-        5930,
-        5931,
-        5934,
-        5935,
-        5936,
-        5937,
-        5938,
-        5939,
-        5933,
-        5941
-    ],
-    'Oylik/Bonus': [
-        6710,
-        9150,
-        9456
-    ],
-    "Qarz": [
-        4730,
-        4790,
-        4890,
-        6820,
-        7820
-    ],
-    "Tovar qabuli": [
-        1511,
-        1512,
-        1513,
-        1514,
-        5910
-    ],
-    "Doimiy xarajat": [
-        3110,
-        3120,
-        5530,
-        5611,
-        8710,
-        9390,
-        9437,
-        9440,
-        9441,
-        9444,
-        9445,
-        9446,
-        9447,
-        9448,
-        9449,
-        9450,
-        9451,
-        9452,
-        9453,
-        9454,
-        9455,
-        9457,
-        9458,
-        9459,
-        9461,
-        9462,
-        9465,
-        9499,
-        9812,
-        9810
-    ],
-    "Yetkazish": [
-        9160,
-        9220,
-        9221,
-        9222,
-        9223,
-        9226,
-        9227,
-        9228,
-        9229,
-        9230,
-        9226,
-        9227,
-        9231,
-        9232,
-        9230,
-        9233,
-        9234,
-        9235,
-        9236,
-        9237,
-        9238
-    ],
+function accounts() {
+    return {
+        'AV/TMB': infoAccountList()['accounts94']['AV/TMB'],
+        'Kassa farq': infoAccountList()['accounts94']['Kassa farq'],
+        'Oylik/Bonus': infoAccountList()['accounts94']['Oylik/Bonus'],
+        "Qarz": infoAccountList()['accounts94']['Qarz'],
+        "Tovar qabuli": infoAccountList()['accounts94']['Tovar qabuli'],
+        "Doimiy xarajat": infoAccountList()['accounts94']['Doimiy xarajat'],
+        "Yetkazish": infoAccountList()['accounts94']['Yetkazish']
+    }
 }
-
 
 
 

@@ -59,6 +59,14 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         'selectAccountMenu': {
             text: 'Schetga qaytish',
             cb: 'backAccountMenu'
+        },
+        'accountListAdminGroup': {
+            text: 'Schetga qaytish',
+            cb: 'backAccountListAdmin'
+        },
+        'accountListCurrency': {
+            text: 'Gruppani qaytish',
+            cb: 'backAccountListGroup'
         }
     }
     if (result.length > 10) {

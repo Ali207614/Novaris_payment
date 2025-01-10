@@ -203,6 +203,23 @@ function infoData() {
     return docs;
 }
 
+function infoAccountList() {
+    let docs = fs.readFileSync(
+        path.join(process.cwd(), "database", "accounts.json"),
+        "UTF-8"
+    );
+    docs = docs ? JSON.parse(docs) : [];
+    return docs;
+}
+
+
+function writeInfoAccountList(data) {
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "accounts.json"),
+        JSON.stringify(data, null, 4)
+    );
+}
+
 function writeMenu(data) {
     let main = fs.readFileSync(
         path.join(process.cwd(), "database", "menu.json"),
@@ -472,5 +489,7 @@ module.exports = {
     infoGroup,
     sendMessageHelper,
     infoAccountPermisson,
-    writePermissonAccount
+    writePermissonAccount,
+    infoAccountList,
+    writeInfoAccountList
 }

@@ -1,6 +1,6 @@
 const { get, isEmpty, isDate } = require("lodash");
 let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred, newMenu, excelFnFormatData } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson, infoMenu, infoSubMenu, infoAllMenu, infoGroup, sendMessageHelper, infoAccountPermisson } = require("../helpers");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson, infoMenu, infoSubMenu, infoAllMenu, infoGroup, sendMessageHelper, infoAccountPermisson, infoAccountList } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles, affirmativeKeyboard, executorKeyboard } = require("../keyboards/keyboards");
 const ShortUniqueId = require('short-unique-id');
@@ -1497,7 +1497,7 @@ let tolovHarajatBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50 : {}) }
+                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50() : {}) }
                 let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
                 }), 2, 'accountType')
@@ -1633,7 +1633,7 @@ let tolovHarajatBojBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50 : {}) }
+                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? (accounts50()) : {}) }
                 let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
                 }), 2, 'accountType')
@@ -2490,15 +2490,16 @@ let adminBtn = {
     "Schet": {
         selfExecuteFn: async ({ chat_id, }) => {
             await updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
-            await sendMessageHelper(chat_id, 'Harakatni tanlang', empDynamicBtn(['Schet biriktirish', `Schet qo'shish`], 2))
+            await sendMessageHelper(chat_id, 'Harakatni tanlang', empDynamicBtn(['Schet biriktirish', `Schet qo'shish`, "Schet o'chirish"], 2))
         },
         middleware: ({ chat_id }) => {
             return true
         },
     },
     "Schet biriktirish": {
-        selfExecuteFn: async ({ chat_id, }) => {
-            await updateBack(chat_id, { text: "Harakatni tanlang", btn: empDynamicBtn(['Schet biriktirish', `Schet qo'shish`], 2), step: 1 })
+        selfExecuteFn: async ({ chat_id }) => {
+            await updateUser(chat_id, { accountListAdmin: { status: true } })
+            await updateBack(chat_id, { text: "Harakatni tanlang", btn: empDynamicBtn(['Schet biriktirish', `Schet qo'shish`, "Schet o'chirish"], 2), step: 1 })
             let btnList = Object.values(SubMenu()).flat().filter(item => get(item, 'update', []).length > 2).map(item => ({ id: `${item.id}#${item.menuId}`, name: item.name }))
             let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountMenu')
             await sendMessageHelper(chat_id, 'Menularni tanlang', btn)
@@ -2506,8 +2507,31 @@ let adminBtn = {
         middleware: ({ chat_id }) => {
             return true
         },
+    },
+    "Schet qo'shish": {
+        selfExecuteFn: async ({ chat_id, }) => {
+            await updateUser(chat_id, { adminAccountStatus: true })
+            await updateBack(chat_id, { text: "Harakatni tanlang", btn: empDynamicBtn(['Schet biriktirish', `Schet qo'shish`, "Schet o'chirish"], 2), step: 1 })
+            let btnList = Object.keys(infoAccountList()).map(item => ({ id: item, name: item }))
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountsListAdmin')
+            await sendMessageHelper(chat_id, 'Menularni tanlang', btn)
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "Schet o'chirish": {
+        selfExecuteFn: async ({ chat_id, }) => {
+            await updateUser(chat_id, { adminAccountStatus: false })
+            await updateBack(chat_id, { text: "Harakatni tanlang", btn: empDynamicBtn(['Schet biriktirish', `Schet qo'shish`, "Schet o'chirish"], 2), step: 1 })
+            let btnList = Object.keys(infoAccountList()).map(item => ({ id: item, name: item }))
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountsListAdmin')
+            await sendMessageHelper(chat_id, 'Menularni tanlang', btn)
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
     }
-
 }
 
 

@@ -63,16 +63,16 @@ class botConroller {
                 btnTree[msg.text] && get(user, "user_step", 0) >= 1
             ) {
                 let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, executorBtn, newBtnExecuter()]
-                let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text, isGroup, groupChatId }))
+                let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text, isGroup, groupChatId, user }))
                 execute = execute ? execute[msg.text] : {}
-                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId })) {
-                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, isGroup, groupChatId }) : undefined
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
+                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, isGroup, groupChatId, user }) : undefined
                     if (Object.values(get(execute, 'next', {})).length) {
 
                         let data = {}
-                        let textBot = await execute?.next?.text ? await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId }) : ''
+                        let textBot = await execute?.next?.text ? await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : ''
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
-                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text, isGroup, groupChatId }) : undefined
+                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
                         if (get(currentUser, 'update') && !execute?.document) {
                             data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                         }
@@ -88,13 +88,13 @@ class botConroller {
                 stepTree[get(user, 'user_step', '1').toString()]
             ) {
                 let execute = stepTree[get(user, 'user_step', '1').toString()]
-                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId })) {
-                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId }) : undefined
+                if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
+                    await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
                     if (Object.values(get(execute, 'next', {})).length) {
                         let data = {}
-                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId })
+                        let textBot = await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId, user })
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
-                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text, isGroup, groupChatId }) : undefined
+                        let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
                         if (get(currentUser, 'update') && !execute?.document) {
                             data = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                         }

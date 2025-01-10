@@ -3,7 +3,7 @@ const { bot } = require("../config");
 const b1Controller = require("../controllers/b1Controller");
 const jiraController = require("../controllers/jiraController");
 let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb, newMenu, payType50, accounts43 } = require("../credentials");
-const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executorListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup, sendMessageHelper, infoAccountPermisson, writePermissonAccount } = require("../helpers");
+const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executorListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup, sendMessageHelper, infoAccountPermisson, writePermissonAccount, infoAccountList } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { mainMenuByRoles } = require("../keyboards/keyboards");
@@ -1013,7 +1013,7 @@ let mahalliyXaridCallback = {
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let account50 = Object.keys(accounts50[data[1]]).map(item => {
+                let account50 = Object.keys(accounts50()[data[1]]).map(item => {
                     return { name: item, id: item }
                 })
                 return await dataConfirmBtnEmp(chat_id, account50, 2, 'currency')
@@ -1027,12 +1027,12 @@ let mahalliyXaridCallback = {
             let list = infoData().find(item => item.id == user.currentDataId)
 
             updateStep(chat_id, 47)
-            let account50 = Object.keys(accounts50[list?.payType]).map(item => {
+            let account50 = Object.keys(accounts50()[list?.payType]).map(item => {
                 return { name: item, id: item }
             })
             let btn = await dataConfirmBtnEmp(chat_id, account50, 2, 'currency')
             updateBack(chat_id, { text: `To'lov usullarini tanlang`, btn, step: 46 })
-            let b1Account50 = await b1Controller.getAccount(accounts50[list?.payType][data[1]], true)
+            let b1Account50 = await b1Controller.getAccount(accounts50()[list?.payType][data[1]], true)
             let accountList50 = b1Account50?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -1306,7 +1306,7 @@ let othersCallback = {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 64)
-            let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? subAccounts50 : {}) }
+            let accountsObj = { ...accounts(), ...(get(list, 'payment', false) ? subAccounts50() : {}) }
             let accountsList = accountsObj[Object.keys(accountsObj)[data[1]]]
             let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                 return { name: item, id: i }
@@ -1414,7 +1414,7 @@ let othersCallback = {
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50 : {}) }
+                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50() : {}) }
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
@@ -1473,10 +1473,10 @@ let othersCallback = {
             await updateUser(chat_id, { selectAccountListMenu: data[1] })
             let btnList = []
             if (data[1] == 1) {
-                btnList = accounts43.sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
+                btnList = accounts43().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
             }
             else if (data[1] == 2) {
-                btnList = Object.values(subAccounts50).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
+                btnList = Object.values(subAccounts50()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
             }
             else if (data[1] == 3) {
                 btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
@@ -1525,10 +1525,10 @@ let othersCallback = {
             let name = Object.values(SubMenu()).flat().find(item => get(item, 'id') == get(user, 'selectAccountMenu.id') && get(item, 'menuId') == get(user, 'selectAccountMenu.menuId'))?.name || ''
             let btnList = []
             if (get(user, 'selectAccountListMenu') == 1) {
-                btnList = accounts43.sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
+                btnList = accounts43().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 2) {
-                btnList = Object.values(subAccounts50).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
+                btnList = Object.values(subAccounts50()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 3) {
                 btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
@@ -1640,13 +1640,13 @@ let othersCallback = {
             let name = Object.values(SubMenu()).flat().find(item => get(item, 'id') == get(user, 'selectAccountMenu.id') && get(item, 'menuId') == get(user, 'selectAccountMenu.menuId'))?.name || ''
             let btnList = []
             if (get(user, 'selectAccountListMenu', '') == 1) {
-                btnList = accounts43.sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
+                btnList = accounts43().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
             }
             else if (get(user, 'selectAccountListMenu', '') == 2) {
-                btnList = Object.values(subAccounts50).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
+                btnList = Object.values(subAccounts50()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
             }
             else if (get(user, 'selectAccountListMenu', '') == 3) {
-                btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
+                btnList = Object.values(accounts()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 4) {
                 let b1Account15 = await b1Controller.getAccount15({ status: false })
@@ -2502,6 +2502,89 @@ let adminCallback = {
                 }), 1, 'selectGroup', pagination)
             },
             update: true
+        },
+    },
+
+
+
+    "accountsListAdmin": {
+        selfExecuteFn: async ({ id, chat_id, data, user }) => {
+            await updateUser(chat_id, { accountListAdmin: { ...get(user, 'accountListAdmin', {}), name: data[1] } })
+            if (data[1] == 'accounts43') {
+                await updateStep(chat_id, 2224)
+                await sendMessageHelper(chat_id, `Schetni kiriting - ${data[1]}`)
+                return
+            }
+            let accountsList = infoAccountList()[data[1]]
+            let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsList).map(item => ({ id: item, name: item })), 2, 'accountListAdminGroup')
+            await bot.editMessageText(`Gruppani tanlang\n📁: ${data[1]}`, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "accountListAdminGroup": {
+        selfExecuteFn: async ({ id, chat_id, data, user }) => {
+            if (get(user, 'accountListAdmin.name') == 'accounts94') {
+                await updateUser(chat_id, { accountListAdmin: { ...get(user, 'accountListAdmin', {}), group: data[1] } })
+                await updateStep(chat_id, 2222)
+                await sendMessageHelper(chat_id, `Schetni kiriting - accounts94 - ${data[1]}`)
+            }
+            else {
+                await updateUser(chat_id, { accountListAdmin: { ...get(user, 'accountListAdmin', {}), group: data[1] } })
+                let accountsList = infoAccountList()[get(user, 'accountListAdmin.name')][data[1]]
+                let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsList).map(item => ({ id: item, name: item })), 2, 'accountListCurrency')
+                await bot.editMessageText(`Valyutani tanlang\n📁: ${get(user, 'accountListAdmin.name')} - ${data[1]}`, {
+                    chat_id: chat_id,
+                    message_id: id,
+                    ...btn
+                });
+            }
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "accountListCurrency": {
+        selfExecuteFn: async ({ id, chat_id, data, user }) => {
+            await updateUser(chat_id, { accountListAdmin: { ...get(user, 'accountListAdmin', {}), currency: data[1] } })
+            await updateStep(chat_id, 2223)
+            await sendMessageHelper(chat_id, `Schetni kiriting - ${get(user, 'accountListAdmin.name', {})} - ${get(user, 'accountListAdmin.group', {})} - ${data[1]}`)
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "backAccountListAdmin": {
+        selfExecuteFn: async ({ id, chat_id, data, user }) => {
+            let btnList = Object.keys(infoAccountList()).map(item => ({ id: item, name: item }))
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountsListAdmin')
+            await bot.editMessageText(`Menularni tanlang`, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
+        },
+    },
+    "backAccountListGroup": {
+        selfExecuteFn: async ({ id, chat_id, data, user }) => {
+            let accountsList = infoAccountList()[get(user, 'accountListAdmin.name')]
+            let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsList).map(item => ({ id: item, name: item })), 2, 'accountListAdminGroup')
+            await bot.editMessageText(`Gruppani tanlang\n📁: ${get(user, 'accountListAdmin.name')}`, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
+        },
+        middleware: ({ chat_id }) => {
+            return true
         },
     }
 
