@@ -1414,7 +1414,7 @@ let othersCallback = {
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
-                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50() : {}) }
+                let accountsObj = { ...accounts(), ...(get(list, 'payment', false) ? accounts50() : {}) }
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
@@ -1479,7 +1479,7 @@ let othersCallback = {
                 btnList = Object.values(subAccounts50()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
             }
             else if (data[1] == 3) {
-                btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
+                btnList = Object.values(accounts()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
             }
             else if (data[1] == 4) {
                 let b1Account15 = await b1Controller.getAccount15({ status: false })
@@ -1531,7 +1531,7 @@ let othersCallback = {
                 btnList = Object.values(subAccounts50()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 3) {
-                btnList = Object.values(accounts).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
+                btnList = Object.values(accounts()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 4) {
                 let b1Account15 = await b1Controller.getAccount15({ status: false })

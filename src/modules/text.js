@@ -1497,7 +1497,7 @@ let tolovHarajatBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? accounts50() : {}) }
+                let accountsObj = { ...accounts(), ...(get(list, 'payment', false) ? accounts50() : {}) }
                 let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
                 }), 2, 'accountType')
@@ -1633,7 +1633,7 @@ let tolovHarajatBojBtn = {
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let accountsObj = { ...accounts, ...(get(list, 'payment', false) ? (accounts50()) : {}) }
+                let accountsObj = { ...accounts(), ...(get(list, 'payment', false) ? (accounts50()) : {}) }
                 let btn = await dataConfirmBtnEmp(chat_id, Object.keys(accountsObj).map((item, i) => {
                     return { name: item, id: i }
                 }), 2, 'accountType')
