@@ -1572,7 +1572,6 @@ let othersCallback = {
                 await writePermissonAccount(per);
                 btnList = btnList.map(item => {
                     let isTrue = per[menuId][accountId].includes(item.id.split('#')[0])
-                    console.log(isTrue, per[menuId][accountId], item.id)
                     return {
                         id: `${item.id}#${data[3] || ''}#${data[4] || ''}`,
                         name: `${item.name} ${isTrue ? '❌' : '✅'}`,
@@ -1636,7 +1635,6 @@ let othersCallback = {
     },
     "paginationSelectAccountMenu": {
         selfExecuteFn: async ({ chat_id, data, user, id }) => {
-            console.log(get(user, 'selectAccountListMenu'), ' bu pag')
             let name = Object.values(SubMenu()).flat().find(item => get(item, 'id') == get(user, 'selectAccountMenu.id') && get(item, 'menuId') == get(user, 'selectAccountMenu.menuId'))?.name || ''
             let btnList = []
             if (get(user, 'selectAccountListMenu', '') == 1) {
@@ -1839,10 +1837,10 @@ let adminCallback = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 if (SubMenu()[get(user, 'selectAdminMenuId', '')]) {
                     let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
-                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[get(user, 'selectAdminMenuId', '')]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]} `, {})[get(user, 'selectAdminMenuId', '')] : []
+                    let infPermisson = get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[get(user, 'selectAdminMenuId', '')]?.length ? get(infoPermissonData, `${selectedUserStatus[get(user, 'selectedAdminUserStatus')]}`, {})[get(user, 'selectAdminMenuId', '')] : []
                     let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                     return dataConfirmBtnEmp(chat_id, SubMenu()[get(user, 'selectAdminMenuId', '')].map((item, i) => {
-                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ' '} `, id: `${get(user, 'selectAdminMenuId', '')} #${item.id} ` }
+                        return { name: `${item.name} ${infPermisson.includes(`${item.id}`) ? '✅' : ''}`, id: `${get(user, 'selectAdminMenuId', '')}#${item.id}` }
                     }), 1, 'subMenu', pagination)
                 }
                 return empDynamicBtn()
@@ -1869,7 +1867,7 @@ let adminCallback = {
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let name = get(user, 'selectedAdminUserStatus', '')[0].toUpperCase() + get(user, 'selectedAdminUserStatus', '').slice(1)
                 let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
-                    return { ...item, name: `${item.name} ${get(infoPermissonData, `permissonMenu${name}`, {})[item.id]?.length ? '✅' : ''} ` }
+                    return { ...item, name: `${item.name} ${get(infoPermissonData, `permissonMenu${name}`, {})[item.id]?.length ? '✅' : ''}` }
                 })
                 if (get(user, 'selectedAdminUserStatus') == 'executor') {
                     menuList = menuList.filter(item => item.id != 4)

@@ -90,6 +90,7 @@ class botConroller {
                 let execute = stepTree[get(user, 'user_step', '1').toString()]
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
+                   
                     if (Object.values(get(execute, 'next', {})).length) {
                         let data = {}
                         let textBot = await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId, user })

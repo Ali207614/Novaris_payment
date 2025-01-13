@@ -1519,6 +1519,107 @@ let SubMenu = () => {
                     return info
                 }
             },
+
+
+            {
+                name: "BX Shartnoma shabloni",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (01.01.2025)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaBX\n\n@XusravRasulov\n@TolanovTolqin",
+                update: [
+                    {
+                        id: 1,
+                        name: "Izoh",
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (01.01.2025)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaBX\n\n@XusravRasulov\n@TolanovTolqin`,
+                        btn: () => empDynamicBtn(),
+                        step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
+                ],
+                updateLine: 1,
+                lastStep: 62,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                    return info
+                }
+            },
+            {
+                name: "SU Shartnoma shabloni",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (01.01.2025)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSU\n\n@XusravRasulov\n@TolanovTolqin",
+                update: [
+                    {
+                        id: 1,
+                        name: "Izoh",
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (01.01.2025)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaSU\n\n@XusravRasulov\n@TolanovTolqin`,
+                        btn: () => empDynamicBtn(),
+                        step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
+                ],
+                updateLine: 1,
+                lastStep: 62,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                    return info
+                }
+            },
+            {
+                name: "QA Shartnoma shabloni",
+                comment: "Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (01.01.2025)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQA\n\n@XusravRasulov\n@TolanovTolqin",
+                update: [
+                    {
+                        id: 1,
+                        name: "Izoh",
+                        message: `Sana:\nOfisdan dogovor so'rash shabloni.\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (01.01.2025)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQA\n\n@XusravRasulov\n@TolanovTolqin`,
+                        btn: () => empDynamicBtn(),
+                        step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
+                ],
+                updateLine: 1,
+                lastStep: 62,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                    return info
+                }
+            },
         ],
         5: [
             {
