@@ -1340,6 +1340,79 @@ let tolovHarajatBtn = {
             },
         },
     },
+
+
+    "Naqd (Tovar qabuli, Yetkazish, Operatsion)": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[get(list, 'menu', 3)]
+            updateStep(chat_id, 61)
+            updateData(get(list, 'id'), { subMenu: `Naqd (Tovar qabuli, Yetkazish, Operatsion)` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[get(list, 'menu', 3)].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+            },
+        },
+    },
+
+    "Naqd (AV/TMB, Marketing, Dastur, Ijara)": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[get(list, 'menu', 3)]
+            updateStep(chat_id, 61)
+            updateData(get(list, 'id'), { subMenu: `Naqd (AV/TMB, Marketing, Dastur, Ijara)` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[get(list, 'menu', 3)].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+            },
+        },
+    },
+    "Naqd NQ": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[get(list, 'menu', 3)]
+            updateStep(chat_id, 61)
+            updateData(get(list, 'id'), { subMenu: `Naqd NQ` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[get(list, 'menu', 3)].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+            },
+        },
+    },
+
     "Naqd/Karta hisobiga tushum": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
