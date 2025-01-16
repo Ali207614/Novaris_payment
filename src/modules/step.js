@@ -11,6 +11,7 @@ const { mainMenuByRoles } = require("../keyboards/keyboards")
 const { dataConfirmText } = require("../keyboards/text")
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
+
 let xorijiyXaridStep = {
     "12": {
         selfExecuteFn: ({ chat_id, msgText }) => {
@@ -165,7 +166,7 @@ let xorijiyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`, btn: empDynamicBtn(), step: 23 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 23 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -246,9 +247,10 @@ let xorijiyXaridStep = {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
 
+            let subMenuId = SubMenu()[get(data, 'menu')].find(el => el.name == get(data, 'subMenu')).id
 
-            if (infoAccountPermisson()[get(data, 'menu')]) {
-                let notAcc = Object.values(infoAccountPermisson()[get(data, 'menu')]).flat()
+            if (infoAccountPermisson()[get(data, 'menu')] && infoAccountPermisson()[get(data, 'menu')][subMenuId]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(data, 'menu')][subMenuId]).flat()
                 accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
             }
 
@@ -278,9 +280,10 @@ let xorijiyXaridStep = {
                         let accountList43 = b1Account43?.map((item, i) => {
                             return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                         })
+                        let subMenuId = SubMenu()[get(list, 'menu')].find(el => el.name == get(list, 'subMenu')).id
 
-                        if (infoAccountPermisson()[get(list, 'menu')]) {
-                            let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+                        if (infoAccountPermisson()[get(list, 'menu')] && infoAccountPermisson()[get(list, 'menu')][subMenuId]) {
+                            let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')][subMenuId]).flat()
                             accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
                         }
 
@@ -562,7 +565,7 @@ let mahalliyXaridStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`, btn: empDynamicBtn(), step: 44 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 44 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -811,7 +814,7 @@ let tolovHarajatStep = {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`, btn: empDynamicBtn(), step: 65 })
+                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 65 })
             }
         },
         middleware: ({ chat_id }) => {
@@ -1243,7 +1246,7 @@ let adminStep = {
     "9000": {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            updateBack(chat_id, { text: `Boshlanish sanasi Yil.Oy.Kun : 2024.01.31`, btn: empDynamicBtn(), step: 9000 })
+            updateBack(chat_id, { text: `Boshlanish sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 9000 })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
@@ -1262,7 +1265,7 @@ let adminStep = {
                 if (isValid && msgText.replace(/\D/g, '').length == 8 && isV) {
                     updateUser(chat_id, { excelStart: msgText })
                     updateStep(chat_id, 9001)
-                    return "Tugash sanasi Yil.Oy.Kun : 2024.01.31"
+                    return `Tugash sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')}`
                 }
                 return `Data formatida xatolik bor Qaytadan kiriting`
             },
@@ -1274,7 +1277,7 @@ let adminStep = {
     "9001": {
         selfExecuteFn: async ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            updateBack(chat_id, { text: `Tugash sanasi Yil.Oy.Kun : 2024.01.31`, btn: empDynamicBtn(), step: 9001 })
+            updateBack(chat_id, { text: `Tugash sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 9001 })
         },
         middleware: ({ chat_id }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)

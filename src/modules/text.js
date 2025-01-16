@@ -11,7 +11,6 @@ const b1Controller = require("../controllers/b1Controller");
 const { bot } = require("../config");
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
-
 let moment = require('moment')
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
@@ -1073,9 +1072,10 @@ let xorijiyXaridBtn = {
                 let accountList43 = b1Account43.map((item, i) => {
                     return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                 })
+                let subMenuId = SubMenu()[get(list, 'menu')].find(el => el.name == get(list, 'subMenu')).id
 
-                if (infoAccountPermisson()[get(list, 'menu')]) {
-                    let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+                if (infoAccountPermisson()[get(list, 'menu')] && infoAccountPermisson()[get(list, 'menu')][subMenuId]) {
+                    let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')][subMenuId]).flat()
                     accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
                 }
 
@@ -1617,9 +1617,10 @@ let tolovHarajatBojBtn = {
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
+            let subMenuId = SubMenu()[get(dataCurUser, 'menu')].find(el => el.name == get(dataCurUser, 'subMenu')).id
 
-            if (infoAccountPermisson()[get(dataCurUser, 'menu')]) {
-                let notAcc = Object.values(infoAccountPermisson()[get(dataCurUser, 'menu')]).flat()
+            if (infoAccountPermisson()[get(dataCurUser, 'menu')] && infoAccountPermisson()[get(dataCurUser, 'menu')][subMenuId]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(dataCurUser, 'menu')][subMenuId]).flat()
                 accountList15 = accountList15.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
             }
 
@@ -1660,9 +1661,10 @@ let tolovHarajatBojBtn = {
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
+            let subMenuId = SubMenu()[get(dataCurUser, 'menu')].find(el => el.name == get(dataCurUser, 'subMenu')).id
 
-            if (infoAccountPermisson()[get(dataCurUser, 'menu')]) {
-                let notAcc = Object.values(infoAccountPermisson()[get(dataCurUser, 'menu')]).flat()
+            if (infoAccountPermisson()[get(dataCurUser, 'menu')] && infoAccountPermisson()[get(dataCurUser, 'menu')][subMenuId]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(dataCurUser, 'menu')][subMenuId]).flat()
                 accountList15 = accountList15.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
             }
 
@@ -3000,7 +3002,7 @@ let infoAdminBtn = {
         },
         next: {
             text: async ({ chat_id }) => {
-                return `Boshlanish sanasi Yil.Oy.Kun : 2024.01.31`
+                return `Boshlanish sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')}`
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()

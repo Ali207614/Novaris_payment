@@ -260,7 +260,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '23'
                     },
@@ -282,9 +282,10 @@ let SubMenu = () => {
                             let accountList43 = b1Account43.map((item, i) => {
                                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                             })
+                            let subMenuId = SubMenu()[get(list, 'menu')].find(el => el.name == get(list, 'subMenu')).id
 
-                            if (infoAccountPermisson()[get(list, 'menu')]) {
-                                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+                            if (infoAccountPermisson()[get(list, 'menu')] && infoAccountPermisson()[get(list, 'menu')][subMenuId]) {
+                                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')][subMenuId]).flat()
                                 accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
                             }
                             updateData(user?.currentDataId, { accountList43 })
@@ -386,7 +387,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -587,7 +588,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -749,7 +750,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -904,7 +905,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -1069,7 +1070,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -1209,7 +1210,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -1348,7 +1349,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },
@@ -1487,7 +1488,7 @@ let SubMenu = () => {
                     {
                         id: 3,
                         name: "Sana",
-                        message: `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31`,
+                        message: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
                         btn: () => empDynamicBtn(),
                         step: '44'
                     },

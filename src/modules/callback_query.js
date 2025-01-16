@@ -662,7 +662,7 @@ let xorijiyXaridCallback = {
                     return (get(list, 'purchaseOrders', [])?.length) ? 'Zakupkani tanlang' : 'Mavjud emas'
                 }
                 updateData(user.currentDataId, { purchaseOrders: [], purchase: false })
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -712,7 +712,7 @@ let xorijiyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -805,7 +805,7 @@ let xorijiyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -979,7 +979,7 @@ let mahalliyXaridCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -1037,9 +1037,9 @@ let mahalliyXaridCallback = {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
 
-
-            if (infoAccountPermisson()[get(list, 'menu')]) {
-                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+            let subMenuId = SubMenu()[get(list, 'menu')].find(el => el.name == get(list, 'subMenu')).id
+            if (infoAccountPermisson()[get(list, 'menu')] && infoAccountPermisson()[get(list, 'menu')][subMenuId]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')][subMenuId]).flat()
 
                 accountList50 = accountList50.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
             }
@@ -1313,8 +1313,9 @@ let othersCallback = {
             }), 2, 'accountType')
             updateBack(chat_id, { text: `Hisob (qayerga)`, btn, step: 63 })
 
-            if (infoAccountPermisson()[get(list, 'menu')]) {
-                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')]).flat()
+            let subMenuId = SubMenu()[get(list, 'menu')].find(el => el.name == get(list, 'subMenu')).id
+            if (infoAccountPermisson()[get(list, 'menu')] && infoAccountPermisson()[get(list, 'menu')][subMenuId]) {
+                let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')][subMenuId]).flat()
                 accountsList = accountsList.filter(item => !notAcc.includes(item.toString()))
             }
 
@@ -1365,7 +1366,7 @@ let othersCallback = {
             text: ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : 2024.01.31 \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : 2024.01.31
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}
                 `
             },
             btn: async ({ chat_id, data }) => {
@@ -1613,24 +1614,21 @@ let othersCallback = {
         },
     },
     "paginationAccountMenu": {
-        selfExecuteFn: ({ chat_id, data }) => {
+        selfExecuteFn: async ({ chat_id, data, id }) => {
+
+            let btnList = Object.values(SubMenu()).flat().filter(item => get(item, 'update', []).length > 2).map(item => ({ id: `${item.id}#${item.menuId} `, name: item.name }))
+            let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+
+            let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountMenu', pagination)
+
+            await bot.editMessageText(`Menularni tanlang `, {
+                chat_id: chat_id,
+                message_id: id,
+                ...btn
+            });
         },
         middleware: ({ chat_id }) => {
             return true
-        },
-        next: {
-            text: ({ chat_id, data }) => {
-                return 'Menularni tanlang'
-            },
-            btn: async ({ chat_id, data }) => {
-                let btnList = Object.values(SubMenu()).flat().filter(item => get(item, 'update', []).length > 2).map(item => ({ id: `${item.id} #${item.menuId} `, name: item.name }))
-                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
-
-                let btn = await dataConfirmBtnEmp(chat_id, btnList, 1, 'accountMenu', pagination)
-
-                return btn
-            },
-            update: true
         },
     },
     "paginationSelectAccountMenu": {
