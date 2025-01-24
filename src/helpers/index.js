@@ -358,6 +358,14 @@ function writeData(data) {
     updateID(+ID + 1)
 }
 
+function clone_data(data) {
+    fs.writeFileSync(
+        path.join(process.cwd(), "database", "data.json"),
+        JSON.stringify(data, null, 4)
+    );
+}
+
+
 function deleteData({ id }) {
     let main = infoData();
     main = main.filter(item => item.id != id)
@@ -491,5 +499,6 @@ module.exports = {
     infoAccountPermisson,
     writePermissonAccount,
     infoAccountList,
-    writeInfoAccountList
+    writeInfoAccountList,
+    clone_data
 }
