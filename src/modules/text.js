@@ -853,6 +853,29 @@ let xorijiyXaridBtn = {
             },
         },
     },
+    "Xorijiy xarid tayyor buyurtma": {
+        selfExecuteFn: ({ chat_id, }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
+            updateStep(chat_id, 12)
+            updateData(get(dataCurUser, 'id'), { subMenu: 'Xorijiy xarid tayyor buyurtma' })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 11 })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 11
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Ticket raqamini kiriting"
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn()
+            },
+        },
+    },
     "Xorijiy xarid mashina buyurtmasi": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)

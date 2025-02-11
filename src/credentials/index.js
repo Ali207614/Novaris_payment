@@ -530,7 +530,53 @@ let SubMenu = () => {
                     let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
                     return info
                 },
-            }
+            },
+            {
+                name: 'Xorijiy xarid tayyor buyurtma',
+                comment: "1) Sana:\n2) Zakaz nomeri: \n3) Yetkazib beruvchi:\n4) Tovar nomi:\n5) Tovar sonida o'zgarish bor/yo'q:\n6) Tovar sifatini bizni shartlar asosida qilingani:\n7) Tovar upakofkasini tekshirish:\n8) Poddon spiska ma'lumoti:\n9) Tovar dizayni tekshirish:\n\n10) Izoh: \n\n#24462IO(zakaz nomeri)\n",
+                update: [
+                    {
+                        id: 1,
+                        name: "Izoh",
+                        message: "1) Sana:\n2) Zakaz nomeri: \n3) Yetkazib beruvchi:\n4) Tovar nomi:\n5) Tovar sonida o'zgarish bor/yo'q:\n6) Tovar sifatini bizni shartlar asosida qilingani:\n7) Tovar upakofkasini tekshirish:\n8) Poddon spiska ma'lumoti:\n9) Tovar dizayni tekshirish:\n\n10) Izoh: \n\n#24462IO(zakaz nomeri)\n",
+                        btn: () => empDynamicBtn(),
+                        step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "Ticket raqami",
+                        message: 'Ticket raqamini kiriting',
+                        btn: () => empDynamicBtn(),
+                        step: '12'
+                    },
+                    {
+                        id: 3,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
+                ],
+                jira: {
+                    statusId: '10010',
+                    transitionId: '41',
+                    operationsList: { comment: true, transition: true, date: false }
+                },
+                updateLine: 2,
+                lastStep: 14,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Izoh', message: data?.comment }]
+
+                    return info
+                }
+            },
         ],
         2: [
             {
