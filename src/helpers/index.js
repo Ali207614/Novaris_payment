@@ -103,7 +103,7 @@ function updateGroup(id, userData) {
 
 function updateUser(chat_id, userData) {
     let users = infoUser();
-    let index = users.findIndex((item) => item.chat_id === chat_id);
+    let index = users.findIndex((item) => item.chat_id == chat_id);
     users[index] = { ...users[index], ...userData };
     fs.writeFileSync(
         path.join(process.cwd(), "database", "user.json"),

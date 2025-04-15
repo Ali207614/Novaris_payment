@@ -928,6 +928,18 @@ let tolovHarajatStep = {
 }
 
 let adminStep = {
+    "704": {
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
+            if (get(user, 'selectedAdminUserChatId')) {
+                await updateUser(get(user, 'selectedAdminUserChatId'), { LastName: "", FirstName: msgText })
+                await sendMessageHelper(chat_id, `Foydalanuvchi ismi muvaffaqiyatli o'zgartirildi ✅`, await mainMenuByRoles({ chat_id }))
+                await updateStep(chat_id, 1)
+            }
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 704
+        },
+    },
     "705": {
         selfExecuteFn: ({ chat_id, msgText }) => {
             if (!infoSubMenu().find(item => item.name == msgText)) {

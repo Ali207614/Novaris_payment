@@ -1715,7 +1715,7 @@ let adminCallback = {
 
             },
             btn: async ({ chat_id, data }) => {
-                return empDynamicBtn(['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular"], 2)
+                return empDynamicBtn(['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya"], 2)
 
             },
         },

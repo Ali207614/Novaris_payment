@@ -218,35 +218,41 @@ let confirmativeBtn = {
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
+            try {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
 
-            const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
-            const endOfToday = moment().endOf('day');
+                const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
+                const endOfToday = moment().endOf('day');
 
-            mainData = mainData
-                .filter(item => {
-                    const creationDate = moment(item.creationDate);
-                    return creationDate.isBetween(startOfLast30Days, endOfToday, null, '[]');
-                })
-                .sort((a, b) => a.ID - b.ID);
+                mainData = mainData
+                    .filter(item => {
+                        const creationDate = moment(item.creationDate);
+                        return creationDate.isBetween(startOfLast30Days, endOfToday, null, '[]');
+                    })
+                    .sort((a, b) => a.ID - b.ID);
 
 
-            if (mainData.length) {
-                await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
+                if (mainData.length) {
+                    await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
-                for (let i = 0; i < mainData.length; i++) {
-                    let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
-                    let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
-                    let file = get(mainData, `${[i]}.file`, {})
-                    sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    for (let i = 0; i < mainData.length; i++) {
+                        let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
+                        let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
+                        let file = get(mainData, `${[i]}.file`, {})
+                        console.log((get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), ' n')
+                        await sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
+                        await sleepNow(300)
+                    }
+                    return
                 }
-                return
+                return sendMessageHelper(chat_id, "Mavjud emas")
             }
-            return sendMessageHelper(chat_id, "Mavjud emas")
+            catch (e) {
+                console.log(e, ' bu e')
+            }
 
         },
         middleware: ({ chat_id }) => {
@@ -2482,6 +2488,18 @@ let adminBtn = {
                     menuList
                     , 1, 'empMenu')
             },
+        },
+    },
+    "Isim Familya": {
+        selfExecuteFn: async ({ chat_id, user }) => {
+            let emp = infoUser().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
+            await updateStep(chat_id, 704)
+            let text = `Xodim : ${get(emp, 'LastName', '')} ${get(emp, 'FirstName', '')}\n\nYengi Isimni yozing`
+            await updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
+            await sendMessageHelper(chat_id, text, empDynamicBtn())
+        },
+        middleware: ({ chat_id, user }) => {
+            return get(user, 'JobTitle') == 'Admin'
         },
     },
     "Bajaruvchi-Menular": {

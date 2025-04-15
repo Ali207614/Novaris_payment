@@ -90,7 +90,7 @@ class botConroller {
                 let execute = stepTree[get(user, 'user_step', '1').toString()]
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
-                   
+
                     if (Object.values(get(execute, 'next', {})).length) {
                         let data = {}
                         let textBot = await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId, user })
@@ -126,7 +126,7 @@ class botConroller {
                     let callbackTreeList = [xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback]
                     let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId }))
                     execute = execute ? execute[data[0]] : {}
-                    if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId })) {
+                    if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId, user })) {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data, isGroup, groupChatId, id: get(msg, 'message.message_id', 0), user }) : undefined
                         if (Object.values(get(execute, 'next', {})).length) {
                             let dataInfo = {}

@@ -113,7 +113,8 @@
                 "1",
                 "2",
                 "3",
-                "4"
+                "4",
+                "7"
             ],
             "3": [
                 "4",
@@ -131,12 +132,7 @@
                 "2",
                 "3"
             ],
-            "11": [
-                "12",
-                "13",
-                "15",
-                "16"
-            ]
+            "11": []
         }
     },
     {
@@ -314,6 +310,159 @@
             ],
             "10": [
                 "8"
+            ]
+        }
+    },
+    {
+        "id": -1001832712093,
+        "title": "D-Abdurahmon-Ibn Sino/Toshkent tumani/Qibray",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001502387388,
+        "title": "D-Alisher-Chilonzor tumani/Olmazor",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001649215926,
+        "title": "D- Muhammad-Gumbaz/Qo'yliq",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001868698619,
+        "title": "D- Muhammadali-Tsalkovskiy bozor/Tsalkovskiy bozor/Parkent bozor/Yunusobod",
+        "type": "supergroup",
+        "permissions": {
+            "8": []
+        }
+    },
+    {
+        "id": -4784728041,
+        "title": "D-Ibrohim-Bo'ka/Piskent/Angren/Ohangaron/Olmaliq/Nurafshon/Bekobod",
+        "type": "group",
+        "all_members_are_administrators": true,
+        "permissions": {
+            "8": []
+        }
+    },
+    {
+        "id": -1001912800109,
+        "title": "D-Ismoil-Qibray, Toshkent tumani",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001860793891,
+        "title": "D-Islom-Chinoz/Uchtepa/Yangiyo'l/Zangiota/Shayxontohur",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001725440348,
+        "title": "D-Shohjahon-Sergeli tumani/Yangihayot",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001981069233,
+        "title": "D-JONIBEK_ Guliston/Sirdaryo/Yangiyer/Mirzo-Ulug'bek",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001853196209,
+        "title": "D-Otabek-Jomiy",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1002190387030,
+        "title": "D-Habibulloh-Chirchiq/Parkent/Gazalkent/Bo'stonliq/Profnastil/Tovoqsoy",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001819393003,
+        "title": "D-Abdulaziz-Dombirobod, Gvardeyski",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001750576715,
+        "title": "D- Abdulbasit-Mirobod, Yashnobod, Yakkasaroy",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1001879863672,
+        "title": "D-Muhammadrasul - Izza",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
+            ]
+        }
+    },
+    {
+        "id": -1002382536401,
+        "title": "D-Bahodir-Uchtepa tumani",
+        "type": "supergroup"
+    },
+    {
+        "id": -1002257891046,
+        "title": "FER| PUL HISOBOTI",
+        "type": "supergroup",
+        "permissions": {
+            "1": [
+                "5",
+                "6"
             ]
         }
     }

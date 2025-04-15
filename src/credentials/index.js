@@ -914,9 +914,6 @@ let SubMenu = () => {
                     return info
                 }
             },
-
-
-
             {
                 name: "Naqd/Click Bojxonaga oid xarajatlar",
                 comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
@@ -2313,7 +2310,7 @@ let DDS = {
         5080, 5090, 5026, 5036, 5035, 5025,
         5611, 5072, 5063, 5054, 5053,
         5052, 5050, 5016, 5017],
-    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9234, 9236, 9238],
+    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9234, 9236, 9238, 9240, 9242, 9244],
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
@@ -2330,7 +2327,7 @@ let DDS = {
     "Oylik(Xarajat)": [6710, 9456],
     "Dividend(Xarajat)": [8710],
     "Bonus xodimlar(Xarajat)": [9150],
-    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224, 9226, 9227, 9233, 9235, 9237],
+    "Yetkazib berish xarajati": [9160, 9220, 9221, 9222, 9223, 9228, 9227, 9226, 9225, 9224, 9226, 9227, 9233, 9235, 9237, 9239, 9241, 9243],
     "Asosiy vosita chiqib ketishidan foyda": [9310],
     "Boshqa tushumlar(Tushum)": [9390],
     "Adminstrativ xarajat": [9440],
@@ -2472,6 +2469,19 @@ let ocrdList = [
     {
         id: 'JZ',
         name: "Jizzax"
+    },
+
+    {
+        id: 'BX',
+        name: "BUXORO"
+    },
+    {
+        id: 'SU',
+        name: "SURXONDARYO"
+    },
+    {
+        id: 'QA',
+        name: "QASHQADARYO"
     }
 ]
 
