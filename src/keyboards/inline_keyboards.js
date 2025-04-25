@@ -49,7 +49,9 @@ const dataConfirmBtnEmp = async (chat_id = '', list = [], count = 1, cbName, pag
         "empMenu": 'paginationEmpMenu',
         "subMenu": 'paginationSubMenu',
         "accountMenu": 'paginationAccountMenu',
-        "selectAccountMenu": 'paginationSelectAccountMenu'
+        "selectAccountMenu": 'paginationSelectAccountMenu',
+        "menuGroup": "paginationMenuGroup",
+        "subMenuGroup": "paginationSubMenuGroup",
     }
     let backCb = {
         'accountListMenu': {

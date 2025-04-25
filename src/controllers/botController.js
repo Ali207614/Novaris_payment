@@ -124,7 +124,7 @@ class botConroller {
             if (user) {
                 if (callbackTree[data[0]]) {
                     let callbackTreeList = [xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback]
-                    let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId }))
+                    let execute = callbackTreeList.find(item => item[data[0]] && item[data[0]]?.middleware({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId, user }))
                     execute = execute ? execute[data[0]] : {}
                     if (get(execute, 'middleware', () => { })({ chat_id, data, msgText: msg.text, id: get(msg, 'message.message_id', 0), isGroup, groupChatId, user })) {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data, isGroup, groupChatId, id: get(msg, 'message.message_id', 0), user }) : undefined
@@ -137,8 +137,8 @@ class botConroller {
                                 dataInfo = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                             }
                             let botInfo = await execute?.next?.update ?
-                                bot.editMessageText(await execute?.next?.text({ chat_id, data }), { chat_id, message_id: +currentUser.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) })
-                                : (await execute?.next?.file ? bot.sendDocument((isGroup ? groupChatId : chat_id), await execute?.next?.file({ chat_id, data }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg }) : undefined) :
+                                bot.editMessageText(await execute?.next?.text({ chat_id, data, user }), { chat_id, message_id: +currentUser.lastMessageId, ...(await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, user }) : undefined) })
+                                : (await execute?.next?.file ? bot.sendDocument((isGroup ? groupChatId : chat_id), await execute?.next?.file({ chat_id, data, user }), await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, user }) : undefined) :
                                     sendMessageHelper((isGroup ? groupChatId : chat_id), textBot, btnBot, { file: get(dataInfo, 'file', {}) }))
                             let botId = await botInfo
 
@@ -148,6 +148,7 @@ class botConroller {
                 }
             }
         } catch (err) {
+            console.log(err, ' bu err')
             throw new Error(err);
         }
     }

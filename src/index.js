@@ -3,7 +3,7 @@ const botController = require("./controllers/botController");
 const b1Controller = require("./controllers/b1Controller")
 const hanaClient = require("@sap/hana-client");
 let tls = require('tls');
-const { sendMessageHelper } = require("./helpers");
+const { sendMessageHelper, deleteData } = require("./helpers");
 
 const start = async () => {
     try {
@@ -18,6 +18,7 @@ const start = async () => {
             if (err) {
                 sendMessageHelper("561932032", `Connection error ${err}`);
             } else {
+                deleteData({ id: 'tnd5ofKi4q' })
                 bot.on("text", async (msg) => {
                     try {
                         let chat_id = msg.chat.id;

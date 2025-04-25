@@ -2364,19 +2364,19 @@ let adminCallback = {
 
     "menuGroup": {
         selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateStep(chat_id, 7001)
             let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                 return { ...item, name: `${item.name}` }
             })
-            updateBack(chat_id, {
+            await updateBack(chat_id, {
                 text: `Menuni tanlang`, btn: await dataConfirmBtnEmp(chat_id,
                     menuList
                     , 1, 'menuGroup'), step: 7000
             })
+            await updateUser(chat_id, { selectMenuId: data[1] })
+
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'user_step') == 7000
         },
         next: {
@@ -2390,13 +2390,59 @@ let adminCallback = {
             },
             btn: async ({ chat_id, data }) => {
                 if (SubMenu()[data[1]]) {
-                    let user = infoUser().find(item => item.chat_id == chat_id)
                     return dataConfirmBtnEmp(chat_id, SubMenu()[data[1]].map((item, i) => {
                         return { name: `${item.name}`, id: `${data[1]}#${item.id}` }
                     }), 1, 'subMenuGroup')
                 }
                 return empDynamicBtn()
             },
+        },
+    },
+    "paginationMenuGroup": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Menuni tanlang`
+            },
+            btn: async ({ chat_id, data }) => {
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
+                    return { ...item, name: `${item.name}` }
+                })
+                return dataConfirmBtnEmp(chat_id,
+                    menuList
+                    , 1, 'menuGroup', pagination)
+            },
+            update: true
+        },
+    },
+    "paginationSubMenuGroup": {
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return get(user, 'user_step')
+        },
+        next: {
+            text: ({ chat_id, data }) => {
+                return `Sub menuni tanlang`
+            },
+            btn: async ({ chat_id, data, user }) => {
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                if (SubMenu()[get(user, 'selectMenuId')]) {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    return dataConfirmBtnEmp(chat_id, SubMenu()[get(user, 'selectMenuId')].map((item, i) => {
+                        return { name: `${item.name}`, id: `${get(user, 'selectMenuId')}#${item.id}` }
+                    }), 1, 'subMenuGroup', pagination)
+                }
+                return empDynamicBtn()
+            },
+            update: true
         },
     },
     "subMenuGroup": {

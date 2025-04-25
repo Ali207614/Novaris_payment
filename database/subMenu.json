@@ -439,5 +439,225 @@
         "status": true,
         "id": 22,
         "creationDate": "2024-12-18T05:18:11.736Z"
+    },
+    {
+        "menuId": "8",
+        "name": "D12 Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_12",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_12",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 23,
+        "creationDate": "2025-04-25T12:53:23.440Z"
+    },
+    {
+        "menuId": "8",
+        "name": "D777 Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_777",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_777",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 24,
+        "creationDate": "2025-04-25T12:53:55.192Z"
+    },
+    {
+        "menuId": "8",
+        "name": "AN Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_AN",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_AN",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 25,
+        "creationDate": "2025-04-25T12:54:29.926Z"
+    },
+    {
+        "menuId": "8",
+        "name": "NM Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_NM",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_NM",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 26,
+        "creationDate": "2025-04-25T12:54:51.041Z"
+    },
+    {
+        "menuId": "8",
+        "name": "Q Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_Q",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_Q",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 27,
+        "creationDate": "2025-04-25T12:55:30.292Z"
+    },
+    {
+        "menuId": "8",
+        "name": "JZ Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_JZ",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_JZ",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 28,
+        "creationDate": "2025-04-25T12:56:19.104Z"
+    },
+    {
+        "menuId": "8",
+        "name": "SM Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SM",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SM",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 29,
+        "creationDate": "2025-04-25T12:57:04.231Z"
+    },
+    {
+        "menuId": "8",
+        "name": "UR Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_UR",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_UR",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 30,
+        "creationDate": "2025-04-25T12:57:38.478Z"
+    },
+    {
+        "menuId": "8",
+        "name": "BX Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_BX",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_BX",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 31,
+        "creationDate": "2025-04-25T13:01:16.615Z"
+    },
+    {
+        "menuId": "8",
+        "name": "SU Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SU",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SU",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 32,
+        "creationDate": "2025-04-25T13:01:41.713Z"
+    },
+    {
+        "menuId": "8",
+        "name": "QA Do'konga tovarlarni qaytarish",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_QA",
+        "update": [
+            {
+                "id": 1,
+                "name": "Izoh",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_QA",
+                "step": "13"
+            }
+        ],
+        "updateLine": 1,
+        "lastStep": 62,
+        "infoFn": "({ chat_id, id }) => {\n    let user = infoUser().find(item => item.chat_id == chat_id)\n    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))\n    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]\n    return info\n} ",
+        "isDelete": false,
+        "status": true,
+        "id": 33,
+        "creationDate": "2025-04-25T13:02:46.953Z"
     }
 ]
