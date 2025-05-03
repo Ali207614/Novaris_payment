@@ -7,7 +7,7 @@ const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, inf
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { mainMenuByRoles } = require("../keyboards/keyboards");
-const { dataConfirmText, ticketAddText } = require("../keyboards/text");
+const { dataConfirmText, ticketAddText, userInfoText } = require("../keyboards/text");
 let moment = require('moment');
 const { boshqaBtn } = require("./text");
 
@@ -1698,25 +1698,23 @@ let othersCallback = {
 
 let adminCallback = {
     "adminUsers": {
-        selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, data, id }) => {
+            bot.deleteMessage(chat_id, id)
             updateUser(chat_id, { selectedAdminUserChatId: data[1] })
             updateStep(chat_id, 701)
-
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            return get(user, 'user_step') == 700
+        middleware: ({ chat_id, user }) => {
+            return get(user, 'user_step')
         },
         next: {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == data[1])
+                let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\n`
+                await sendMessageHelper(chat_id, get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id }))
                 return `${user?.LastName} ${user?.FirstName} `
-
             },
             btn: async ({ chat_id, data }) => {
                 return empDynamicBtn(['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya"], 2)
-
             },
         },
     },

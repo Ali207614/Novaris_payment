@@ -150,13 +150,20 @@ const adminKeyboard = {
                     text: "Foydalanuvchilar",
                 },
                 {
-                    text: "Ma'lumotlar",
-                }
+                    text: "Foydalanuvchilarni qidirish",
+                },
+
             ],
             [
                 {
+                    text: "Ma'lumotlar",
+                },
+                {
                     text: "Menular"
                 },
+
+            ],
+            [
                 {
                     text: "Gruppalar"
                 },

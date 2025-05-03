@@ -2146,8 +2146,7 @@ let shartnomaBtn = {
 
 let narxChiqarishBtn = {
     "Narx chiqarish": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             if (dataCurUser?.menuName != "Narx chiqarish" || dataCurUser.full) {
                 let uid = randomUUID()
@@ -2162,16 +2161,14 @@ let narxChiqarishBtn = {
             updateStep(chat_id, 60)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 10
         },
         next: {
             text: ({ chat_id }) => {
                 return "Narx chiqarish"
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
                 let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
                 let permisson = infoPermisson().find(item => item.chat_id == chat_id)
                 let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2180,8 +2177,7 @@ let narxChiqarishBtn = {
         },
     },
     "Narx chiqarishni tasdiqlash xitoy": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2189,13 +2185,11 @@ let narxChiqarishBtn = {
             updateData(get(dataCurUser, 'id'), { subMenu: `Narx chiqarishni tasdiqlash xitoy` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 60
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
                 return findComment
@@ -2206,8 +2200,7 @@ let narxChiqarishBtn = {
         },
     },
     "Narx chiqarishni tasdiqlash mahalliy": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2215,13 +2208,11 @@ let narxChiqarishBtn = {
             updateData(get(dataCurUser, 'id'), { subMenu: `Narx chiqarishni tasdiqlash mahalliy` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 60
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
                 return findComment
@@ -2235,8 +2226,7 @@ let narxChiqarishBtn = {
 
 let boshqaBtn = {
     "Boshqa": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             if (dataCurUser?.menuName != "Boshqa" || dataCurUser.full) {
                 let uid = randomUUID()
@@ -2251,17 +2241,15 @@ let boshqaBtn = {
             updateStep(chat_id, 60)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 10
         },
         next: {
             text: ({ chat_id }) => {
                 return "Boshqa"
             },
-            btn: async ({ chat_id, }) => {
+            btn: async ({ chat_id, user }) => {
 
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
                 let permisson = infoPermisson().find(item => item.chat_id == chat_id)
                 let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2270,8 +2258,7 @@ let boshqaBtn = {
         },
     },
     "SAPda o'zgartirishni tasdiqlash": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2279,13 +2266,11 @@ let boshqaBtn = {
             updateData(get(dataCurUser, 'id'), { subMenu: `SAPda o'zgartirishni tasdiqlash` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 60
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
                 return findComment
@@ -2296,8 +2281,7 @@ let boshqaBtn = {
         },
     },
     "Do'kon xarid": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2305,13 +2289,11 @@ let boshqaBtn = {
             updateData(get(dataCurUser, 'id'), { subMenu: `Do'kon xarid` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 60
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
                 return findComment
@@ -2322,8 +2304,7 @@ let boshqaBtn = {
         },
     },
     "Chegirma": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2331,13 +2312,11 @@ let boshqaBtn = {
             updateData(get(dataCurUser, 'id'), { subMenu: `Chegirma` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 60
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
                 return findComment
@@ -2348,8 +2327,7 @@ let boshqaBtn = {
         },
     },
     "Yangi tovar nomi": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2357,13 +2335,11 @@ let boshqaBtn = {
             updateData(get(dataCurUser, 'id'), { subMenu: `Yangi tovar nomi` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 60
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
                 return findComment
@@ -2381,12 +2357,10 @@ let boshqaBtn = {
 let adminBtn = {
     "Foydalanuvchilar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
             updateStep(chat_id, 700)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
         },
         next: {
@@ -2403,21 +2377,34 @@ let adminBtn = {
             },
         },
     },
+    "Foydalanuvchilarni qidirish": {
+        selfExecuteFn: ({ chat_id, }) => {
+            updateStep(chat_id, 8000)
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return "Foydalanuvchini Ismi yoki telefon raqamini yozing"
+            },
+            btn: async ({ chat_id, }) => {
+                return
+            },
+        },
+    },
     "Rollar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateStep(chat_id, 702)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin'
         },
         next: {
             text: ({ chat_id }) => {
                 return "Rollarni belgilang"
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
                 return dataConfirmBtnEmp(chat_id,
                     [
@@ -2440,20 +2427,17 @@ let adminBtn = {
     },
     "Xodim-Menular": {
         selfExecuteFn: async ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateUser(chat_id, { selectedAdminUserStatus: 'emp' })
             updateStep(chat_id, 702)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin'
         },
         next: {
             text: ({ chat_id }) => {
                 return "Xodim uchun menuni tanlang"
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
                 let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuEmp', {})[item.id]?.length ? '✅' : ''}` }
@@ -2466,20 +2450,17 @@ let adminBtn = {
     },
     "Tasdiqlovchi-Menular": {
         selfExecuteFn: async ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateUser(chat_id, { selectedAdminUserStatus: 'affirmative' })
             updateStep(chat_id, 702)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin'
         },
         next: {
             text: ({ chat_id }) => {
                 return "Tasdiqlochi uchun menuni tanlang"
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
                 let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuAffirmative', {})[item.id]?.length ? '✅' : ''}` }
@@ -2504,20 +2485,17 @@ let adminBtn = {
     },
     "Bajaruvchi-Menular": {
         selfExecuteFn: async ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateUser(chat_id, { selectedAdminUserStatus: 'executor' })
             updateStep(chat_id, 702)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin'
         },
         next: {
             text: ({ chat_id }) => {
                 return "Bajaruvchi uchun menuni tanlang"
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
                 let infoPermissonData = infoPermisson().find(item => item.chat_id == get(user, 'selectedAdminUserChatId'))
                 let menuList = Menu().filter(item => item.status && item.isDelete == false).map(item => {
                     return { ...item, name: `${item.name} ${get(infoPermissonData, 'permissonMenuExecutor', {})[item.id]?.length ? '✅' : ''}` }
@@ -2533,12 +2511,10 @@ let adminBtn = {
     },
     "Menular": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
             updateStep(chat_id, 702)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin'
         },
         next: {
@@ -2546,19 +2522,17 @@ let adminBtn = {
                 return "Menular"
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
+                return empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info",], 2)
             },
         },
     },
     "Menular qo'shish": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info",], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 703)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
         },
         next: {
@@ -2571,9 +2545,8 @@ let adminBtn = {
         },
     },
     "Xodim menulari": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
+        selfExecuteFn: ({ chat_id, user }) => {
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info",], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 703)
 
@@ -2582,8 +2555,7 @@ let adminBtn = {
                 sendMessageHelper(chat_id, userInfoText({ user: allUser[i], chat_id: allUser[i].chat_id }))
             }
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
         },
         next: {
@@ -2597,13 +2569,11 @@ let adminBtn = {
     },
     "Asosiy Menu": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let btn = empDynamicBtn(["Asosiy Menu", "Sub Menu"], 2)
             updateBack(chat_id, { text: "Menular qo'shish", btn, step: 703 })
             updateStep(chat_id, 710)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin' && user?.user_step == 703
         },
         next: {
@@ -2617,13 +2587,11 @@ let adminBtn = {
     },
     "Sub Menu": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let btn = empDynamicBtn(["Asosiy Menu", "Sub Menu"], 2)
             updateBack(chat_id, { text: "Menular qo'shish", btn, step: 703 })
             updateStep(chat_id, 704)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'JobTitle') == 'Admin' && user?.user_step == 703
         },
         next: {
@@ -2652,11 +2620,9 @@ let adminBtn = {
                 return
             }
             sendMessageHelper(chat_id, "Gruppalar", empDynamicBtn());
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateStep(chat_id, 7000)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
         },
         next: {
@@ -2731,7 +2697,7 @@ let updateAdminBtn = {
     "Menular o'zgartirish": {
         selfExecuteFn: ({ chat_id, }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info", 'Xodim menulari'], 2)
+            let btn = empDynamicBtn(["Menular qo'shish", "Menular o'zgartirish", "Menular o'chirish", "Menular status", "Menular info",], 2)
             updateBack(chat_id, { text: "Menular", btn, step: 702 })
             updateStep(chat_id, 800)
             updateUser(chat_id, { adminType: 'update' })

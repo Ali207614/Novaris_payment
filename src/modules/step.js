@@ -7,7 +7,7 @@ let { SubMenu, ocrdList, payType50, excelFnFormatData } = require("../credential
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate, sendMessageHelper, infoAccountPermisson, infoAccountList, writeInfoAccountList } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
-const { mainMenuByRoles } = require("../keyboards/keyboards")
+const { mainMenuByRoles, adminKeyboard } = require("../keyboards/keyboards")
 const { dataConfirmText } = require("../keyboards/text")
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
@@ -765,8 +765,7 @@ let mahalliyXaridStep = {
 
 let tolovHarajatStep = {
     "61": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
             let data = infoData().find(item => item.id == user.currentDataId)
             if (user?.update) {
                 updateStep(chat_id, get(data, 'lastStep', 30))
@@ -778,13 +777,11 @@ let tolovHarajatStep = {
             }
             updateData(user.currentDataId, { comment: msgText })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 61
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
 
                 if (user?.update) {
                     let list = infoData().find(item => item.id == user.currentDataId)
@@ -794,8 +791,7 @@ let tolovHarajatStep = {
                 return "File jo'natasizmi"
 
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
 
                 if (user?.update) {
                     return dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
@@ -811,19 +807,16 @@ let tolovHarajatStep = {
         },
     },
     "65": {
-        selfExecuteFn: async ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
             if (!user?.update) {
                 updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 65 })
             }
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 65
         },
         next: {
-            text: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: async ({ chat_id, msgText, user }) => {
                 let data = infoData().find(item => item.id == user.currentDataId)
                 msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
@@ -853,8 +846,7 @@ let tolovHarajatStep = {
                 }
                 return `Data formatida xatolik bor Qaytadan kiriting`
             },
-            btn: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, msgText, user }) => {
                 let data = infoData().find(item => item.id == user.currentDataId)
                 msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
                 msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
@@ -882,9 +874,8 @@ let tolovHarajatStep = {
         },
     },
     "80": {
-        selfExecuteFn: async ({ chat_id, msgText }) => {
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
             if (msgText.length > 3) {
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 updateStep(chat_id, 43)
                 updateBack(chat_id, { text: `Xodimning ismini yozing`, btn: empDynamicBtn(), step: 80 })
                 let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [111])
@@ -895,13 +886,11 @@ let tolovHarajatStep = {
             }
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 80
         },
         next: {
-            text: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: async ({ chat_id, msgText, user }) => {
                 let data = infoData().find(item => item.id == user.currentDataId)
 
                 if (msgText.length > 3) {
@@ -913,8 +902,7 @@ let tolovHarajatStep = {
                 return `Xodim ni ismi 3 ta harfdan katta bo'lishi kerak`
 
             },
-            btn: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, msgText, user }) => {
                 let data = infoData().find(item => item.id == user.currentDataId)
                 if (msgText.length > 3) {
                     if (data?.vendorList?.length) {
@@ -941,17 +929,15 @@ let adminStep = {
         },
     },
     "705": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
             if (!infoSubMenu().find(item => item.name == msgText)) {
                 updateStep(chat_id, 706)
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 let data = infoData().find(item => item.id == user.currentDataId)
                 updateUser(chat_id, { newSubMenu: { ...get(user, 'newSubMenu', {}), title: msgText } })
                 updateBack(chat_id, { text: 'Submenu nomini yozing', btn: empDynamicBtn(), step: 705 })
             }
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 705
         },
         next: {
@@ -1054,20 +1040,17 @@ let adminStep = {
         },
     },
     "706": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
             updateStep(chat_id, 707)
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let data = infoData().find(item => item.id == user.currentDataId)
             updateUser(chat_id, { newSubMenu: { ...get(user, 'newSubMenu', {}), comment: msgText } })
             updateBack(chat_id, { text: 'Kommentariyani yozing', btn: empDynamicBtn(), step: 706 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 706
         },
         next: {
-            text: ({ chat_id }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, user }) => {
                 let info = [
                     {
                         name: 'Asosiy Menu Nomi',
@@ -1090,16 +1073,14 @@ let adminStep = {
         },
     },
     "710": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
             if (!infoMenu().find(item => item.name == msgText)) {
                 updateStep(chat_id, 711)
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 updateUser(chat_id, { newMenu: { ...get(user, 'newMenu', {}), title: msgText } })
                 updateBack(chat_id, { text: 'Asosiy Menu nomini yozing', btn: empDynamicBtn(), step: 710 })
             }
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 710
         },
         next: {
@@ -1124,8 +1105,7 @@ let adminStep = {
         },
     },
     "803": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
             let type = get(user, 'updateMenu.menuType')
             let id = get(user, 'updateMenu.menuId')
             let key = get(user, 'updateMenu.key')
@@ -1133,13 +1113,11 @@ let adminStep = {
             updateUser(chat_id, { back: get(user, 'back').filter(item => ![800, 801, 802].includes(+item.step)) })
             updateStep(chat_id, 800)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 803
         },
         next: {
-            text: ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, msgText, user }) => {
                 let type = get(user, 'updateMenu.menuType')
                 let id = get(user, 'updateMenu.menuId')
                 let menu = (type == 1) ? infoMenu().find(item => item.id == id) : infoSubMenu().find(item => item.id == id)
@@ -1152,8 +1130,7 @@ let adminStep = {
         },
     },
     "4000": {
-        selfExecuteFn: ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
             let newText = `${'🔴'.repeat(10)}\n`
@@ -1183,8 +1160,7 @@ let adminStep = {
             }
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 4000
         },
         next: {
@@ -1197,8 +1173,7 @@ let adminStep = {
         },
     },
     "5000": {
-        selfExecuteFn: ({ chat_id, msgText, isGroup, groupChatId }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, msgText, isGroup, groupChatId, user }) => {
             let list = infoData().find(item => item.id == get(user, 'notConfirmId'))
             updateData(list.id, { notConfirmMessage: msgText })
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
@@ -1239,11 +1214,10 @@ let adminStep = {
                 return
             }
         },
-        middleware: ({ chat_id, isGroup, groupChatId }) => {
+        middleware: ({ chat_id, isGroup, groupChatId, user }) => {
             if (isGroup) {
                 adminStep['5000'].next = {}
             }
-            let user = infoUser().find(item => item.chat_id == chat_id)
             return user.user_step == 5000
         },
         next: {
@@ -1256,17 +1230,14 @@ let adminStep = {
         },
     },
     "9000": {
-        selfExecuteFn: async ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
             updateBack(chat_id, { text: `Boshlanish sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 9000 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 9000
         },
         next: {
             text: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 msgText = msgText.replace(`Boshlanish sanasi Yil.Oy.Kun :`, '')
                 msgText = msgText.split(' ').filter(item => item).join('')
                 const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
@@ -1287,17 +1258,14 @@ let adminStep = {
         },
     },
     "9001": {
-        selfExecuteFn: async ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
             updateBack(chat_id, { text: `Tugash sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 9001 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 9001
         },
         next: {
-            text: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: async ({ chat_id, msgText, user }) => {
                 msgText = msgText.replace(`Tugash sanasi Yil.Oy.Kun :`, '')
                 msgText = msgText.split(' ').filter(item => item).join('')
                 const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
@@ -1335,6 +1303,28 @@ let adminStep = {
             },
             btn: async ({ chat_id, msgText }) => {
                 return empDynamicBtn()
+            },
+        },
+    },
+    "8000": {
+        selfExecuteFn: async ({ chat_id, msgText }) => {
+            updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 })
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 8000
+        },
+        next: {
+            text: async ({ chat_id, msgText }) => {
+                return `Foydalanuvchilar ro'yxati`
+            },
+            btn: async ({ chat_id, msgText }) => {
+
+                let user = infoUser().filter(item => item.JobTitle !== 'Admin' && (`${item.LastName.toLowerCase()} ${item.FirstName.toLowerCase()}`.includes(msgText.toLowerCase()) || item.MobilePhone.includes(msgText)))
+                return dataConfirmBtnEmp(chat_id, user.map(item => {
+                    return {
+                        name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
+                    }
+                }), 1, 'adminUsers')
             },
         },
     },
