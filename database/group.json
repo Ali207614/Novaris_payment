@@ -32,6 +32,7 @@
         "title": "FERRO| MIJOZLAR ANALIZI",
         "type": "supergroup",
         "permissions": {
+            "4": [],
             "6": [
                 "3"
             ]
@@ -346,9 +347,7 @@
         "title": "D-Abdurahmon-Ibn Sino/Toshkent tumani/Qibray",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -356,9 +355,7 @@
         "title": "D-Alisher-Chilonzor tumani/Olmazor",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -366,9 +363,7 @@
         "title": "D- Muhammad-Gumbaz/Qo'yliq",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -393,9 +388,7 @@
         "title": "D-Ismoil-Qibray, Toshkent tumani",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -403,9 +396,7 @@
         "title": "D-Islom-Chinoz/Uchtepa/Yangiyo'l/Zangiota/Shayxontohur",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -413,9 +404,7 @@
         "title": "D-Shohjahon-Sergeli tumani/Yangihayot",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -423,9 +412,7 @@
         "title": "D-JONIBEK_ Guliston/Sirdaryo/Yangiyer/Mirzo-Ulug'bek",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -433,9 +420,7 @@
         "title": "D-Otabek-Jomiy",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -453,9 +438,7 @@
         "title": "D-Abdulaziz-Dombirobod, Gvardeyski",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -463,9 +446,7 @@
         "title": "D- Abdulbasit-Mirobod, Yashnobod, Yakkasaroy",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -473,9 +454,7 @@
         "title": "D-Muhammadrasul - Izza",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
@@ -491,6 +470,16 @@
             "1": [
                 "5",
                 "6"
+            ]
+        }
+    },
+    {
+        "id": -1001528044899,
+        "title": "DIS| AGENTLAR JAMOASI",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "4"
             ]
         }
     }
