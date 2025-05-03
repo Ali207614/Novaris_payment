@@ -169,7 +169,7 @@ let confirmativeBtn = {
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
@@ -204,7 +204,7 @@ let confirmativeBtn = {
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
@@ -244,7 +244,7 @@ let confirmativeBtn = {
                         let file = get(mainData, `${[i]}.file`, {})
                         console.log((get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), ' n')
                         await sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                        await sleepNow(300)
+                        await sleepNow(200)
                     }
                     return
                 }
@@ -351,7 +351,7 @@ let executorBtn = {
                     let file = get(mainData, `${[i]}.file`, {})
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
@@ -385,7 +385,7 @@ let executorBtn = {
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
@@ -424,7 +424,7 @@ let executorBtn = {
                     let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmExecuter'))
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Bajarilmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
@@ -720,7 +720,7 @@ let executeBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu)?.infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
 
                 }
                 return
@@ -753,7 +753,7 @@ let executeBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
@@ -789,7 +789,7 @@ let executeBtn = {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
-                    await sleepNow(300)
+                    await sleepNow(200)
                 }
                 return
             }
