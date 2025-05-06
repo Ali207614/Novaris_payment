@@ -45,12 +45,10 @@ let firtBtnExecutor = () => {
 let confirmativeBtn = {
     "Tasdiqlanmagan so'rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlanmagan so'rovlar", user_step: 300 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
         next: {
@@ -66,12 +64,10 @@ let confirmativeBtn = {
     },
     "Tasdiqlanib , bajarilmagan so'rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlanib , bajarilmagan so'rovlar", user_step: 300 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
         next: {
@@ -86,12 +82,10 @@ let confirmativeBtn = {
     },
     "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar", user_step: 300 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
         next: {
@@ -106,13 +100,11 @@ let confirmativeBtn = {
     },
     "Rad etilgan so'rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
             updateUser(chat_id, { selectedInfoMenu: "Rad etilgan so'rovlar", user_step: 300 })
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
         next: {
@@ -127,12 +119,10 @@ let confirmativeBtn = {
     },
     "Bajarilgan so'rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: affirmativeKeyboard, step: 2 })
             updateUser(chat_id, { selectedInfoMenu: "Bajarilgan so'rovlar", user_step: 300 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
         next: {
@@ -149,10 +139,9 @@ let confirmativeBtn = {
 
 
     "Kunlik": {
-        selfExecuteFn: async ({ chat_id }) => {
+        selfExecuteFn: async ({ chat_id, user }) => {
             updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const today = moment().startOf('day');
             const tomorrow = moment(today).add(1, 'days');
@@ -176,17 +165,15 @@ let confirmativeBtn = {
             return sendMessageHelper(chat_id, "Mavjud emas")
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
 
     },
     "Haftalik": {
-        selfExecuteFn: async ({ chat_id }) => {
+        selfExecuteFn: async ({ chat_id, user }) => {
             updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const startOfWeek = moment().startOf('isoWeek');
             const endOfWeek = moment().endOf('isoWeek');
@@ -211,17 +198,15 @@ let confirmativeBtn = {
             return sendMessageHelper(chat_id, "Mavjud emas")
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
     },
     "Oylik": {
-        selfExecuteFn: async ({ chat_id }) => {
+        selfExecuteFn: async ({ chat_id, user }) => {
             try {
                 updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
 
                 const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
@@ -242,7 +227,7 @@ let confirmativeBtn = {
                         let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                         let btn = (await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${mainData[i].id}`, }, { name: 'Bekor qilish', id: `2#${mainData[i].id}` }], 2, 'confirmConfirmative'))
                         let file = get(mainData, `${[i]}.file`, {})
-                        console.log((get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), ' n')
+
                         await sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == "Tasdiqlanmagan so'rovlar" ? btn : undefined), { file }, { lastFile: mainData[i]?.lastFile })
                         await sleepNow(200)
                     }
@@ -255,8 +240,7 @@ let confirmativeBtn = {
             }
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 300 && get(user, 'currentUserRole') == 'Tasdiqlovchi'
         },
     },
@@ -488,8 +472,7 @@ let executeBtn = {
                 extraWaiting: false
             })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2
         },
         next: {
@@ -507,13 +490,11 @@ let executeBtn = {
 
     "Kutilayotgan so’rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: empKeyboard, step: 2 })
             updateStep(chat_id, 3)
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -527,13 +508,11 @@ let executeBtn = {
     },
     "Tasdiqlanishi kutilayotgan so’rovlar": {
         selfExecuteFn: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateStep(chat_id, 200)
             updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(['Tasdiqlanishi kutilayotgan so’rovlar', 'Bajarilishi kutilaytogan so’rovlar']), step: 3 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlanishi kutilayotgan so’rovlar" })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 3 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -553,8 +532,7 @@ let executeBtn = {
             updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(['Tasdiqlanishi kutilayotgan so’rovlar', 'Bajarilishi kutilaytogan so’rovlar']), step: 3 })
             updateUser(chat_id, { selectedInfoMenu: "Bajarilishi kutilaytogan so’rovlar" })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 3 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -572,14 +550,12 @@ let executeBtn = {
 
 
     "Tasdiqlangan so’rovlar": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             updateBack(chat_id, { text: "So'rovlar", btn: empKeyboard, step: 2 })
             updateStep(chat_id, 3)
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -597,8 +573,7 @@ let executeBtn = {
             updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlangan , bajarilmagan so'rovlar", "Tasdiqlangan , bajarilgan so'rovlar"]), step: 3 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlangan , bajarilmagan so'rovlar" })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 3 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -619,8 +594,7 @@ let executeBtn = {
             updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlangan , bajarilmagan so'rovlar", "Tasdiqlangan , bajarilgan so'rovlar"]), step: 3 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlangan , bajarilgan so'rovlar" })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 3 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -639,12 +613,10 @@ let executeBtn = {
 
     "Rad etilgan so'rovlar": {
         selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             updateBack(chat_id, { text: "So'rovlar", btn: empKeyboard, step: 2 })
             updateStep(chat_id, 3)
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 2 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -662,8 +634,7 @@ let executeBtn = {
             updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlovchi rad etgan so'rovlar", "Bajaruvchi rad etgan so'rovlar"]), step: 3 })
             updateUser(chat_id, { selectedInfoMenu: "Tasdiqlovchi rad etgan so'rovlar" })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 3 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -684,8 +655,7 @@ let executeBtn = {
             updateBack(chat_id, { text: "So'rovlar", btn: empDynamicBtn(["Tasdiqlovchi rad etgan so'rovlar", "Bajaruvchi rad etgan so'rovlar"]), step: 3 })
             updateUser(chat_id, { selectedInfoMenu: "Bajaruvchi rad etgan so'rovlar" })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 3 && get(user, 'currentUserRole') == 'Xodim'
         },
         next: {
@@ -727,16 +697,14 @@ let executeBtn = {
             }
             return sendMessageHelper(chat_id, "Mavjud emas")
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
     },
     "Haftalik": {
-        selfExecuteFn: async ({ chat_id }) => {
+        selfExecuteFn: async ({ chat_id, user }) => {
             updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
 
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
 
             const startOfWeek = moment().startOf('isoWeek');
@@ -759,17 +727,15 @@ let executeBtn = {
             }
             return sendMessageHelper(chat_id, "Mavjud emas")
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
 
     },
     "Oylik": {
-        selfExecuteFn: async ({ chat_id }) => {
+        selfExecuteFn: async ({ chat_id, user }) => {
             updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
 
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
             const endOfToday = moment().endOf('day');
@@ -795,8 +761,7 @@ let executeBtn = {
             }
             return sendMessageHelper(chat_id, "Mavjud emas")
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 200 && get(user, 'currentUserRole') == 'Xodim'
         },
 
@@ -805,8 +770,7 @@ let executeBtn = {
 
 let xorijiyXaridBtn = {
     "Xorijiy xarid": {
-        selfExecuteFn: ({ chat_id, }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             if (dataCurUser?.menuName != 'Xorijiy xarid' || dataCurUser.full) {
                 let uid = randomUUID()
@@ -819,16 +783,14 @@ let xorijiyXaridBtn = {
             let btn = empDynamicBtn(Menu().filter(item => Object.keys(permissonMenuEmp).includes(`${item.id}`) && item.status && item.isDelete == false).map(item => item.name), 3)
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn, step: 10 })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return user.user_step == 10
         },
         next: {
             text: ({ chat_id }) => {
                 return "Xorijiy xarid"
             },
-            btn: async ({ chat_id, }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, user }) => {
                 let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
                 let permisson = infoPermisson().find(item => item.chat_id == chat_id)
                 let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
@@ -2361,7 +2323,7 @@ let adminBtn = {
             updateStep(chat_id, 700)
         },
         middleware: ({ chat_id, user }) => {
-            return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
+            return get(user, 'JobTitle') == 'Admin'
         },
         next: {
             text: ({ chat_id }) => {
@@ -2382,7 +2344,7 @@ let adminBtn = {
             updateStep(chat_id, 8000)
         },
         middleware: ({ chat_id, user }) => {
-            return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
+            return get(user, 'JobTitle') == 'Admin'
         },
         next: {
             text: ({ chat_id }) => {

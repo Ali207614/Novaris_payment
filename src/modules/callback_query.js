@@ -1699,21 +1699,24 @@ let othersCallback = {
 let adminCallback = {
     "adminUsers": {
         selfExecuteFn: async ({ chat_id, data, id }) => {
-            bot.deleteMessage(chat_id, id)
             updateUser(chat_id, { selectedAdminUserChatId: data[1] })
             updateStep(chat_id, 701)
+            await bot.deleteMessage(chat_id, id)
+
         },
-        middleware: ({ chat_id, user }) => {
+        middleware: async ({ chat_id, user, id }) => {
+
             return get(user, 'user_step')
         },
         next: {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == data[1])
                 let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\n`
-                await sendMessageHelper(chat_id, get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id }))
+                await sendMessageHelper(chat_id, (get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id: data[1] })))
                 return `${user?.LastName} ${user?.FirstName} `
             },
             btn: async ({ chat_id, data }) => {
+
                 return empDynamicBtn(['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya"], 2)
             },
         },

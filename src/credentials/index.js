@@ -2563,13 +2563,13 @@ const confDataCred = () => {
             )
         },
         "Tasdiqlanib , bajarilmagan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') == false),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') && get(item, 'executor.status') == false),
         "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && !item.executor),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') && !item.executor),
         "Rad etilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') == false),
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') == false),
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status'))
+            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') && get(item, 'executor.status'))
     }
     return mainDataCred
 }
