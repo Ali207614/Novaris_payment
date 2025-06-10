@@ -68,6 +68,7 @@ class botConroller {
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, isGroup, groupChatId, user }) : undefined
                     if (Object.values(get(execute, 'next', {})).length) {
+                        let user = infoUser().find((item) => item.chat_id === chat_id);
 
                         let data = {}
                         let textBot = await execute?.next?.text ? await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : ''
@@ -92,6 +93,8 @@ class botConroller {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
 
                     if (Object.values(get(execute, 'next', {})).length) {
+                        let user = infoUser().find((item) => item.chat_id === chat_id);
+
                         let data = {}
                         let textBot = await execute?.next?.text({ chat_id, msgText: msg.text, isGroup, groupChatId, user })
                         let currentUser = infoUser().find((item) => item.chat_id === chat_id)
@@ -108,6 +111,7 @@ class botConroller {
             }
         }
         catch (err) {
+            console.log(err, ' bu err')
             throw new Error(err);
         }
     }

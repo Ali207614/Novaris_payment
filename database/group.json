@@ -128,11 +128,7 @@
         "title": "FER | Overtime",
         "type": "supergroup",
         "permissions": {
-            "7": [
-                "1",
-                "2",
-                "3"
-            ],
+            "7": [],
             "11": []
         }
     },
@@ -428,9 +424,7 @@
         "title": "D-Habibulloh-Chirchiq/Parkent/Gazalkent/Bo'stonliq/Profnastil/Tovoqsoy",
         "type": "supergroup",
         "permissions": {
-            "8": [
-                "4"
-            ]
+            "8": []
         }
     },
     {
