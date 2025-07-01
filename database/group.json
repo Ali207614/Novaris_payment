@@ -192,7 +192,11 @@
                 "26",
                 "27",
                 "28",
-                "29"
+                "29",
+                "30",
+                "31",
+                "32",
+                "33"
             ]
         }
     },
@@ -246,6 +250,9 @@
         "permissions": {
             "4": [
                 "9"
+            ],
+            "8": [
+                "30"
             ]
         }
     },
@@ -474,6 +481,36 @@
         "permissions": {
             "8": [
                 "4"
+            ]
+        }
+    },
+    {
+        "id": -1002355918622,
+        "title": "FER | BUXORO",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "31"
+            ]
+        }
+    },
+    {
+        "id": -1002354156547,
+        "title": "FER | SURXONDARYO",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "32"
+            ]
+        }
+    },
+    {
+        "id": -1002279939114,
+        "title": "FER | QASHQADARYO",
+        "type": "supergroup",
+        "permissions": {
+            "8": [
+                "33"
             ]
         }
     }

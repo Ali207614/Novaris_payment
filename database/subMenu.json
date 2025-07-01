@@ -443,12 +443,12 @@
     {
         "menuId": "8",
         "name": "D12 Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_12",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi12",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_12",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi12",
                 "step": "13"
             }
         ],
@@ -463,12 +463,12 @@
     {
         "menuId": "8",
         "name": "D777 Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_777",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi777",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_777",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi777",
                 "step": "13"
             }
         ],
@@ -483,12 +483,12 @@
     {
         "menuId": "8",
         "name": "AN Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_AN",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiAN",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_AN",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiAN",
                 "step": "13"
             }
         ],
@@ -503,12 +503,12 @@
     {
         "menuId": "8",
         "name": "NM Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_NM",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiNM",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_NM",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiNM",
                 "step": "13"
             }
         ],
@@ -523,12 +523,12 @@
     {
         "menuId": "8",
         "name": "Q Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_Q",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiQ",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_Q",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiQ",
                 "step": "13"
             }
         ],
@@ -543,12 +543,12 @@
     {
         "menuId": "8",
         "name": "JZ Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_JZ",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiJZ",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_JZ",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiJZ",
                 "step": "13"
             }
         ],
@@ -563,12 +563,12 @@
     {
         "menuId": "8",
         "name": "SM Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SM",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiSM",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SM",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiSM",
                 "step": "13"
             }
         ],
@@ -583,12 +583,12 @@
     {
         "menuId": "8",
         "name": "UR Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_UR",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiUR",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_UR",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiUR",
                 "step": "13"
             }
         ],
@@ -603,12 +603,12 @@
     {
         "menuId": "8",
         "name": "BX Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_BX",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiBX",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_BX",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiBX",
                 "step": "13"
             }
         ],
@@ -623,12 +623,12 @@
     {
         "menuId": "8",
         "name": "SU Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SU",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiSU",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_SU",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiSU",
                 "step": "13"
             }
         ],
@@ -643,12 +643,12 @@
     {
         "menuId": "8",
         "name": "QA Do'konga tovarlarni qaytarish",
-        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_QA",
+        "comment": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiQA",
         "update": [
             {
                 "id": 1,
                 "name": "Izoh",
-                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishi_QA",
+                "message": "Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#tovarqaytishiQA",
                 "step": "13"
             }
         ],
