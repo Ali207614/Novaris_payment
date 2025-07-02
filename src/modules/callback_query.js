@@ -1254,8 +1254,7 @@ let mahalliyXaridCallback = {
         },
     },
     "isSendFile": {
-        selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, data, user }) => {
             let list = infoData().find(item => item.id == user.currentDataId)
             if (data[1] == 1) {
                 updateData(get(list, 'id'), { file: { active: true } })
@@ -1269,8 +1268,7 @@ let mahalliyXaridCallback = {
             }
 
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'user_step')
         },
         next: {
@@ -1302,8 +1300,7 @@ let mahalliyXaridCallback = {
 let othersCallback = {
     "accountType": {
         document: true,
-        selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, data, user }) => {
             let list = infoData().find(item => item.id == user?.currentDataId)
             updateStep(chat_id, 64)
             let accountsObj = { ...accounts(), ...(get(list, 'payment', false) ? subAccounts50() : {}) }
@@ -1316,9 +1313,9 @@ let othersCallback = {
             let subMenuId = SubMenu()[get(list, 'menu')].find(el => el.name == get(list, 'subMenu')).id
             if (infoAccountPermisson()[get(list, 'menu')] && infoAccountPermisson()[get(list, 'menu')][subMenuId]) {
                 let notAcc = Object.values(infoAccountPermisson()[get(list, 'menu')][subMenuId]).flat()
-                accountsList = accountsList.filter(item => !notAcc.includes(item.toString()))
-            }
 
+                accountsList = accountsList.filter(item => !notAcc.includes(item))
+            }
 
             let b1Account = await b1Controller.getAccountNo(accountsList)
             let accountList = b1Account?.map((item, i) => {
@@ -1328,16 +1325,14 @@ let othersCallback = {
 
             updateData(user?.currentDataId, { accountType: Object.keys(accountsObj)[data[1]], accountList })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'user_step') == 63
         },
         next: {
             text: async ({ chat_id, data }) => {
                 return `Hisob (qayerga)`
             },
-            btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, data, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
 
                 return await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount')
@@ -1345,8 +1340,7 @@ let othersCallback = {
         },
     },
     "othersAccount": {
-        selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, data, user }) => {
             let list = infoData().find(item => item.id == user.currentDataId)
             if (user?.update) {
                 updateStep(chat_id, list.lastStep)
@@ -1358,19 +1352,16 @@ let othersCallback = {
             }
             updateData(user.currentDataId, { accountCodeOther: data[1] })
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'user_step') == 64
         },
         next: {
-            text: ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: ({ chat_id, data, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}
                 `
             },
-            btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, data, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let btn = user?.update ? list.lastBtn : empDynamicBtn()
                 updateUser(chat_id, { update: false })
@@ -1382,16 +1373,14 @@ let othersCallback = {
         document: true,
         selfExecuteFn: ({ chat_id, data }) => {
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'user_step')
         },
         next: {
             text: ({ chat_id, data }) => {
                 return `Hisob ni tanlang`
             },
-            btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, data, user }) => {
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let btn = await dataConfirmBtnEmp(chat_id, list?.accountList?.sort((a, b) => +b.id - +a.id), 1, 'othersAccount', pagination)
@@ -1404,16 +1393,14 @@ let othersCallback = {
         document: true,
         selfExecuteFn: ({ chat_id, data }) => {
         },
-        middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, user }) => {
             return get(user, 'user_step')
         },
         next: {
             text: ({ chat_id, data }) => {
                 return `Hisob (qayerga)`
             },
-            btn: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            btn: async ({ chat_id, data, user }) => {
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let accountsObj = { ...accounts(), ...(get(list, 'payment', false) ? accounts50() : {}) }
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
