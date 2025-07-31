@@ -18,7 +18,7 @@ const start = async () => {
             if (err) {
                 sendMessageHelper("561932032", `Connection error ${err}`);
             } else {
-                // deleteData({ id: 'tnd5ofKi4q' })
+                deleteData({ id: 'K9lonOcgG3' })
                 bot.on("text", async (msg) => {
                     try {
                         let chat_id = msg.chat.id;

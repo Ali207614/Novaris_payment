@@ -1322,7 +1322,6 @@ let othersCallback = {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
 
-
             updateData(user?.currentDataId, { accountType: Object.keys(accountsObj)[data[1]], accountList })
         },
         middleware: ({ chat_id, user }) => {
