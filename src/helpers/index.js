@@ -1,16 +1,11 @@
 const fs = require("fs");
 const { get } = require("lodash");
 const path = require("path");
+const { dataStore } = require('./dataStore')
+const { userStore } = require('./userStore')
 const { bot } = require('../config')
 
-function infoUser() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "user.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs;
-}
+
 
 function formatterCurrency(
     number = 0,
@@ -41,13 +36,7 @@ function getSession() {
     return docs
 }
 
-function writeUser(userData) {
-    let users = infoUser();
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "user.json"),
-        JSON.stringify([...users, { ...userData, creationDate: new Date() }], null, 4)
-    );
-}
+
 function infoGroup() {
     let docs = fs.readFileSync(
         path.join(process.cwd(), "database", "group.json"),
@@ -101,15 +90,6 @@ function updateGroup(id, userData) {
     );
 }
 
-function updateUser(chat_id, userData) {
-    let users = infoUser();
-    let index = users.findIndex((item) => item.chat_id == chat_id);
-    users[index] = { ...users[index], ...userData };
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "user.json"),
-        JSON.stringify(users, null, 4)
-    );
-}
 
 function updateID(id) {
     fs.writeFileSync(
@@ -128,39 +108,6 @@ function infoID() {
     return docs;
 }
 
-
-function updateBack(chat_id, userData) {
-    let users = infoUser();
-    let index = users.findIndex((item) => item.chat_id === chat_id);
-    let last = users[index].back.slice(-1)[0]
-    if (!last || (last.step != userData.step)) {
-        users[index].back = [...users[index]?.back, userData];
-    }
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "user.json"),
-        JSON.stringify(users, null, 4)
-    );
-}
-
-function deleteBack(chat_id, step) {
-    let users = infoUser();
-    let index = users.findIndex((item) => item.chat_id === chat_id);
-    users[index].back = get(users[index], 'back', []).filter(item => item.step != step);
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "user.json"),
-        JSON.stringify(users, null, 4)
-    );
-}
-
-function updateStep(chat_id = '', user_step = 1) {
-    let users = infoUser();
-    let index = users.findIndex((item) => item.chat_id == chat_id);
-    users[index].user_step = user_step;
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "user.json"),
-        JSON.stringify(users, null, 4)
-    );
-}
 
 function infoPermisson() {
     let docs = fs.readFileSync(
@@ -194,14 +141,7 @@ function writePermisson(data) {
     );
 }
 
-function infoData() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "data.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs;
-}
+
 
 function infoAccountList() {
     let docs = fs.readFileSync(
@@ -337,26 +277,7 @@ function infoSubMenu() {
 }
 
 
-function updateData(id, data) {
-    let main = infoData();
-    let index = main.findIndex((item) => item.id === id);
-    main[index] = { ...main[index], ...data };
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify(main, null, 4)
-    );
-}
 
-function writeData(data) {
-    let main = infoData();
-    let { ID } = infoID()
-    let currentDate = new Date();
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify([...main, { ...data, creationDate: formatLocalDateToISOString(currentDate), full: false, is_delete: false, ID }], null, 4)
-    );
-    updateID(+ID + 1)
-}
 
 function clone_data(data) {
     fs.writeFileSync(
@@ -366,31 +287,6 @@ function clone_data(data) {
 }
 
 
-function deleteData({ id }) {
-    let main = infoData();
-    main = main.filter(item => item.id != id)
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify(main, null, 4)
-    );
-}
-
-function deleteAllInvalidData({ chat_id }) {
-    let main = infoData();
-    let data = main.filter(item => item.chat_id == chat_id && !item.full).map(item => item.id)
-    main = main.filter(item => !data.includes(item.id))
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "data.json"),
-        JSON.stringify(main, null, 4)
-    );
-}
-
-function confirmativeListFn() {
-    return infoUser().filter(item => item.JobTitle == 'Tasdiqlovchi')
-}
-function executorListFn() {
-    return infoUser().filter(item => item.JobTitle == 'Bajaruvchi')
-}
 
 function parseDate(dateStr) {
     const [year, month, day] = dateStr.split('.').map(Number);
@@ -456,6 +352,52 @@ function formatLocalDateToISOString(date) {
     const offsetMinutes = pad(Math.abs(offset) % 60);
 
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}${offsetSign}${offsetHours}:${offsetMinutes}`;
+}
+
+function infoData() {
+    return dataStore.infoData();
+}
+
+function writeData(row) {
+    dataStore.add(row);
+}
+
+function updateData(id, data) {
+    return dataStore.update(id, data);
+}
+
+function deleteData({ id }) {
+    return dataStore.delete(id);
+}
+
+function deleteAllInvalidData({ chat_id }) {
+    return dataStore.deleteAllInvalid(chat_id);
+}
+
+
+function infoUser() {
+    return userStore.infoUser();
+}
+function writeUser(userData) {
+    return userStore.writeUser(userData);
+}
+function updateUser(chat_id, userData) {
+    return userStore.updateUser(chat_id, userData);
+}
+function updateStep(chat_id = "", user_step = 1) {
+    return userStore.updateStep(chat_id, user_step);
+}
+function updateBack(chat_id, userData) {
+    return userStore.updateBack(chat_id, userData);
+}
+function deleteBack(chat_id, step) {
+    return userStore.deleteBack(chat_id, step);
+}
+function confirmativeListFn() {
+    return userStore.confirmativeListFn();
+}
+function executorListFn() {
+    return userStore.executorListFn();
 }
 
 module.exports = {

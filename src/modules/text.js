@@ -1300,7 +1300,48 @@ let tolovHarajatBtn = {
             },
         },
     },
-
+    "Naqd AQ (Yetkazish, Operatsion)": {
+        selfExecuteFn: ({ chat_id, user }) => {
+            let list = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[get(list, 'menu', 3)]
+            updateStep(chat_id, 61)
+            updateData(get(list, 'id'), { subMenu: `Naqd AQ (Yetkazish, Operatsion)` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[get(list, 'menu', 3)].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+            },
+        },
+    },
+    "Naqd DQ (Yetkazish, Operatsion)": {
+        selfExecuteFn: ({ chat_id, user }) => {
+            let list = infoData().find(item => item.id == user?.currentDataId)
+            let permisson = infoPermisson().find(item => item.chat_id == chat_id)
+            let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[get(list, 'menu', 3)]
+            updateStep(chat_id, 61)
+            updateData(get(list, 'id'), { subMenu: `Naqd DQ (Yetkazish, Operatsion)` })
+            updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[get(list, 'menu', 3)].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 60
+        },
+        next: {
+            text: ({ chat_id }) => {
+                return 'Hujjatni tanlang'
+            },
+            btn: async ({ chat_id, }) => {
+                return empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+            },
+        },
+    },
 
     "Naqd (Tovar qabuli, Yetkazish, Operatsion)": {
         selfExecuteFn: ({ chat_id, user }) => {
