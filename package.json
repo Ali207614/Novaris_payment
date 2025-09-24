@@ -12,6 +12,7 @@
   "dependencies": {
     "@sap/hana-client": "^2.18.27",
     "axios": "^1.6.1",
+    "exceljs": "^4.4.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-cron": "^3.0.3",

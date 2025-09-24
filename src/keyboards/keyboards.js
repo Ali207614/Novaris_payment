@@ -170,6 +170,11 @@ const adminKeyboard = {
                 {
                     text: "Schet"
                 }
+            ],
+            [
+                {
+                    text: "Foydalanuvchilar excel"
+                }
             ]
         ],
     },

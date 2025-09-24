@@ -1,7 +1,7 @@
 {
     "Cookie": [
-        "B1SESSION=9d411d02-7c3e-11f0-8000-000c29b96273;HttpOnly;;Secure;SameSite=None",
+        "B1SESSION=bd7e4356-9944-11f0-8000-000c29b96273;HttpOnly;;Secure;SameSite=None",
         "ROUTEID=.node4; path=/;Secure;SameSite=None"
     ],
-    "SessionId": "9d411d02-7c3e-11f0-8000-000c29b96273"
+    "SessionId": "bd7e4356-9944-11f0-8000-000c29b96273"
 }

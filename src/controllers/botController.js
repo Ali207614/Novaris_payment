@@ -28,6 +28,7 @@ class botConroller {
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
             if (msg.text == "/start") {
+
                 if (['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                     writeGroup(get(msg, 'chat', {}))
                     sendMessageHelper(get(msg, 'chat.id'), "Qo'shildi ✅")

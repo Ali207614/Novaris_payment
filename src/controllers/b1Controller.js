@@ -198,7 +198,6 @@ class b1Controller {
         }
 
 
-        console.log(body)
 
         const axios = Axios.create({
             baseURL: "https://192.168.1.3:50000/b1s/v1/",
