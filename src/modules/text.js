@@ -1,5 +1,5 @@
 const { get, isEmpty, isDate } = require("lodash");
-let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred, newMenu, excelFnFormatData, generateUsersPermissionsExcel } = require("../credentials");
+let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred, newMenu, excelFnFormatData, generateUsersPermissionsExcel, excelFnPaymentData } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson, infoMenu, infoSubMenu, infoAllMenu, infoGroup, sendMessageHelper, infoAccountPermisson, infoAccountList } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles, affirmativeKeyboard, executorKeyboard } = require("../keyboards/keyboards");
@@ -3034,10 +3034,17 @@ let infoAdminBtn = {
 
 
                 let { objects, schema } = excelFnFormatData({ main: data })
+                let paymentExcel = excelFnPaymentData({ main: data.filter(item => ((item.payment === true) || (item.payment === false))) })
                 await writeXlsxFile(objects, {
                     schema,
                     filePath: path.join(process.cwd(), "data.xlsx")
                 })
+
+                await writeXlsxFile(paymentExcel.objects, {
+                    schema: paymentExcel.schema,
+                    filePath: path.join(process.cwd(), "payment.xlsx")
+                })
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"))
                 return path.join(process.cwd(), "data.xlsx")
             },
             btn: async ({ chat_id, }) => {
@@ -3068,10 +3075,17 @@ let infoAdminBtn = {
 
 
                 let { objects, schema } = excelFnFormatData({ main: data })
+                let paymentExcel = excelFnPaymentData({ main: data.filter(item => ((item.payment === true) || (item.payment === false))) })
                 await writeXlsxFile(objects, {
                     schema,
                     filePath: path.join(process.cwd(), "data.xlsx")
                 })
+
+                await writeXlsxFile(paymentExcel.objects, {
+                    schema: paymentExcel.schema,
+                    filePath: path.join(process.cwd(), "payment.xlsx")
+                })
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"))
                 return path.join(process.cwd(), "data.xlsx")
             },
             btn: async ({ chat_id, }) => {
@@ -3101,10 +3115,17 @@ let infoAdminBtn = {
 
 
                 let { objects, schema } = excelFnFormatData({ main: data })
+                let paymentExcel = excelFnPaymentData({ main: data.filter(item => ((item.payment === true) || (item.payment === false))) })
                 await writeXlsxFile(objects, {
                     schema,
                     filePath: path.join(process.cwd(), "data.xlsx")
                 })
+
+                await writeXlsxFile(paymentExcel.objects, {
+                    schema: paymentExcel.schema,
+                    filePath: path.join(process.cwd(), "payment.xlsx")
+                })
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"))
                 return path.join(process.cwd(), "data.xlsx")
             },
             btn: async ({ chat_id, }) => {

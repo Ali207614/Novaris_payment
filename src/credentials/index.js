@@ -4307,79 +4307,293 @@ const styles = {
 };
 
 let excelFnFormatData = ({ main }) => {
-    let objects = []
-    let schema = []
+    let objects = [];
+    let schema = [];
+
+    // === Helpers ===
+    const formatDate = (val) => {
+        const d = moment(val);
+        return d.isValid() ? d.format('DD.MM.YYYY') : '';
+    };
+
+    const safeCurrency = (val, cur) => {
+        if (val === undefined || val === null || isNaN(+val)) return '';
+        return formatterCurrency(+val, cur);
+    };
+
     for (let i = 0; i < main.length; i++) {
-        let data = main[i]
-        let paymentType = get(data, 'payment', true) ? `Kiruvchi to'lov` : `Chiquvchi to'lov`
-        let vendorName = get(data, 'vendorList', []).find(item => item.id == get(data, 'vendorId'))?.name || ''
-        let accountName = [...get(data, 'accountList43', []), ...get(data, 'accountList', []), ...get(data, 'accountList50', [])].find(item => item.id == get(data, 'accountCode', 1))?.name || ''
-        let pointName = get(ocrdList.find(item => item.id == data?.point), 'name', '')
-        let accountOtherName = ([...get(data, 'accountList43', []), ...get(data, 'accountList', []), ...get(data, 'accountList50', [])].find(item => item.id == get(data, 'accountCodeOther')))
-        let namesType = get(data, 'documentType') ? ([...get(data, 'accountList43', []), ...get(data, 'accountList', []), ...get(data, 'accountList50', [])].find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
-        let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
-        let empData = infoUser().find(item => item.chat_id == get(data, 'chat_id'))
-        let empName = `${get(empData, 'LastName')} ${get(empData, 'FirstName')}`
-        let executor = get(data, 'executor', {})
-        let confirmative = get(data, 'confirmative', {})
-        let confirmUser = confirmative ? infoUser().find(item => item.chat_id == get(data, 'confirmative.chat_id')) : {}
-        let executUser = executor ? infoUser().find(item => item.chat_id == get(data, 'executor.chat_id')) : {}
+        const data = main[i];
+
+        // === Lookup values ===
+        const paymentType = get(data, 'payment') === true
+            ? `Kiruvchi to'lov` : (get(data, 'payment') === false ? "Chiquvchi to'lov" : "-")
+
+        const vendorName = get(
+            get(data, 'vendorList', []).find((item) => item.id == get(data, 'vendorId')),
+            'name',
+            ''
+        );
+
+        const accountName = [
+            ...get(data, 'accountList43', []),
+            ...get(data, 'accountList', []),
+            ...get(data, 'accountList50', []),
+        ].find((item) => item.id == get(data, 'accountCode', 1))?.name || '';
+
+        const pointName = get(
+            ocrdList.find((item) => item.id == data?.point),
+            'name',
+            ''
+        );
+
+        const accountOtherName = [
+            ...get(data, 'accountList43', []),
+            ...get(data, 'accountList', []),
+            ...get(data, 'accountList50', []),
+        ].find((item) => item.id == get(data, 'accountCodeOther'));
+
+        const namesType = get(data, 'documentType', '')
+            ? (accountOtherName?.name || '')
+            : vendorName;
+
+        const purchase = get(data, 'purchase')
+            ? get(data, 'purchaseOrders', []).find(
+                (item) => item.DocEntry == get(data, 'purchaseEntry')
+            )
+            : {};
+
+        const empData = infoUser().find(
+            (item) => item.chat_id == get(data, 'chat_id')
+        );
+        const empName = `${get(empData, 'LastName', '')} ${get(empData, 'FirstName', '')}`;
+
+        const executor = get(data, 'executor', {});
+        const confirmative = get(data, 'confirmative', {});
+
+        const confirmUser = confirmative
+            ? infoUser().find(
+                (item) => item.chat_id == get(data, 'confirmative.chat_id')
+            )
+            : {};
+
+        const executUser = executor
+            ? infoUser().find((item) => item.chat_id == get(data, 'executor.chat_id'))
+            : {};
+
+        // === Info rows ===
         let info = [
-            { name: 'ID', message: data?.ID || 1 },
-            { name: 'Menu', message: get(data, 'menuName', '') },
-            { name: 'SubMenu', message: get(data, 'subMenu', '') },
-            { name: 'Xodim', message: empName },
-            { name: 'Tasdiqlovchi', message: `${get(confirmUser, 'LastName', '')} ${get(confirmUser, 'FirstName', '')} ${get(confirmative, 'status') ? "✅" : "❌"}` },
-            { name: 'Bajaruvchi', message: `${get(executUser, 'LastName', '')} ${get(executUser, 'FirstName', '')} ${get(executor, 'status') ? "✅" : "❌"}` },
-            { name: 'SAP Document', message: paymentType || '' },
-            { name: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi', message: namesType || '' },
-            { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` },
-            { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') },
-            { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') },
-            { name: 'Ticket raqami', message: get(data, 'ticket', '') },
-            { name: 'Hisob(qayerdan)', message: `${accountName}` },
-            { name: 'Hisob(qayerga)', message: `${get(accountOtherName, 'name', '')}` },
-            { name: 'Valyuta', message: get(data, 'currency', '') },
-            { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) },
-            { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) },
-            { name: "Hisob Nuqtasi", message: pointName },
-            { name: 'Statya DDS', message: get(data, 'dds', '❌') },
-            { name: 'Izoh', message: get(data, 'comment', '') }
-        ]
+            { key: 'start_date', label: `To'lov sanasi`, message: formatDate(get(data, 'startDate', '')) },
+            { key: 'end_date', label: `Hisobot To'lov sanasi`, message: formatDate(get(data, 'endDate', '')) },
+            { key: 'point', label: 'Hisob nuqtasi', message: pointName },
+            { key: 'account_from', label: 'Hisob (qayerdan)', message: accountName },
+            { key: 'account_to', label: 'Hisob (qayerga)', message: get(accountOtherName, 'name', '') },
+            { key: 'id', label: 'ID', message: data?.ID || '' },
+            { key: 'comment', label: 'Izoh', message: get(data, 'comment', '') },
+            { key: 'menu', label: 'Menu', message: get(data, 'menuName', '') },
+            { key: 'submenu', label: 'SubMenu', message: get(data, 'subMenu', '') },
+            { key: 'employee', label: 'Xodim', message: empName },
+            {
+                key: 'confirmative',
+                label: 'Tasdiqlovchi',
+                message: `${get(confirmUser, 'LastName', '')} ${get(
+                    confirmUser,
+                    'FirstName',
+                    ''
+                )} ${get(confirmative, 'status') ? '✅' : '❌'}`,
+            },
+            {
+                key: 'executor',
+                label: 'Bajaruvchi',
+                message: `${get(executUser, 'LastName', '')} ${get(
+                    executUser,
+                    'FirstName',
+                    ''
+                )} ${get(executor, 'status') ? '✅' : '❌'}`,
+            },
+            { key: 'sap_doc', label: 'SAP Document', message: paymentType },
+            {
+                key: 'partner',
+                label: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi',
+                message: namesType,
+            },
+            {
+                key: 'purchase',
+                label: 'Zakupka',
+                message: `${get(purchase, 'NumAtCard', '')} - ${get(
+                    purchase,
+                    'DocNum',
+                    ''
+                )}`,
+            },
+
+            { key: 'ticket', label: 'Ticket raqami', message: get(data, 'ticket', '') },
+            { key: 'currency', label: 'Valyuta', message: get(data, 'currency', '') },
+            { key: 'amount', label: 'Summa', message: safeCurrency(data?.summa, data?.currency) },
+            {
+                key: 'rate',
+                label: 'Valyuta kursi',
+                message: safeCurrency(data?.currencyRate, "UZS"),
+            },
+
+            // === ALWAYS PRESENT ===
+            {
+                key: 'amount_usd',
+                label: 'Summa (USD)',
+                message: (() => {
+                    if (data?.currency === 'USD') {
+                        return safeCurrency(data?.summa, 'USD');
+                    } else if (data?.currency === 'UZS' && data?.currencyRate) {
+                        const usd = (+data.summa / +data.currencyRate).toFixed(2);
+                        return safeCurrency(usd, 'USD');
+                    }
+                    return '';
+                })(),
+            },
+
+            { key: 'dds', label: 'Statya DDS', message: get(data, 'dds', '❌') },
+        ];
+
+        // === Dynamic remove ===
         if (!accountOtherName) {
-            info = info.filter(item => item.name != 'Hisob(qayerga)')
+            info = info.filter((item) => item.key !== 'account_to');
         }
         if (!get(purchase, 'DocEntry')) {
-            info = info.filter(item => item.name != 'Zakupka')
+            info = info.filter((item) => item.key !== 'purchase');
         }
-        if (schema.length == 0) {
-            info.forEach(el => {
+
+        // === Schema generate (once) ===
+        if (schema.length === 0) {
+            info.forEach((el) => {
                 let obj = {
-                    column: el.name,
+                    column: el.label,
                     type: String,
-                    value: student => {
-                        return `${student[el.name]}`
-                    },
+                    value: (student) => `${student[el.label] ?? ''}`,
                     align: 'center',
                     alignVertical: 'center',
                     span: 2,
+                };
+
+                // width/height rules
+                switch (el.key) {
+                    case 'id':
+                    case 'ticket':
+                        obj.width = 12;
+                        break;
+                    case 'employee':
+                    case 'confirmative':
+                    case 'executor':
+                        obj.width = 25;
+                        break;
+                    case 'partner':
+                        obj.width = 30;
+                        break;
+                    case 'comment':
+                        obj.width = 50;
+                        obj.height = 120;
+                        break;
+                    case 'amount':
+                    case 'rate':
+                    case 'amount_usd':
+                        obj.width = 22;
+                        break;
+                    case 'start_date':
+                    case 'end_date':
+                        obj.width = 18;
+                        break;
+                    default:
+                        obj.width = 20;
                 }
-                if (el.name == 'Izoh') {
-                    obj['height'] = 100
-                }
-                schema.push(obj)
-            })
+
+                schema.push(obj);
+            });
         }
 
-
-        let resultObj = {}
-        info.forEach(el => {
-            resultObj[el.name] = el.message
-        })
-        objects.push(resultObj)
+        // === Object result ===
+        let resultObj = {};
+        info.forEach((el) => {
+            resultObj[el.label] = el.message || '';
+        });
+        objects.push(resultObj);
     }
-    return { objects, schema }
-}
+
+    return { objects, schema };
+};
+
+let excelFnPaymentData = ({ main }) => {
+    let objects = [];
+    let schema = [];
+
+    const formatDate = (val) => {
+        const d = moment(val);
+        return d.isValid() ? d.format("YYYYMMDD") : "";
+    };
+
+    for (let i = 0; i < main.length; i++) {
+        const data = main[i];
+
+        // faqat payment mavjud bo‘lsa
+        if (typeof data.payment !== "boolean") {
+            continue;
+        }
+
+        // vendorName agar kerak bo‘lsa
+        const vendorName = get(
+            get(data, "vendorList", []).find(
+                (item) => item.id == get(data, "vendorId")
+            ),
+            "name",
+            ""
+        );
+        const paymentType = get(data, 'payment') === true
+            ? `Kiruvchi to'lov` : (get(data, 'payment') === false ? "Chiquvchi to'lov" : "-")
+        // documentType ni olish
+        const docType = get(data, "documentType", "") === true ? "A" : (get(data, "documentType", "") === false ? 'C' : '-');
+
+        // Asosiy satrlar
+        let info = [
+            { key: "document", label: "Document", message: paymentType },
+            { key: "docnum", label: "DocNum", message: String(i + 1) }, // har safar 1 dan boshlanadi
+            { key: "doctype", label: "DocType", message: docType },
+            { key: "docdate", label: "DocDate", message: formatDate(data?.startDate) },
+            { key: "taxdate", label: "TaxDate", message: formatDate(data?.endDate) },
+            { key: "u_izoh", label: "U_izoh", message: get(data, "comment", "") },
+            { key: "cashaccount", label: "CashAccount", message: get(data, "accountCode", "") },
+            { key: "cashsum", label: "CashSum", message: data?.summa || "" },
+            { key: "currency", label: "Currency", message: get(data, "currency", "") },
+        ];
+
+        // Agar C bo‘lsa ShortName chiqadi
+        info.push({
+            key: "shortname",
+            label: "ShortName",
+            message: vendorName,
+        });
+
+        // schema faqat 1 marta yaratiladi
+        if (schema.length === 0) {
+            info.forEach((el) => {
+                schema.push({
+                    column: el.label,
+                    type: String,
+                    value: (row) => `${row[el.label] ?? ""}`,
+                    align: "center",
+                    alignVertical: "center",
+                    width: 20,
+                });
+            });
+        }
+
+        // obyekt yig‘ish
+        let resultObj = {};
+        info.forEach((el) => {
+            resultObj[el.label] = el.message || "";
+        });
+        objects.push(resultObj);
+    }
+
+    return { objects, schema };
+};
+
 
 async function generateUsersPermissionsExcel(users, permissions, menus, filePath) {
     const workbook = new ExcelJS.Workbook();
@@ -4430,6 +4644,7 @@ module.exports = {
     newMenu,
     payType50,
     excelFnFormatData,
-    generateUsersPermissionsExcel
+    generateUsersPermissionsExcel,
+    excelFnPaymentData
 }
 
