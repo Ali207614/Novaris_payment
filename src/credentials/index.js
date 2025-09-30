@@ -4283,28 +4283,6 @@ const confDataCred = () => {
     return mainDataCred
 }
 
-const styles = {
-    correct: {
-        fill: {
-            type: 'pattern',
-            patternType: 'solid',
-            fgColor: { rgb: '00FF00' } // Green
-        },
-        font: {
-            color: { rgb: 'FFFFFF' } // White text
-        }
-    },
-    incorrect: {
-        fill: {
-            type: 'pattern',
-            patternType: 'solid',
-            fgColor: { rgb: 'FF0000' } // Red
-        },
-        font: {
-            color: { rgb: 'FFFFFF' } // White text
-        }
-    }
-};
 
 let excelFnFormatData = ({ main }) => {
     let objects = [];
@@ -4315,10 +4293,11 @@ let excelFnFormatData = ({ main }) => {
         const d = moment(val);
         return d.isValid() ? d.format('DD.MM.YYYY') : '';
     };
-
     const safeCurrency = (val, cur) => {
         if (val === undefined || val === null || isNaN(+val)) return '';
-        return formatterCurrency(+val, cur);
+        return formatterCurrency(+val, cur)
+            .replace(/\s?(UZS|\$)/, '')
+            .trim();
     };
 
     for (let i = 0; i < main.length; i++) {
@@ -4528,6 +4507,13 @@ let excelFnPaymentData = ({ main }) => {
         return d.isValid() ? d.format("YYYYMMDD") : "";
     };
 
+    const safeCurrency = (val, cur) => {
+        if (val === undefined || val === null || isNaN(+val)) return '';
+        return formatterCurrency(+val, cur)
+            .replace(/\s?(UZS|\$)/, '')
+            .trim();
+    };
+
     for (let i = 0; i < main.length; i++) {
         const data = main[i];
 
@@ -4551,6 +4537,7 @@ let excelFnPaymentData = ({ main }) => {
 
         // Asosiy satrlar
         let info = [
+            { key: 'id', label: 'ID', message: data?.ID || '' },
             { key: "document", label: "Document", message: paymentType },
             { key: "docnum", label: "DocNum", message: String(i + 1) }, // har safar 1 dan boshlanadi
             { key: "doctype", label: "DocType", message: docType },
@@ -4558,7 +4545,7 @@ let excelFnPaymentData = ({ main }) => {
             { key: "taxdate", label: "TaxDate", message: formatDate(data?.endDate) },
             { key: "u_izoh", label: "U_izoh", message: get(data, "comment", "") },
             { key: "cashaccount", label: "CashAccount", message: get(data, "accountCode", "") },
-            { key: "cashsum", label: "CashSum", message: data?.summa || "" },
+            { key: "cashsum", label: "CashSum", message: safeCurrency(data?.summa, data?.currency) },
             { key: "currency", label: "Currency", message: get(data, "currency", "") },
         ];
 
@@ -4594,6 +4581,88 @@ let excelFnPaymentData = ({ main }) => {
     return { objects, schema };
 };
 
+let excelFnPaymentLines = ({ main }) => {
+    let objects = [];
+    let schema = [];
+
+    const safeCurrency = (val, cur) => {
+        if (val === undefined || val === null || isNaN(+val)) return '';
+        return formatterCurrency(+val, cur)
+            .replace(/\s?(UZS|\$)/, '')
+            .trim();
+    };
+
+    for (let i = 0; i < main.length; i++) {
+        const data = main[i];
+
+        if (typeof data.payment !== "boolean") {
+            continue;
+        }
+
+        const docNum = String(i + 1);
+        const lineNum = 0;
+        const accountCode = String(get(data, "accountCode", ""));
+        const summa = safeCurrency(data?.summa, data?.currency);
+        const id = data?.ID || ''
+
+        let resultObj = {
+            ID: id,
+            ParentKey: docNum,
+            LineNum: lineNum,
+            AccountCode: accountCode,
+            SumPaid: summa,
+        };
+
+        objects.push(resultObj);
+    }
+
+    schema = [
+        {
+            column: "ID",
+            type: String,
+            value: (row) => `${row.ID ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "ParentKey",
+            type: String,
+            value: (row) => `${row.ParentKey ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "LineNum",
+            type: String,
+            value: (row) => `${row.LineNum ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "AccountCode",
+            type: String,
+            value: (row) => `${row.AccountCode ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "SumPaid",
+            type: String,
+            value: (row) => `${row.SumPaid ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+    ];
+
+    return { objects, schema };
+};
+
+
 
 async function generateUsersPermissionsExcel(users, permissions, menus, filePath) {
     const workbook = new ExcelJS.Workbook();
@@ -4628,6 +4697,7 @@ async function generateUsersPermissionsExcel(users, permissions, menus, filePath
     return filePath;
 }
 module.exports = {
+    excelFnPaymentLines,
     Menu,
     SubMenu,
     accounts43,

@@ -1,5 +1,5 @@
 const { get, isEmpty, isDate } = require("lodash");
-let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred, newMenu, excelFnFormatData, generateUsersPermissionsExcel, excelFnPaymentData } = require("../credentials");
+let { SubMenu, accounts, accounts50, Menu, empDataCred, execDataCred, confDataCred, newMenu, excelFnFormatData, excelFnPaymentLines, generateUsersPermissionsExcel, excelFnPaymentData } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, infoPermisson, infoMenu, infoSubMenu, infoAllMenu, infoGroup, sendMessageHelper, infoAccountPermisson, infoAccountList } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
 const { empKeyboard, adminKeyboard, jobMenu, mainMenuByRoles, affirmativeKeyboard, executorKeyboard } = require("../keyboards/keyboards");
@@ -3012,127 +3012,156 @@ let infoAdminBtn = {
         },
     },
     "Kunlik": {
-        selfExecuteFn: ({ chat_id, }) => {
+        selfExecuteFn: ({ chat_id }) => {
             updateBack(chat_id, {
-                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
-                , step: 702
-            })
+                text: "Ma'lumotlar",
+                btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3),
+                step: 702,
+            });
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702;
         },
         next: {
             file: async ({ chat_id }) => {
-
                 const today = moment().startOf('day');
                 const tomorrow = moment(today).add(1, 'days');
 
-                let data = infoData().filter(item => {
-                    const creationDate = moment(item.creationDate);
-                    return creationDate.isBetween(today, tomorrow, null, '[)') && get(item, 'full');
-                }).sort((a, b) => a.ID - b.ID)
+                let data = infoData()
+                    .filter(item => {
+                        const creationDate = moment(item.creationDate);
+                        return creationDate.isBetween(today, tomorrow, null, '[)') && get(item, 'full');
+                    })
+                    .sort((a, b) => a.ID - b.ID);
+                let { objects, schema } = excelFnFormatData({ main: data });
+                let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
+                let paymentLinesExcel = excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
+                // Fayllarni yaratish
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(paymentLinesExcel.objects, {
+                    schema: paymentLinesExcel.schema,
+                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    header: [
+                        ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
+                        ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
+                    ],
+                });
 
-                let { objects, schema } = excelFnFormatData({ main: data })
-                let paymentExcel = excelFnPaymentData({ main: data.filter(item => ((item.payment === true) || (item.payment === false))) })
-                await writeXlsxFile(objects, {
-                    schema,
-                    filePath: path.join(process.cwd(), "data.xlsx")
-                })
+                // Bot orqali yuborish
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
 
-                await writeXlsxFile(paymentExcel.objects, {
-                    schema: paymentExcel.schema,
-                    filePath: path.join(process.cwd(), "payment.xlsx")
-                })
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"))
-                return path.join(process.cwd(), "data.xlsx")
+                return path.join(process.cwd(), "data.xlsx");
             },
-            btn: async ({ chat_id, }) => {
-                return empDynamicBtn()
+            btn: async ({ chat_id }) => {
+                return empDynamicBtn();
             },
         },
     },
+
     "Haftalik": {
-        selfExecuteFn: ({ chat_id, user }) => {
+        selfExecuteFn: ({ chat_id }) => {
             updateBack(chat_id, {
-                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
-                , step: 702
-            })
+                text: "Ma'lumotlar",
+                btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3),
+                step: 702,
+            });
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702;
         },
         next: {
             file: async ({ chat_id }) => {
+                const startOfWeek = moment().startOf('isoWeek');
+                const endOfWeek = moment().endOf('isoWeek');
 
-                const startOfMonth = moment().startOf('isoWeek');
-                const endOfMonth = moment().endOf('isoWeek');
+                let data = infoData()
+                    .filter(item => {
+                        const creationDate = moment(item.creationDate);
+                        return creationDate.isBetween(startOfWeek, endOfWeek, null, '[]') && get(item, 'full');
+                    })
+                    .sort((a, b) => a.ID - b.ID);
+                console.log(data.length, ' bu length')
 
-                let data = infoData().filter(item => {
-                    const creationDate = moment(item.creationDate);
-                    return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]') && get(item, 'full');
-                }).sort((a, b) => a.ID - b.ID);
+                let { objects, schema } = excelFnFormatData({ main: data });
+                let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
+                let paymentLinesExcel = excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
 
-                let { objects, schema } = excelFnFormatData({ main: data })
-                let paymentExcel = excelFnPaymentData({ main: data.filter(item => ((item.payment === true) || (item.payment === false))) })
-                await writeXlsxFile(objects, {
-                    schema,
-                    filePath: path.join(process.cwd(), "data.xlsx")
-                })
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
 
-                await writeXlsxFile(paymentExcel.objects, {
-                    schema: paymentExcel.schema,
-                    filePath: path.join(process.cwd(), "payment.xlsx")
-                })
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"))
-                return path.join(process.cwd(), "data.xlsx")
+                await writeXlsxFile(paymentLinesExcel.objects, {
+                    schema: paymentLinesExcel.schema,
+                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    header: [
+                        ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
+                        ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
+                    ],
+                });
+
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+
+                return path.join(process.cwd(), "data.xlsx");
             },
-            btn: async ({ chat_id, }) => {
-                return
+            btn: async ({ chat_id }) => {
+                return empDynamicBtn();
             },
         },
     },
+
     "Oylik": {
-        selfExecuteFn: ({ chat_id, user }) => {
+        selfExecuteFn: ({ chat_id }) => {
             updateBack(chat_id, {
-                text: "Ma'lumotlar", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3)
-                , step: 702
-            })
+                text: "Ma'lumotlar",
+                btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik', 'Tanlash'], 3),
+                step: 702,
+            });
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702;
         },
         next: {
             file: async ({ chat_id }) => {
                 const startOfMonth = moment().startOf('month');
                 const endOfMonth = moment().endOf('month');
 
-                let data = infoData().filter(item => {
-                    const creationDate = moment(item.creationDate);
-                    return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]') && get(item, 'full');
-                }).sort((a, b) => a.ID - b.ID);
+                let data = infoData()
+                    .filter(item => {
+                        const creationDate = moment(item.creationDate);
+                        return creationDate.isBetween(startOfMonth, endOfMonth, null, '[]') && get(item, 'full');
+                    })
+                    .sort((a, b) => a.ID - b.ID);
 
+                let { objects, schema } = excelFnFormatData({ main: data });
+                let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
+                let paymentLinesExcel = excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
-                let { objects, schema } = excelFnFormatData({ main: data })
-                let paymentExcel = excelFnPaymentData({ main: data.filter(item => ((item.payment === true) || (item.payment === false))) })
-                await writeXlsxFile(objects, {
-                    schema,
-                    filePath: path.join(process.cwd(), "data.xlsx")
-                })
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(paymentLinesExcel.objects, {
+                    schema: paymentLinesExcel.schema,
+                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    header: [
+                        ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
+                        ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
+                    ],
+                });
 
-                await writeXlsxFile(paymentExcel.objects, {
-                    schema: paymentExcel.schema,
-                    filePath: path.join(process.cwd(), "payment.xlsx")
-                })
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"))
-                return path.join(process.cwd(), "data.xlsx")
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+
+                return path.join(process.cwd(), "data.xlsx");
             },
-            btn: async ({ chat_id, }) => {
-                return
+            btn: async ({ chat_id }) => {
+                return empDynamicBtn();
             },
         },
     },
+
     "Tanlash": {
         selfExecuteFn: ({ chat_id, user }) => {
             updateBack(chat_id, {
