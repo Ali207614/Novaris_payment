@@ -3,7 +3,7 @@ const moment = require('moment')
 const { bot } = require("../config")
 const b1Controller = require("../controllers/b1Controller")
 const jiraController = require("../controllers/jiraController")
-let { SubMenu, ocrdList, payType50, excelFnFormatData } = require("../credentials")
+let { SubMenu, ocrdList, payType50, excelFnFormatData, excelFnPaymentData, excelFnPaymentLines } = require("../credentials")
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate, sendMessageHelper, infoAccountPermisson, infoAccountList, writeInfoAccountList } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
@@ -1266,40 +1266,60 @@ let adminStep = {
         },
         next: {
             text: async ({ chat_id, msgText, user }) => {
-                msgText = msgText.replace(`Tugash sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.split(' ').filter(item => item).join('')
+                msgText = msgText.replace(`Tugash sanasi Yil.Oy.Kun :`, '');
+                msgText = msgText.split(' ').filter(item => item).join('');
                 const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
                 const dateToCheck = moment(msgText.replace(/\D/g, '')).format();
                 const isValid = isValidDate(dateToCheck);
-                let isV = new Date(moment(get(user, 'excelStart', '').replace(/\D/g, '')).format('L')) <= new Date(moment(dateToCheck).format('L'))
-                if (isValid && msgText.replace(/\D/g, '').length == 8 && isV) {
-                    updateUser(chat_id, { excelEnd: msgText })
-                    updateStep(chat_id, 9002)
+                let isV = new Date(moment(get(user, 'excelStart', '').replace(/\D/g, '')).format('L')) <= new Date(moment(dateToCheck).format('L'));
+
+                if (isValid && msgText.replace(/\D/g, '').length === 8 && isV) {
+                    updateUser(chat_id, { excelEnd: msgText });
 
                     const startDate = parseDate(get(user, 'excelStart', ''));
                     const endDate = parseDate(msgText);
                     let data = infoData().filter(item => {
-                        let creationDate = parseDate(moment(item.creationDate).format('YYYY.MM.DD'))
-                        return (creationDate >= startDate && creationDate <= endDate)
-                    }
-                    )
+                        let creationDate = parseDate(moment(item.creationDate).format('YYYY.MM.DD'));
+                        return creationDate >= startDate && creationDate <= endDate;
+                    });
 
-                    if (data.length == 0) {
-                        return 'Mavjud emas'
+                    if (data.length === 0) {
+                        return 'Mavjud emas';
                     }
-                    let { objects, schema } = excelFnFormatData({ main: data })
-                    writeXlsxFile(objects, {
-                        schema,
-                        filePath: path.join(process.cwd(), "data.xlsx")
-                    }).then(data => {
-                        bot.sendDocument(chat_id, path.join(process.cwd(), "data.xlsx"))
-                    }).catch(e => {
-                        return "Exelga yuklashda muommo"
-                    })
 
-                    return `Boshlanish sanasi : ${moment(get(user, 'excelStart', '').replace(/\D/g, '')).format('L')}\nTugash sanasi : ${moment(msgText.replace(/\D/g, '')).format('L')}`
+                    // === 1️⃣ Asosiy fayl
+                    let { objects, schema } = excelFnFormatData({ main: data });
+                    const dataPath = path.join(process.cwd(), 'data.xlsx');
+                    await writeXlsxFile(objects, { schema, filePath: dataPath });
+
+                    // === 2️⃣ To‘lov fayli
+                    const filteredPaymentData = data.filter(item => item.payment === true || item.payment === false);
+                    const paymentExcel = excelFnPaymentData({ main: filteredPaymentData });
+                    const paymentPath = path.join(process.cwd(), 'payment.xlsx');
+                    await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: paymentPath });
+
+                    // === 3️⃣ To‘lov qatorlari fayli
+                    const paymentLinesExcel = await excelFnPaymentLines({ main: filteredPaymentData });
+                    const paymentLinesPath = path.join(process.cwd(), 'payment_lines.xlsx');
+                    await writeXlsxFile(paymentLinesExcel.objects, {
+                        schema: paymentLinesExcel.schema,
+                        filePath: paymentLinesPath,
+                        header: [
+                            ['ID', 'ParentKey', 'LineNum', 'AccountCode', 'SumPaid'],
+                            ['ID', 'DocNum', 'LineNum', 'AcctCode', 'SumApplied'],
+                        ],
+                    });
+
+                    // === 4️⃣ Fayllarni yuborish
+                    await bot.sendDocument(chat_id, dataPath);
+                    await bot.sendDocument(chat_id, paymentPath);
+                    await bot.sendDocument(chat_id, paymentLinesPath);
+
+                    return `Boshlanish sanasi: ${moment(get(user, 'excelStart', '').replace(/\D/g, '')).format('L')}\n` +
+                        `Tugash sanasi: ${moment(msgText.replace(/\D/g, '')).format('L')}`;
                 }
-                return `Data formatida xatolik bor Qaytadan kiriting`
+
+                return `Data formatida xatolik bor. Qaytadan kiriting.`;
             },
             btn: async ({ chat_id, msgText }) => {
                 return empDynamicBtn()

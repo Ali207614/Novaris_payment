@@ -3,7 +3,7 @@ const https = require("https");
 const { get } = require("lodash");
 let dbService = require('../services/dbService')
 const moment = require('moment');
-const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES } = require("../repositories/dataRepositories");
+const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES, DATABASE } = require("../repositories/dataRepositories");
 const { saveSession, getSession } = require("../helpers");
 
 class b1Controller {
@@ -93,6 +93,28 @@ class b1Controller {
             throw new Error(e)
         }
     }
+    async cashFlowList(list = []) {
+        try {
+            if (!Array.isArray(list) || list.length === 0) {
+                return []; // bo‘sh kelsa hech narsa qaytarmaymiz
+            }
+
+            // Dinamik `IN` joyini yaratamiz
+            const placeholders = list.map(() => '?').join(', ');
+            const query = `
+                SELECT * 
+                FROM "${DATABASE}"."OCFW" T0 
+                WHERE T0."CFWName" IN (${placeholders})
+            `;
+            const data = await dbService.executeParam(query, list);
+
+            return data;
+        } catch (e) {
+            console.log(e)
+            throw new Error(e.message || e);
+        }
+    }
+
     async getAccount43() {
         try {
             const { accounts43, DDS } = require("../credentials");

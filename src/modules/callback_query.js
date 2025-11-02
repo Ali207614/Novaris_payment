@@ -17,8 +17,7 @@ const sleepNow = (delay) =>
 let xorijiyXaridCallback = {
     "confirmEmp": {
         document: true,
-        selfExecuteFn: async ({ chat_id, data }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        selfExecuteFn: async ({ chat_id, data, user }) => {
             let list = infoData().find(item => item.id == user.currentDataId)
             if (get(list, 'full')) {
                 return
@@ -45,13 +44,11 @@ let xorijiyXaridCallback = {
                 updateData(user.currentDataId, { confirmativeSendlist })
             }
         },
-        middleware: ({ chat_id, id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+        middleware: ({ chat_id, id, user }) => {
             return get(user, 'lastMessageId', 1) == id
         },
         next: {
-            text: async ({ chat_id, data, isGroup, groupChatId }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
+            text: async ({ chat_id, data, isGroup, groupChatId, user }) => {
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let file = get(list, 'file', {})
                 if (get(list, 'full')) {
@@ -87,14 +84,12 @@ let xorijiyXaridCallback = {
                     return `Tasdiqlovchiga jo'natildi`
                 }
             },
-            btn: async ({ chat_id, data }) => {
+            btn: async ({ chat_id, data, user }) => {
 
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 if (get(list, 'full')) {
                     return
                 }
-                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
 
                 if (data[1] == '3') {
                     let updateList = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
@@ -117,7 +112,6 @@ let xorijiyXaridCallback = {
     },
     "confirmConfirmative": {
         selfExecuteFn: async ({ chat_id, data, isGroup, groupChatId, id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
 
             if (get(list, 'confirmative')) {
@@ -143,9 +137,8 @@ let xorijiyXaridCallback = {
             }
         },
         next: {
-            text: async ({ chat_id, data, isGroup, groupChatId }) => {
+            text: async ({ chat_id, data, isGroup, groupChatId, user }) => {
 
-                let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
                 let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
                 let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
@@ -247,9 +240,7 @@ let xorijiyXaridCallback = {
     },
     "confirmExecuter": {
         selfExecuteFn: async ({ chat_id, data, isGroup, groupChatId }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == data[2])
-            let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
 
             if (get(list, 'sapB1') === false && get(list, 'jira') === false) {
                 return

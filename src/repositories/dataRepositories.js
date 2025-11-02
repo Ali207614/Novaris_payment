@@ -19,7 +19,8 @@ module.exports = {
     ACCOUNTS: `SELECT T0.\"AcctCode\", T0.\"AcctName\", T0.\"CurrTotal\", T0.\"SysTotal\", T0.\"FcTotal\", T0.\"FrozenFor\" FROM \"${db}\".\"OACT\" T0 WHERE T0.\"AcctCode\" like ?  and T0.\"FrozenFor\" = 'N'`,
     ACCOUNTSNO: `SELECT T0.\"AcctCode\", T0.\"AcctName\", T0.\"CurrTotal\", T0.\"SysTotal\", T0.\"FcTotal\", T0.\"FrozenFor\" FROM \"${db}\".\"OACT\" T0 WHERE T0.\"AcctCode\" like ?  and T0.\"FrozenFor\" = 'N'`,
     accountBuilderFn,
-    accountBuilderFnNo
+    accountBuilderFnNo,
+    DATABASE: db
 }
 
 

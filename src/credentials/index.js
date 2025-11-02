@@ -4296,9 +4296,11 @@ let excelFnFormatData = ({ main }) => {
     const safeCurrency = (val, cur) => {
         if (val === undefined || val === null || isNaN(+val)) return '';
         return formatterCurrency(+val, cur)
-            .replace(/\s?(UZS|\$)/, '')
+            .replace(/\s?(UZS|\$|CNY)/, '') // 🔹 CNY ham qo‘shildi
             .trim();
+
     };
+
 
     for (let i = 0; i < main.length; i++) {
         const data = main[i];
@@ -4368,6 +4370,30 @@ let excelFnFormatData = ({ main }) => {
             { key: 'account_to', label: 'Hisob (qayerga)', message: get(accountOtherName, 'name', '') },
             { key: 'id', label: 'ID', message: data?.ID || '' },
             { key: 'comment', label: 'Izoh', message: get(data, 'comment', '') },
+            { key: 'currency', label: 'Valyuta', message: get(data, 'currency', '') },
+            { key: 'amount', label: 'Summa', message: Number(data?.summa) },
+            {
+                key: 'rate',
+                label: 'Valyuta kursi',
+                message: safeCurrency(data?.currencyRate, "UZS"),
+            },
+            {
+                key: 'amount_usd',
+                label: 'Summa (USD)',
+                message: (() => {
+                    if (data?.currency === 'USD') {
+                        return Number(data?.summa);
+                    } else if (data?.currency === 'UZS' && data?.currencyRate) {
+                        const usd = (+data.summa / +data.currencyRate).toFixed(2);
+                        return Number(usd)
+                    }
+                    else if (data?.currency === 'CNY' && data?.currencyRate) {
+                        const usd = (+data.summa / +data.currencyRate).toFixed(2);
+                        return Number(usd)
+                    }
+                    return Number(data?.summa);
+                })(),
+            },
             { key: 'menu', label: 'Menu', message: get(data, 'menuName', '') },
             { key: 'submenu', label: 'SubMenu', message: get(data, 'subMenu', '') },
             { key: 'employee', label: 'Xodim', message: empName },
@@ -4406,29 +4432,6 @@ let excelFnFormatData = ({ main }) => {
             },
 
             { key: 'ticket', label: 'Ticket raqami', message: get(data, 'ticket', '') },
-            { key: 'currency', label: 'Valyuta', message: get(data, 'currency', '') },
-            { key: 'amount', label: 'Summa', message: safeCurrency(data?.summa, data?.currency) },
-            {
-                key: 'rate',
-                label: 'Valyuta kursi',
-                message: safeCurrency(data?.currencyRate, "UZS"),
-            },
-
-            // === ALWAYS PRESENT ===
-            {
-                key: 'amount_usd',
-                label: 'Summa (USD)',
-                message: (() => {
-                    if (data?.currency === 'USD') {
-                        return safeCurrency(data?.summa, 'USD');
-                    } else if (data?.currency === 'UZS' && data?.currencyRate) {
-                        const usd = (+data.summa / +data.currencyRate).toFixed(2);
-                        return safeCurrency(usd, 'USD');
-                    }
-                    return '';
-                })(),
-            },
-
             { key: 'dds', label: 'Statya DDS', message: get(data, 'dds', '❌') },
         ];
 
@@ -4533,7 +4536,7 @@ let excelFnPaymentData = ({ main }) => {
         const paymentType = get(data, 'payment') === true
             ? `Kiruvchi to'lov` : (get(data, 'payment') === false ? "Chiquvchi to'lov" : "-")
         // documentType ni olish
-        const docType = get(data, "documentType", "") === true ? "A" : (get(data, "documentType", "") === false ? 'C' : '-');
+        const docType = get(data, "documentType", "") === true ? "A" : (get(data, "documentType", "") === false ? 'C' : (get(data, "accountCode", "") ? 'A' : '-'));
 
         // Asosiy satrlar
         let info = [
@@ -4545,7 +4548,7 @@ let excelFnPaymentData = ({ main }) => {
             { key: "taxdate", label: "TaxDate", message: formatDate(data?.endDate) },
             { key: "u_izoh", label: "U_izoh", message: get(data, "comment", "") },
             { key: "cashaccount", label: "CashAccount", message: get(data, "accountCode", "") },
-            { key: "cashsum", label: "CashSum", message: safeCurrency(data?.summa, data?.currency) },
+            { key: "cashsum", label: "CashSum", message: Number(data?.summa) },
             { key: "currency", label: "Currency", message: get(data, "currency", "") },
         ];
 
@@ -4581,16 +4584,13 @@ let excelFnPaymentData = ({ main }) => {
     return { objects, schema };
 };
 
-let excelFnPaymentLines = ({ main }) => {
+let excelFnPaymentLines = async ({ main }) => {
     let objects = [];
     let schema = [];
 
-    const safeCurrency = (val, cur) => {
-        if (val === undefined || val === null || isNaN(+val)) return '';
-        return formatterCurrency(+val, cur)
-            .replace(/\s?(UZS|\$)/, '')
-            .trim();
-    };
+    let list = [...new Set(main.map(list => get(list, 'DDS', get(list, 'dds'))).filter(item => item && item !== '-'))]
+
+    let cashflow = await b1Controller.cashFlowList(list)
 
     for (let i = 0; i < main.length; i++) {
         const data = main[i];
@@ -4601,9 +4601,11 @@ let excelFnPaymentLines = ({ main }) => {
 
         const docNum = String(i + 1);
         const lineNum = 0;
-        const accountCode = String(get(data, "accountCode", ""));
-        const summa = safeCurrency(data?.summa, data?.currency);
+        const accountCode = String(get(data, "accountCodeOther", ""));
+        const summa = Number(data?.summa || 0);
         const id = data?.ID || ''
+        const cur = data?.currency || ''
+        const cashFlowItem = cashflow.find(el => el.CFWName == get(data, 'DDS', get(data, 'dds')))
 
         let resultObj = {
             ID: id,
@@ -4611,6 +4613,8 @@ let excelFnPaymentLines = ({ main }) => {
             LineNum: lineNum,
             AccountCode: accountCode,
             SumPaid: summa,
+            Currency: cur,
+            CashFlowItemID: cashFlowItem?.CFWId || '-'
         };
 
         objects.push(resultObj);
@@ -4653,6 +4657,22 @@ let excelFnPaymentLines = ({ main }) => {
             column: "SumPaid",
             type: String,
             value: (row) => `${row.SumPaid ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "Currency",
+            type: String,
+            value: (row) => `${row.Currency ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "CashFlowLineItemID",
+            type: String,
+            value: (row) => `${row.CashFlowItemID ?? ""}`,
             align: "center",
             alignVertical: "center",
             width: 20,
