@@ -9,6 +9,15 @@ let moment = require('moment')
 const path = require('path');
 const ExcelJS = require('exceljs');
 
+const foreignPaymentTypes = [
+    "ZAKLAD TO'LOV",
+    "TOVAR TO'LOV",
+    "TOVAR RASXOD TO'LOV",
+    "LOGISTIKA RASXOD TO'LOV",
+    "KONTEINER RASXOD TO'LOV",
+    "PUL O'TKAZMALARI",
+]
+
 function mapRoles(roles) {
     const roleMap = { '1': 'Xodim', '2': 'Tasdiqlovchi', '3': 'Bajaruvchi' };
     return (roles || []).map(r => roleMap[r] || r).join(', ');
@@ -250,11 +259,25 @@ let SubMenu = () => {
                 comment: `Tovar nomi:\nZakaz nomeri:\nTo'lov turi: (zaklad, tovar uchun, kontener uchun, rasxod uchun kabi)\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\nTasdiqlovchi:\n#tolov\n#21059MY(Zakaz nomeri)\n`,
                 update: [
                     {
+                        id: 2,
+                        name: "To'lov turi",
+                        message: `To'lov turini tanlang`,
+                        btn: () => empDynamicBtn(foreignPaymentTypes, 2),
+                        step: '19'
+                    },
+                    {
                         id: 1,
                         name: "Sap Document",
                         message: `Hujjatni tanlang`,
                         btn: () => empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2),
                         step: '20'
+                    },
+                    {
+                        id: 11,
+                        name: "Buyurtma raqami",
+                        message: `BUYURTMA RAQAMI`,
+                        btn: () => empDynamicBtn(),
+                        step: '2302'
                     },
                     // {
                     //     id: 2,
@@ -372,7 +395,7 @@ let SubMenu = () => {
                     // accountCodeOther
                     let namesType = get(data, 'documentType') ? (get(data, 'accountList43', []).find(item => item.id == get(data, 'accountCodeOther'))?.name) : vendorName
                     let purchase = get(data, 'purchase') ? get(data, 'purchaseOrders', []).find(item => item.DocEntry == get(data, 'purchaseEntry')) : {}
-                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data?.subMenu }, { name: "To'lov turi", message: get(data, 'foreignPaymentType', '') }, { name: 'Buyurtma raqami', message: get(data, 'orderNumber', '') }, { name: 'SAP Document', message: paymentType }, { name: get(data, 'documentType') ? 'Hisob (qayerga)' : 'Yetkazib beruvchi', message: namesType }, { name: 'Zakupka', message: `${get(purchase, 'NumAtCard', '')} - ${get(purchase, 'DocNum', '')}` }, { name: `To'lov sanasi`, message: moment(get(data, 'startDate', '')).format('DD.MM.YYYY') }, { name: `Hisobot To'lov sanasi`, message: moment(get(data, 'endDate', '')).format('DD.MM.YYYY') }, { name: 'Ticket raqami', message: data?.ticket }, { name: 'Hisob (qayerdan)', message: `${accountName}` }, { name: 'Valyuta', message: data?.currency }, { name: 'Valyuta kursi', message: formatterCurrency(+data?.currencyRate, data?.currency) }, { name: 'Summa', message: formatterCurrency(+data?.summa, data?.currency) }, { name: 'Izoh', message: data?.comment }]
                     if (!get(purchase, 'DocEntry')) {
                         info = info.filter(item => item.name != 'Zakupka')
                     }
@@ -381,7 +404,7 @@ let SubMenu = () => {
             },
             {
                 name: "Chetga pul chiqarish",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                 update: [
                     {
                         id: 1,
@@ -428,7 +451,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -783,7 +806,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd/Karta hisobidan to'lov/xarajat",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -837,7 +860,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -922,7 +945,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd/Click Bojxonaga oid xarajatlar",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                 update: [
                     {
                         id: 1,
@@ -989,7 +1012,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1100,7 +1123,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -1154,7 +1177,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1240,7 +1263,7 @@ let SubMenu = () => {
 
             {
                 name: "Naqd (Tovar qabuli, Yetkazish, Operatsion)",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -1294,7 +1317,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1379,7 +1402,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd (AV/TMB, Marketing, Dastur, Ijara)",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -1433,7 +1456,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1518,7 +1541,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd NQ",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -1572,7 +1595,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1657,7 +1680,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd (Oylik davriy xarajat)",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -1711,7 +1734,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1831,7 +1854,7 @@ let SubMenu = () => {
 
             {
                 name: "Naqd AQ (Yetkazish, Operatsion)",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -1885,7 +1908,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -1970,7 +1993,7 @@ let SubMenu = () => {
             },
             {
                 name: "Naqd DQ (Yetkazish, Operatsion)",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2024,7 +2047,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2109,7 +2132,7 @@ let SubMenu = () => {
             },
             {
                 name: "JZ Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2163,7 +2186,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2248,7 +2271,7 @@ let SubMenu = () => {
             },
             {
                 name: "SM Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2302,7 +2325,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2387,7 +2410,7 @@ let SubMenu = () => {
             },
             {
                 name: "UR Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2441,7 +2464,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2526,7 +2549,7 @@ let SubMenu = () => {
             },
             {
                 name: "AN Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2580,7 +2603,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2665,7 +2688,7 @@ let SubMenu = () => {
             },
             {
                 name: "NM Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2719,7 +2742,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2804,7 +2827,7 @@ let SubMenu = () => {
             },
             {
                 name: "Q Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2858,7 +2881,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -2943,7 +2966,7 @@ let SubMenu = () => {
             },
             {
                 name: "BX Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -2997,7 +3020,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -3082,7 +3105,7 @@ let SubMenu = () => {
             },
             {
                 name: "SU Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -3136,7 +3159,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -3221,7 +3244,7 @@ let SubMenu = () => {
             },
             {
                 name: "QA Naqd/Karta hisobiga tushum",
-                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                comment: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                 update: [
                     {
                         id: 1,
@@ -3275,7 +3298,7 @@ let SubMenu = () => {
                     {
                         id: 9,
                         name: "Izoh",
-                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
+                        message: `-Yetkazib beruvchi(Kimdan sotib olinayotgani):\n-Kimga:\n-Sotib olinayotgan tovar/xizmat yoki harajat nom:\n-To'lovchi(Pulni kim berayotgani):\n-To'lov/Harajat jami summasi(Kelishilgan jami summa):\n-To'lov summasi(Ayni damda to'lanayotgan summa):\n-Chek(Bor/Yo'q):`,
                         btn: () => empDynamicBtn(),
                         step: '50'
                     },
@@ -4019,7 +4042,7 @@ let DDS = {
         5080, 5090, 5026, 5036, 5035, 5025,
         5611, 5072, 5063, 5054, 5053,
         5052, 5050, 5016, 5017],
-    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9234, 9236, 9238, 9240, 9242, 9244],
+    "Agentlar yo'lkirasi": [9229, 9230, 9231, 9232, 9234, 9236, 9238, 9240, 9242, 9244, 9246],
     "Boshqa xarajat": [9499, 9437],
     "Asosiy vosita haridi": ["0820", "0830"],
     "Bojxona xarajati": [1511],
@@ -4191,7 +4214,11 @@ let ocrdList = [
     {
         id: 'QA',
         name: "QASHQADARYO"
-    }
+    },
+    {
+        id: 'FR',
+        name: "Farg'ona"
+    },
 ]
 
 
@@ -4293,14 +4320,6 @@ let excelFnFormatData = ({ main }) => {
         const d = moment(val);
         return d.isValid() ? d.format('DD.MM.YYYY') : '';
     };
-    const safeCurrency = (val, cur) => {
-        if (val === undefined || val === null || isNaN(+val)) return '';
-        return formatterCurrency(+val, cur)
-            .replace(/\s?(UZS|\$|CNY)/, '') // 🔹 CNY ham qo‘shildi
-            .trim();
-
-    };
-
 
     for (let i = 0; i < main.length; i++) {
         const data = main[i];
@@ -4333,9 +4352,7 @@ let excelFnFormatData = ({ main }) => {
             ...get(data, 'accountList50', []),
         ].find((item) => item.id == get(data, 'accountCodeOther'));
 
-        const namesType = get(data, 'documentType', '')
-            ? (accountOtherName?.name || '')
-            : vendorName;
+        const namesType = vendorName;
 
         const purchase = get(data, 'purchase')
             ? get(data, 'purchaseOrders', []).find(
@@ -4371,29 +4388,29 @@ let excelFnFormatData = ({ main }) => {
             { key: 'id', label: 'ID', message: data?.ID || '' },
             { key: 'comment', label: 'Izoh', message: get(data, 'comment', '') },
             { key: 'currency', label: 'Valyuta', message: get(data, 'currency', '') },
-            { key: 'amount', label: 'Summa', message: Number(data?.summa) },
+            { key: 'amount', label: 'Summa', message: Number(data?.summa ?? 0) },
             {
                 key: 'rate',
                 label: 'Valyuta kursi',
-                message: safeCurrency(data?.currencyRate, "UZS"),
+                message: String(data?.currencyRate ?? 0).replace('.', ','),
             },
             {
                 key: 'amount_usd',
                 label: 'Summa (USD)',
                 message: (() => {
                     if (data?.currency === 'USD') {
-                        return Number(data?.summa);
+                        return String(Number(data?.summa || 0).toFixed(2)).replace('.', ',');
                     } else if (data?.currency === 'UZS' && data?.currencyRate) {
                         const usd = (+data.summa / +data.currencyRate).toFixed(2);
-                        return Number(usd)
-                    }
-                    else if (data?.currency === 'CNY' && data?.currencyRate) {
+                        return String(usd).replace('.', ',');
+                    } else if (data?.currency === 'CNY' && data?.currencyRate) {
                         const usd = (+data.summa / +data.currencyRate).toFixed(2);
-                        return Number(usd)
+                        return String(usd).replace('.', ',');
                     }
-                    return Number(data?.summa);
+                    return String(Number(data?.summa || 0).toFixed(2)).replace('.', ',');
                 })(),
             },
+
             { key: 'menu', label: 'Menu', message: get(data, 'menuName', '') },
             { key: 'submenu', label: 'SubMenu', message: get(data, 'subMenu', '') },
             { key: 'employee', label: 'Xodim', message: empName },
@@ -4416,9 +4433,11 @@ let excelFnFormatData = ({ main }) => {
                 )} ${get(executor, 'status') ? '✅' : '❌'}`,
             },
             { key: 'sap_doc', label: 'SAP Document', message: paymentType },
+            { key: 'foreign_payment_type', label: "To'lov turi", message: get(data, 'foreignPaymentType', '') },
+            { key: 'order_number', label: 'Buyurtma raqami', message: get(data, 'orderNumber', '') },
             {
                 key: 'partner',
-                label: get(data, 'documentType') ? 'Hisob' : 'Yetkazib beruvchi',
+                label: 'Yetkazib beruvchi',
                 message: namesType,
             },
             {
@@ -4435,10 +4454,7 @@ let excelFnFormatData = ({ main }) => {
             { key: 'dds', label: 'Statya DDS', message: get(data, 'dds', '❌') },
         ];
 
-        // === Dynamic remove ===
-        if (!accountOtherName) {
-            info = info.filter((item) => item.key !== 'account_to');
-        }
+
         if (!get(purchase, 'DocEntry')) {
             info = info.filter((item) => item.key !== 'purchase');
         }
@@ -4542,6 +4558,8 @@ let excelFnPaymentData = ({ main }) => {
         let info = [
             { key: 'id', label: 'ID', message: data?.ID || '' },
             { key: "document", label: "Document", message: paymentType },
+            { key: "foreign_payment_type", label: "To'lov turi", message: get(data, 'foreignPaymentType', '') },
+            { key: "order_number", label: "Buyurtma raqami", message: get(data, 'orderNumber', '') },
             { key: "docnum", label: "DocNum", message: String(i + 1) }, // har safar 1 dan boshlanadi
             { key: "doctype", label: "DocType", message: docType },
             { key: "docdate", label: "DocDate", message: formatDate(data?.startDate) },
@@ -4594,6 +4612,13 @@ let excelFnPaymentLines = async ({ main }) => {
 
     for (let i = 0; i < main.length; i++) {
         const data = main[i];
+        const vendorName = get(
+            get(data, "vendorList", []).find(
+                (item) => item.id == get(data, "vendorId")
+            ),
+            "name",
+            ""
+        );
 
         if (typeof data.payment !== "boolean") {
             continue;
@@ -4614,7 +4639,8 @@ let excelFnPaymentLines = async ({ main }) => {
             AccountCode: accountCode,
             SumPaid: summa,
             Currency: cur,
-            CashFlowItemID: cashFlowItem?.CFWId || '-'
+            CashFlowItemID: cashFlowItem?.CFWId || '-',
+            ShortName: vendorName
         };
 
         objects.push(resultObj);
@@ -4673,6 +4699,14 @@ let excelFnPaymentLines = async ({ main }) => {
             column: "CashFlowLineItemID",
             type: String,
             value: (row) => `${row.CashFlowItemID ?? ""}`,
+            align: "center",
+            alignVertical: "center",
+            width: 20,
+        },
+        {
+            column: "ShortName",
+            type: String,
+            value: (row) => `${row.ShortName ?? ""}`,
             align: "center",
             alignVertical: "center",
             width: 20,

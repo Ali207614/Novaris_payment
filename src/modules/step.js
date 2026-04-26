@@ -12,6 +12,93 @@ const { dataConfirmText } = require("../keyboards/text")
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 
+
+const cleanTelegramText = (text = '') => {
+    return String(text)
+        .normalize('NFKC')
+        .replace(/[\u200B-\u200D\uFEFF]/g, '') // zero-width chars
+        .replace(/\u00A0/g, ' ') // non-breaking space
+        .replace(/\r/g, '')
+        .trim();
+};
+
+const extractStepDates = (msgText) => {
+    const cleaned = cleanTelegramText(msgText)
+        .replace(/1\)\s*To'lov sanasi Yil\.Oy\.Kun\s*:/giu, '')
+        .replace(/2\)\s*Hisobot To'lov sanasi Yil\.Oy\.Kun\s*:/giu, '')
+        .trim();
+
+    const parts = cleaned.split(/\s+/u).filter(Boolean);
+
+    if (parts.length !== 2) {
+        return { ok: false, error: `Data formatida xatolik bor Qaytadan kiriting` };
+    }
+
+    const parseOne = (value) => {
+        const digits = cleanTelegramText(value).replace(/\D/g, '');
+
+        if (digits.length !== 8) {
+            return null;
+        }
+
+        const parsed = moment(digits, 'YYYYMMDD', true);
+        if (!parsed.isValid()) {
+            return null;
+        }
+
+        return parsed;
+    };
+
+    const startMoment = parseOne(parts[0]);
+    const endMoment = parseOne(parts[1]);
+
+    if (!startMoment || !endMoment) {
+        return { ok: false, error: `Data formatida xatolik bor Qaytadan kiriting` };
+    }
+
+    if (startMoment.isAfter(moment(), 'day')) {
+        return { ok: false, error: `To'lov sanasi bugundan katta bo'lmasligi kerak` };
+    }
+
+    return {
+        ok: true,
+        startDate: startMoment.format('YYYY.MM.DD'),
+        endDate: endMoment.format('YYYY.MM.DD'),
+    };
+};
+
+const getPayTypeBtn = async ({ chat_id, user, data }) => {
+    const btnList = payType50;
+    const btn = user?.update
+        ? data.lastBtn
+        : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType');
+
+    updateUser(chat_id, { update: false });
+    return btn;
+};
+
+const isForeignPaymentAccountDocument = (data = {}) => {
+    return get(data, 'subMenu') == "Xorijiy xarid to'lovi" && get(data, 'documentType') === true
+};
+
+const getFilteredAccount43 = async (data = {}) => {
+    let b1Account43 = await b1Controller.getAccount43()
+    let accountList43 = (b1Account43 || []).map((item, i) => {
+        return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
+    })
+
+    let subMenuId = SubMenu()[get(data, 'menu')]?.find(el => el.name == get(data, 'subMenu'))?.id
+
+    if (infoAccountPermisson()[get(data, 'menu')] && infoAccountPermisson()[get(data, 'menu')][subMenuId]) {
+        let notAcc = Object.values(infoAccountPermisson()[get(data, 'menu')][subMenuId]).flat()
+        accountList43 = accountList43.filter(item => !notAcc.includes((get(item, 'id', '') || '').toString()))
+    }
+
+    return accountList43
+};
+
+const isKeepOldDateMessage = (msgText = '') => ['-', 'old', 'eski'].includes(cleanTelegramText(msgText).toLowerCase());
+
 let xorijiyXaridStep = {
     "12": {
         selfExecuteFn: ({ chat_id, msgText }) => {
@@ -162,71 +249,103 @@ let xorijiyXaridStep = {
             },
         },
     },
+    "2302": {
+        selfExecuteFn: ({ chat_id, msgText, user }) => {
+            updateData(user.currentDataId, { orderNumber: msgText })
+            if (user?.update) {
+                let list = infoData().find(item => item.id == user.currentDataId)
+                updateStep(chat_id, get(list, 'lastStep', 30))
+                return
+            }
+            updateStep(chat_id, 21)
+            updateBack(chat_id, { text: `BUYURTMA RAQAMI`, btn: empDynamicBtn(), step: 2302 })
+        },
+        middleware: ({ user }) => {
+            return user.user_step == 2302
+        },
+        next: {
+            text: ({ chat_id, user }) => {
+                let list = infoData().find(item => item.id == user.currentDataId)
+                if (user?.update) {
+                    let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                    return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
+                }
+                return `Yetkazib beruvchi ni ismini yozing`
+            },
+            btn: async ({ chat_id, user }) => {
+                let list = infoData().find(item => item.id == user.currentDataId)
+                updateUser(chat_id, { update: false })
+                return user?.update ? list.lastBtn : empDynamicBtn()
+            },
+        },
+    },
     "23": {
         selfExecuteFn: async ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+            let user = infoUser().find(item => item.chat_id == chat_id);
+
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 23 })
+                updateBack(chat_id, {
+                    text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
+                    btn: empDynamicBtn(),
+                    step: 23
+                });
             }
         },
         middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            return user.user_step == 23
+            let user = infoUser().find(item => item.chat_id == chat_id);
+            return user.user_step == 23;
         },
         next: {
             text: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
-                msgText = msgText.split(' ').filter(item => item)
-                let count = 0
-                for (let i = 0; i < msgText.length; i++) {
-                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
-                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
-                    const isValid = isValidDate(dateToCheck);
-                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
-                        count += 1
-                    }
+                let user = infoUser().find(item => item.chat_id == chat_id);
+                let data = infoData().find(item => item.id == user.currentDataId);
+                const parsed = extractStepDates(msgText);
+
+                if (!parsed.ok) {
+                    return parsed.error;
                 }
-                if (count == 2) {
-                    updateData(user.currentDataId, { startDate: msgText[0], endDate: msgText[1] })
-                    if (user?.update) {
-                        let info = SubMenu()[get(data, 'menu', 1)].find(item => item.name == data.subMenu).infoFn({ chat_id })
-                        updateStep(chat_id, get(data, 'lastStep', 30))
-                        return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
-                    }
-                    else {
-                        updateStep(chat_id, 24)
-                        return "Ticket raqamini kiriting"
-                    }
+
+                updateData(user.currentDataId, {
+                    startDate: parsed.startDate,
+                    endDate: parsed.endDate,
+                });
+
+                if (user?.update) {
+                    let info = SubMenu()[get(data, 'menu', 1)]
+                        .find(item => item.name == data.subMenu)
+                        .infoFn({ chat_id });
+
+                    updateStep(chat_id, get(data, 'lastStep', 30));
+                    return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id);
+                } else if (isForeignPaymentAccountDocument(data)) {
+                    let accountList43 = await getFilteredAccount43(data)
+                    updateData(user.currentDataId, { ticket: '', accountList43 })
+                    updateStep(chat_id, 25);
+                    return `Hisob (qayerdan)`;
+                } else {
+                    updateStep(chat_id, 24);
+                    return "Ticket raqamini kiriting";
                 }
-                return `Data formatida xatolik bor Qaytadan kiriting`
             },
             btn: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
-                msgText = msgText.split(' ').filter(item => item)
+                let user = infoUser().find(item => item.chat_id == chat_id);
+                let data = infoData().find(item => item.id == user.currentDataId);
+                const parsed = extractStepDates(msgText);
 
-                let count = 0
-                for (let i = 0; i < msgText.length; i++) {
-                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
-                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
-                    const isValid = isValidDate(dateToCheck);
-                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
-                        count += 1
-                    }
+                if (!parsed.ok) {
+                    return empDynamicBtn();
                 }
-                if (count != 2) {
-                    return empDynamicBtn()
+
+                if (isForeignPaymentAccountDocument(data)) {
+                    let list = infoData().find(item => item.id == user.currentDataId);
+                    updateUser(chat_id, { update: false });
+                    return list?.accountList43?.length
+                        ? await dataConfirmBtnEmp(chat_id, list.accountList43.sort((a, b) => a.id - b.id), 1, 'account')
+                        : empDynamicBtn()
                 }
-                let btn = user?.update ? data.lastBtn : empDynamicBtn()
-                updateUser(chat_id, { update: false })
-                return btn
+
+                updateUser(chat_id, { update: false });
+                return empDynamicBtn();
             },
         },
     },
@@ -563,75 +682,57 @@ let mahalliyXaridStep = {
     },
     "44": {
         selfExecuteFn: async ({ chat_id, msgText }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
+            let user = infoUser().find(item => item.chat_id == chat_id);
+
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 44 })
+                updateBack(chat_id, {
+                    text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
+                    btn: empDynamicBtn(),
+                    step: 44
+                });
             }
         },
         middleware: ({ chat_id }) => {
-            let user = infoUser().find(item => item.chat_id == chat_id)
-            return user.user_step == 44
+            let user = infoUser().find(item => item.chat_id == chat_id);
+            return user.user_step == 44;
         },
         next: {
             text: async ({ chat_id, msgText }) => {
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
-                msgText = msgText.split(' ').filter(item => item)
+                let user = infoUser().find(item => item.chat_id == chat_id);
+                let data = infoData().find(item => item.id == user.currentDataId);
+                const parsed = extractStepDates(msgText);
 
-                let count = 0
-                for (let i = 0; i < msgText.length; i++) {
-                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
-                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
-                    const isValid = isValidDate(dateToCheck);
-                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                if (!parsed.ok) {
+                    return parsed.error;
+                }
 
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
-                        count += 1
-                    }
+                updateData(user.currentDataId, {
+                    startDate: parsed.startDate,
+                    endDate: parsed.endDate,
+                });
+
+                if (user?.update) {
+                    let info = SubMenu()[get(data, 'menu', 1)]
+                        .find(item => item.name == data.subMenu)
+                        .infoFn({ chat_id });
+
+                    updateStep(chat_id, get(data, 'lastStep', 30));
+                    return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id);
+                } else {
+                    updateStep(chat_id, 45);
+                    return "To'lov usullarini tanlang";
                 }
-                if (count == 2) {
-                    updateData(user.currentDataId, { startDate: msgText[0], endDate: msgText[1] })
-                    if (user?.update) {
-                        let info = SubMenu()[get(data, 'menu', 1)].find(item => item.name == data.subMenu).infoFn({ chat_id })
-                        updateStep(chat_id, get(data, 'lastStep', 30))
-                        return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
-                    }
-                    else {
-                        updateStep(chat_id, 45)
-                        return "To'lov usullarini tanlang"
-                    }
-                }
-                return `Data formatida xatolik bor Qaytadan kiriting`
             },
             btn: async ({ chat_id, msgText }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id);
+                let data = infoData().find(item => item.id == user.currentDataId);
+                const parsed = extractStepDates(msgText);
 
-                let user = infoUser().find(item => item.chat_id == chat_id)
-                let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
-                msgText = msgText.split(' ').filter(item => item)
-
-                let count = 0
-                for (let i = 0; i < msgText.length; i++) {
-                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
-                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
-                    const isValid = isValidDate(dateToCheck);
-                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
-
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
-                        count += 1
-                    }
-                }
-                if (count != 2) {
-                    return empDynamicBtn()
+                if (!parsed.ok) {
+                    return empDynamicBtn();
                 }
 
-                let btnList = payType50
-                let btn = user?.update ? data.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
-                updateUser(chat_id, { update: false })
-                return btn
+                return await getPayTypeBtn({ chat_id, user, data });
             },
         },
     },
@@ -807,69 +908,53 @@ let tolovHarajatStep = {
         },
     },
     "65": {
-        selfExecuteFn: async ({ chat_id, msgText, user }) => {
+        selfExecuteFn: async ({ chat_id, user }) => {
             if (!user?.update) {
-                updateBack(chat_id, { text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`, btn: empDynamicBtn(), step: 65 })
+                updateBack(chat_id, {
+                    text: `1)To'lov sanasi Yil.Oy.Kun : ${moment().format('YYYY.MM.DD')} \n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${moment().format('YYYY.MM.DD')}`,
+                    btn: empDynamicBtn(),
+                    step: 65
+                });
             }
         },
-        middleware: ({ chat_id, user }) => {
-            return user.user_step == 65
+        middleware: ({ user }) => {
+            return user.user_step == 65;
         },
         next: {
             text: async ({ chat_id, msgText, user }) => {
-                let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
-                msgText = msgText.split(' ').filter(item => item)
+                const data = infoData().find(item => item.id == user.currentDataId);
+                const parsed = extractStepDates(msgText);
 
-                let count = 0
-                for (let i = 0; i < msgText.length; i++) {
-                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
-                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
-                    const isValid = isValidDate(dateToCheck);
-                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
-                        count += 1
-                    }
+                if (!parsed.ok) {
+                    return parsed.error;
                 }
-                if (count == 2) {
-                    updateData(user.currentDataId, { startDate: msgText[0], endDate: msgText[1] })
-                    if (user?.update) {
-                        let info = SubMenu()[get(data, 'menu', 3)].find(item => item.name == data.subMenu).infoFn({ chat_id })
-                        updateStep(chat_id, get(data, 'lastStep', 30))
-                        return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
-                    }
-                    else {
-                        updateStep(chat_id, 45)
-                        return "To'lov usullarini tanlang"
-                    }
+
+                updateData(user.currentDataId, {
+                    startDate: parsed.startDate,
+                    endDate: parsed.endDate,
+                });
+
+                if (user?.update) {
+                    const info = SubMenu()[get(data, 'menu', 3)]
+                        .find(item => item.name == data.subMenu)
+                        .infoFn({ chat_id });
+
+                    updateStep(chat_id, get(data, 'lastStep', 30));
+                    return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id);
+                } else {
+                    updateStep(chat_id, 45);
+                    return "To'lov usullarini tanlang";
                 }
-                return `Data formatida xatolik bor Qaytadan kiriting`
             },
             btn: async ({ chat_id, msgText, user }) => {
-                let data = infoData().find(item => item.id == user.currentDataId)
-                msgText = msgText.replace(`1)To'lov sanasi Yil.Oy.Kun :`, '')
-                msgText = msgText.replace(`\n2)Hisobot To'lov sanasi Yil.Oy.Kun  :`, '')
-                msgText = msgText.split(' ').filter(item => item)
+                const data = infoData().find(item => item.id == user.currentDataId);
+                const parsed = extractStepDates(msgText);
 
-                let count = 0
-                for (let i = 0; i < msgText.length; i++) {
-                    const isValidDate = (...val) => !Number.isNaN(new Date(...val).valueOf());
-                    const dateToCheck = moment(msgText[i].replace(/\D/g, '')).format();
-                    const isValid = isValidDate(dateToCheck);
-                    let isV = (i == 0) ? new Date(moment(new Date()).format('L')) >= new Date(moment(dateToCheck).format('L')) : true
+                if (!parsed.ok) {
+                    return empDynamicBtn();
+                }
 
-                    if (isValid && msgText[i].replace(/\D/g, '').length == 8 && isV) {
-                        count += 1
-                    }
-                }
-                if (count != 2) {
-                    return empDynamicBtn()
-                }
-                let btnList = payType50
-                let btn = user?.update ? data.lastBtn : await dataConfirmBtnEmp(chat_id, btnList, 2, 'payType')
-                updateUser(chat_id, { update: false })
-                return btn
+                return await getPayTypeBtn({ chat_id, user, data });
             },
         },
     },
@@ -1169,6 +1254,53 @@ let adminStep = {
             },
             btn: async ({ chat_id, msgText }) => {
                 return mainMenuByRoles({ chat_id })
+            },
+        },
+    },
+    "5100": {
+        selfExecuteFn: ({ chat_id }) => {
+        },
+        middleware: ({ chat_id, user }) => {
+            return user.user_step == 5100
+        },
+        next: {
+            text: ({ chat_id, msgText, user }) => {
+                let dataId = get(user, 'executorDate.currentDataId')
+                let list = infoData().find(item => item.id == dataId)
+
+                if (!list) {
+                    updateUser(chat_id, { executorDate: {}, user_step: 1 })
+                    return `So'rov topilmadi`
+                }
+
+                if (!isKeepOldDateMessage(msgText)) {
+                    const parsed = extractStepDates(msgText)
+
+                    if (!parsed.ok) {
+                        return `${parsed.error}\n\nEski sanani qoldirish uchun "-" yuboring`
+                    }
+
+                    updateData(dataId, {
+                        startDate: parsed.startDate,
+                        endDate: parsed.endDate
+                    })
+                }
+
+                updateUser(chat_id, { executorDate: {}, user_step: 1 })
+                return `Qo'shimcha file jo'natasizmi ?`
+            },
+            btn: async ({ chat_id, msgText, user }) => {
+                let dataId = get(user, 'executorDate.currentDataId')
+
+                if (!dataId) {
+                    return mainMenuByRoles({ chat_id })
+                }
+
+                if (!isKeepOldDateMessage(msgText) && !extractStepDates(msgText).ok) {
+                    return empDynamicBtn()
+                }
+
+                return await dataConfirmBtnEmp(chat_id, [{ name: "Ha", id: `1#${dataId}` }, { name: "Yo'q", id: `2#${dataId}` }], 2, 'lastFile')
             },
         },
     },

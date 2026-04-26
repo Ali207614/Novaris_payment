@@ -14,6 +14,29 @@ const writeXlsxFile = require('write-excel-file/node')
 let moment = require('moment')
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
+
+const foreignPaymentTypes = [
+    "ZAKLAD TO'LOV",
+    "TOVAR TO'LOV",
+    "TOVAR RASXOD TO'LOV",
+    "LOGISTIKA RASXOD TO'LOV",
+    "KONTEINER RASXOD TO'LOV",
+    "PUL O'TKAZMALARI",
+]
+
+const ensureCurrentMenuData = ({ chat_id, user, menu, menuName }) => {
+    let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+
+    if (!dataCurUser || dataCurUser?.menuName != menuName || dataCurUser.full) {
+        let uid = randomUUID()
+        dataCurUser = { id: uid, menu, menuName, chat_id }
+        updateUser(chat_id, { currentDataId: uid })
+        writeData(dataCurUser)
+    }
+
+    return dataCurUser
+}
+
 let firtBtnExecutor = () => {
     let newBtnMenu = {}
     let menuList = ['Tasdiqlovchi', 'Bajaruvchi', 'Xodim']
@@ -412,7 +435,7 @@ let executorBtn = {
                 }
                 return
             }
-            return 'Mavjud emas'
+            return sendMessageHelper(chat_id, "Mavjud emas")
 
         },
         middleware: ({ chat_id }) => {
@@ -770,12 +793,7 @@ let executeBtn = {
 let xorijiyXaridBtn = {
     "Xorijiy xarid": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
-            if (dataCurUser?.menuName != 'Xorijiy xarid' || dataCurUser.full) {
-                let uid = randomUUID()
-                updateUser(chat_id, { currentDataId: uid })
-                writeData({ id: uid, menu: 1, menuName: 'Xorijiy xarid', chat_id })
-            }
+            ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             updateStep(chat_id, 11)
             let permisson = infoPermisson().find(item => chat_id == item.chat_id)
             let permissonMenuEmp = Object.fromEntries(Object.entries(get(permisson, 'permissonMenuEmp', {})).filter(item => item[1]?.length))
@@ -790,7 +808,7 @@ let xorijiyXaridBtn = {
                 return "Xorijiy xarid"
             },
             btn: async ({ chat_id, user }) => {
-                let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+                let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
                 let permisson = infoPermisson().find(item => item.chat_id == chat_id)
                 let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
                 return empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2)
@@ -799,7 +817,7 @@ let xorijiyXaridBtn = {
     },
     "Xorijiy xarid konteyner buyurtmasi": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 12)
@@ -820,7 +838,7 @@ let xorijiyXaridBtn = {
     },
     "Xorijiy xarid tayyor buyurtma": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 12)
@@ -841,7 +859,7 @@ let xorijiyXaridBtn = {
     },
     "Xorijiy xarid mashina buyurtmasi": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 12)
@@ -862,7 +880,7 @@ let xorijiyXaridBtn = {
     },
     "Xorijiy xarid tovar buyurtmasi": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 12)
@@ -883,10 +901,10 @@ let xorijiyXaridBtn = {
     },
     "Xorijiy xarid to'lovi": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
-            updateStep(chat_id, 20)
+            updateStep(chat_id, 19)
             updateData(get(dataCurUser, 'id'), { subMenu: `Xorijiy xarid to'lovi` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 11 })
         },
@@ -895,16 +913,44 @@ let xorijiyXaridBtn = {
         },
         next: {
             text: ({ chat_id }) => {
-                return "Hujjatni tanlang"
+                return "To'lov turini tanlang"
             },
             btn: async ({ chat_id, }) => {
-                return empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+                return empDynamicBtn(foreignPaymentTypes, 2)
             },
         },
     },
+    ...Object.fromEntries(foreignPaymentTypes.map(paymentType => [paymentType, {
+        selfExecuteFn: ({ chat_id, user }) => {
+            let list = infoData().find(item => item.id == user?.currentDataId)
+            if (user?.update) {
+                updateStep(chat_id, get(list, 'lastStep', 30))
+            }
+            else {
+                updateStep(chat_id, 20)
+                updateBack(chat_id, { text: "To'lov turini tanlang", btn: empDynamicBtn(foreignPaymentTypes, 2), step: 19 })
+            }
+            updateData(user.currentDataId, { foreignPaymentType: paymentType })
+        },
+        middleware: ({ user }) => {
+            return user.user_step == 19
+        },
+        next: {
+            text: ({ chat_id, user }) => {
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                return user?.update ? dataConfirmText(SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id }), 'Tasdiqlaysizmi ?', chat_id) : "Hujjatni tanlang"
+            },
+            btn: async ({ chat_id, user }) => {
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let btn = user?.update ? list.lastBtn : empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2)
+                updateUser(chat_id, { update: false })
+                return btn
+            },
+        },
+    }])),
     "Chetga pul chiqarish": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 90)
@@ -925,7 +971,7 @@ let xorijiyXaridBtn = {
     },
     "Chetga pul chiqarish (Bank)": {
         selfExecuteFn: ({ chat_id, user }) => {
-            let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
+            let dataCurUser = ensureCurrentMenuData({ chat_id, user, menu: 1, menuName: 'Xorijiy xarid' })
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 61)
@@ -1050,14 +1096,22 @@ let xorijiyXaridBtn = {
     },
     "Yetkazib beruvchi": {
         selfExecuteFn: ({ chat_id, user }) => {
+            let list = infoData().find(item => item.id == user?.currentDataId)
             updateBack(chat_id, { text: "Hujjat turi ni tanlang", btn: empDynamicBtn([`Hisob`, `Yetkazib beruvchi`], 2), step: 21 })
+            if (get(list, 'subMenu') == "Xorijiy xarid to'lovi" && !user?.update) {
+                updateStep(chat_id, 2302)
+            }
             updateData(user.currentDataId, { documentType: false, accountCodeOther: '' })
         },
         middleware: ({ chat_id, user }) => {
             return user.user_step == 21
         },
         next: {
-            text: ({ chat_id }) => {
+            text: ({ chat_id, user }) => {
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                if (get(list, 'subMenu') == "Xorijiy xarid to'lovi" && !user?.update) {
+                    return "BUYURTMA RAQAMI"
+                }
                 return "Yetkazib beruvchi ni ismini yozing"
             },
             btn: async ({ chat_id, }) => {
@@ -3035,7 +3089,7 @@ let infoAdminBtn = {
                     .sort((a, b) => a.ID - b.ID);
                 let { objects, schema } = excelFnFormatData({ main: data });
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
-                let paymentLinesExcel = excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
+                let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
                 // Fayllarni yaratish
                 await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
@@ -3087,7 +3141,7 @@ let infoAdminBtn = {
 
                 let { objects, schema } = excelFnFormatData({ main: data });
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
-                let paymentLinesExcel = excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
+                let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
                 await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
 
@@ -3138,10 +3192,12 @@ let infoAdminBtn = {
 
                 let { objects, schema } = excelFnFormatData({ main: data });
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
-                let paymentLinesExcel = excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
+                let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
                 await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
                 await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                console.log('paymentLinesExcel.objects', Array.isArray(paymentLinesExcel.objects), paymentLinesExcel.objects[0]);
+                console.log('paymentLinesExcel.schema', paymentLinesExcel.schema);
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
                     filePath: path.join(process.cwd(), "payment_lines.xlsx"),

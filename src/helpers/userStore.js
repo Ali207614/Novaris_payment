@@ -8,6 +8,7 @@ const DEBOUNCE_MS = Number(process.env.USERSTORE_DEBOUNCE_MS || 200);
 class UserStore {
   constructor() {
     this.cache = null;          // RAM cache (array)
+    this.fileMtimeMs = 0;       // tashqi o'zgarishni sezish uchun
     this.dirty = false;         // diskka yozish kerakmi
     this.flushTimer = null;     // debounced timer
     this.flushing = false;      // hozir flush ketyaptimi
@@ -17,7 +18,21 @@ class UserStore {
   // --- Helpers ---
 
   _loadOnce() {
-    if (this.cache) return this.cache;
+    const stat = fs.existsSync(FILE_PATH) ? fs.statSync(FILE_PATH) : null;
+
+    if (this.cache) {
+      if (!this.dirty && stat && this.fileMtimeMs && stat.mtimeMs !== this.fileMtimeMs) {
+        const raw = fs.readFileSync(FILE_PATH, "utf-8");
+        try {
+          this.cache = raw ? JSON.parse(raw) : [];
+          this.fileMtimeMs = stat.mtimeMs;
+        } catch (e) {
+          // Agar fayl buzilgan bo'lsa, eski cache bilan davom etamiz
+        }
+      }
+      return this.cache;
+    }
+
     const raw = fs.existsSync(FILE_PATH) ? fs.readFileSync(FILE_PATH, "utf-8") : "";
     try {
       this.cache = raw ? JSON.parse(raw) : [];
@@ -25,6 +40,7 @@ class UserStore {
       // Agar fayl buzilgan bo'lsa, xavfsiz default
       this.cache = [];
     }
+    this.fileMtimeMs = stat ? stat.mtimeMs : 0;
     return this.cache;
   }
 
@@ -48,6 +64,8 @@ class UserStore {
     try {
       await fs.promises.writeFile(tmp, JSON.stringify(data, null, 2), "utf-8");
       await fs.promises.rename(tmp, FILE_PATH);
+      const stat = await fs.promises.stat(FILE_PATH);
+      this.fileMtimeMs = stat.mtimeMs;
       this.dirty = false;
       this.flushing = false;
       const pending = this.pendingResolves.splice(0);

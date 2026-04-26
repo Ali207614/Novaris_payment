@@ -135,9 +135,9 @@ class botConroller {
                         await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, data, isGroup, groupChatId, id: get(msg, 'message.message_id', 0), user }) : undefined
                         if (Object.values(get(execute, 'next', {})).length) {
                             let dataInfo = {}
-                            let textBot = await execute?.next?.text({ chat_id, data, isGroup, groupChatId })
                             let currentUser = infoUser().find(item => item.chat_id == chat_id)
-                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, isGroup, groupChatId, user }) : undefined
+                            let textBot = await execute?.next?.text({ chat_id, data, isGroup, groupChatId, user: currentUser })
+                            let btnBot = await execute?.next?.btn ? await execute?.next?.btn({ chat_id, data, msg, isGroup, groupChatId, user: currentUser }) : undefined
                             if (get(currentUser, 'update') && !execute?.document) {
                                 dataInfo = infoData().find(item => get(item, 'id') == get(currentUser, 'currentDataId'))
                             }
@@ -256,7 +256,7 @@ class botConroller {
 
         let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
         let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: list.id }), text, chat_id)
-        if (get(cred, 'jira')) {
+        if (get(cred, 'jira') && get(list, 'ticket')) {
             let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
             updateData(list.id, { ticketAdd: true, ticketStatusObj: statusObj, jira: false })
             count += 1

@@ -14,6 +14,12 @@ const { boshqaBtn } = require("./text");
 
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
+
+const isSapExecutorRequest = (list = {}) => {
+    let cred = SubMenu()[get(list, 'menu', 1)]?.find(item => item.name == list.subMenu)
+    return Boolean(get(cred, 'b1.status')) && get(list, 'sapB1') !== false
+}
+
 let xorijiyXaridCallback = {
     "confirmEmp": {
         document: true,
@@ -248,6 +254,12 @@ let xorijiyXaridCallback = {
             if (get(list, 'executor')) {
                 return
             }
+            else if (data[1] == '1') {
+                if (isSapExecutorRequest(list)) {
+                    updateStep(chat_id, 5100)
+                    updateUser(chat_id, { executorDate: { currentDataId: data[2] } })
+                }
+            }
             else if (data[1] == '2') {
                 updateStep(chat_id, 5000)
                 updateUser(chat_id, { notConfirmId: data[2], confirmationStatus: true })
@@ -291,7 +303,10 @@ let xorijiyXaridCallback = {
                     return text
                 }
                 if (data[1] == '1') {
-                    return `Qo'shimcha file jo'natasizmi ?`
+                    if (!isSapExecutorRequest(list)) {
+                        return `Qo'shimcha file jo'natasizmi ?`
+                    }
+                    return `To'lov sanasini kiriting yoki eski sanani qoldirish uchun "-" yuboring\n\n1)To'lov sanasi Yil.Oy.Kun : ${get(list, 'startDate')}\n2)Hisobot To'lov sanasi Yil.Oy.Kun  : ${get(list, 'endDate')}`
                 }
                 if (data[1] == '2') {
                     updateData(data[2], {
@@ -314,7 +329,10 @@ let xorijiyXaridCallback = {
                     return mainMenuByRoles({ chat_id })
                 }
                 if (data[1] == '1') {
-                    return await dataConfirmBtnEmp(chat_id, [{ name: "Ha", id: `1#${data[2]}` }, { name: "Yo'q", id: `2#${data[2]}` }], 2, 'lastFile')
+                    if (!isSapExecutorRequest(list)) {
+                        return await dataConfirmBtnEmp(chat_id, [{ name: "Ha", id: `1#${data[2]}` }, { name: "Yo'q", id: `2#${data[2]}` }], 2, 'lastFile')
+                    }
+                    return
                 }
                 return mainMenuByRoles({ chat_id })
             },
@@ -386,7 +404,7 @@ let xorijiyXaridCallback = {
 
                     let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
                     let dataInfo = dataConfirmText(cred.infoFn({ chat_id: list.chat_id, id: data[2] }), text, chat_id)
-                    if (get(cred, 'jira')) {
+                    if (get(cred, 'jira') && get(list, 'ticket')) {
 
                         let statusObj = await jiraController.jiraIntegrationResultObj({ list, cred, dataInfo })
                         updateData(data[2], { ticketAdd: true, ticketStatusObj: statusObj, jira: false })

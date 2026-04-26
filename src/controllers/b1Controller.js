@@ -6,6 +6,10 @@ const moment = require('moment');
 const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES, DATABASE } = require("../repositories/dataRepositories");
 const { saveSession, getSession } = require("../helpers");
 
+
+
+
+
 class b1Controller {
     async auth() {
         let obj = {
@@ -13,12 +17,6 @@ class b1Controller {
             "UserName": "Fin7",
             "Password": "1234"
         }
-
-        // let obj = {
-        //     "CompanyDB": "TEST311223",
-        //     "UserName": "manager",
-        //     "Password": "w2e3r4Q!"
-        // }
         const axios = Axios.create({
             baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,

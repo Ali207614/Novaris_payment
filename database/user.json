@@ -7,8 +7,182 @@
     "MobilePhone": "998903367448",
     "chat_id": 561932032,
     "is_active": true,
-    "user_step": 1,
-    "back": [],
+    "user_step": 21,
+    "back": [
+      {
+        "text": "Assalomu Aleykum",
+        "btn": {
+          "parse_mode": "Markdown",
+          "reply_markup": {
+            "resize_keyboard": true,
+            "keyboard": [
+              [
+                {
+                  "text": "Xodim"
+                },
+                {
+                  "text": "Tasdiqlovchi"
+                }
+              ],
+              [
+                {
+                  "text": "Bajaruvchi"
+                }
+              ]
+            ]
+          }
+        },
+        "step": 1
+      },
+      {
+        "text": "So'rovlar",
+        "btn": {
+          "parse_mode": "Markdown",
+          "reply_markup": "{\"resize_keyboard\":true,\"keyboard\":[[{\"text\":\"So'rov Yuborish\"},{\"text\":\"Kutilayotgan so’rovlar\"}],[{\"text\":\"Tasdiqlangan so’rovlar\"},{\"text\":\"Rad etilgan so'rovlar\"}],[{\"text\":\"Orqaga\"}]]}",
+          "chat_id": 561932032,
+          "text": "Xodim"
+        },
+        "step": 2
+      },
+      {
+        "text": "Sub Menuni tanlang",
+        "btn": {
+          "parse_mode": "Markdown",
+          "reply_markup": {
+            "resize_keyboard": true,
+            "keyboard": [
+              [
+                {
+                  "text": "Xorijiy xarid"
+                },
+                {
+                  "text": "To'lov/Xarajat"
+                },
+                {
+                  "text": "Shartnoma"
+                }
+              ],
+              [
+                {
+                  "text": "Narx chiqarish"
+                },
+                {
+                  "text": "Boshqa"
+                },
+                {
+                  "text": "Overtime"
+                }
+              ],
+              [
+                {
+                  "text": "Orqaga"
+                }
+              ]
+            ]
+          }
+        },
+        "step": 10
+      },
+      {
+        "text": "Sub Menuni tanlang",
+        "btn": {
+          "parse_mode": "Markdown",
+          "reply_markup": {
+            "resize_keyboard": true,
+            "keyboard": [
+              [
+                {
+                  "text": "Xorijiy xarid tovar buyurtmasi"
+                },
+                {
+                  "text": "Xorijiy xarid to'lovi"
+                }
+              ],
+              [
+                {
+                  "text": "Chetga pul chiqarish"
+                },
+                {
+                  "text": "Chetga pul chiqarish (Bank)"
+                }
+              ],
+              [
+                {
+                  "text": "Orqaga"
+                }
+              ]
+            ]
+          }
+        },
+        "step": 11
+      },
+      {
+        "text": "To'lov turini tanlang",
+        "btn": {
+          "parse_mode": "Markdown",
+          "reply_markup": {
+            "resize_keyboard": true,
+            "keyboard": [
+              [
+                {
+                  "text": "ZAKLAD TO'LOV"
+                },
+                {
+                  "text": "TOVAR TO'LOV"
+                }
+              ],
+              [
+                {
+                  "text": "TOVAR RASXOD TO'LOV"
+                },
+                {
+                  "text": "LOGISTIKA RASXOD TO'LOV"
+                }
+              ],
+              [
+                {
+                  "text": "KONTEINER RASXOD TO'LOV"
+                },
+                {
+                  "text": "PUL O'TKAZMALARI"
+                }
+              ],
+              [
+                {
+                  "text": "Orqaga"
+                }
+              ]
+            ]
+          }
+        },
+        "step": 19
+      },
+      {
+        "text": "Hujjatni tanlang",
+        "btn": {
+          "parse_mode": "Markdown",
+          "reply_markup": {
+            "resize_keyboard": true,
+            "keyboard": [
+              [
+                {
+                  "text": "Chiquvchi to'lov"
+                },
+                {
+                  "text": "Kiruvchi to'lov"
+                }
+              ],
+              [
+                {
+                  "text": "Orqaga"
+                }
+              ]
+            ]
+          }
+        },
+        "step": 20
+      }
+    ],
     "creationDate": "2025-01-06T13:33:32.510Z",
     "currentUserRole": "Xodim",
     "update": false,
@@ -25,7 +199,7 @@
     "selectedAdminUserChatId": "251065",
     "selectedAdminUserStatus": "affirmative",
     "selectAdminMenuId": "3",
-    "currentDataId": "GAcnmUujkT",
+    "currentDataId": "rVGWUi5XpE",
     "accountListAdmin": {
       "status": true
     },
@@ -40,7 +214,7 @@
       "menu": "4",
       "subMenu": "3"
     },
-    "lastMessageId": 2888787,
+    "lastMessageId": 13264,
     "adminType": "update",
     "updatePaginationMenu": 2,
     "updateMenu": {
@@ -69,8 +243,9 @@
       "text": "O'zgartirasizmi ?\n\nAsosiy Menu Nomi : Tovarlarni qaytarish\nSub Menu Nomi : Do'konga tovarlarni qaytarish\nKommentariya : Sana:\nMijoz nomi:\nTovar olgan sanasi:\n\nTovar1:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar2:\nOlingan miqdori:\nQaytarayotgan miqdori:\nTovar3:\nOlingan miqdori:\nQaytarayotgan miqdori:\n\nTovar qaytarish sababi:\nTovarni qayerga qaytishi:\nTovarni kim olib kelishi:\n\n#vozvrat\nYaratilagan Sana : July 16, 2024\n",
       "step": 802
     },
-    "selectedInfoMenu": "Bajarilishi kutilaytogan so’rovlar",
-    "JobTitle": "Admin"
+    "selectedInfoMenu": "Bajarilmagan so'rovlar",
+    "JobTitle": "User",
+    "executorDate": {}
   },
   {
     "EmployeeID": 77,
