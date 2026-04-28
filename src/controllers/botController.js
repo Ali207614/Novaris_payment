@@ -12,6 +12,7 @@ const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = req
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
 const b1Controller = require("./b1Controller");
 const jiraController = require("./jiraController");
+const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
 
 class botConroller {
     async text(msg, chat_id) {
@@ -68,6 +69,11 @@ class botConroller {
                 execute = execute ? execute[msg.text] : {}
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, isGroup, groupChatId, user }) : undefined
+                    let userAfterExecute = infoUser().find((item) => item.chat_id === chat_id);
+                    let dataAfterExecute = infoData().find(item => get(item, 'id') == get(userAfterExecute, 'currentDataId'))
+                    if (!get(userAfterExecute, 'update') && get(userAfterExecute, 'user_step') == 61 && shouldAskCustomer(dataAfterExecute)) {
+                        updateStep(chat_id, CUSTOMER_SEARCH_STEP)
+                    }
                     if (Object.values(get(execute, 'next', {})).length) {
                         let user = infoUser().find((item) => item.chat_id === chat_id);
 

@@ -6,10 +6,6 @@ const moment = require('moment');
 const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES, DATABASE } = require("../repositories/dataRepositories");
 const { saveSession, getSession } = require("../helpers");
 
-
-
-
-
 class b1Controller {
     async auth() {
         let obj = {
@@ -67,6 +63,21 @@ class b1Controller {
         try {
             let sql = PARTNERSEARCH + ` and T0.\"GroupCode\" in  (${groupList.map(item => `'${item}'`)})`
             let data = await dbService.executeParam(sql, [`%${name}%`])
+            return data
+        }
+        catch (e) {
+            throw new Error(e)
+        }
+    }
+    async getCustomer(name = "") {
+        try {
+            const query = `
+                SELECT T0."CardCode", T0."CardName", T0."GroupCode", T0."CardType", T0."Phone1", T0."Phone2"
+                FROM "${DATABASE}"."OCRD" T0
+                WHERE LOWER(T0."CardName") LIKE ?
+                    AND T0."CardType" = 'C'
+            `;
+            let data = await dbService.executeParam(query, [`%${name}%`])
             return data
         }
         catch (e) {

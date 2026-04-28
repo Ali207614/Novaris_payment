@@ -12,6 +12,7 @@ const { bot } = require("../config");
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 let moment = require('moment')
+const { getCustomerSelectionText } = require("../helpers/customerSelection")
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -985,7 +986,7 @@ let xorijiyXaridBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -1169,7 +1170,7 @@ let mahalliyXaridBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -1303,7 +1304,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -1326,7 +1327,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -1730,7 +1731,7 @@ let tolovHarajatBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2015,7 +2016,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2038,7 +2039,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2061,7 +2062,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2084,20 +2085,20 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
             },
         },
     },
-    "DQ Shartnoma shabloni": {
+    "FR Shartnoma shabloni": {
         selfExecuteFn: ({ chat_id, user }) => {
             let dataCurUser = infoData().find(item => item.id == user?.currentDataId)
             let permisson = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
             updateStep(chat_id, 61)
-            updateData(get(dataCurUser, 'id'), { subMenu: `DQ Shartnoma shabloni` })
+            updateData(get(dataCurUser, 'id'), { subMenu: `FR Shartnoma shabloni` })
             updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(item => permissonSubMenu.includes(`${item.id}`)).map(item => item.name)], 2), step: 60 })
         },
         middleware: ({ chat_id, user }) => {
@@ -2107,7 +2108,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2131,7 +2132,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2154,7 +2155,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2177,7 +2178,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2200,7 +2201,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2223,7 +2224,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2253,7 +2254,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2276,7 +2277,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2299,7 +2300,7 @@ let shartnomaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2358,7 +2359,7 @@ let narxChiqarishBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2381,7 +2382,7 @@ let narxChiqarishBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2439,7 +2440,7 @@ let boshqaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2462,7 +2463,7 @@ let boshqaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2485,7 +2486,7 @@ let boshqaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -2508,7 +2509,7 @@ let boshqaBtn = {
             text: ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
                 let findComment = SubMenu()[get(list, 'menu', 3)].find(item => item.name == list.subMenu)?.comment
-                return findComment
+                return getCustomerSelectionText(list, findComment)
             },
             btn: async ({ chat_id, }) => {
                 return empDynamicBtn()
@@ -3292,7 +3293,7 @@ let newBtnExecuter = () => {
                         text: ({ chat_id, user }) => {
                             let list = infoData().find(el => el.id == user?.currentDataId)
                             let findComment = SubMenu()[get(list, 'menu', 3)]?.find(el => el.name == list.subMenu)?.comment
-                            return findComment || 'Error'
+                            return getCustomerSelectionText(list, findComment || 'Error')
                         },
                         btn: async ({ chat_id, }) => {
                             return empDynamicBtn()
@@ -3326,3 +3327,4 @@ module.exports = {
     confirmativeBtn,
     executorBtn
 }
+

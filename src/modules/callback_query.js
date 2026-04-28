@@ -10,6 +10,7 @@ const { mainMenuByRoles } = require("../keyboards/keyboards");
 const { dataConfirmText, ticketAddText, userInfoText } = require("../keyboards/text");
 let moment = require('moment');
 const { boshqaBtn } = require("./text");
+const { CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection");
 
 
 const sleepNow = (delay) =>
@@ -1307,6 +1308,54 @@ let mahalliyXaridCallback = {
 }
 
 let othersCallback = {
+    "paginationCustomer": {
+        document: true,
+        selfExecuteFn: ({ chat_id, data }) => {
+        },
+        middleware: ({ user }) => {
+            return get(user, 'user_step') == CUSTOMER_SELECT_STEP
+        },
+        next: {
+            text: () => {
+                return `Mijozni tanlang`
+            },
+            btn: async ({ chat_id, data, user }) => {
+                let list = infoData().find(item => item.id == user.currentDataId)
+                let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
+                return await dataConfirmBtnEmp(chat_id, list.customerList, 1, 'customerSearch', pagination)
+            },
+            update: true
+        },
+    },
+    "customerSearch": {
+        selfExecuteFn: async ({ chat_id, data, user }) => {
+            let list = infoData().find(item => item.id == user.currentDataId)
+            let selectedCustomer = get(list, 'customerList', []).find(item => item.id == data[1]) || {}
+            let pagination = { prev: 0, next: 10 }
+            let btn = await dataConfirmBtnEmp(chat_id, list.customerList, 1, 'customerSearch', pagination)
+            updateStep(chat_id, 61)
+            updateBack(chat_id, { text: `Mijozni tanlang`, btn, step: CUSTOMER_SELECT_STEP })
+            updateData(user.currentDataId, {
+                customerId: data[1],
+                customerCode: data[1],
+                customerName: get(selectedCustomer, 'customerName', get(selectedCustomer, 'name', '')),
+                customerList: selectedCustomer.id ? [selectedCustomer] : get(list, 'customerList', [])
+            })
+        },
+        middleware: ({ user }) => {
+            return get(user, 'user_step') == CUSTOMER_SELECT_STEP
+        },
+        next: {
+            text: ({ user }) => {
+                let list = infoData().find(item => item.id == user?.currentDataId)
+                let findComment = SubMenu()[get(list, 'menu', 3)]?.find(item => item.name == list.subMenu)?.comment
+                return findComment || 'Izoh'
+            },
+            btn: async () => {
+                return empDynamicBtn()
+            },
+        },
+    },
     "accountType": {
         document: true,
         selfExecuteFn: async ({ chat_id, data, user }) => {

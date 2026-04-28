@@ -4,6 +4,7 @@ const { SubMenu, Menu } = require("../credentials")
 const { infoMenu, infoAllMenu, infoAllSubMenu, infoUser, updateUser, infoData, updateData, infoPermisson } = require("../helpers")
 const { dataConfirmBtnEmp } = require("./inline_keyboards")
 const moment = require('moment')
+const { getSelectedCustomer } = require("../helpers/customerSelection")
 
 const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '') => {
     let user = infoUser().find(item => item.chat_id == chat_id)
@@ -20,6 +21,15 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
         confirmative = get(userData, 'confirmative', {})
         newErrStr = get(userData, 'SapJiraMessage', '')
         notConfirmMessage += get(userData, 'notConfirmMessage', '')
+        const customer = getSelectedCustomer(userData)
+        if (customer.code && !list.find(item => item.name == 'Mijoz kodi')) {
+            list = [
+                ...list.slice(0, 3),
+                { name: 'Mijoz', message: customer.name },
+                { name: 'Mijoz kodi', message: customer.code },
+                ...list.slice(3),
+            ]
+        }
     }
     if (get(user, 'waitingUpdateStatus')) {
         confirmativeUpdateMessage({ user, list, chat_id })
@@ -36,7 +46,7 @@ const dataConfirmText = (list = [], firstText = 'Tasdiqlaysizmi ? ', chat_id = '
     let result = `${firstText}\n\n`
 
 
-    let sort = ['ID', 'SubMenu', 'Ticket raqami', 'SAP Document', "To'lov sanasi", "Hisobot To'lov sanasi", "Hisob (qayerdan)", 'Yetkazib beruvchi', "Hisob (qayerga)", 'Zakupka', "Statya DDS", "To'lov Usuli", "Summa", "Valyuta kursi", "Hisob Nuqtasi", "Izoh"]
+    let sort = ['ID', 'SubMenu', 'Mijoz', 'Mijoz kodi', 'Ticket raqami', 'SAP Document', "To'lov sanasi", "Hisobot To'lov sanasi", "Hisob (qayerdan)", 'Yetkazib beruvchi', "Hisob (qayerga)", 'Zakupka', "Statya DDS", "To'lov Usuli", "Summa", "Valyuta kursi", "Hisob Nuqtasi", "Izoh"]
 
     list = list.filter(item => !['Hujjat turi', 'Menu', 'Valyuta'].includes(item.name)).map(item => {
         let findIndex = sort.findIndex(el => el.trim().toLowerCase() == get(item, 'name', '').trim().toLowerCase())

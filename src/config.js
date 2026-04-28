@@ -1,6 +1,6 @@
 const TelegramAPi = require("node-telegram-bot-api");
 let token = `7191276212:AAG0J_K5UwoZLBqHn67gpZ8dsH6NKHGyS-Q`
-// let token = `5902250488:AAEXcOm02e6PohBxNLL-s-7rczUrrcpLTEI`
+//let token = `5902250488:AAEXcOm02e6PohBxNLL-s-7rczUrrcpLTEI`
 // 192.168.1.3
 // 66.45.245.130
 let conn_params = {
@@ -8,7 +8,7 @@ let conn_params = {
     uid: 'SYSTEM',
     pwd: 'GrvYL8YX',
 };
-let jiraToken = 'ATATT3xFfGF03KuknJ3pr_bErcKptVcFHzSc7E-SihdqZEqlMJ3rGKSICUD8ALXkXxGagDapxfwOkk1bbNtiJqRxAz9g68XR_m_guM9j88gfx1K2bIKwchWZnM-LWUTJBlEKrM38nlbVoyT1336kN7ESxPU5sRdcl63ZJzBz6O0xIKI4mk6wa9s=829302D7'
+let jiraToken = 'ATATT3xFfGF06F4pe8yWqSjhAc7gRxLyVHc7QMqB4-NEJwzTCYCIr-z0VOm_aaOZkvdr1Ywb4_ziWS04kuo9wEslSELRfszUonQJVAbUX8NvU43WKSEpDfuMTN2DGIFDJH-QCKUKzI0GWNTNQwm53F2DptiRbecmoDFadZ98FA_QUDdkn4QFb7I=4A9D8431'
 
 let bot = new TelegramAPi(token, {
     polling: true,

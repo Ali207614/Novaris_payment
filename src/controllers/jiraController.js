@@ -5,12 +5,16 @@ const { get } = require("lodash");
 const { jiraToken } = require("../config");
 const { dataConfirmText } = require("../keyboards/text");
 
+const jiraEmail = 'ferrotelegrambot@gmail.com';
 let authKey = `Basic ${Buffer.from(
-    `ferrotelegrambot@gmail.com:${jiraToken}`
+    `${jiraEmail}:${`${jiraToken || ''}`.trim()}`
 ).toString('base64')}`
 // ferrotelegrambot@gmail.com
 class jiraController {
+    normalizeIssueKey = (issueKey = '') => `${issueKey || ''}`.trim().toUpperCase()
+
     getTicketById = async ({ issueKey }) => {
+        issueKey = this.normalizeIssueKey(issueKey)
         const axios = Axios.create({
             baseURL: `https://tisco-uz.atlassian.net/rest/api/2/`,
             timeout: 30000,
@@ -31,6 +35,7 @@ class jiraController {
     }
 
     updateTicketCommentById = async ({ issueKey, bodyData }) => {
+        issueKey = this.normalizeIssueKey(issueKey)
         const axios = Axios.create({
             baseURL: `https://tisco-uz.atlassian.net/rest/api/2/`,
             timeout: 30000,
@@ -85,6 +90,7 @@ class jiraController {
     }
 
     postTicketTransitionsById = async ({ issueKey, transitionId }) => {
+        issueKey = this.normalizeIssueKey(issueKey)
         const bodyData = {
             transition: {
                 id: transitionId,
@@ -110,6 +116,7 @@ class jiraController {
     }
 
     putTicketDateById = async ({ issueKey }) => {
+        issueKey = this.normalizeIssueKey(issueKey)
         const bodyData = {
             fields: {
                 "customfield_10041": new Date(),

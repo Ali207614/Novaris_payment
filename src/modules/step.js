@@ -11,6 +11,7 @@ const { mainMenuByRoles, adminKeyboard } = require("../keyboards/keyboards")
 const { dataConfirmText } = require("../keyboards/text")
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
+const { CUSTOMER_SEARCH_STEP, CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection")
 
 
 const cleanTelegramText = (text = '') => {
@@ -109,6 +110,7 @@ let xorijiyXaridStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
+                msgText = `${msgText || ''}`.trim().toUpperCase()
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let jira = await jiraController.getTicketById({ issueKey: msgText })
@@ -381,6 +383,7 @@ let xorijiyXaridStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
+                msgText = `${msgText || ''}`.trim().toUpperCase()
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user.currentDataId)
                 let jira = await jiraController.getTicketById({ issueKey: msgText })
@@ -865,6 +868,49 @@ let mahalliyXaridStep = {
 }
 
 let tolovHarajatStep = {
+    [CUSTOMER_SEARCH_STEP]: {
+        selfExecuteFn: async ({ chat_id, msgText, user }) => {
+            const searchText = cleanTelegramText(msgText).toLowerCase();
+            if (searchText.length > 3) {
+                updateStep(chat_id, CUSTOMER_SELECT_STEP)
+                updateBack(chat_id, { text: `Mijoz ismini yozing`, btn: empDynamicBtn(), step: CUSTOMER_SEARCH_STEP })
+                let b1Customer = await b1Controller.getCustomer(searchText)
+                let customerList = b1Customer.map((item, i) => {
+                    return {
+                        name: `${item.CardName} - ${item.CardCode}`,
+                        customerName: item.CardName,
+                        id: item.CardCode,
+                        num: i + 1
+                    }
+                })
+                updateData(user?.currentDataId, { customerList })
+            }
+        },
+        middleware: ({ user }) => {
+            return user.user_step == CUSTOMER_SEARCH_STEP
+        },
+        next: {
+            text: async ({ msgText, user }) => {
+                let data = infoData().find(item => item.id == user.currentDataId)
+                if (cleanTelegramText(msgText).length > 3) {
+                    if (data?.customerList?.length) {
+                        return `Mijozni tanlang`
+                    }
+                    return `Mijoz mavjud emas`
+                }
+                return `Mijoz ismi 3 ta harfdan katta bo'lishi kerak`
+            },
+            btn: async ({ chat_id, msgText, user }) => {
+                let data = infoData().find(item => item.id == user.currentDataId)
+                if (cleanTelegramText(msgText).length > 3) {
+                    if (data?.customerList?.length) {
+                        return await dataConfirmBtnEmp(chat_id, data?.customerList, 1, 'customerSearch')
+                    }
+                }
+                return empDynamicBtn()
+            },
+        },
+    },
     "61": {
         selfExecuteFn: ({ chat_id, msgText, user }) => {
             let data = infoData().find(item => item.id == user.currentDataId)

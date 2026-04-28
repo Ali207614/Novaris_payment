@@ -8,6 +8,7 @@ let moment = require('moment')
 
 const path = require('path');
 const ExcelJS = require('exceljs');
+const { getSelectedCustomer } = require("../helpers/customerSelection")
 
 const foreignPaymentTypes = [
     "ZAKLAD TO'LOV",
@@ -3516,7 +3517,7 @@ let SubMenu = () => {
                 }
             },
             {
-                name: "DQ Shartnoma shabloni",
+                name: "FR Shartnoma shabloni",
                 comment: `Sana:\nOfisdan dogovor so'rash shabloni:\n-Firma: Bolter (Unikus)\n-Mijoz: Ismi\n-Buxgalter ismi va telefon raqami: Tel nomeri\n-INN: 
                 \n-Shartnoma turi: ochiq\n-Shartnoma summasi: ?? mln\n-Ishonchnoma summasi : ?? mln\n-Ishonchnoma nomeri va sanasi: (31.12.2021)\n-To'lov summasi:\n-Tovar narxi: (Bizni prixodga qarab)\n-Tovar nomi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#shartnomaQ01\n\n@XusravRasulov\n@TolanovTolqin`,
                 update: [
@@ -4333,6 +4334,7 @@ let excelFnFormatData = ({ main }) => {
             'name',
             ''
         );
+        const selectedCustomer = getSelectedCustomer(data);
 
         const accountName = [
             ...get(data, 'accountList43', []),
@@ -4413,6 +4415,8 @@ let excelFnFormatData = ({ main }) => {
 
             { key: 'menu', label: 'Menu', message: get(data, 'menuName', '') },
             { key: 'submenu', label: 'SubMenu', message: get(data, 'subMenu', '') },
+            { key: 'customer', label: 'Mijoz', message: selectedCustomer.name },
+            { key: 'customer_code', label: 'Mijoz kodi', message: selectedCustomer.code },
             { key: 'employee', label: 'Xodim', message: empName },
             {
                 key: 'confirmative',
@@ -4483,7 +4487,11 @@ let excelFnFormatData = ({ main }) => {
                         obj.width = 25;
                         break;
                     case 'partner':
+                    case 'customer':
                         obj.width = 30;
+                        break;
+                    case 'customer_code':
+                        obj.width = 16;
                         break;
                     case 'comment':
                         obj.width = 50;

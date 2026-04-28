@@ -7,7 +7,7 @@
     "MobilePhone": "998903367448",
     "chat_id": 561932032,
     "is_active": true,
-    "user_step": 21,
+    "user_step": 60,
     "back": [
       {
         "text": "Assalomu Aleykum",
@@ -82,105 +82,6 @@
           }
         },
         "step": 10
-      },
-      {
-        "text": "Sub Menuni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Xorijiy xarid tovar buyurtmasi"
-                },
-                {
-                  "text": "Xorijiy xarid to'lovi"
-                }
-              ],
-              [
-                {
-                  "text": "Chetga pul chiqarish"
-                },
-                {
-                  "text": "Chetga pul chiqarish (Bank)"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 11
-      },
-      {
-        "text": "To'lov turini tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "ZAKLAD TO'LOV"
-                },
-                {
-                  "text": "TOVAR TO'LOV"
-                }
-              ],
-              [
-                {
-                  "text": "TOVAR RASXOD TO'LOV"
-                },
-                {
-                  "text": "LOGISTIKA RASXOD TO'LOV"
-                }
-              ],
-              [
-                {
-                  "text": "KONTEINER RASXOD TO'LOV"
-                },
-                {
-                  "text": "PUL O'TKAZMALARI"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 19
-      },
-      {
-        "text": "Hujjatni tanlang",
-        "btn": {
-          "parse_mode": "Markdown",
-          "reply_markup": {
-            "resize_keyboard": true,
-            "keyboard": [
-              [
-                {
-                  "text": "Chiquvchi to'lov"
-                },
-                {
-                  "text": "Kiruvchi to'lov"
-                }
-              ],
-              [
-                {
-                  "text": "Orqaga"
-                }
-              ]
-            ]
-          }
-        },
-        "step": 20
       }
     ],
     "creationDate": "2025-01-06T13:33:32.510Z",
@@ -199,7 +100,7 @@
     "selectedAdminUserChatId": "251065",
     "selectedAdminUserStatus": "affirmative",
     "selectAdminMenuId": "3",
-    "currentDataId": "rVGWUi5XpE",
+    "currentDataId": "cpbErKOJ7p",
     "accountListAdmin": {
       "status": true
     },
@@ -214,7 +115,7 @@
       "menu": "4",
       "subMenu": "3"
     },
-    "lastMessageId": 13264,
+    "lastMessageId": 13373,
     "adminType": "update",
     "updatePaginationMenu": 2,
     "updateMenu": {
