@@ -5,8 +5,13 @@ const hanaClient = require("@sap/hana-client");
 let tls = require('tls');
 const { sendMessageHelper, deleteData, updateUser } = require("./helpers");
 
+const { connectDB } = require("./database/mongoose.module");
+
 const start = async () => {
     try {
+        // Initialize MongoDB without blocking the main bot logic initially
+        connectDB().catch(err => console.error("MongoDB init error:", err));
+
         bot.setMyCommands([
             { command: "/start", description: "start" },
             { command: "/info", description: "info" },
