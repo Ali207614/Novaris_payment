@@ -1,5 +1,5 @@
 const TelegramAPi = require("node-telegram-bot-api");
-let token = `7191276212:AAG0J_K5UwoZLBqHn67gpZ8dsH6NKHGyS-Q`
+let token = `8608084291:AAFy6rzo6WOQ6RDDNDV0w3S3PsHjvGdNjt8`
 //let token = `5902250488:AAEXcOm02e6PohBxNLL-s-7rczUrrcpLTEI`
 // 192.168.1.3
 // 66.45.245.130
@@ -14,7 +14,7 @@ let bot = new TelegramAPi(token, {
     polling: true,
 });
 
-let personalChatId = '561932032'
+let personalChatId = '8641624618'
 
 module.exports = { bot, personalChatId, conn_params, jiraToken }
 

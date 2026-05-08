@@ -21,7 +21,7 @@ const start = async () => {
         const connection = hanaClient.createConnection();
         connection.connect(conn_params, async (err) => {
             if (err) {
-                sendMessageHelper("561932032", `Connection error ${err}`);
+                sendMessageHelper("8641624618", `Connection error ${err}`);
             } else {
                 deleteData({ id: 'K9lonOcgG3' })
                 bot.on("text", async (msg) => {
