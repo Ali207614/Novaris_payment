@@ -1,6 +1,5 @@
 const { bot, personalChatId, conn_params } = require("./config");
 const botController = require("./controllers/botController");
-const b1Controller = require("./controllers/b1Controller")
 const hanaClient = require("@sap/hana-client");
 let tls = require('tls');
 const { sendMessageHelper, deleteData, updateUser } = require("./helpers");
