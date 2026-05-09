@@ -1,7 +1,7 @@
 const { get, update } = require("lodash")
 const moment = require('moment')
 const { bot } = require("../config")
-const b1Controller = require("../controllers/b1Controller")
+const financialDbController = require("../controllers/financialDbController")
 const jiraController = require("../controllers/jiraController")
 let { SubMenu, ocrdList, payType50, excelFnFormatData, excelFnPaymentData, excelFnPaymentLines } = require("../credentials")
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate, sendMessageHelper, infoAccountPermisson, infoAccountList, writeInfoAccountList } = require("../helpers")
@@ -83,7 +83,7 @@ const isForeignPaymentAccountDocument = (data = {}) => {
 };
 
 const getFilteredAccount43 = async (data = {}) => {
-    let b1Account43 = await b1Controller.getAccount43()
+    let b1Account43 = await financialDbController.getAccount43()
     let accountList43 = (b1Account43 || []).map((item, i) => {
         return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
     })
@@ -212,7 +212,7 @@ let xorijiyXaridStep = {
             if (msgText.length > 3) {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateBack(chat_id, { text: `Yetkazib beruvchi ni ismini yozing`, btn: empDynamicBtn(), step: 21 })
-                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [101, 106])
+                let b1Partner = await financialDbController.getPartner(msgText.toLowerCase(), [101, 106])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
                 })
@@ -363,7 +363,7 @@ let xorijiyXaridStep = {
                 updateStep(chat_id, 25)
                 updateBack(chat_id, { text: `Ticket raqamini kiriting`, btn: empDynamicBtn(), step: 24 })
             }
-            let b1Account43 = await b1Controller.getAccount43()
+            let b1Account43 = await financialDbController.getAccount43()
             let accountList43 = b1Account43?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -398,7 +398,7 @@ let xorijiyXaridStep = {
                             updateStep(chat_id, 25)
                             updateBack(chat_id, { text: `Ticket raqamini kiriting`, btn: empDynamicBtn(), step: 24 })
                         }
-                        let b1Account43 = await b1Controller.getAccount43()
+                        let b1Account43 = await financialDbController.getAccount43()
                         let accountList43 = b1Account43?.map((item, i) => {
                             return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                         })
@@ -473,7 +473,7 @@ let xorijiyXaridStep = {
                 let btn = empDynamicBtn()
                 updateBack(chat_id, { text: `Summani kiriting`, btn, step: 27 })
             }
-            let data = await b1Controller.getCurrentRate('CNY', get(list, 'startDate', ''))
+            let data = await financialDbController.getCurrentRate('CNY', get(list, 'startDate', ''))
             let rate = get(data, '[0].Rate', 12500)
             updateData(user.currentDataId, { summa: msgText, currencyRate: get(list, 'currencyRate', rate) })
         },
@@ -645,7 +645,7 @@ let mahalliyXaridStep = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 updateStep(chat_id, 43)
                 updateBack(chat_id, { text: `Yetkazib beruvchi ni ismini yozing`, btn: empDynamicBtn(), step: 42 })
-                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [113, 107])
+                let b1Partner = await financialDbController.getPartner(msgText.toLowerCase(), [113, 107])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName} - ${item.GroupCode == 113 ? 'Korxona' : "Do'kon"}`, id: item.CardCode, num: i + 1 }
                 })
@@ -758,7 +758,7 @@ let mahalliyXaridStep = {
                 updateBack(chat_id, { text: `Summani yozing`, btn: empDynamicBtn(), step: 48 })
             }
             let cur = get(list, 'currency', 'UZS') == 'CNY' ? 'CNY' : 'UZS'
-            let data = await b1Controller.getCurrentRate(cur, get(list, 'startDate', ''))
+            let data = await financialDbController.getCurrentRate(cur, get(list, 'startDate', ''))
             let rate = get(data, '[0].Rate', 12500)
             updateData(user.currentDataId, { summa: msgText, currencyRate: rate || get(list, 'currencyRate') })
         },
@@ -874,7 +874,7 @@ let tolovHarajatStep = {
             if (searchText.length > 3) {
                 updateStep(chat_id, CUSTOMER_SELECT_STEP)
                 updateBack(chat_id, { text: `Mijoz ismini yozing`, btn: empDynamicBtn(), step: CUSTOMER_SEARCH_STEP })
-                let b1Customer = await b1Controller.getCustomer(searchText)
+                let b1Customer = await financialDbController.getCustomer(searchText)
                 let customerList = b1Customer.map((item, i) => {
                     return {
                         name: `${item.CardName} - ${item.CardCode}`,
@@ -1009,7 +1009,7 @@ let tolovHarajatStep = {
             if (msgText.length > 3) {
                 updateStep(chat_id, 43)
                 updateBack(chat_id, { text: `Xodimning ismini yozing`, btn: empDynamicBtn(), step: 80 })
-                let b1Partner = await b1Controller.getPartner(msgText.toLowerCase(), [111])
+                let b1Partner = await financialDbController.getPartner(msgText.toLowerCase(), [111])
                 let vendorList = b1Partner.map((item, i) => {
                     return { name: `${item.CardName}`, id: item.CardCode, num: i + 1 }
                 })
