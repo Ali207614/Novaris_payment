@@ -10,7 +10,8 @@ const { userInfoText, dataConfirmText, ticketAddText } = require("../keyboards/t
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
-const b1Controller = require("./b1Controller");
+const verifixController = require("./verifixController");
+const financialDbController = require("./financialDbController");
 const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
 const loggerService = require("../services/loggerService");
@@ -175,7 +176,7 @@ class botConroller {
         try {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
             let deleteMessage = await sendMessageHelper(chat_id, 'Loading...')
-            let sap_user = await b1Controller.getEmpInfo(phone);
+            let sap_user = await verifixController.getEmpInfo(phone);
             if (get(sap_user, "status") && get(sap_user, "data.value")?.length) {
                 writeUser({
                     ...get(sap_user, "data.value[0]", {}),
@@ -278,7 +279,7 @@ class botConroller {
             }
         }
         if (get(cred, 'b1.status')) {
-            let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+            let b1MainStatus = await financialDbController.executePayments({ list, cred, dataInfo })
             updateData(list.id, { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
             count += 1
             if (count == 2) {

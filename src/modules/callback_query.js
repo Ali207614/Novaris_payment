@@ -1,6 +1,6 @@
 const { get, isEmpty, update } = require("lodash");
 const { bot } = require("../config");
-const b1Controller = require("../controllers/b1Controller");
+const financialDbController = require("../controllers/financialDbController");
 const jiraController = require("../controllers/jiraController");
 let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb, newMenu, payType50, accounts43 } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executorListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup, sendMessageHelper, infoAccountPermisson, writePermissonAccount, infoAccountList } = require("../helpers");
@@ -416,7 +416,7 @@ let xorijiyXaridCallback = {
                     }
                     if (get(cred, 'b1.status')) {
 
-                        let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+                        let b1MainStatus = await financialDbController.executePayments({ list, cred, dataInfo })
                         updateData(data[2], { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
                         count += 1
                         if (count == 2) {
@@ -653,7 +653,7 @@ let xorijiyXaridCallback = {
                 updateData(user.currentDataId, { purchase: false })
             }
             else {
-                let purchaseOrdersB1 = await b1Controller.getPurchaseOrder({ cardCode: get(list, 'vendorId', '') })
+                let purchaseOrdersB1 = await financialDbController.getPurchaseOrder({ cardCode: get(list, 'vendorId', '') })
                 updateData(user?.currentDataId, { purchaseOrders: purchaseOrdersB1, purchase: true })
                 let btn = await dataConfirmBtnEmp(chat_id, [{ name: "Bo'nak", id: '1' }, { name: "To'lov", id: '2' }], 2, 'type')
                 updateBack(chat_id, { text: `To'lovni turini tanlang`, btn, step: 2300 })
@@ -1042,7 +1042,7 @@ let mahalliyXaridCallback = {
             })
             let btn = await dataConfirmBtnEmp(chat_id, account50, 2, 'currency')
             updateBack(chat_id, { text: `To'lov usullarini tanlang`, btn, step: 46 })
-            let b1Account50 = await b1Controller.getAccount(accounts50()[list?.payType][data[1]], true)
+            let b1Account50 = await financialDbController.getAccount(accounts50()[list?.payType][data[1]], true)
             let accountList50 = b1Account50?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -1375,7 +1375,7 @@ let othersCallback = {
                 accountsList = accountsList.filter(item => !notAcc.includes(item))
             }
 
-            let b1Account = await b1Controller.getAccountNo(accountsList)
+            let b1Account = await financialDbController.getAccountNo(accountsList)
             let accountList = b1Account?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -1527,7 +1527,7 @@ let othersCallback = {
                 btnList = Object.values(accounts()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${data[1]}`, name: item }))
             }
             else if (data[1] == 4) {
-                let b1Account15 = await b1Controller.getAccount15({ status: false })
+                let b1Account15 = await financialDbController.getAccount15({ status: false })
                 btnList = await b1Account15.sort((a, b) => Number(a.AcctCode) - Number(b.AcctCode)).map(item => ({ id: `${item.AcctCode}#${data[1]})}`, name: item.AcctName }))
             }
             let per = await infoAccountPermisson();
@@ -1579,7 +1579,7 @@ let othersCallback = {
                 btnList = Object.values(accounts()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu')}`, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 4) {
-                let b1Account15 = await b1Controller.getAccount15({ status: false })
+                let b1Account15 = await financialDbController.getAccount15({ status: false })
 
                 btnList = await b1Account15.sort((a, b) => Number(a.AcctCode) - Number(b.AcctCode)).map(item => ({ id: `${item.AcctCode}#${get(user, 'selectAccountListMenu')}`, name: item.AcctName }))
 
@@ -1689,7 +1689,7 @@ let othersCallback = {
                 btnList = Object.values(accounts()).flat().sort((a, b) => Number(a) - Number(b)).map(item => ({ id: `${item}#${get(user, 'selectAccountListMenu', '')} `, name: item }))
             }
             else if (get(user, 'selectAccountListMenu') == 4) {
-                let b1Account15 = await b1Controller.getAccount15({ status: false })
+                let b1Account15 = await financialDbController.getAccount15({ status: false })
 
                 btnList = await b1Account15.sort((a, b) => Number(a.AcctCode) - Number(b.AcctCode)).map(item => ({ id: `${item.AcctCode}#${get(user, 'selectAccountListMenu')}`, name: item.AcctName }))
 

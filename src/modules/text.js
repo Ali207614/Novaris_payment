@@ -7,7 +7,7 @@ const ShortUniqueId = require('short-unique-id');
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 const { dataConfirmText, adminMenusInfo, userInfoText } = require("../keyboards/text");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
-const b1Controller = require("../controllers/b1Controller");
+const financialDbController = require("../controllers/financialDbController");
 const { bot } = require("../config");
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
@@ -1079,7 +1079,7 @@ let xorijiyXaridBtn = {
             btn: async ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
 
-                let b1Account43 = await b1Controller.getAccount43()
+                let b1Account43 = await financialDbController.getAccount43()
                 let accountList43 = b1Account43.map((item, i) => {
                     return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                 })
@@ -1850,7 +1850,7 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
+            let b1Account15 = await financialDbController.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -1890,7 +1890,7 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
+            let b1Account15 = await financialDbController.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
