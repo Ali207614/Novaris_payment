@@ -13,6 +13,7 @@ const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiq
 const b1Controller = require("./b1Controller");
 const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
+const loggerService = require("../services/loggerService");
 
 class botConroller {
     async text(msg, chat_id) {
@@ -28,7 +29,12 @@ class botConroller {
                 ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...updateAdminBtn, ...adminBtn, ...deleteAdminBtn, ...changeStatusAdminBtn, ...infoAdminBtn, ...executorBtn, ...newBtnExecuter()
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
+            
+            // Log every text message
+            loggerService.logBotAction(msg, 'TEXT_MESSAGE', { type: 'text', id: null }, { after: { text: msg.text } });
+
             if (msg.text == "/start") {
+                loggerService.logBotAction(msg, 'COMMAND_START');
 
                 if (['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                     writeGroup(get(msg, 'chat', {}))
@@ -125,6 +131,7 @@ class botConroller {
 
     async callback_query(msg, data, chat_id) {
         try {
+            loggerService.logBotAction(msg.message, 'CALLBACK_QUERY', { type: 'callback', id: msg.id }, { after: { data: data.join('#') } });
             let isGroup = ['group', 'supergroup'].includes(get(msg, 'message.chat.type', ''))
             let groupChatId = get(msg, 'message.chat.id')
             if (['group', 'supergroup'].includes(get(msg, 'message.chat.type'))) {
@@ -284,6 +291,7 @@ class botConroller {
 
     async document(msg, chat_id) {
         try {
+            loggerService.logBotAction(msg, 'DOCUMENT_UPLOAD', { type: 'document', id: msg.document?.file_id }, { after: { fileName: msg.document?.file_name } });
             let isGroup = ['group', 'supergroup'].includes(get(msg, 'chat.type', ''))
             let groupChatId = get(msg, 'chat.id')
             if (['group', 'supergroup'].includes(get(msg, 'chat.type'))) {
