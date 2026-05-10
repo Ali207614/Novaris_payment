@@ -1,6 +1,12 @@
 const TelegramAPi = require("node-telegram-bot-api");
-let token = `8608084291:AAFy6rzo6WOQ6RDDNDV0w3S3PsHjvGdNjt8`
-//let token = `5902250488:AAEXcOm02e6PohBxNLL-s-7rczUrrcpLTEI`
+require("dotenv").config();
+
+let token = process.env.TELEGRAM_BOT_TOKEN;
+
+if (!token) {
+    throw new Error("TELEGRAM_BOT_TOKEN is not set in .env");
+}
+
 // 192.168.1.3
 // 66.45.245.130
 let conn_params = {
@@ -14,7 +20,7 @@ let bot = new TelegramAPi(token, {
     polling: true,
 });
 
-let personalChatId = '8641624618'
+let personalChatId = process.env.PERSONAL_CHAT_ID || '561932032'
 
 module.exports = { bot, personalChatId, conn_params, jiraToken }
 
