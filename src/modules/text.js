@@ -2520,6 +2520,30 @@ let boshqaBtn = {
 
 
 
+const ADMIN_DELETE_EMPLOYEE_STEP = 708;
+const adminUserActionButtons = ['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya", "Verifixdan o'chirish"];
+
+const getSelectedAdminUser = (user = {}) => {
+    return infoUser().find(item => `${item.chat_id}` == `${get(user, 'selectedAdminUserChatId', '')}`);
+};
+
+const getAdminUserFullName = (user = {}) => {
+    return `${get(user, 'LastName', '')} ${get(user, 'FirstName', '')}`.trim() || "Noma'lum foydalanuvchi";
+};
+
+const getVerifixDeleteConfirmText = (targetUser = {}) => {
+    return [
+        "Verifixdan xodimni o'chirish",
+        "",
+        `Xodim: ${getAdminUserFullName(targetUser)}`,
+        `Employee ID: ${get(targetUser, 'EmployeeID', 'topilmadi')}`,
+        `Telegram ID: ${get(targetUser, 'chat_id', 'topilmadi')}`,
+        "",
+        "Bu amal Verifix tizimida xodimni o'chiradi va botdagi kirish huquqlarini bloklaydi.",
+        "Davom etasizmi?"
+    ].join('\n');
+};
+
 let adminBtn = {
     "Foydalanuvchilar": {
         selfExecuteFn: ({ chat_id, }) => {
@@ -2556,6 +2580,87 @@ let adminBtn = {
             },
             btn: async ({ chat_id, }) => {
                 return
+            },
+        },
+    },
+    "Verifixdan xodim o'chirish": {
+        selfExecuteFn: ({ chat_id }) => {
+            updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 });
+            updateStep(chat_id, 709);
+            updateUser(chat_id, {
+                selectedAdminUserChatId: '',
+                verifixDeleteManualEmployeeId: '',
+                verifixDeleteLookup: {},
+                verifixDeleteLookupResult: {},
+                verifixDeleteMode: 'lookup'
+            });
+        },
+        middleware: ({ user }) => {
+            return get(user, 'JobTitle') == 'Admin';
+        },
+        next: {
+            text: () => {
+                return "Telefon raqamni kiriting";
+            },
+            btn: async () => {
+                return empDynamicBtn();
+            },
+        },
+    },
+    "Verifixdan o'chirish": {
+        selfExecuteFn: ({ chat_id, user }) => {
+            const targetUser = getSelectedAdminUser(user);
+
+            if (!targetUser || !get(targetUser, 'EmployeeID') || get(targetUser, 'JobTitle') == 'Admin') {
+                updateStep(chat_id, 1);
+                return;
+            }
+
+            updateBack(chat_id, {
+                text: getAdminUserFullName(targetUser),
+                btn: empDynamicBtn(adminUserActionButtons, 2),
+                step: 701
+            });
+            updateStep(chat_id, ADMIN_DELETE_EMPLOYEE_STEP);
+            updateUser(chat_id, {
+                verifixDeleteManualEmployeeId: '',
+                verifixDeleteLookup: {},
+                verifixDeleteLookupResult: {},
+                verifixDeleteMode: 'selected'
+            });
+        },
+        middleware: ({ user }) => {
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'selectedAdminUserChatId');
+        },
+        next: {
+            text: ({ user }) => {
+                const targetUser = getSelectedAdminUser(user);
+
+                if (!targetUser) {
+                    return "Foydalanuvchi topilmadi. Qaytadan tanlang.";
+                }
+
+                if (get(targetUser, 'JobTitle') == 'Admin') {
+                    return "Admin foydalanuvchini bu bo'lim orqali o'chirib bo'lmaydi.";
+                }
+
+                if (!get(targetUser, 'EmployeeID')) {
+                    return "Bu foydalanuvchida Employee ID topilmadi. Verifixdan o'chirib bo'lmaydi.";
+                }
+
+                return getVerifixDeleteConfirmText(targetUser);
+            },
+            btn: async ({ chat_id, user }) => {
+                const targetUser = getSelectedAdminUser(user);
+
+                if (!targetUser || !get(targetUser, 'EmployeeID') || get(targetUser, 'JobTitle') == 'Admin') {
+                    return mainMenuByRoles({ chat_id });
+                }
+
+                return dataConfirmBtnEmp(chat_id, [
+                    { name: "Ha, o'chirish", id: 1 },
+                    { name: "Bekor qilish", id: 2 }
+                ], 1, 'verifixDeleteEmployee');
             },
         },
     },
@@ -3326,4 +3431,3 @@ module.exports = {
     confirmativeBtn,
     executorBtn
 }
-

@@ -2,6 +2,8 @@ const { get, isEmpty, update } = require("lodash");
 const { bot } = require("../config");
 const financialDbController = require("../controllers/financialDbController");
 const jiraController = require("../controllers/jiraController");
+const verifixController = require("../controllers/verifixController");
+const loggerService = require("../services/loggerService");
 let { SubMenu, accounts50, ocrdList, accounts, DDS, subAccounts50, Menu, selectedUserStatus, selectedUserStatusUzb, newMenu, payType50, accounts43 } = require("../credentials");
 const { updateStep, infoUser, updateUser, updateBack, updateData, writeData, infoData, formatterCurrency, deleteAllInvalidData, confirmativeListFn, executorListFn, updatePermisson, infoPermisson, deleteBack, infoMenu, writeSubMenu, writeMenu, infoSubMenu, updateSubMenu, updateMenu, infoAllSubMenu, infoAllMenu, infoGroup, updateGroup, deleteGroup, sendMessageHelper, infoAccountPermisson, writePermissonAccount, infoAccountList } = require("../helpers");
 const { empDynamicBtn } = require("../keyboards/function_keyboards");
@@ -11,6 +13,7 @@ const { dataConfirmText, ticketAddText, userInfoText } = require("../keyboards/t
 let moment = require('moment');
 const { boshqaBtn } = require("./text");
 const { CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection");
+const { permissionChatIds, hasPermissionOrAdmin } = require("../helpers/adminPermissions");
 
 
 const sleepNow = (delay) =>
@@ -20,6 +23,36 @@ const isSapExecutorRequest = (list = {}) => {
     let cred = SubMenu()[get(list, 'menu', 1)]?.find(item => item.name == list.subMenu)
     return Boolean(get(cred, 'b1.status')) && get(list, 'sapB1') !== false
 }
+
+const ADMIN_DELETE_EMPLOYEE_STEP = 708;
+const adminUserActionButtons = ['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya", "Verifixdan o'chirish"];
+
+const getSelectedAdminUser = (user = {}) => {
+    return infoUser().find(item => `${item.chat_id}` == `${get(user, 'selectedAdminUserChatId', '')}`);
+};
+
+const getUserFullName = (user = {}) => {
+    return `${get(user, 'LastName', '')} ${get(user, 'FirstName', '')}`.trim() || "Noma'lum foydalanuvchi";
+};
+
+const normalizePhone = (value = '') => String(value).replace(/\D/g, '');
+
+const findLocalUserByVerifixEmployee = (employee = {}) => {
+    const employeeId = get(employee, 'EmployeeID');
+    const phone = normalizePhone(get(employee, 'MobilePhone', ''));
+
+    return infoUser().find(item => {
+        const sameEmployeeId = employeeId && `${get(item, 'EmployeeID', '')}` == `${employeeId}`;
+        const localPhone = normalizePhone(get(item, 'MobilePhone', ''));
+        const samePhone = phone && localPhone && (
+            phone == localPhone ||
+            phone.endsWith(localPhone) ||
+            localPhone.endsWith(phone)
+        );
+
+        return sameEmployeeId || samePhone;
+    });
+};
 
 let xorijiyXaridCallback = {
     "confirmEmp": {
@@ -39,7 +72,13 @@ let xorijiyXaridCallback = {
             let btn = await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
             updateBack(chat_id, { text: dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id), btn, step: user.user_step })
             if (data[1] == '1') {
-                let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                let accessChatId = permissionChatIds({
+                    users: infoUser(),
+                    permissions: infoPermisson(),
+                    permissionKey: 'permissonMenuAffirmative',
+                    menuId: get(list, 'menu'),
+                    subMenuId
+                })
                 let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
                 let confirmativeSendlist = []
                 for (let i = 0; i < accessChatId.length; i++) {
@@ -136,8 +175,14 @@ let xorijiyXaridCallback = {
             try {
                 let list = infoData().find(item => item.id == data[2])
                 let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-                let accessChatId = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                return accessChatId.find(item => item == chat_id)
+                return hasPermissionOrAdmin({
+                    users: infoUser(),
+                    permissions: infoPermisson(),
+                    chat_id,
+                    permissionKey: 'permissonMenuAffirmative',
+                    menuId: get(list, 'menu'),
+                    subMenuId
+                })
             }
             catch (e) {
                 console.log(e, ' bu errro')
@@ -187,13 +232,25 @@ let xorijiyXaridCallback = {
                         })
                     }
 
-                    let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                    let executorList = permissionChatIds({
+                        users: infoUser(),
+                        permissions: infoPermisson(),
+                        permissionKey: 'permissonMenuExecutor',
+                        menuId: get(list, 'menu'),
+                        subMenuId
+                    })
                     let btnExecuter = await dataConfirmBtnEmp(chat_id, [{ name: 'Bajarish', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmExecuter')
                     for (let i = 0; i < executorList.length; i++) {
                         sendMessageHelper(executorList[i], newTextExecutor + dataConfirmText(info, 'Bajarasizmi ?', chat_id, { file }), btnExecuter, { file })
                     }
 
-                    let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                    let confirmativeList = permissionChatIds({
+                        users: infoUser(),
+                        permissions: infoPermisson(),
+                        permissionKey: 'permissonMenuAffirmative',
+                        menuId: get(list, 'menu'),
+                        subMenuId
+                    })
                     let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqladi ✅ ID:${list.ID}`
                     for (let i = 0; i < confirmativeList.length; i++) {
                         sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
@@ -292,8 +349,14 @@ let xorijiyXaridCallback = {
             // }
             let list = infoData().find(item => item.id == data[2])
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-            let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-            return executorList.find(item => item == chat_id)
+            return hasPermissionOrAdmin({
+                users: infoUser(),
+                permissions: infoPermisson(),
+                chat_id,
+                permissionKey: 'permissonMenuExecutor',
+                menuId: get(list, 'menu'),
+                subMenuId
+            })
         },
         next: {
             text: async ({ chat_id, data }) => {
@@ -462,13 +525,25 @@ let xorijiyXaridCallback = {
                 if (str) {
                     updateData(list.id, { SapJiraMessage: str })
                 }
-                let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                let executorList = permissionChatIds({
+                    users: infoUser(),
+                    permissions: infoPermisson(),
+                    permissionKey: 'permissonMenuExecutor',
+                    menuId: get(list, 'menu'),
+                    subMenuId
+                })
                 let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
                 for (let i = 0; i < executorList.length; i++) {
                     sendMessageHelper(executorList[i], newText + dataConfirmText(info, text, chat_id), { file })
                 }
 
-                let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+                let confirmativeList = permissionChatIds({
+                    users: infoUser(),
+                    permissions: infoPermisson(),
+                    permissionKey: 'permissonMenuAffirmative',
+                    menuId: get(list, 'menu'),
+                    subMenuId
+                })
 
                 for (let i = 0; i < confirmativeList.length; i++) {
                     sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
@@ -1761,7 +1836,197 @@ let adminCallback = {
             },
             btn: async ({ chat_id, data }) => {
 
-                return empDynamicBtn(['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya"], 2)
+                return empDynamicBtn(adminUserActionButtons, 2)
+            },
+        },
+    },
+    "verifixDeleteEmployee": {
+        selfExecuteFn: async ({ chat_id, data, id, user }) => {
+            const selectedUser = getSelectedAdminUser(user);
+            const lookupEmployee = get(user, 'verifixDeleteLookup', {});
+            const targetUser = selectedUser || findLocalUserByVerifixEmployee(lookupEmployee);
+            const manualEmployeeId = get(user, 'verifixDeleteManualEmployeeId');
+            const employeeId = get(selectedUser, 'EmployeeID') || get(lookupEmployee, 'EmployeeID') || manualEmployeeId;
+            const deleteMode = get(user, 'verifixDeleteMode', selectedUser ? 'selected' : 'lookup');
+            const targetName = selectedUser
+                ? getUserFullName(selectedUser)
+                : (`${get(lookupEmployee, 'LastName', '')} ${get(lookupEmployee, 'FirstName', '')}`.trim() || `Employee ID ${employeeId}`);
+            const action = data[1];
+
+            try {
+                await bot.deleteMessage(chat_id, id);
+            } catch (err) {
+            }
+
+            if (action == '2') {
+                updateStep(chat_id, deleteMode == 'selected' ? 701 : 1);
+                updateUser(chat_id, {
+                    verifixDeleteManualEmployeeId: '',
+                    verifixDeleteLookup: {},
+                    verifixDeleteLookupResult: {},
+                    verifixDeleteMode: deleteMode == 'selected' ? 'selected' : '',
+                    verifixDeleteResult: {
+                        status: 'cancelled',
+                        message: "O'chirish bekor qilindi.",
+                        mode: deleteMode
+                    }
+                });
+                return;
+            }
+
+            if (!employeeId) {
+                updateStep(chat_id, 1);
+                updateUser(chat_id, {
+                    selectedAdminUserChatId: '',
+                    verifixDeleteManualEmployeeId: '',
+                    verifixDeleteLookup: {},
+                    verifixDeleteLookupResult: {},
+                    verifixDeleteMode: '',
+                    verifixDeleteResult: {
+                        status: 'error',
+                        message: 'Verifix xodimi topilmadi. Qaytadan qidiring.'
+                    }
+                });
+                return;
+            }
+
+            if (get(targetUser, 'JobTitle') == 'Admin') {
+                updateStep(chat_id, 1);
+                updateUser(chat_id, {
+                    selectedAdminUserChatId: '',
+                    verifixDeleteManualEmployeeId: '',
+                    verifixDeleteLookup: {},
+                    verifixDeleteLookupResult: {},
+                    verifixDeleteMode: '',
+                    verifixDeleteResult: {
+                        status: 'error',
+                        message: "Admin foydalanuvchini bu bo'lim orqali o'chirib bo'lmaydi."
+                    }
+                });
+                return;
+            }
+
+            const deleteResult = await verifixController.deleteEmployee(employeeId);
+
+            if (deleteResult.status) {
+                if (targetUser) {
+                    updateUser(get(targetUser, 'chat_id'), {
+                        is_active: false,
+                        user_step: 0,
+                        currentDataId: '',
+                        currentUserRole: '',
+                        back: [],
+                        update: false,
+                        confirmationStatus: false,
+                        waitingUpdateStatus: false,
+                        extraWaiting: false,
+                        deactivatedAt: new Date(),
+                        deactivatedBy: chat_id,
+                        deactivatedSource: 'verifix_employee_delete'
+                    });
+                    updatePermisson(get(targetUser, 'chat_id'), {
+                        roles: [],
+                        permissonMenuEmp: {},
+                        permissonMenuAffirmative: {},
+                        permissonMenuExecutor: {}
+                    });
+                }
+                updateStep(chat_id, 1);
+                updateUser(chat_id, {
+                    selectedAdminUserChatId: '',
+                    verifixDeleteManualEmployeeId: '',
+                    verifixDeleteLookup: {},
+                    verifixDeleteLookupResult: {},
+                    verifixDeleteMode: '',
+                    verifixDeleteResult: {
+                        status: 'success',
+                        employeeId,
+                        targetChatId: get(targetUser, 'chat_id', ''),
+                        targetName,
+                        localAccessRevoked: Boolean(targetUser),
+                        mode: deleteMode
+                    }
+                });
+
+                await loggerService.logBotAction(
+                    { chat: { id: chat_id }, message_id: id },
+                    'ADMIN_VERIFIX_EMPLOYEE_DELETE_SUCCESS',
+                    { type: 'employee' },
+                    { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode } },
+                    { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode }
+                );
+                return;
+            }
+
+            updateStep(chat_id, ADMIN_DELETE_EMPLOYEE_STEP);
+            updateUser(chat_id, {
+                verifixDeleteResult: {
+                    status: 'error',
+                    employeeId,
+                    targetChatId: get(targetUser, 'chat_id', ''),
+                    targetName,
+                    message: deleteResult.message || "Verifixdan o'chirishda xatolik yuz berdi.",
+                    mode: deleteMode
+                }
+            });
+
+            await loggerService.logBotAction(
+                { chat: { id: chat_id }, message_id: id },
+                'ADMIN_VERIFIX_EMPLOYEE_DELETE_FAILURE',
+                { type: 'employee' },
+                { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), message: deleteResult.message, mode: deleteMode } },
+                { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode }
+            );
+        },
+        middleware: ({ user }) => {
+            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == ADMIN_DELETE_EMPLOYEE_STEP;
+        },
+        next: {
+            text: async ({ user }) => {
+                const result = get(user, 'verifixDeleteResult', {});
+
+                if (get(result, 'status') == 'success') {
+                    return [
+                        "Verifixdan o'chirildi.",
+                        "",
+                        `Xodim: ${get(result, 'targetName')}`,
+                        `Employee ID: ${get(result, 'employeeId')}`,
+                        get(result, 'localAccessRevoked')
+                            ? "Botdagi kirish huquqlari ham bloklandi."
+                            : "Botda mahalliy foydalanuvchi topilmadi, Verifix amali bajarildi."
+                    ].join('\n');
+                }
+
+                if (get(result, 'status') == 'cancelled') {
+                    return get(result, 'message');
+                }
+
+                return [
+                    "Verifixdan o'chirib bo'lmadi.",
+                    "",
+                    `Xodim: ${get(result, 'targetName', '-')}`,
+                    `Employee ID: ${get(result, 'employeeId', '-')}`,
+                    `Sabab: ${get(result, 'message', "Noma'lum xatolik")}`
+                ].join('\n');
+            },
+            btn: async ({ chat_id, user }) => {
+                const result = get(user, 'verifixDeleteResult', {});
+                const canRetry = get(user, 'selectedAdminUserChatId') ||
+                    get(user, 'verifixDeleteManualEmployeeId') ||
+                    get(user, 'verifixDeleteLookup.EmployeeID');
+
+                if (get(result, 'status') == 'error' && canRetry) {
+                    return dataConfirmBtnEmp(chat_id, [
+                        { name: "Qayta urinish", id: 1 },
+                        { name: "Bekor qilish", id: 2 }
+                    ], 1, 'verifixDeleteEmployee');
+                }
+
+                if (get(result, 'status') == 'cancelled' && get(result, 'mode') == 'selected') {
+                    return empDynamicBtn(adminUserActionButtons, 2);
+                }
+
+                return mainMenuByRoles({ chat_id });
             },
         },
     },

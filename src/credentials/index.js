@@ -4,6 +4,7 @@ const { infoUser, infoData, formatterCurrency, updateData, infoMenu, infoSubMenu
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards")
 let moment = require('moment')
+const { isAdminUser, permittedSubMenuNames } = require("../helpers/adminPermissions")
 
 
 const path = require('path');
@@ -4271,18 +4272,35 @@ const empDataCred = () => {
 const execDataCred = () => {
     let mainDataCred = {
         "Bajarilmagan so'rovlar": ({ chat_id }) => {
+            const user = infoUser().find(item => item.chat_id == chat_id)
+            if (isAdminUser(user)) {
+                return infoData().filter(item => item?.full && get(item, 'confirmative.status') && !get(item, 'executor'))
+            }
+
             let permission = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonMenuExecutor = Object.fromEntries(Object.entries(get(permission, 'permissonMenuExecutor', {})).map(item => {
-                return [item[0], item[1].map(el => SubMenu()[item[0]]?.find(s => s.id == el)?.name)]
+                return [item[0], permittedSubMenuNames({
+                    user,
+                    permission,
+                    permissionKey: 'permissonMenuExecutor',
+                    menuId: item[0],
+                    subMenus: SubMenu()[item[0]] || []
+                })]
             }))
             return infoData().filter(item => item?.full
                 && get(item, 'confirmative.status') && !get(item, 'executor')
                 && (permissonMenuExecutor[item.menu] ? permissonMenuExecutor[item.menu].includes(item?.subMenu) : false))
         },
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') && get(item, 'executor.chat_id') == chat_id),
+            ({ chat_id }) => {
+                const user = infoUser().find(item => item.chat_id == chat_id)
+                return infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') && (isAdminUser(user) || get(item, 'executor.chat_id') == chat_id))
+            },
         "Rad etilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') == false && get(item, 'executor.chat_id') == chat_id)
+            ({ chat_id }) => {
+                const user = infoUser().find(item => item.chat_id == chat_id)
+                return infoData().filter(item => item.full && get(item, 'confirmative.status') && get(item, 'executor.status') == false && (isAdminUser(user) || get(item, 'executor.chat_id') == chat_id))
+            }
     }
     return mainDataCred
 }
@@ -4290,9 +4308,20 @@ const execDataCred = () => {
 const confDataCred = () => {
     let mainDataCred = {
         "Tasdiqlanmagan so'rovlar": ({ chat_id }) => {
+            const user = infoUser().find(item => item.chat_id == chat_id)
+            if (isAdminUser(user)) {
+                return infoData().filter(item => item?.full && !get(item, 'confirmative'))
+            }
+
             let permission = infoPermisson().find(item => item.chat_id == chat_id)
             let permissonMenuAffirmative = Object.fromEntries(Object.entries(get(permission, 'permissonMenuAffirmative', {})).map(item => {
-                return [item[0], item[1].map(el => SubMenu()[item[0]]?.find(s => s.id == el)?.name)]
+                return [item[0], permittedSubMenuNames({
+                    user,
+                    permission,
+                    permissionKey: 'permissonMenuAffirmative',
+                    menuId: item[0],
+                    subMenus: SubMenu()[item[0]] || []
+                })]
             }))
             return infoData().filter(item => item?.full
                 && !get(item, 'confirmative')
@@ -4300,13 +4329,25 @@ const confDataCred = () => {
             )
         },
         "Tasdiqlanib , bajarilmagan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') && get(item, 'executor.status') == false),
+            ({ chat_id }) => {
+                const user = infoUser().find(item => item.chat_id == chat_id)
+                return infoData().filter(item => item.full && (isAdminUser(user) || get(item, 'confirmative.chat_id') == chat_id) && get(item, 'confirmative.status') && get(item, 'executor.status') == false)
+            },
         "Tasdiqlanib , bajarilishi kutilayotgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') && !item.executor),
+            ({ chat_id }) => {
+                const user = infoUser().find(item => item.chat_id == chat_id)
+                return infoData().filter(item => item.full && (isAdminUser(user) || get(item, 'confirmative.chat_id') == chat_id) && get(item, 'confirmative.status') && !item.executor)
+            },
         "Rad etilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') == false),
+            ({ chat_id }) => {
+                const user = infoUser().find(item => item.chat_id == chat_id)
+                return infoData().filter(item => item.full && (isAdminUser(user) || get(item, 'confirmative.chat_id') == chat_id) && get(item, 'confirmative.status') == false)
+            },
         "Bajarilgan so'rovlar":
-            ({ chat_id }) => infoData().filter(item => item.full && get(item, 'confirmative.chat_id') == chat_id && get(item, 'confirmative.status') && get(item, 'executor.status'))
+            ({ chat_id }) => {
+                const user = infoUser().find(item => item.chat_id == chat_id)
+                return infoData().filter(item => item.full && (isAdminUser(user) || get(item, 'confirmative.chat_id') == chat_id) && get(item, 'confirmative.status') && get(item, 'executor.status'))
+            }
     }
     return mainDataCred
 }
@@ -4779,4 +4820,3 @@ module.exports = {
     generateUsersPermissionsExcel,
     excelFnPaymentData
 }
-

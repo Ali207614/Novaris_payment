@@ -1,4 +1,4 @@
-const { bot, personalChatId, conn_params } = require("./config");
+const { bot, personalChatId, conn_params, sapConnectionRequired } = require("./config");
 const botController = require("./controllers/botController");
 const b1Controller = require("./controllers/b1Controller")
 const verifixController = require("./controllers/verifixController");
@@ -39,6 +39,25 @@ const initializeMongoBackedStores = async () => {
     }
 };
 
+const connectSapHana = (connection) => {
+    return new Promise((resolve, reject) => {
+        connection.connect(conn_params, async (err) => {
+            if (err) {
+                console.error("SAP HANA Connection error:", err);
+                sendMessageHelper(personalChatId, `SAP Connection error: ${err.message || err}`);
+                loggerService.logError(err, { source: 'sap_sync', action: 'SAP_CONNECT' });
+                reject(err);
+                return;
+            }
+
+            console.log("SAP HANA connected successfully.");
+            loggerService.logSystemAction('sap_sync', 'SAP_CONNECT_SUCCESS');
+            deleteData({ id: 'K9lonOcgG3' });
+            resolve();
+        });
+    });
+};
+
 const start = async () => {
     try {
         await initializeMongoBackedStores();
@@ -50,19 +69,16 @@ const start = async () => {
 
         tls.DEFAULT_MIN_VERSION = 'TLSv1';
         const connection = hanaClient.createConnection();
+        global.connection = connection;
         
-        // Attempt SAP HANA connection
-        connection.connect(conn_params, async (err) => {
-            if (err) {
-                console.error("SAP HANA Connection error:", err);
-                sendMessageHelper(personalChatId, `SAP Connection error: ${err.message || err}`);
-                loggerService.logError(err, { source: 'sap_sync', action: 'SAP_CONNECT' });
-            } else {
-                console.log("SAP HANA connected successfully.");
-                loggerService.logSystemAction('sap_sync', 'SAP_CONNECT_SUCCESS');
-                deleteData({ id: 'K9lonOcgG3' });
-            }
-        });
+        // Attempt SAP HANA connection. If required, do not start the bot without it.
+        if (sapConnectionRequired) {
+            await connectSapHana(connection);
+        } else {
+            connectSapHana(connection).catch(() => {
+                console.warn("SAP HANA is unavailable. Continuing because SAP_CONNECTION_REQUIRED is disabled.");
+            });
+        }
 
         // Attempt Verifix connection
         verifixController.auth().then(result => {
@@ -77,8 +93,6 @@ const start = async () => {
             console.error("Verifix Connection error:", err);
             loggerService.logError(err, { source: 'verifix_sync', action: 'VERIFIX_CONNECT_ERROR' });
         });
-
-        global.connection = connection;
 
         // Register bot listeners independently of SAP connection
         bot.on("text", async (msg) => {

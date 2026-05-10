@@ -15,6 +15,7 @@ const financialDbController = require("./financialDbController");
 const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
 const loggerService = require("../services/loggerService");
+const { permissionChatIds, hasPermissionOrAdmin } = require("../helpers/adminPermissions");
 
 const CONTACT_AUTH_PROMPT = "Telefon raqamingizni faqat pastdagi tugma orqali ulashing. Qo'lda yozilgan raqam yoki boshqa kontaktlar qabul qilinmaydi.";
 const FOREIGN_CONTACT_BLOCK_MESSAGE = "Faqat o'zingizning Telegram kontakt raqamingizni ulashing. Boshqa odamning kontakti orqali tasdiqlash mumkin emas ❌";
@@ -43,6 +44,18 @@ class botConroller {
             
             // Log every text message
             loggerService.logBotAction(msg, 'TEXT_MESSAGE', { type: 'text', id: null }, { after: { text: msg.text } });
+
+            if (user && get(user, 'is_active') === false) {
+                await loggerService.logBotAction(msg, 'INACTIVE_USER_BLOCKED', { type: 'user_auth' }, {}, {
+                    chatId: chat_id,
+                    groupChatId: isGroup ? groupChatId : undefined
+                });
+                sendMessageHelper(
+                    isGroup ? groupChatId : chat_id,
+                    "Profilingiz aktiv emas. Admin bilan bog'laning."
+                );
+                return;
+            }
 
             if (msg.text == "/start") {
                 loggerService.logBotAction(msg, 'COMMAND_START');
@@ -159,6 +172,17 @@ class botConroller {
             }
             let user = infoUser().find((item) => item.chat_id === chat_id);
             let callbackTree = { ...xorijiyXaridCallback, ...mahalliyXaridCallback, ...othersCallback, ...adminCallback }
+            if (user && get(user, 'is_active') === false) {
+                await loggerService.logBotAction(msg.message, 'INACTIVE_USER_CALLBACK_BLOCKED', { type: 'user_auth' }, {}, {
+                    chatId: chat_id,
+                    groupChatId: isGroup ? groupChatId : undefined
+                });
+                sendMessageHelper(
+                    isGroup ? groupChatId : chat_id,
+                    "Profilingiz aktiv emas. Admin bilan bog'laning."
+                );
+                return;
+            }
             if (user) {
                 if (callbackTree[data[0]]) {
                     let callbackTreeList = [xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback]
@@ -287,13 +311,25 @@ class botConroller {
         if (str) {
             updateData(list.id, { SapJiraMessage: str })
         }
-        let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+        let executorList = permissionChatIds({
+            users: infoUser(),
+            permissions: infoPermisson(),
+            permissionKey: 'permissonMenuExecutor',
+            menuId: get(list, 'menu'),
+            subMenuId
+        })
         let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
         for (let i = 0; i < executorList.length; i++) {
             sendMessageHelper(executorList[i], newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
         }
 
-        let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+        let confirmativeList = permissionChatIds({
+            users: infoUser(),
+            permissions: infoPermisson(),
+            permissionKey: 'permissonMenuAffirmative',
+            menuId: get(list, 'menu'),
+            subMenuId
+        })
 
         for (let i = 0; i < confirmativeList.length; i++) {
             sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file }, { lastFile: get(list, 'lastFile') })
@@ -367,8 +403,14 @@ class botConroller {
                 }
                 if (isGroup) {
                     let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-                    let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
-                    if (!executorList.find(item => item == chat_id)) {
+                    if (!hasPermissionOrAdmin({
+                        users: infoUser(),
+                        permissions: infoPermisson(),
+                        chat_id,
+                        permissionKey: 'permissonMenuExecutor',
+                        menuId: get(list, 'menu'),
+                        subMenuId
+                    })) {
                         bot.sendMessage(groupChatId, 'Mumkin emas ❌')
                         return
                     }

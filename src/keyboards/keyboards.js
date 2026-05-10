@@ -174,6 +174,17 @@ const adminKeyboard = {
             [
                 {
                     text: "Foydalanuvchilar excel"
+                },
+                {
+                    text: "Verifixdan xodim o'chirish"
+                }
+            ],
+            [
+                {
+                    text: "Tasdiqlovchi"
+                },
+                {
+                    text: "Bajaruvchi"
                 }
             ]
         ],

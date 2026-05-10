@@ -15,6 +15,9 @@ let conn_params = {
     pwd: 'GrvYL8YX',
 };
 let jiraToken = process.env.JIRA_TOKEN || '';
+let sapConnectionRequired = ['true', '1', 'yes', 'on'].includes(
+    String(process.env.SAP_CONNECTION_REQUIRED || '').trim().toLowerCase()
+);
 
 let bot = new TelegramAPi(token, {
     polling: true,
@@ -22,6 +25,5 @@ let bot = new TelegramAPi(token, {
 
 let personalChatId = process.env.PERSONAL_CHAT_ID || '561932032'
 
-module.exports = { bot, personalChatId, conn_params, jiraToken }
-
+module.exports = { bot, personalChatId, conn_params, jiraToken, sapConnectionRequired }
 

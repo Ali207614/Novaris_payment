@@ -3,6 +3,7 @@ const moment = require('moment')
 const { bot } = require("../config")
 const financialDbController = require("../controllers/financialDbController")
 const jiraController = require("../controllers/jiraController")
+const verifixController = require("../controllers/verifixController")
 let { SubMenu, ocrdList, payType50, excelFnFormatData, excelFnPaymentData, excelFnPaymentLines } = require("../credentials")
 const { infoUser, updateUser, updateStep, updateBack, updateData, infoData, formatterCurrency, infoMenu, infoSubMenu, updateMenu, updateSubMenu, infoPermisson, deleteGroup, infoGroup, parseDate, sendMessageHelper, infoAccountPermisson, infoAccountList, writeInfoAccountList } = require("../helpers")
 const { empDynamicBtn } = require("../keyboards/function_keyboards")
@@ -12,6 +13,7 @@ const { dataConfirmText } = require("../keyboards/text")
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 const { CUSTOMER_SEARCH_STEP, CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection")
+const { permissionChatIds } = require("../helpers/adminPermissions")
 
 
 const cleanTelegramText = (text = '') => {
@@ -1046,7 +1048,111 @@ let tolovHarajatStep = {
     },
 }
 
+const ADMIN_DELETE_EMPLOYEE_STEP = 708;
+
+const normalizePhoneInput = (value = '') => {
+    const digits = String(value).replace(/\D/g, '');
+
+    return digits.length >= 7 && digits.length <= 15 ? digits : '';
+};
+
+const getVerifixLookupDeleteText = (employee = {}) => {
+    const fullName = `${get(employee, 'LastName', '')} ${get(employee, 'FirstName', '')}`.trim() || "Noma'lum";
+    const rows = [
+        "Verifixdan topildi",
+        "",
+        `Xodim: ${fullName}`,
+        `Employee ID: ${get(employee, 'EmployeeID', '-')}`,
+        `Telefon: ${get(employee, 'MobilePhone', '-')}`,
+        `Lavozim: ${get(employee, 'JobTitle', '-')}`,
+        `Bo'lim: ${get(employee, 'DivisionName', '-')}`,
+        `Lokatsiya: ${get(employee, 'LocationName', '-')}`,
+        "",
+        "Bu xodimni Verifixdan o'chirishni tasdiqlaysizmi?"
+    ];
+
+    return rows.join('\n');
+};
+
 let adminStep = {
+    "709": {
+        selfExecuteFn: async ({ chat_id, msgText }) => {
+            const phone = normalizePhoneInput(msgText);
+
+            if (!phone) {
+                updateUser(chat_id, {
+                    verifixDeleteLookup: {},
+                    verifixDeleteLookupResult: {
+                        status: 'error',
+                        message: "Telefon raqam noto'g'ri. Masalan: +998901234567"
+                    }
+                });
+                return;
+            }
+
+            const lookupResult = await verifixController.lookupEmployeeByPhone(phone);
+
+            if (!lookupResult.status) {
+                updateUser(chat_id, {
+                    verifixDeleteLookup: { phone },
+                    verifixDeleteLookupResult: {
+                        status: 'error',
+                        message: get(lookupResult, 'message', 'Verifixdan qidirishda xatolik yuz berdi.')
+                    }
+                });
+                return;
+            }
+
+            if (!lookupResult.data) {
+                updateUser(chat_id, {
+                    verifixDeleteLookup: { phone },
+                    verifixDeleteLookupResult: {
+                        status: 'not_found',
+                        message: "Bu telefon raqam bo'yicha Verifixda aktiv xodim topilmadi."
+                    }
+                });
+                return;
+            }
+
+            updateUser(chat_id, {
+                selectedAdminUserChatId: '',
+                verifixDeleteManualEmployeeId: '',
+                verifixDeleteLookup: lookupResult.data,
+                verifixDeleteLookupResult: { status: 'found' },
+                verifixDeleteMode: 'lookup'
+            });
+            updateStep(chat_id, ADMIN_DELETE_EMPLOYEE_STEP);
+            updateBack(chat_id, {
+                text: "Telefon raqamni kiriting",
+                btn: empDynamicBtn(),
+                step: 709
+            });
+        },
+        middleware: ({ user }) => {
+            return get(user, 'JobTitle') == 'Admin' && user.user_step == 709;
+        },
+        next: {
+            text: ({ user }) => {
+                const lookupState = get(user, 'verifixDeleteLookupResult', {});
+
+                if (get(lookupState, 'status') !== 'found') {
+                    return get(lookupState, 'message', "Telefon raqam bo'yicha xodim topilmadi.");
+                }
+
+                return getVerifixLookupDeleteText(get(user, 'verifixDeleteLookup', {}));
+            },
+            btn: async ({ chat_id, user }) => {
+                if (get(user, 'verifixDeleteLookupResult.status') !== 'found') {
+                    return empDynamicBtn();
+                }
+
+                return dataConfirmBtnEmp(chat_id, [
+                    { name: "Ha, o'chirish", id: 1 },
+                    { name: "Bekor qilish", id: 2 }
+                ], 1, 'verifixDeleteEmployee');
+            },
+        },
+    },
     "704": {
         selfExecuteFn: async ({ chat_id, msgText, user }) => {
             if (get(user, 'selectedAdminUserChatId')) {
@@ -1267,7 +1373,13 @@ let adminStep = {
             let newText = `${'🔴'.repeat(10)}\n`
             let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: get(user, 'notConfirmId') })
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-            let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            let confirmativeList = permissionChatIds({
+                users: infoUser(),
+                permissions: infoPermisson(),
+                permissionKey: 'permissonMenuAffirmative',
+                menuId: get(list, 'menu'),
+                subMenuId
+            })
             let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Tasdiqlovchi tasdiqlamadi ❌ ID:${list.ID}`
             let file = get(list, 'file', {})
 
@@ -1359,13 +1471,25 @@ let adminStep = {
             let file = get(list, 'file', {})
 
             let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
-            let confirmativeList = infoPermisson().filter(item => get(get(item, 'permissonMenuAffirmative', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            let confirmativeList = permissionChatIds({
+                users: infoUser(),
+                permissions: infoPermisson(),
+                permissionKey: 'permissonMenuAffirmative',
+                menuId: get(list, 'menu'),
+                subMenuId
+            })
             let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajarmadi ❌ ID:${list.ID}`
             for (let i = 0; i < confirmativeList.length; i++) {
                 sendMessageHelper(confirmativeList[i], newText + dataConfirmText(info, text, chat_id), { file })
             }
 
-            let executorList = infoPermisson().filter(item => get(get(item, 'permissonMenuExecutor', {}), `${get(list, 'menu')}`, []).includes(`${subMenuId}`)).map(item => item.chat_id)
+            let executorList = permissionChatIds({
+                users: infoUser(),
+                permissions: infoPermisson(),
+                permissionKey: 'permissonMenuExecutor',
+                menuId: get(list, 'menu'),
+                subMenuId
+            })
             for (let i = 0; i < executorList.length; i++) {
                 sendMessageHelper(executorList[i], newText + dataConfirmText(info, text, chat_id), { file })
             }

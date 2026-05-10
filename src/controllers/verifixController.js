@@ -87,15 +87,7 @@ class verifixController {
             const matchedEmployee = await this._findEmployeeByPhone(instance, normalizedPhone);
 
             if (matchedEmployee) {
-                const botUserFormat = {
-                    EmployeeID: matchedEmployee.employee_id,
-                    LastName: matchedEmployee.last_name || '',
-                    FirstName: matchedEmployee.first_name || '',
-                    JobTitle: matchedEmployee.job_name || matchedEmployee.job_title || '',
-                    MobilePhone: matchedEmployee.phone_number,
-                    SalesPersonCode: -1
-                };
-                return { status: true, data: { value: [botUserFormat] } };
+                return { status: true, data: { value: [this._formatEmployee(matchedEmployee)] } };
             }
 
             return { status: true, data: { value: [] } };
@@ -107,6 +99,48 @@ class verifixController {
             });
             return { status: false, message: get(err, 'response.data.message', err.message) };
         }
+    }
+
+    async lookupEmployeeByPhone(phone = '') {
+        try {
+            const normalizedPhone = this._normalizePhone(phone);
+
+            if (!normalizedPhone || normalizedPhone.length < 7) {
+                return { status: false, message: "Telefon raqam noto'g'ri" };
+            }
+
+            const instance = await this._getAxiosInstance();
+            const matchedEmployee = await this._findEmployeeByPhone(instance, normalizedPhone);
+
+            if (!matchedEmployee) {
+                return { status: true, data: null };
+            }
+
+            return { status: true, data: this._formatEmployee(matchedEmployee) };
+        } catch (err) {
+            await loggerService.logError(err, {
+                source: 'verifix_sync',
+                action: 'VERIFIX_EMPLOYEE_PHONE_LOOKUP_ERROR',
+                entity: { type: 'employee' },
+                metadata: { phoneLast4: this._normalizePhone(phone).slice(-4) }
+            });
+            return { status: false, message: get(err, 'response.data.message', err.message) };
+        }
+    }
+
+    _formatEmployee(employee = {}) {
+        return {
+            EmployeeID: get(employee, 'employee_id'),
+            LastName: get(employee, 'last_name', ''),
+            FirstName: get(employee, 'first_name', ''),
+            MiddleName: get(employee, 'middle_name', ''),
+            JobTitle: get(employee, 'job_name') || get(employee, 'job_title', ''),
+            MobilePhone: get(this._employeePhoneValues(employee), '[0]', ''),
+            DivisionName: get(employee, 'division_name') || get(employee, 'division', ''),
+            LocationName: get(employee, 'location_name') || get(employee, 'location', ''),
+            State: get(employee, 'state', ''),
+            SalesPersonCode: -1
+        };
     }
 
     _normalizePhone(phone = '') {
@@ -248,6 +282,45 @@ class verifixController {
             return { status: true, data: response.data };
         } catch (err) {
             return { status: false, message: get(err, 'response.data.message', err.message) };
+        }
+    }
+
+    async deleteEmployee(employeeId) {
+        const normalizedEmployeeId = Number(String(employeeId || '').trim());
+
+        if (!Number.isInteger(normalizedEmployeeId) || normalizedEmployeeId <= 0) {
+            return { status: false, message: "Employee ID noto'g'ri" };
+        }
+
+        try {
+            const instance = await this._getAxiosInstance();
+            const response = await instance.post('/b/vhr/api/v1/core/employee$delete', {
+                employee_id: normalizedEmployeeId
+            });
+
+            await loggerService.logSystemAction('verifix_sync', 'VERIFIX_EMPLOYEE_DELETE_SUCCESS', {
+                type: 'employee'
+            }, {
+                metadata: { employeeId: normalizedEmployeeId }
+            });
+
+            return {
+                status: true,
+                data: response.data,
+                statusCode: response.status
+            };
+        } catch (err) {
+            await loggerService.logError(err, {
+                source: 'verifix_sync',
+                action: 'VERIFIX_EMPLOYEE_DELETE_ERROR',
+                entity: { type: 'employee' },
+                metadata: { employeeId: normalizedEmployeeId }
+            });
+
+            return {
+                status: false,
+                message: get(err, 'response.data.message', get(err, 'response.data.error_description', err.message))
+            };
         }
     }
 }
