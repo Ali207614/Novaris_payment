@@ -21,11 +21,11 @@ class BaseRepository {
   }
 
   async updateById(id, data) {
-    return await this.model.findByIdAndUpdate(id, data, { new: true }).exec();
+    return await this.model.findByIdAndUpdate(id, data, { returnDocument: 'after' }).exec();
   }
 
   async updateOne(query, data) {
-    return await this.model.findOneAndUpdate(query, data, { new: true }).exec();
+    return await this.model.findOneAndUpdate(query, data, { returnDocument: 'after' }).exec();
   }
 
   async deleteById(id) {

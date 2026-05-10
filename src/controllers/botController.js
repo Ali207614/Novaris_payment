@@ -44,7 +44,9 @@ class botConroller {
                 else if (!['group', 'supergroup'].includes(get(msg, 'chat.type', ''))) {
                     sendMessageHelper(
                         chat_id,
-                        "Assalomu Aleykum",
+                        !get(user, "user_step")
+                            ? "Assalomu Aleykum. Telefon raqamingizni jo'nating yoki qo'lda yozing (masalan: 998901234567):"
+                            : "Assalomu Aleykum",
                         !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
                     );
                     if (get(user, "user_step")) {
@@ -57,6 +59,11 @@ class botConroller {
                         deleteAllInvalidData({ chat_id })
                     }
                 }
+            }
+            else if (!get(user, "user_step") && /^\+?\d{7,15}$/.test(msg.text)) {
+                // Manually typed phone number
+                msg.contact = { phone_number: msg.text };
+                await this.contact(msg, chat_id);
             }
             else if (msg.text == '/info') {
                 if (user) {
@@ -175,11 +182,28 @@ class botConroller {
     async contact(msg, chat_id) {
         try {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
+            const phoneLast4 = phone.slice(-4);
             let deleteMessage = await sendMessageHelper(chat_id, 'Loading...')
-            let sap_user = await verifixController.getEmpInfo(phone);
-            if (get(sap_user, "status") && get(sap_user, "data.value")?.length) {
+            await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_START', { type: 'user_auth' }, {}, { phoneLast4 });
+            
+            let verifix_user = await verifixController.getEmpInfo(phone);
+            let final_user = null;
+
+            if (get(verifix_user, "status") && get(verifix_user, "data.value")?.length) {
+                final_user = get(verifix_user, "data.value[0]", {});
+            } else if (!get(verifix_user, "status")) {
+                await loggerService.logError(new Error(get(verifix_user, 'message', 'Verifix employee lookup failed')), {
+                    source: 'verifix_sync',
+                    action: 'VERIFIX_EMPLOYEE_LOOKUP_FAILURE',
+                    actor: { chatId: chat_id, role: 'user' },
+                    entity: { type: 'user_auth' },
+                    metadata: { phoneLast4 }
+                });
+            }
+
+            if (final_user) {
                 writeUser({
-                    ...get(sap_user, "data.value[0]", {}),
+                    ...final_user,
                     chat_id,
                     is_active: true,
                     user_step: 1,
@@ -191,6 +215,11 @@ class botConroller {
                     })
                 }
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
+                await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_SUCCESS', { type: 'user_auth' }, {
+                    after: {
+                        employeeId: get(final_user, 'EmployeeID')
+                    }
+                }, { phoneLast4 });
                 sendMessageHelper(
                     chat_id,
                     "Foydalanuvchi tasdiqlandi ✅",
@@ -198,9 +227,16 @@ class botConroller {
                 );
             } else {
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
+                await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_NOT_FOUND', { type: 'user_auth' }, {}, { phoneLast4 });
                 sendMessageHelper(chat_id, "Foydalanuvchi tasdiqlanmadi ❌", option);
             }
         } catch (err) {
+            loggerService.logError(err, {
+                source: 'telegram_bot',
+                action: 'CONTACT_VERIFIX_AUTH_ERROR',
+                actor: { chatId: chat_id, role: 'user' },
+                entity: { type: 'user_auth' }
+            });
             throw new Error(err);
         }
     }
@@ -352,5 +388,3 @@ class botConroller {
 }
 
 module.exports = new botConroller();
-
-

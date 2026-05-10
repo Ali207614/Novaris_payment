@@ -11,6 +11,19 @@ class LoggerService {
    */
   async log(logData) {
     try {
+      if (logData.metadata) {
+        const { source, requestId, ip, details, ...extraMetadata } = logData.metadata;
+        logData.metadata = {
+          source,
+          requestId,
+          ip,
+          details: {
+            ...details,
+            ...extraMetadata
+          }
+        };
+      }
+
       // Basic validation for required fields
       if (!logData.action || !logData.metadata || !logData.metadata.source) {
         console.warn('[LoggerService] Missing required log fields:', logData);
@@ -94,7 +107,7 @@ class LoggerService {
     
     return this.log({
       actor: context.actor || { role: 'system' },
-      action: 'SYSTEM_ERROR',
+      action: context.action || 'SYSTEM_ERROR',
       entity: context.entity || { type: 'error' },
       before: { stack: error.stack },
       after: { message: error.message },

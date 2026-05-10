@@ -109,37 +109,20 @@ function infoID() {
 }
 
 
+const permissionStore = require('./permissionStore');
+
 function infoPermisson() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "permisson.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs;
+    return permissionStore.infoPermisson();
 }
 
 function updatePermisson(id, data) {
-    let main = infoPermisson();
-    let index = main.findIndex((item) => item.chat_id == id);
-    if (index != -1) {
-        main[index] = { ...main[index], ...data };
-    }
-    else {
-        main.push({ chat_id: id, ...data })
-    }
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "permisson.json"),
-        JSON.stringify(main, null, 4)
-    );
+    return permissionStore.updatePermisson(id, data);
 }
 
 function writePermisson(data) {
-    let main = infoPermisson();
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "permisson.json"),
-        JSON.stringify([...main, data], null, 4)
-    );
+    return permissionStore.writePermisson(data);
 }
+
 
 
 

@@ -1,39 +1,64 @@
 exports.executeParam = function (query, param) {
-  return new Promise((resolve) => {
-    console.log("Mocked dbService.executeParam called");
-    resolve([]);
+  return new Promise((resolve, reject) => {
+    connection.exec(query, [...param], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
   });
 };
 
 exports.execute = function (query) {
-  return new Promise((resolve) => {
-    console.log("Mocked dbService.execute called");
-    resolve([]);
+  return new Promise((resolve, reject) => {
+    connection.exec(query, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
   });
 };
 
 exports.executeBatch = function (query, data) {
-  return new Promise((resolve) => {
-    console.log("Mocked dbService.executeBatch called");
-    resolve([]);
+  return new Promise((resolve, reject) => {
+    const statement = connection.prepare(query);
+    statement.execBatch(data, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
   });
 };
 
 exports.setAutocommit = function (value) {
-  console.log("Mocked dbService.setAutocommit called");
-  return true;
+  return connection.setAutoCommit(value);
 };
 
 exports.rollback = function () {
-  return new Promise((resolve) => {
-    console.log("Mocked dbService.rollback called");
-    resolve(null);
+  return new Promise((resolve, reject) => {
+    connection.rollback((err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(null);
+      }
+    });
   });
 };
 
 exports.commit = function () {
-  return new Promise((resolve) => {
-    console.log("Mocked dbService.commit called");
-    resolve(null);
+  return new Promise((resolve, reject) => {
+    connection.commit((err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(null);
+      }
+    });
   });
 };
