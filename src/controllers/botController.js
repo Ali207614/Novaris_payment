@@ -16,7 +16,17 @@ const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
 const loggerService = require("../services/loggerService");
 
+const CONTACT_AUTH_PROMPT = "Telefon raqamingizni faqat pastdagi tugma orqali ulashing. Qo'lda yozilgan raqam yoki boshqa kontaktlar qabul qilinmaydi.";
+const FOREIGN_CONTACT_BLOCK_MESSAGE = "Faqat o'zingizning Telegram kontakt raqamingizni ulashing. Boshqa odamning kontakti orqali tasdiqlash mumkin emas ❌";
+
 class botConroller {
+    isOwnSharedContact(msg) {
+        const senderId = get(msg, "from.id");
+        const contactUserId = get(msg, "contact.user_id");
+
+        return Boolean(senderId && contactUserId && Number(senderId) === Number(contactUserId));
+    }
+
     async text(msg, chat_id) {
         try {
             let isGroup = ['group', 'supergroup'].includes(get(msg, 'chat.type', ''))
@@ -45,7 +55,7 @@ class botConroller {
                     sendMessageHelper(
                         chat_id,
                         !get(user, "user_step")
-                            ? "Assalomu Aleykum. Telefon raqamingizni jo'nating yoki qo'lda yozing (masalan: 998901234567):"
+                            ? `Assalomu Aleykum. ${CONTACT_AUTH_PROMPT}`
                             : "Assalomu Aleykum",
                         !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
                     );
@@ -61,9 +71,11 @@ class botConroller {
                 }
             }
             else if (!get(user, "user_step") && /^\+?\d{7,15}$/.test(msg.text)) {
-                // Manually typed phone number
-                msg.contact = { phone_number: msg.text };
-                await this.contact(msg, chat_id);
+                await loggerService.logBotAction(msg, 'CONTACT_AUTH_BLOCKED_MANUAL_PHONE', { type: 'user_auth' });
+                sendMessageHelper(chat_id, CONTACT_AUTH_PROMPT, option);
+            }
+            else if (!isGroup && !get(user, "user_step") && msg.text && !msg.text.startsWith('/')) {
+                sendMessageHelper(chat_id, CONTACT_AUTH_PROMPT, option);
             }
             else if (msg.text == '/info') {
                 if (user) {
@@ -183,6 +195,17 @@ class botConroller {
         try {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
             const phoneLast4 = phone.slice(-4);
+
+            if (!this.isOwnSharedContact(msg)) {
+                await loggerService.logBotAction(msg, 'CONTACT_AUTH_BLOCKED_FOREIGN_CONTACT', { type: 'user_auth' }, {}, {
+                    senderId: get(msg, 'from.id'),
+                    contactUserId: get(msg, 'contact.user_id', null),
+                    phoneLast4
+                });
+                sendMessageHelper(chat_id, FOREIGN_CONTACT_BLOCK_MESSAGE, option);
+                return;
+            }
+
             let deleteMessage = await sendMessageHelper(chat_id, 'Loading...')
             await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_START', { type: 'user_auth' }, {}, { phoneLast4 });
             

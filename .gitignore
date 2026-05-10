@@ -10,3 +10,4 @@ src/database/scripts/*
 .env
 .env.*
 !.env.example
+.gemini/
