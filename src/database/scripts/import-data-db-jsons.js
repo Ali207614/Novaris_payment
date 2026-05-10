@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { connectDB, disconnectDB } = require("../mongoose.module");
+const { connectDB, disconnectDB, mongoose } = require("../mongoose.module");
 const User = require("../models/user.model");
 const BotState = require("../models/bot-state.model");
 const Request = require("../models/request.model");
@@ -11,11 +11,25 @@ const TelegramChat = require("../models/telegram-chat.model");
 const Account = require("../models/account.model");
 const AccountPermission = require("../models/account-permission.model");
 const SapSession = require("../models/sap-session.model");
-const GlobalConfig = require("../models/global-config.model");
 const {
   mapLegacyRequestToMongo,
   mapLegacyPermissionToMongoList
 } = require("../../helpers/mongoLegacyMapper");
+
+const GlobalConfig = (() => {
+  try {
+    return require("../models/global-config.model");
+  } catch (error) {
+    const schema = new mongoose.Schema({
+      key: { type: String, required: true, unique: true },
+      value: { type: mongoose.Schema.Types.Mixed },
+      description: { type: String },
+      updatedAt: { type: Date, default: Date.now }
+    });
+
+    return mongoose.models.GlobalConfig || mongoose.model("GlobalConfig", schema);
+  }
+})();
 
 const inputDir = process.argv[2] || process.env.JSON_IMPORT_DIR || path.join("data", "db");
 const DB_DIR = path.isAbsolute(inputDir) ? inputDir : path.join(process.cwd(), inputDir);
