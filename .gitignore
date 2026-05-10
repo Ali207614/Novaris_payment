@@ -7,6 +7,8 @@ src/database/*
 src/database/scripts/*
 !src/database/scripts/migrate-json-to-mongo.js
 !src/database/scripts/import-data-db-jsons.js
+!src/database/repositories/
+!src/database/repositories/*.js
 
 .env
 .env.*
