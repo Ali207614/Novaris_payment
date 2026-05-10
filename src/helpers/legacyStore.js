@@ -3,6 +3,10 @@ const path = require("path");
 
 const DB_DIR = path.join(process.cwd(), "data", "db");
 
+function ensureDbDir() {
+    fs.mkdirSync(DB_DIR, { recursive: true });
+}
+
 function readJson(fileName, fallback) {
     const filePath = path.join(DB_DIR, fileName);
     try {
@@ -14,6 +18,7 @@ function readJson(fileName, fallback) {
 }
 
 function writeJson(fileName, data) {
+    ensureDbDir();
     const filePath = path.join(DB_DIR, fileName);
     const tmpPath = `${filePath}.tmp`;
     fs.writeFileSync(tmpPath, JSON.stringify(data, null, 4), "utf-8");

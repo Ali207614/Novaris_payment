@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const FILE_PATH = path.join(process.cwd(), "data", "db", "permisson.json");
+const DB_DIR = path.dirname(FILE_PATH);
 
 class PermissionStore {
     constructor() {
@@ -81,6 +82,7 @@ class PermissionStore {
             main.push(data);
         }
         
+        fs.mkdirSync(DB_DIR, { recursive: true });
         fs.writeFileSync(FILE_PATH, JSON.stringify(main, null, 4));
         this._syncToMongo(id, data);
         return true;
@@ -89,6 +91,7 @@ class PermissionStore {
     writePermisson(data) {
         const main = this._loadOnce();
         main.push(data);
+        fs.mkdirSync(DB_DIR, { recursive: true });
         fs.writeFileSync(FILE_PATH, JSON.stringify(main, null, 4));
         this._syncToMongo(data.chat_id, data);
         return true;

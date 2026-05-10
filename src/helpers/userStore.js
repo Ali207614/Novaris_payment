@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const FILE_PATH = path.join(process.cwd(), "data", "db", "user.json");
+const DB_DIR = path.dirname(FILE_PATH);
 const DEBOUNCE_MS = Number(process.env.USERSTORE_DEBOUNCE_MS || 200);
 
 class UserStore {
@@ -162,6 +163,7 @@ class UserStore {
     const tmp = `${FILE_PATH}.tmp`;
 
     try {
+      await fs.promises.mkdir(DB_DIR, { recursive: true });
       await fs.promises.writeFile(tmp, JSON.stringify(data, null, 2), "utf-8");
       await fs.promises.rename(tmp, FILE_PATH);
       const stat = await fs.promises.stat(FILE_PATH);

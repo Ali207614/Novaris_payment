@@ -132,6 +132,7 @@ function infoSubMenu() {
 
 
 function clone_data(data) {
+    fs.mkdirSync(path.join(process.cwd(), "data", "db"), { recursive: true });
     fs.writeFileSync(
         path.join(process.cwd(), "data", "db", "data.json"),
         JSON.stringify(data, null, 4)
