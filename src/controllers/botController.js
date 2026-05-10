@@ -10,11 +10,23 @@ const { userInfoText, dataConfirmText, ticketAddText } = require("../keyboards/t
 const { xorijiyXaridCallback, mahalliyXaridCallback, othersCallback, adminCallback } = require("../modules/callback_query");
 const { xorijiyXaridStep, mahalliyXaridStep, tolovHarajatStep, adminStep } = require("../modules/step");
 const { executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, newBtnExecuter, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, firtBtnExecutor, confirmativeBtn, executorBtn } = require("../modules/text");
-const b1Controller = require("./b1Controller");
+const verifixController = require("./verifixController");
+const financialDbController = require("./financialDbController");
 const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
+const loggerService = require("../services/loggerService");
+
+const CONTACT_AUTH_PROMPT = "Telefon raqamingizni faqat pastdagi tugma orqali ulashing. Qo'lda yozilgan raqam yoki boshqa kontaktlar qabul qilinmaydi.";
+const FOREIGN_CONTACT_BLOCK_MESSAGE = "Faqat o'zingizning Telegram kontakt raqamingizni ulashing. Boshqa odamning kontakti orqali tasdiqlash mumkin emas ❌";
 
 class botConroller {
+    isOwnSharedContact(msg) {
+        const senderId = get(msg, "from.id");
+        const contactUserId = get(msg, "contact.user_id");
+
+        return Boolean(senderId && contactUserId && Number(senderId) === Number(contactUserId));
+    }
+
     async text(msg, chat_id) {
         try {
             let isGroup = ['group', 'supergroup'].includes(get(msg, 'chat.type', ''))
@@ -28,7 +40,12 @@ class botConroller {
                 ...executeBtn, ...xorijiyXaridBtn, ...mahalliyXaridBtn, ...tolovHarajatBtn, ...narxChiqarishBtn, ...boshqaBtn, ...shartnomaBtn, ...tolovHarajatBojBtn, ...updateAdminBtn, ...adminBtn, ...deleteAdminBtn, ...changeStatusAdminBtn, ...infoAdminBtn, ...executorBtn, ...newBtnExecuter()
             }
             let stepTree = { ...xorijiyXaridStep, ...mahalliyXaridStep, ...tolovHarajatStep, ...adminStep }
+            
+            // Log every text message
+            loggerService.logBotAction(msg, 'TEXT_MESSAGE', { type: 'text', id: null }, { after: { text: msg.text } });
+
             if (msg.text == "/start") {
+                loggerService.logBotAction(msg, 'COMMAND_START');
 
                 if (['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && !infoGroup().find(item => item.id == get(msg, 'chat.id'))) {
                     writeGroup(get(msg, 'chat', {}))
@@ -37,7 +54,9 @@ class botConroller {
                 else if (!['group', 'supergroup'].includes(get(msg, 'chat.type', ''))) {
                     sendMessageHelper(
                         chat_id,
-                        "Assalomu Aleykum",
+                        !get(user, "user_step")
+                            ? `Assalomu Aleykum. ${CONTACT_AUTH_PROMPT}`
+                            : "Assalomu Aleykum",
                         !get(user, "user_step") ? option : mainMenuByRoles({ chat_id })
                     );
                     if (get(user, "user_step")) {
@@ -50,6 +69,13 @@ class botConroller {
                         deleteAllInvalidData({ chat_id })
                     }
                 }
+            }
+            else if (!get(user, "user_step") && /^\+?\d{7,15}$/.test(msg.text)) {
+                await loggerService.logBotAction(msg, 'CONTACT_AUTH_BLOCKED_MANUAL_PHONE', { type: 'user_auth' });
+                sendMessageHelper(chat_id, CONTACT_AUTH_PROMPT, option);
+            }
+            else if (!isGroup && !get(user, "user_step") && msg.text && !msg.text.startsWith('/')) {
+                sendMessageHelper(chat_id, CONTACT_AUTH_PROMPT, option);
             }
             else if (msg.text == '/info') {
                 if (user) {
@@ -125,6 +151,7 @@ class botConroller {
 
     async callback_query(msg, data, chat_id) {
         try {
+            loggerService.logBotAction(msg.message, 'CALLBACK_QUERY', { type: 'callback', id: msg.id }, { after: { data: data.join('#') } });
             let isGroup = ['group', 'supergroup'].includes(get(msg, 'message.chat.type', ''))
             let groupChatId = get(msg, 'message.chat.id')
             if (['group', 'supergroup'].includes(get(msg, 'message.chat.type'))) {
@@ -167,11 +194,39 @@ class botConroller {
     async contact(msg, chat_id) {
         try {
             let phone = get(msg, "contact.phone_number", "").replace(/\D/g, "");
+            const phoneLast4 = phone.slice(-4);
+
+            if (!this.isOwnSharedContact(msg)) {
+                await loggerService.logBotAction(msg, 'CONTACT_AUTH_BLOCKED_FOREIGN_CONTACT', { type: 'user_auth' }, {}, {
+                    senderId: get(msg, 'from.id'),
+                    contactUserId: get(msg, 'contact.user_id', null),
+                    phoneLast4
+                });
+                sendMessageHelper(chat_id, FOREIGN_CONTACT_BLOCK_MESSAGE, option);
+                return;
+            }
+
             let deleteMessage = await sendMessageHelper(chat_id, 'Loading...')
-            let sap_user = await b1Controller.getEmpInfo(phone);
-            if (get(sap_user, "status") && get(sap_user, "data.value")?.length) {
+            await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_START', { type: 'user_auth' }, {}, { phoneLast4 });
+            
+            let verifix_user = await verifixController.getEmpInfo(phone);
+            let final_user = null;
+
+            if (get(verifix_user, "status") && get(verifix_user, "data.value")?.length) {
+                final_user = get(verifix_user, "data.value[0]", {});
+            } else if (!get(verifix_user, "status")) {
+                await loggerService.logError(new Error(get(verifix_user, 'message', 'Verifix employee lookup failed')), {
+                    source: 'verifix_sync',
+                    action: 'VERIFIX_EMPLOYEE_LOOKUP_FAILURE',
+                    actor: { chatId: chat_id, role: 'user' },
+                    entity: { type: 'user_auth' },
+                    metadata: { phoneLast4 }
+                });
+            }
+
+            if (final_user) {
                 writeUser({
-                    ...get(sap_user, "data.value[0]", {}),
+                    ...final_user,
                     chat_id,
                     is_active: true,
                     user_step: 1,
@@ -183,6 +238,11 @@ class botConroller {
                     })
                 }
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
+                await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_SUCCESS', { type: 'user_auth' }, {
+                    after: {
+                        employeeId: get(final_user, 'EmployeeID')
+                    }
+                }, { phoneLast4 });
                 sendMessageHelper(
                     chat_id,
                     "Foydalanuvchi tasdiqlandi ✅",
@@ -190,9 +250,16 @@ class botConroller {
                 );
             } else {
                 bot.deleteMessage(chat_id, deleteMessage.message_id)
+                await loggerService.logBotAction(msg, 'CONTACT_VERIFIX_AUTH_NOT_FOUND', { type: 'user_auth' }, {}, { phoneLast4 });
                 sendMessageHelper(chat_id, "Foydalanuvchi tasdiqlanmadi ❌", option);
             }
         } catch (err) {
+            loggerService.logError(err, {
+                source: 'telegram_bot',
+                action: 'CONTACT_VERIFIX_AUTH_ERROR',
+                actor: { chatId: chat_id, role: 'user' },
+                entity: { type: 'user_auth' }
+            });
             throw new Error(err);
         }
     }
@@ -271,7 +338,7 @@ class botConroller {
             }
         }
         if (get(cred, 'b1.status')) {
-            let b1MainStatus = await b1Controller.executePayments({ list, cred, dataInfo })
+            let b1MainStatus = await financialDbController.executePayments({ list, cred, dataInfo })
             updateData(list.id, { sapB1: false, sap: b1MainStatus?.status, sapErrorMessage: b1MainStatus?.message })
             count += 1
             if (count == 2) {
@@ -284,6 +351,7 @@ class botConroller {
 
     async document(msg, chat_id) {
         try {
+            loggerService.logBotAction(msg, 'DOCUMENT_UPLOAD', { type: 'document', id: msg.document?.file_id }, { after: { fileName: msg.document?.file_name } });
             let isGroup = ['group', 'supergroup'].includes(get(msg, 'chat.type', ''))
             let groupChatId = get(msg, 'chat.id')
             if (['group', 'supergroup'].includes(get(msg, 'chat.type'))) {
@@ -343,5 +411,3 @@ class botConroller {
 }
 
 module.exports = new botConroller();
-
-

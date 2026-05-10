@@ -5,6 +5,7 @@ let dbService = require('../services/dbService')
 const moment = require('moment');
 const { PARTNERSEARCH, GETPURCHASEORDER, ACCOUNTS, accountBuilderFn, CURRENTRATE, accountBuilderFnNo, ACCOUNTSNO, CASHFLOW, GETJOURNALENTRIES, DATABASE } = require("../repositories/dataRepositories");
 const { saveSession, getSession } = require("../helpers");
+const loggerService = require("../services/loggerService");
 
 class b1Controller {
     async auth() {
@@ -25,9 +26,12 @@ class b1Controller {
                 'Cookie': get(headers, 'set-cookie', ''),
                 'SessionId': get(data, 'SessionId', '')
             })
+            loggerService.logSystemAction('sap_sync', 'SAP_AUTH_SUCCESS');
             return { status: true };
         }).catch(err => {
-            return { status: false, message: get(err, 'response.data.error.message.value') }
+            const errorMessage = get(err, 'response.data.error.message.value') || err.message;
+            loggerService.logError(err, { source: 'sap_sync', action: 'SAP_AUTH_FAILURE' });
+            return { status: false, message: errorMessage }
         });
     }
     async getEmpInfo(phone = '') {
@@ -43,7 +47,7 @@ class b1Controller {
             }),
         });
         return axios
-            .get(`EmployeesInfo?$select=EmployeeID,LastName,FirstName,JobTitle,MobilePhone,SalesPersonCode&$filter=MobilePhone eq '${phone}'`,)
+            .get(`EmployeesInfo?$select=EmployeeID,LastName,FirstName,JobTitle,MobilePhone,SalesPersonCode&$filter=MobilePhone eq '${phone}'`,)    
             .then(({ data }) => {
                 return { status: true, data }
             })
@@ -55,7 +59,9 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                    const errorMessage = get(err, 'response.data.error.message.value') || err.message;
+                    loggerService.logError(err, { source: 'sap_sync', action: 'SAP_GET_EMP_INFO_ERROR', metadata: { phone } });
+                    return { status: false, message: errorMessage };
                 }
             });
     }
@@ -66,6 +72,7 @@ class b1Controller {
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_PARTNER_ERROR', metadata: { name, groupList } });
             throw new Error(e)
         }
     }
@@ -81,6 +88,7 @@ class b1Controller {
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_CUSTOMER_ERROR', metadata: { name } });
             throw new Error(e)
         }
     }
@@ -90,6 +98,7 @@ class b1Controller {
             return data?.sort((a, b) => b.TransId - a.TransId)
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_JOURNAL_ENTRIES_ERROR', metadata: { docNum } });
             throw new Error(e)
         }
     }
@@ -99,16 +108,16 @@ class b1Controller {
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_CASH_FLOW_ERROR', metadata: { name } });
             throw new Error(e)
         }
     }
     async cashFlowList(list = []) {
         try {
             if (!Array.isArray(list) || list.length === 0) {
-                return []; // bo‘sh kelsa hech narsa qaytarmaymiz
+                return []; 
             }
 
-            // Dinamik `IN` joyini yaratamiz
             const placeholders = list.map(() => '?').join(', ');
             const query = `
                 SELECT * 
@@ -119,19 +128,20 @@ class b1Controller {
 
             return data;
         } catch (e) {
-            console.log(e)
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_CASH_FLOW_LIST_ERROR', metadata: { list } });
             throw new Error(e.message || e);
         }
     }
 
     async getAccount43() {
         try {
-            const { accounts43, DDS } = require("../credentials");
+            const { accounts43 } = require("../credentials");
             let accountQuery = accountBuilderFn(accounts43())
             let data = await dbService.execute(accountQuery)
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_ACCOUNT_43_ERROR' });
             throw new Error(e)
         }
     }
@@ -141,6 +151,7 @@ class b1Controller {
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_PURCHASE_ORDER_ERROR', metadata: { cardCode } });
             throw new Error(e)
         }
     }
@@ -151,6 +162,7 @@ class b1Controller {
             return data.filter(item => item.AcctCode != 15)
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_ACCOUNT_15_ERROR', metadata: { status } });
             throw new Error(e)
         }
     }
@@ -161,17 +173,18 @@ class b1Controller {
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_ACCOUNT_ERROR', metadata: { arr, isPay } });
             throw new Error(e)
         }
     }
     async getAccountNo(arr) {
         try {
-            // true
             let accountQuery = accountBuilderFnNo(arr)
             let data = await dbService.execute(accountQuery)
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_ACCOUNT_NO_ERROR', metadata: { arr } });
             throw new Error(e)
         }
     }
@@ -181,6 +194,7 @@ class b1Controller {
             return data
         }
         catch (e) {
+            loggerService.logError(e, { source: 'sap_sync', action: 'SAP_GET_CURRENT_RATE_ERROR', metadata: { cur, date } });
             throw new Error(e)
         }
     }
@@ -228,8 +242,6 @@ class b1Controller {
             }
         }
 
-
-
         const axios = Axios.create({
             baseURL: "https://192.168.1.3:50000/b1s/v1/",
             timeout: 30000,
@@ -247,6 +259,7 @@ class b1Controller {
                 if (body.DocType != 'rAccount') {
                     await this.PatchJournalEntries(get(data, 'DocNum'), get(list, 'point', ''))
                 }
+                loggerService.logSystemAction('sap_sync', 'SAP_EXECUTE_PAYMENTS_SUCCESS', { docNum: data.DocNum });
                 return { status: true, data }
             })
             .catch(async (err) => {
@@ -257,7 +270,9 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                    const errorMessage = get(err, 'response.data.error.message.value') || err.message;
+                    loggerService.logError(err, { source: 'sap_sync', action: 'SAP_EXECUTE_PAYMENTS_ERROR', metadata: { body } });
+                    return { status: false, message: errorMessage };
                 }
             });
     }
@@ -302,7 +317,9 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                    const errorMessage = get(err, 'response.data.error.message.value') || err.message;
+                    loggerService.logError(err, { source: 'sap_sync', action: 'SAP_PURCHASE_DOWN_PAYMENTS_ERROR', metadata: { body } });
+                    return { status: false, message: errorMessage };
                 }
             });
     }
@@ -349,7 +366,9 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                    const errorMessage = get(err, 'response.data.error.message.value') || err.message;
+                    loggerService.logError(err, { source: 'sap_sync', action: 'SAP_PATCH_JOURNAL_ENTRIES_ERROR', metadata: { docNum, point } });
+                    return { status: false, message: errorMessage };
                 }
             });
     }
@@ -387,6 +406,7 @@ class b1Controller {
         return axios
             .post(`VendorPayments`, body)
             .then(({ data }) => {
+                loggerService.logSystemAction('sap_sync', 'SAP_DOWN_PAYMENTS_SUCCESS', { docEntry: data.DocEntry });
                 return { status: true, data }
             })
             .catch(async (err) => {
@@ -397,12 +417,12 @@ class b1Controller {
                     }
                     return { status: false, message: token.message }
                 } else {
-                    return { status: false, message: get(err, 'response.data.error.message.value') };
+                    const errorMessage = get(err, 'response.data.error.message.value') || err.message;
+                    loggerService.logError(err, { source: 'sap_sync', action: 'SAP_DOWN_PAYMENTS_ERROR', metadata: { body } });
+                    return { status: false, message: errorMessage };
                 }
             });
     }
 }
 
 module.exports = new b1Controller();
-
-

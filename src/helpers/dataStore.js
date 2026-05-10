@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const DB_DIR = path.join(process.cwd(), "database");
+const DB_DIR = path.join(process.cwd(), "data", "db");
 const FILE_PATH = path.join(DB_DIR, "data.json");
 const ID_PATH = path.join(DB_DIR, "id.json");
 const DEBOUNCE_MS = Number(process.env.DATASTORE_DEBOUNCE_MS || 200);
@@ -14,9 +14,73 @@ class DataStore {
         this.flushing = false;
         this.pendingResolves = [];
         this.pendingRejects = [];
+        this.mongoConnected = false;
+        this.jsonFallbackEnabled = false;
     }
 
     // --- Helpers ---
+
+    async syncFromMongo() {
+        try {
+            const requestRepository = require("../database/repositories/request.repository");
+            const { mapToLegacyRequest } = require("./mongoLegacyMapper");
+
+            console.log("[DataStore] Syncing requests from MongoDB...");
+            const mongoRequests = await requestRepository.find(
+                { "workflow.isDeleted": { $ne: true } },
+                { "timestamps.createdAt": 1 }
+            );
+
+            this.cache = this._normalizeData(mongoRequests.map(mapToLegacyRequest).filter(Boolean));
+            this.dirty = false;
+            this.mongoConnected = true;
+            this.jsonFallbackEnabled = false;
+            console.log(`[DataStore] Synced ${this.cache.length} requests from MongoDB.`);
+        } catch (error) {
+            this.mongoConnected = false;
+            this.jsonFallbackEnabled = true;
+            console.error("[DataStore] Failed to sync from MongoDB, falling back to JSON:", error.message);
+            this._loadOnce();
+        }
+    }
+
+    enableJsonFallback() {
+        this.mongoConnected = false;
+        this.jsonFallbackEnabled = true;
+        this.cache = null;
+        return this._loadOnce();
+    }
+
+    _syncRowToMongo(row) {
+        if (!this.mongoConnected || !row) return;
+
+        try {
+            const requestRepository = require("../database/repositories/request.repository");
+            const { mapLegacyRequestToMongo } = require("./mongoLegacyMapper");
+            const mongoRequest = mapLegacyRequestToMongo(row);
+
+            if (!mongoRequest || !mongoRequest.publicId) return;
+
+            requestRepository.upsertLegacyRequest(mongoRequest.publicId, mongoRequest).catch((error) => {
+                console.error("[DataStore] MongoDB request sync failed:", error.message);
+            });
+        } catch (error) {
+            console.error("[DataStore] MongoDB request sync setup failed:", error.message);
+        }
+    }
+
+    _markDeletedInMongo(id) {
+        if (!this.mongoConnected || id == null) return;
+
+        try {
+            const requestRepository = require("../database/repositories/request.repository");
+            requestRepository.markDeletedByPublicId(String(id)).catch((error) => {
+                console.error("[DataStore] MongoDB request delete sync failed:", error.message);
+            });
+        } catch (error) {
+            console.error("[DataStore] MongoDB request delete setup failed:", error.message);
+        }
+    }
 
     _ensureDir() {
         if (!fs.existsSync(DB_DIR)) {
@@ -97,6 +161,10 @@ class DataStore {
 
     _loadOnce() {
         if (this.cache) return this.cache;
+        if (!this.jsonFallbackEnabled) {
+            this.cache = [];
+            return this.cache;
+        }
 
         const parsed = this._readJsonFile(FILE_PATH, []);
         this.cache = this._normalizeData(parsed);
@@ -227,6 +295,7 @@ class DataStore {
 
         this._writeID(nextID + 1);
         this._markDirtyAndScheduleFlush();
+        this._syncRowToMongo(newRow);
 
         return newRow;
     }
@@ -245,6 +314,7 @@ class DataStore {
         });
 
         this._markDirtyAndScheduleFlush();
+        this._syncRowToMongo(data[index]);
         return true;
     }
 
@@ -256,6 +326,7 @@ class DataStore {
 
         if (this.cache.length !== before) {
             this._markDirtyAndScheduleFlush();
+            this._markDeletedInMongo(id);
             return true;
         }
 
@@ -278,6 +349,7 @@ class DataStore {
         );
 
         this._markDirtyAndScheduleFlush();
+        toDeleteIds.forEach((id) => this._markDeletedInMongo(id));
         return toDeleteIds.length;
     }
 }

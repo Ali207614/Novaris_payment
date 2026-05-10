@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // 1. Fayldan ma'lumotlarni o'qish
-const rawData = fs.readFileSync('./database/clone.data.json', 'utf-8');
+const rawData = fs.readFileSync('./data/db/clone.data.json', 'utf-8');
 const data = JSON.parse(rawData);
 
 // 2. Iyul 2025 uchun boshlanish va tugash sanalari

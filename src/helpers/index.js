@@ -3,6 +3,7 @@ const { get } = require("lodash");
 const path = require("path");
 const { dataStore } = require('./dataStore')
 const { userStore } = require('./userStore')
+const legacyStore = require('./legacyStore')
 const { bot } = require('../config')
 
 
@@ -22,197 +23,88 @@ function formatterCurrency(
 
 
 function saveSession(cookie) {
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "session.json"),
-        JSON.stringify(cookie, null, 4)
-    );
+    legacyStore.saveSession(cookie);
 }
 function getSession() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "session.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : {};
-    return docs
+    return legacyStore.infoSession();
 }
 
 
 function infoGroup() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "group.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : {};
-    return docs
+    return legacyStore.infoGroup();
 }
 
 
 function infoAccountPermisson() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "accountsPermisson.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : {};
-    return docs
+    return legacyStore.infoAccountPermission();
 }
 
 function writePermissonAccount(userData) {
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "accountsPermisson.json"),
-        JSON.stringify(userData, null, 4)
-    );
+    legacyStore.writeAccountPermission(userData);
 }
 
 function writeGroup(userData) {
-    let users = infoGroup();
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "group.json"),
-        JSON.stringify([...users, { ...userData }], null, 4)
-    );
+    legacyStore.writeGroup(userData);
 }
 function deleteGroup(id) {
-    let users = infoGroup();
-    users = users.filter((item) => item.id != id);
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "group.json"),
-        JSON.stringify(users, null, 4)
-    );
+    legacyStore.deleteGroup(id);
 }
 
 function updateGroup(id, userData) {
-    let users = infoGroup();
-    let index = users.findIndex((item) => item.id == id);
-    users[index] = { ...users[index], ...userData };
-
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "group.json"),
-        JSON.stringify(users, null, 4)
-    );
+    legacyStore.updateGroup(id, userData);
 }
 
 
 function updateID(id) {
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "id.json"),
-        JSON.stringify(
-            { ID: id }
-            , null, 4)
-    );
+    legacyStore.updateID(id);
 }
 function infoID() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "id.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : { ID: 0 };
-    return docs;
+    return legacyStore.infoID();
 }
 
 
+const permissionStore = require('./permissionStore');
+
 function infoPermisson() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "permisson.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs;
+    return permissionStore.infoPermisson();
 }
 
 function updatePermisson(id, data) {
-    let main = infoPermisson();
-    let index = main.findIndex((item) => item.chat_id == id);
-    if (index != -1) {
-        main[index] = { ...main[index], ...data };
-    }
-    else {
-        main.push({ chat_id: id, ...data })
-    }
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "permisson.json"),
-        JSON.stringify(main, null, 4)
-    );
+    return permissionStore.updatePermisson(id, data);
 }
 
 function writePermisson(data) {
-    let main = infoPermisson();
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "permisson.json"),
-        JSON.stringify([...main, data], null, 4)
-    );
+    return permissionStore.writePermisson(data);
 }
+
 
 
 
 function infoAccountList() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "accounts.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs;
+    return legacyStore.infoAccountList();
 }
 
 
 function writeInfoAccountList(data) {
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "accounts.json"),
-        JSON.stringify(data, null, 4)
-    );
+    legacyStore.writeAccountList(data);
 }
 
 function writeMenu(data) {
-    let main = fs.readFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        "UTF-8"
-    );
-    main = main ? JSON.parse(main) : [];
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        JSON.stringify([...main, { ...data, status: true, isDelete: false, creationDate: new Date(), id: !main.length ? 7 : Math.max(...main.map(item => item.id)) + 1 }], null, 4)
-    );
+    legacyStore.writeMenu(data);
 }
 function updateMenu(id, data) {
-    let main = fs.readFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        "UTF-8"
-    );
-    main = main ? JSON.parse(main) : [];
-    let index = main.findIndex((item) => item.id == id);
-    main[index] = { ...main[index], ...data };
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        JSON.stringify(main, null, 4)
-    );
+    legacyStore.updateMenu(id, data);
 }
 function deleteMenu({ id }) {
-    let main = fs.readFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        "UTF-8"
-    );
-    main = main ? JSON.parse(main) : [];;
-    main = main.filter(item => item.id != id)
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        JSON.stringify(main, null, 4)
-    );
+    legacyStore.updateMenu(id, { isDelete: true });
 }
 
 function infoMenu() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs.filter(item => item?.status && !item?.isDelete);
+    return legacyStore.infoMenu();
 }
 
 function infoAllMenu() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "menu.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs.filter(item => !item.isDelete)
+    return legacyStore.infoMenu(true);
 }
 
 
@@ -220,60 +112,20 @@ function infoAllMenu() {
 
 
 function writeSubMenu(data) {
-    let main = fs.readFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        "UTF-8"
-    );
-    main = main ? JSON.parse(main) : [];;
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        JSON.stringify([...main, { ...data, isDelete: false, status: true, id: main?.length ? Math.max(...main.map(item => item.id)) + 1 : 1, creationDate: new Date() }], null, 4)
-    );
+    legacyStore.writeSubMenu(data);
 }
 function updateSubMenu(id, data) {
-    let main = fs.readFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        "UTF-8"
-    );
-    main = main ? JSON.parse(main) : [];;
-    let index = main.findIndex((item) => item.id == id);
-    main[index] = { ...main[index], ...data };
-    if (data?.comment) {
-        main[index] = { ...main[index], update: [{ ...main[index].update[0], message: data.comment }] }
-    }
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        JSON.stringify(main, null, 4)
-    );
+    legacyStore.updateSubMenu(id, data);
 }
 function deleteSubMenu({ id }) {
-    let main = fs.readFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        "UTF-8"
-    );
-    main = main ? JSON.parse(main) : [];;
-    main = main.filter(item => item.id != id)
-    fs.writeFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        JSON.stringify(main, null, 4)
-    );
+    legacyStore.updateSubMenu(id, { isDelete: true });
 }
 
 function infoAllSubMenu() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs.filter(item => !item.isDelete)
+    return legacyStore.infoSubMenu(true);
 }
 function infoSubMenu() {
-    let docs = fs.readFileSync(
-        path.join(process.cwd(), "database", "subMenu.json"),
-        "UTF-8"
-    );
-    docs = docs ? JSON.parse(docs) : [];
-    return docs.filter(item => item?.status && !item?.isDelete);
+    return legacyStore.infoSubMenu();
 }
 
 
@@ -281,7 +133,7 @@ function infoSubMenu() {
 
 function clone_data(data) {
     fs.writeFileSync(
-        path.join(process.cwd(), "database", "data.json"),
+        path.join(process.cwd(), "data", "db", "data.json"),
         JSON.stringify(data, null, 4)
     );
 }
@@ -359,7 +211,7 @@ function infoData() {
 }
 
 function writeData(row) {
-    dataStore.add(row);
+    return dataStore.add(row);
 }
 
 function updateData(id, data) {

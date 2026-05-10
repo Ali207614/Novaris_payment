@@ -7,7 +7,7 @@ const ShortUniqueId = require('short-unique-id');
 const { randomUUID } = new ShortUniqueId({ length: 10 });
 const { dataConfirmText, adminMenusInfo, userInfoText } = require("../keyboards/text");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
-const b1Controller = require("../controllers/b1Controller");
+const financialDbController = require("../controllers/financialDbController");
 const { bot } = require("../config");
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
@@ -164,7 +164,6 @@ let confirmativeBtn = {
 
     "Kunlik": {
         selfExecuteFn: async ({ chat_id, user }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const today = moment().startOf('day');
@@ -175,6 +174,7 @@ let confirmativeBtn = {
                 return creationDate.isBetween(today, tomorrow, null, '[)');
             }).sort((a, b) => a.ID - b.ID)
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
 
                 for (let i = 0; i < mainData.length; i++) {
@@ -196,7 +196,6 @@ let confirmativeBtn = {
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id, user }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
             let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const startOfWeek = moment().startOf('isoWeek');
@@ -208,6 +207,7 @@ let confirmativeBtn = {
             }).sort((a, b) => a.ID - b.ID);
 
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
 
                 for (let i = 0; i < mainData.length; i++) {
@@ -229,7 +229,6 @@ let confirmativeBtn = {
     "Oylik": {
         selfExecuteFn: async ({ chat_id, user }) => {
             try {
-                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
                 let mainData = confDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
 
@@ -245,6 +244,7 @@ let confirmativeBtn = {
 
 
                 if (mainData.length) {
+                    updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
                     await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
                     for (let i = 0; i < mainData.length; i++) {
@@ -338,7 +338,6 @@ let executorBtn = {
 
     "Kunlik": {
         selfExecuteFn: async ({ chat_id }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
@@ -352,8 +351,8 @@ let executorBtn = {
 
 
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
-
                 for (let i = 0; i < mainData.length; i++) {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
@@ -374,7 +373,6 @@ let executorBtn = {
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
@@ -386,6 +384,7 @@ let executorBtn = {
                 return creationDate.isBetween(startOfWeek, endOfWeek, null, '[]');
             }).sort((a, b) => a.ID - b.ID);
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
 
                 for (let i = 0; i < mainData.length; i++) {
@@ -408,7 +407,6 @@ let executorBtn = {
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = execDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
@@ -425,6 +423,7 @@ let executorBtn = {
 
 
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 300 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
 
                 for (let i = 0; i < mainData.length; i++) {
@@ -693,7 +692,6 @@ let executeBtn = {
 
     "Kunlik": {
         selfExecuteFn: async ({ chat_id }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
 
             let user = infoUser().find(item => item.chat_id == chat_id)
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
@@ -708,6 +706,7 @@ let executeBtn = {
 
 
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Kunlik`, empDynamicBtn())
                 for (let i = 0; i < mainData.length; i++) {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu)?.infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
@@ -726,7 +725,6 @@ let executeBtn = {
     },
     "Haftalik": {
         selfExecuteFn: async ({ chat_id, user }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
 
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
 
@@ -739,6 +737,7 @@ let executeBtn = {
             }).sort((a, b) => a.ID - b.ID);
 
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Haftalik`, empDynamicBtn())
                 for (let i = 0; i < mainData.length; i++) {
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
@@ -757,7 +756,6 @@ let executeBtn = {
     },
     "Oylik": {
         selfExecuteFn: async ({ chat_id, user }) => {
-            updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
 
             let mainData = empDataCred({ chat_id })[get(user, 'selectedInfoMenu')]({ chat_id }) || []
             const startOfLast30Days = moment().subtract(30, 'days').startOf('day');
@@ -772,9 +770,10 @@ let executeBtn = {
 
 
             if (mainData.length) {
+                updateBack(chat_id, { text: "Sanani tanlang", btn: empDynamicBtn(['Kunlik', "Haftalik", 'Oylik'], 2), step: 200 })
                 await sendMessageHelper(chat_id, `${get(user, 'selectedInfoMenu')} - Oylik`, empDynamicBtn())
-
                 for (let i = 0; i < mainData.length; i++) {
+
                     let mainInfo = SubMenu()[get(mainData[i], 'menu', 1)].find(item => item.name == mainData[i].subMenu).infoFn({ chat_id: mainData[i].chat_id, id: mainData[i].id })
                     let file = get(mainData, `${[i]}.file`, {})
                     sendMessageHelper(chat_id, dataConfirmText(mainInfo, `So'rovlar`, chat_id), (get(user, 'selectedInfoMenu') == 'Tasdiqlanishi kutilayotgan so’rovlar' ? await dataConfirmBtnEmp(chat_id, [{ name: "O'zgartirish", id: `3#${mainData[i].id}` }], 2, 'Waiting') : undefined), { file }, { lastFile: mainData[i]?.lastFile })
@@ -1079,7 +1078,7 @@ let xorijiyXaridBtn = {
             btn: async ({ chat_id, user }) => {
                 let list = infoData().find(item => item.id == user?.currentDataId)
 
-                let b1Account43 = await b1Controller.getAccount43()
+                let b1Account43 = await financialDbController.getAccount43()
                 let accountList43 = b1Account43.map((item, i) => {
                     return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
                 })
@@ -1850,7 +1849,7 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
+            let b1Account15 = await financialDbController.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -1890,7 +1889,7 @@ let tolovHarajatBojBtn = {
                 updateStep(chat_id, 64)
                 updateBack(chat_id, { text: "Hujjatni tanlang", btn: empDynamicBtn([`Chiquvchi to'lov`, `Kiruvchi to'lov`], 2), step: 90 })
             }
-            let b1Account15 = await b1Controller.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
+            let b1Account15 = await financialDbController.getAccount15({ status: (dataCurUser.menu == 1 && dataCurUser?.menuName == 'Xorijiy xarid') })
             let accountList15 = b1Account15?.map((item, i) => {
                 return { name: `${item.AcctCode} - ${item.AcctName}`, id: item.AcctCode, num: i + 1 }
             })
@@ -3093,11 +3092,11 @@ let infoAdminBtn = {
                 let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
                 // Fayllarni yaratish
-                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
-                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data", "data.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "data", "payment.xlsx") });
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
-                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    filePath: path.join(process.cwd(), "data", "payment_lines.xlsx"),
                     header: [
                         ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
                         ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
@@ -3105,10 +3104,10 @@ let infoAdminBtn = {
                 });
 
                 // Bot orqali yuborish
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment_lines.xlsx"));
 
-                return path.join(process.cwd(), "data.xlsx");
+                return path.join(process.cwd(), "data", "data.xlsx");
             },
             btn: async ({ chat_id }) => {
                 return empDynamicBtn();
@@ -3144,23 +3143,23 @@ let infoAdminBtn = {
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
                 let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
-                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data", "data.xlsx") });
 
-                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "data", "payment.xlsx") });
 
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
-                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    filePath: path.join(process.cwd(), "data", "payment_lines.xlsx"),
                     header: [
                         ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
                         ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
                     ],
                 });
 
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment_lines.xlsx"));
 
-                return path.join(process.cwd(), "data.xlsx");
+                return path.join(process.cwd(), "data", "data.xlsx");
             },
             btn: async ({ chat_id }) => {
                 return empDynamicBtn();
@@ -3195,23 +3194,23 @@ let infoAdminBtn = {
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
                 let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
-                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
-                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data", "data.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "data", "payment.xlsx") });
                 console.log('paymentLinesExcel.objects', Array.isArray(paymentLinesExcel.objects), paymentLinesExcel.objects[0]);
                 console.log('paymentLinesExcel.schema', paymentLinesExcel.schema);
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
-                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    filePath: path.join(process.cwd(), "data", "payment_lines.xlsx"),
                     header: [
                         ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
                         ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
                     ],
                 });
 
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment_lines.xlsx"));
 
-                return path.join(process.cwd(), "data.xlsx");
+                return path.join(process.cwd(), "data", "data.xlsx");
             },
             btn: async ({ chat_id }) => {
                 return empDynamicBtn();
