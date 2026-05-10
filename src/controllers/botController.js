@@ -15,7 +15,7 @@ const financialDbController = require("./financialDbController");
 const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
 const loggerService = require("../services/loggerService");
-const { permissionChatIds, hasPermissionOrAdmin } = require("../helpers/adminPermissions");
+const { permissionChatIds, hasPermissionOrAdmin, isAdminUser } = require("../helpers/adminPermissions");
 
 const CONTACT_AUTH_PROMPT = "Telefon raqamingizni faqat pastdagi tugma orqali ulashing. Qo'lda yozilgan raqam yoki boshqa kontaktlar qabul qilinmaydi.";
 const FOREIGN_CONTACT_BLOCK_MESSAGE = "Faqat o'zingizning Telegram kontakt raqamingizni ulashing. Boshqa odamning kontakti orqali tasdiqlash mumkin emas ❌";
@@ -93,7 +93,7 @@ class botConroller {
             else if (msg.text == '/info') {
                 if (user) {
                     let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\nAdmin`
-                    sendMessageHelper(chat_id, get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id }))
+                    sendMessageHelper(chat_id, isAdminUser(user) ? adminText : userInfoText({ user, chat_id }))
                 }
             }
             else if (msg.text == '/delete' && ['group', 'supergroup'].includes(get(msg, 'chat.type', '')) && infoGroup().find(item => item.id == get(msg, 'chat.id'))) {

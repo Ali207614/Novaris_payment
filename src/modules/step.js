@@ -13,7 +13,7 @@ const { dataConfirmText } = require("../keyboards/text")
 const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 const { CUSTOMER_SEARCH_STEP, CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection")
-const { permissionChatIds } = require("../helpers/adminPermissions")
+const { permissionChatIds, isAdminUser } = require("../helpers/adminPermissions")
 
 
 const cleanTelegramText = (text = '') => {
@@ -1129,7 +1129,7 @@ let adminStep = {
             });
         },
         middleware: ({ user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user.user_step == 709;
+            return isAdminUser(user) && user.user_step == 709;
         },
         next: {
             text: ({ user }) => {
@@ -1641,7 +1641,7 @@ let adminStep = {
             },
             btn: async ({ chat_id, msgText }) => {
 
-                let user = infoUser().filter(item => item.JobTitle !== 'Admin' && (`${item.LastName.toLowerCase()} ${item.FirstName.toLowerCase()}`.includes(msgText.toLowerCase()) || item.MobilePhone.includes(msgText)))
+                let user = infoUser().filter(item => !isAdminUser(item) && (`${item.LastName.toLowerCase()} ${item.FirstName.toLowerCase()}`.includes(msgText.toLowerCase()) || item.MobilePhone.includes(msgText)))
                 return dataConfirmBtnEmp(chat_id, user.map(item => {
                     return {
                         name: `${item.LastName} ${item.FirstName}`, id: item.chat_id

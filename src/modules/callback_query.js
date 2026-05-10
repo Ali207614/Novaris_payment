@@ -13,7 +13,7 @@ const { dataConfirmText, ticketAddText, userInfoText } = require("../keyboards/t
 let moment = require('moment');
 const { boshqaBtn } = require("./text");
 const { CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection");
-const { permissionChatIds, hasPermissionOrAdmin } = require("../helpers/adminPermissions");
+const { permissionChatIds, hasPermissionOrAdmin, isAdminUser } = require("../helpers/adminPermissions");
 
 
 const sleepNow = (delay) =>
@@ -1831,7 +1831,7 @@ let adminCallback = {
             text: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == data[1])
                 let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\n`
-                await sendMessageHelper(chat_id, (get(user, 'JobTitle', '') == 'Admin' ? adminText : userInfoText({ user, chat_id: data[1] })))
+                await sendMessageHelper(chat_id, (isAdminUser(user) ? adminText : userInfoText({ user, chat_id: data[1] })))
                 return `${user?.LastName} ${user?.FirstName} `
             },
             btn: async ({ chat_id, data }) => {
@@ -1890,7 +1890,7 @@ let adminCallback = {
                 return;
             }
 
-            if (get(targetUser, 'JobTitle') == 'Admin') {
+            if (isAdminUser(targetUser)) {
                 updateStep(chat_id, 1);
                 updateUser(chat_id, {
                     selectedAdminUserChatId: '',
@@ -1979,7 +1979,7 @@ let adminCallback = {
             );
         },
         middleware: ({ user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == ADMIN_DELETE_EMPLOYEE_STEP;
+            return isAdminUser(user) && get(user, 'user_step') == ADMIN_DELETE_EMPLOYEE_STEP;
         },
         next: {
             text: async ({ user }) => {
@@ -2247,7 +2247,7 @@ let adminCallback = {
                 return `Foydalanuvchini tanlang`
             },
             btn: async ({ chat_id, data }) => {
-                let user = infoUser().filter(item => item.JobTitle !== 'Admin')
+                let user = infoUser().filter(item => !isAdminUser(item))
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
                 let btn = await dataConfirmBtnEmp(chat_id, user.map(item => {
                     return {
@@ -2438,7 +2438,7 @@ let adminCallback = {
         },
         middleware: ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            return get(user, 'JobTitle') == 'Admin' && +user?.user_step == 801
+            return isAdminUser(user) && +user?.user_step == 801
         },
         next: {
             text: ({ chat_id, data }) => {
@@ -2643,7 +2643,7 @@ let adminCallback = {
         },
         middleware: ({ chat_id, data }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
-            return get(user, 'JobTitle') == 'Admin' && +user?.user_step == 802
+            return isAdminUser(user) && +user?.user_step == 802
         },
         next: {
             text: ({ chat_id, data }) => {

@@ -59,6 +59,8 @@ function mapToLegacyUser(mongoUser, mongoBotState) {
         SalesPersonCode: get(mongoUser, 'employee.salesPersonCode', legacyBase.SalesPersonCode),
         chat_id: get(mongoUser, 'telegram.chatId', legacyBase.chat_id),
         is_active: get(mongoUser, 'status.isActive', legacyBase.is_active),
+        isAdmin: get(mongoUser, 'role.isAdmin', legacyBase.isAdmin),
+        adminType: get(mongoUser, 'role.adminType', legacyBase.adminType),
         
         // State fields from BotState (the primary source for state now)
         user_step: get(mongoBotState, 'current.step', legacyBase.user_step || 1),

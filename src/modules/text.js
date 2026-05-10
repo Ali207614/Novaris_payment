@@ -13,6 +13,7 @@ const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 let moment = require('moment')
 const { getCustomerSelectionText } = require("../helpers/customerSelection")
+const { isAdminUser } = require("../helpers/adminPermissions")
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -2551,14 +2552,14 @@ let adminBtn = {
             updateStep(chat_id, 700)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
                 return "Foydalanuvchini tanlang"
             },
             btn: async ({ chat_id, }) => {
-                let user = infoUser().filter(item => item.JobTitle !== 'Admin')
+                let user = infoUser().filter(item => !isAdminUser(item))
                 return dataConfirmBtnEmp(chat_id, user.map(item => {
                     return {
                         name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
@@ -2572,7 +2573,7 @@ let adminBtn = {
             updateStep(chat_id, 8000)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2596,7 +2597,7 @@ let adminBtn = {
             });
         },
         middleware: ({ user }) => {
-            return get(user, 'JobTitle') == 'Admin';
+            return isAdminUser(user);
         },
         next: {
             text: () => {
@@ -2611,7 +2612,7 @@ let adminBtn = {
         selfExecuteFn: ({ chat_id, user }) => {
             const targetUser = getSelectedAdminUser(user);
 
-            if (!targetUser || !get(targetUser, 'EmployeeID') || get(targetUser, 'JobTitle') == 'Admin') {
+            if (!targetUser || !get(targetUser, 'EmployeeID') || isAdminUser(targetUser)) {
                 updateStep(chat_id, 1);
                 return;
             }
@@ -2630,7 +2631,7 @@ let adminBtn = {
             });
         },
         middleware: ({ user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'selectedAdminUserChatId');
+            return isAdminUser(user) && get(user, 'selectedAdminUserChatId');
         },
         next: {
             text: ({ user }) => {
@@ -2640,7 +2641,7 @@ let adminBtn = {
                     return "Foydalanuvchi topilmadi. Qaytadan tanlang.";
                 }
 
-                if (get(targetUser, 'JobTitle') == 'Admin') {
+                if (isAdminUser(targetUser)) {
                     return "Admin foydalanuvchini bu bo'lim orqali o'chirib bo'lmaydi.";
                 }
 
@@ -2653,7 +2654,7 @@ let adminBtn = {
             btn: async ({ chat_id, user }) => {
                 const targetUser = getSelectedAdminUser(user);
 
-                if (!targetUser || !get(targetUser, 'EmployeeID') || get(targetUser, 'JobTitle') == 'Admin') {
+                if (!targetUser || !get(targetUser, 'EmployeeID') || isAdminUser(targetUser)) {
                     return mainMenuByRoles({ chat_id });
                 }
 
@@ -2669,7 +2670,7 @@ let adminBtn = {
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2702,7 +2703,7 @@ let adminBtn = {
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2725,7 +2726,7 @@ let adminBtn = {
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2751,7 +2752,7 @@ let adminBtn = {
             await sendMessageHelper(chat_id, text, empDynamicBtn())
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
     },
     "Bajaruvchi-Menular": {
@@ -2760,7 +2761,7 @@ let adminBtn = {
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2786,7 +2787,7 @@ let adminBtn = {
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2804,7 +2805,7 @@ let adminBtn = {
             updateStep(chat_id, 703)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
+            return isAdminUser(user) && user?.user_step == 702
         },
         next: {
             text: ({ chat_id }) => {
@@ -2827,7 +2828,7 @@ let adminBtn = {
             }
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
+            return isAdminUser(user) && user?.user_step == 702
         },
         next: {
             text: ({ chat_id }) => {
@@ -2845,7 +2846,7 @@ let adminBtn = {
             updateStep(chat_id, 710)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 703
+            return isAdminUser(user) && user?.user_step == 703
         },
         next: {
             text: ({ chat_id }) => {
@@ -2863,7 +2864,7 @@ let adminBtn = {
             updateStep(chat_id, 704)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 703
+            return isAdminUser(user) && user?.user_step == 703
         },
         next: {
             text: async ({ chat_id }) => {
@@ -2894,7 +2895,7 @@ let adminBtn = {
             updateStep(chat_id, 7000)
         },
         middleware: ({ chat_id, user }) => {
-            return user.user_step == 1 && get(user, 'JobTitle') == 'Admin'
+            return user.user_step == 1 && isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -2986,7 +2987,7 @@ let updateAdminBtn = {
             }
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
     },
     "Menular o'zgartirish": {
@@ -2997,7 +2998,7 @@ let updateAdminBtn = {
             updateUser(chat_id, { adminType: 'update' })
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
+            return isAdminUser(user) && user?.user_step == 702
         },
         next: {
             text: ({ chat_id }) => {
@@ -3016,7 +3017,7 @@ let updateAdminBtn = {
             updateStep(chat_id, 801)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && [800, 801].includes(+user?.user_step)
+            return isAdminUser(user) && [800, 801].includes(+user?.user_step)
         },
         next: {
             text: ({ chat_id }) => {
@@ -3043,7 +3044,7 @@ let updateAdminBtn = {
             updateStep(chat_id, 801)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && [800, 801].includes(+user?.user_step)
+            return isAdminUser(user) && [800, 801].includes(+user?.user_step)
         },
         next: {
             text: async ({ chat_id }) => {
@@ -3076,7 +3077,7 @@ let deleteAdminBtn = {
             updateUser(chat_id, { adminType: 'delete' })
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
+            return isAdminUser(user) && user?.user_step == 702
         },
         next: {
             text: async ({ chat_id }) => {
@@ -3112,7 +3113,7 @@ let changeStatusAdminBtn = {
             updateUser(chat_id, { adminType: 'change' })
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user?.user_step == 702
+            return isAdminUser(user) && user?.user_step == 702
         },
         next: {
             text: async ({ chat_id }) => {
@@ -3142,7 +3143,7 @@ let infoAdminBtn = {
         selfExecuteFn: ({ chat_id, }) => {
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -3159,7 +3160,7 @@ let infoAdminBtn = {
             updateStep(chat_id, 702)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin'
+            return isAdminUser(user)
         },
         next: {
             text: ({ chat_id }) => {
@@ -3179,7 +3180,7 @@ let infoAdminBtn = {
             });
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702;
+            return isAdminUser(user) && get(user, 'user_step') == 702;
         },
         next: {
             file: async ({ chat_id }) => {
@@ -3229,7 +3230,7 @@ let infoAdminBtn = {
             });
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702;
+            return isAdminUser(user) && get(user, 'user_step') == 702;
         },
         next: {
             file: async ({ chat_id }) => {
@@ -3281,7 +3282,7 @@ let infoAdminBtn = {
             });
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702;
+            return isAdminUser(user) && get(user, 'user_step') == 702;
         },
         next: {
             file: async ({ chat_id }) => {
@@ -3332,7 +3333,7 @@ let infoAdminBtn = {
             updateStep(chat_id, 9000)
         },
         middleware: ({ chat_id, user }) => {
-            return get(user, 'JobTitle') == 'Admin' && get(user, 'user_step') == 702
+            return isAdminUser(user) && get(user, 'user_step') == 702
         },
         next: {
             text: async ({ chat_id }) => {

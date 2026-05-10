@@ -1,5 +1,6 @@
 const { get } = require("lodash");
 const { infoPermisson, infoUser } = require("../helpers");
+const { isAdminUser } = require("../helpers/adminPermissions");
 const { empDynamicBtn } = require("./function_keyboards");
 
 const option = {
@@ -205,7 +206,7 @@ const mainMenuByRoles = ({ chat_id }) => {
         return item.chat_id == `${chat_id}`
     })
     let roles = get(permissons, 'roles', [])
-    if (get(user, 'JobTitle', '') == 'Admin') {
+    if (isAdminUser(user)) {
         return adminKeyboard
     }
     if (roles?.length) {
