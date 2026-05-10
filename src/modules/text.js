@@ -3093,11 +3093,11 @@ let infoAdminBtn = {
                 let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
                 // Fayllarni yaratish
-                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
-                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data", "data.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "data", "payment.xlsx") });
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
-                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    filePath: path.join(process.cwd(), "data", "payment_lines.xlsx"),
                     header: [
                         ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
                         ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
@@ -3105,10 +3105,10 @@ let infoAdminBtn = {
                 });
 
                 // Bot orqali yuborish
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment_lines.xlsx"));
 
-                return path.join(process.cwd(), "data.xlsx");
+                return path.join(process.cwd(), "data", "data.xlsx");
             },
             btn: async ({ chat_id }) => {
                 return empDynamicBtn();
@@ -3144,23 +3144,23 @@ let infoAdminBtn = {
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
                 let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
-                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data", "data.xlsx") });
 
-                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "data", "payment.xlsx") });
 
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
-                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    filePath: path.join(process.cwd(), "data", "payment_lines.xlsx"),
                     header: [
                         ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
                         ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
                     ],
                 });
 
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment_lines.xlsx"));
 
-                return path.join(process.cwd(), "data.xlsx");
+                return path.join(process.cwd(), "data", "data.xlsx");
             },
             btn: async ({ chat_id }) => {
                 return empDynamicBtn();
@@ -3195,23 +3195,23 @@ let infoAdminBtn = {
                 let paymentExcel = excelFnPaymentData({ main: data.filter(item => (item.payment === true || item.payment === false)) });
                 let paymentLinesExcel = await excelFnPaymentLines({ main: data.filter(item => (item.payment === true || item.payment === false)) });
 
-                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data.xlsx") });
-                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "payment.xlsx") });
+                await writeXlsxFile(objects, { schema, filePath: path.join(process.cwd(), "data", "data.xlsx") });
+                await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: path.join(process.cwd(), "data", "payment.xlsx") });
                 console.log('paymentLinesExcel.objects', Array.isArray(paymentLinesExcel.objects), paymentLinesExcel.objects[0]);
                 console.log('paymentLinesExcel.schema', paymentLinesExcel.schema);
                 await writeXlsxFile(paymentLinesExcel.objects, {
                     schema: paymentLinesExcel.schema,
-                    filePath: path.join(process.cwd(), "payment_lines.xlsx"),
+                    filePath: path.join(process.cwd(), "data", "payment_lines.xlsx"),
                     header: [
                         ["ID", "ParentKey", "LineNum", "AccountCode", "SumPaid"],
                         ["ID", "DocNum", "LineNum", "AcctCode", "SumApplied"],
                     ],
                 });
 
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment.xlsx"));
-                await bot.sendDocument(chat_id, path.join(process.cwd(), "payment_lines.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment.xlsx"));
+                await bot.sendDocument(chat_id, path.join(process.cwd(), "data", "payment_lines.xlsx"));
 
-                return path.join(process.cwd(), "data.xlsx");
+                return path.join(process.cwd(), "data", "data.xlsx");
             },
             btn: async ({ chat_id }) => {
                 return empDynamicBtn();

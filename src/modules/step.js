@@ -1467,18 +1467,18 @@ let adminStep = {
 
                     // === 1️⃣ Asosiy fayl
                     let { objects, schema } = excelFnFormatData({ main: data });
-                    const dataPath = path.join(process.cwd(), 'data.xlsx');
+                    const dataPath = path.join(process.cwd(), 'data', 'data.xlsx');
                     await writeXlsxFile(objects, { schema, filePath: dataPath });
 
                     // === 2️⃣ To‘lov fayli
                     const filteredPaymentData = data.filter(item => item.payment === true || item.payment === false);
                     const paymentExcel = excelFnPaymentData({ main: filteredPaymentData });
-                    const paymentPath = path.join(process.cwd(), 'payment.xlsx');
+                    const paymentPath = path.join(process.cwd(), 'data', 'payment.xlsx');
                     await writeXlsxFile(paymentExcel.objects, { schema: paymentExcel.schema, filePath: paymentPath });
 
                     // === 3️⃣ To‘lov qatorlari fayli
                     const paymentLinesExcel = await excelFnPaymentLines({ main: filteredPaymentData });
-                    const paymentLinesPath = path.join(process.cwd(), 'payment_lines.xlsx');
+                    const paymentLinesPath = path.join(process.cwd(), 'data', 'payment_lines.xlsx');
                     await writeXlsxFile(paymentLinesExcel.objects, {
                         schema: paymentLinesExcel.schema,
                         filePath: paymentLinesPath,

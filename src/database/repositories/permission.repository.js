@@ -13,6 +13,12 @@ class PermissionRepository extends BaseRepository {
   async findMenuPermissions(legacyMenuId) {
     return await this.find({ 'scope.legacyMenuId': legacyMenuId, 'status.isActive': true });
   }
+
+  async replaceUserPermissions(chatId, permissions) {
+    await this.deleteMany({ 'subject.chatId': chatId });
+    if (!permissions.length) return [];
+    return await this.model.insertMany(permissions);
+  }
 }
 
 module.exports = new PermissionRepository();

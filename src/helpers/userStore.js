@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const FILE_PATH = path.join(process.cwd(), "database", "user.json");
+const FILE_PATH = path.join(process.cwd(), "data", "db", "user.json");
 const DEBOUNCE_MS = Number(process.env.USERSTORE_DEBOUNCE_MS || 200);
 
 class UserStore {
@@ -14,6 +14,7 @@ class UserStore {
     this.flushing = false;      // hozir flush ketyaptimi
     this.pendingResolves = [];  // flushNow() kutayotganlar
     this.mongoConnected = false;
+    this.jsonFallbackEnabled = false;
   }
 
   // --- Helpers ---
@@ -40,11 +41,20 @@ class UserStore {
       this.fileMtimeMs = Date.now();
       this.dirty = false;
       this.mongoConnected = true;
+      this.jsonFallbackEnabled = false;
       console.log(`[UserStore] Synced ${this.cache.length} users from MongoDB.`);
     } catch (error) {
       console.error('[UserStore] Failed to sync from MongoDB, falling back to JSON:', error.message);
+      this.jsonFallbackEnabled = true;
       this._loadOnce();
     }
+  }
+
+  enableJsonFallback() {
+    this.mongoConnected = false;
+    this.jsonFallbackEnabled = true;
+    this.cache = null;
+    return this._loadOnce();
   }
 
   _updateMongo(chat_id, updateData) {
@@ -58,15 +68,26 @@ class UserStore {
       const userUpdate = {};
       const stateUpdate = {};
       
-      if (updateData.FirstName) userUpdate['employee.firstName'] = updateData.FirstName;
-      if (updateData.LastName) userUpdate['employee.lastName'] = updateData.LastName;
-      if (updateData.JobTitle) userUpdate['employee.jobTitle'] = updateData.JobTitle;
+      if (updateData.FirstName !== undefined) userUpdate['employee.firstName'] = updateData.FirstName;
+      if (updateData.LastName !== undefined) userUpdate['employee.lastName'] = updateData.LastName;
+      if (updateData.JobTitle !== undefined) userUpdate['employee.jobTitle'] = updateData.JobTitle;
+      if (updateData.MobilePhone !== undefined) {
+        userUpdate['employee.mobilePhone'] = updateData.MobilePhone;
+        userUpdate['telegram.phone'] = updateData.MobilePhone;
+      }
+      if (updateData.is_active !== undefined) userUpdate['status.isActive'] = updateData.is_active;
+      if (updateData.confirmationStatus !== undefined) userUpdate['status.confirmationStatus'] = updateData.confirmationStatus;
       
-      if (updateData.user_step) stateUpdate['current.step'] = updateData.user_step;
-      if (updateData.currentDataId) stateUpdate['current.dataId'] = updateData.currentDataId;
-      if (updateData.currentUserRole) stateUpdate['current.role'] = updateData.currentUserRole;
-      if (updateData.lastMessageId) stateUpdate['lastMessage.messageId'] = updateData.lastMessageId;
-      if (updateData.lastFile) stateUpdate.lastFile = updateData.lastFile;
+      if (updateData.user_step !== undefined) stateUpdate['current.step'] = updateData.user_step;
+      if (updateData.currentDataId !== undefined) stateUpdate['current.dataId'] = updateData.currentDataId;
+      if (updateData.currentUserRole !== undefined) stateUpdate['current.role'] = updateData.currentUserRole;
+      if (updateData.lastMessageId !== undefined) stateUpdate['lastMessage.messageId'] = updateData.lastMessageId;
+      if (updateData.lastFile !== undefined) stateUpdate.lastFile = updateData.lastFile;
+      if (updateData.selectedAdminUserChatId !== undefined) stateUpdate['adminFlow.selectedAdminUserChatId'] = updateData.selectedAdminUserChatId;
+      if (updateData.selectedAdminUserStatus !== undefined) stateUpdate['adminFlow.selectedAdminUserStatus'] = updateData.selectedAdminUserStatus;
+      if (updateData.selectMenuId !== undefined) stateUpdate['adminFlow.selectedMenuId'] = updateData.selectMenuId;
+      if (updateData.selectGroup !== undefined) stateUpdate['adminFlow.selectedGroup'] = updateData.selectGroup;
+      if (updateData.updateMenu !== undefined) stateUpdate['adminFlow.updateMenu'] = updateData.updateMenu;
       
       if (updateData.back) {
           stateUpdate['navigation.backStack'] = updateData.back.map(b => ({
@@ -104,6 +125,12 @@ class UserStore {
           // Agar fayl buzilgan bo'lsa, eski cache bilan davom etamiz
         }
       }
+      return this.cache;
+    }
+
+    if (!this.jsonFallbackEnabled) {
+      this.cache = [];
+      this.fileMtimeMs = stat ? stat.mtimeMs : 0;
       return this.cache;
     }
 
@@ -172,9 +199,12 @@ class UserStore {
     // Sync to Mongo
     if (this.mongoConnected) {
        const userRepository = require('../database/repositories/user.repository');
-       userRepository.create({
+       const botStateRepository = require('../database/repositories/bot-state.repository');
+       const chatId = Number(userData.chat_id);
+
+       userRepository.updateOne({ 'telegram.chatId': chatId }, {
          telegram: {
-           chatId: userData.chat_id,
+           chatId,
            firstName: userData.FirstName,
            lastName: userData.LastName,
            phone: userData.MobilePhone
@@ -188,6 +218,21 @@ class UserStore {
            salesPersonCode: userData.SalesPersonCode
          },
          legacy: { raw: userData }
+       }, { upsert: true, setDefaultsOnInsert: true }).catch(() => {});
+
+       botStateRepository.updateState(chatId, {
+         'current.step': userData.user_step || 1,
+         'current.role': userData.currentUserRole,
+         'current.dataId': userData.currentDataId,
+         'lastMessage.messageId': userData.lastMessageId,
+         'navigation.backStack': Array.isArray(userData.back) ? userData.back.map((b) => ({
+           step: b.step,
+           text: b.text,
+           buttonSnapshot: b.btn
+         })) : [],
+         'flags.update': Boolean(userData.update),
+         'flags.waitingUpdateStatus': Boolean(userData.waitingUpdateStatus),
+         'flags.extraWaiting': Boolean(userData.extraWaiting)
        }).catch(() => {});
     }
     
@@ -268,4 +313,3 @@ for (const ev of ["beforeExit", "exit", "SIGINT", "SIGTERM"]) {
 module.exports = {
   userStore,
 };
-

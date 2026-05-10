@@ -1,5 +1,11 @@
 node_modules/
-database/
+data/db/
+data/*.xlsx
+!src/database/
+src/database/*
+!src/database/scripts/
+src/database/scripts/*
+!src/database/scripts/migrate-json-to-mongo.js
 
 .env
 .env.*

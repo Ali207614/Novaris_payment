@@ -25,6 +25,11 @@ const SubMenuSchema = new mongoose.Schema({
   status: {
     isActive: { type: Boolean, default: true },
     isDeleted: { type: Boolean, default: false }
+  },
+
+  legacy: {
+    sourceFile: { type: String, default: 'subMenu.json' },
+    raw: { type: mongoose.Schema.Types.Mixed }
   }
 }, { timestamps: true });
 

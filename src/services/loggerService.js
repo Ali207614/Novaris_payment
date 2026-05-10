@@ -1,5 +1,6 @@
 const auditLogRepository = require('../database/repositories/audit-log.repository');
 const mongoose = require('mongoose');
+const { isMongoConnected } = require('../database/mongoose.module');
 
 /**
  * LoggerService for professional audit logging.
@@ -11,6 +12,11 @@ class LoggerService {
    */
   async log(logData) {
     try {
+      if (!isMongoConnected()) {
+        console.warn('[LoggerService] MongoDB is not connected. Audit log skipped:', logData.action);
+        return null;
+      }
+
       if (logData.metadata) {
         const { source, requestId, ip, details, ...extraMetadata } = logData.metadata;
         logData.metadata = {

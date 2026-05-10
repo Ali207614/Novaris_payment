@@ -9,7 +9,12 @@ const MenuSchema = new mongoose.Schema({
     isDeleted: { type: Boolean, default: false }
   },
 
-  sortOrder: { type: Number, default: 0 }
+  sortOrder: { type: Number, default: 0 },
+
+  legacy: {
+    sourceFile: { type: String, default: 'menu.json' },
+    raw: { type: mongoose.Schema.Types.Mixed }
+  }
 }, { timestamps: true });
 
 MenuSchema.index({ legacyId: 1 }, { unique: true });

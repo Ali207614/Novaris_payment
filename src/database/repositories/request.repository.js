@@ -14,6 +14,21 @@ class RequestRepository extends BaseRepository {
     return await this.findOne({ publicId });
   }
 
+  async upsertLegacyRequest(publicId, data) {
+    return await this.updateOne(
+      { publicId },
+      data,
+      { upsert: true, setDefaultsOnInsert: true }
+    );
+  }
+
+  async markDeletedByPublicId(publicId) {
+    return await this.updateOne(
+      { publicId },
+      { 'workflow.isDeleted': true, 'legacy.raw.is_delete': true }
+    );
+  }
+
   async findPendingByChatId(chatId) {
     return await this.find({
       'creator.chatId': chatId,

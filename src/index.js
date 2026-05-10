@@ -9,22 +9,39 @@ const { sendMessageHelper, deleteData, updateUser } = require("./helpers");
 const { connectDB } = require("./database/mongoose.module");
 const loggerService = require("./services/loggerService");
 
+const initializeMongoBackedStores = async () => {
+    try {
+        await connectDB();
+        const { userStore } = require("./helpers/userStore");
+        const { dataStore } = require("./helpers/dataStore");
+        const permissionStore = require("./helpers/permissionStore");
+        const legacyStore = require("./helpers/legacyStore");
+
+        await Promise.all([
+            userStore.syncFromMongo(),
+            dataStore.syncFromMongo(),
+            permissionStore.syncFromMongo(),
+            legacyStore.syncFromMongo()
+        ]);
+        console.log("MongoDB synchronization complete.");
+    } catch (err) {
+        console.error("MongoDB init error:", err);
+        const { userStore } = require("./helpers/userStore");
+        const { dataStore } = require("./helpers/dataStore");
+        const permissionStore = require("./helpers/permissionStore");
+        const legacyStore = require("./helpers/legacyStore");
+
+        userStore.enableJsonFallback();
+        dataStore.enableJsonFallback();
+        permissionStore.enableJsonFallback();
+        legacyStore.loadJsonFallback();
+        loggerService.logError(err, { source: 'migration', action: 'DB_CONNECT' });
+    }
+};
+
 const start = async () => {
     try {
-        // Initialize MongoDB without blocking the main bot logic initially
-        connectDB().then(async () => {
-            const { userStore } = require("./helpers/userStore");
-            const permissionStore = require("./helpers/permissionStore");
-            await Promise.all([
-                userStore.syncFromMongo(),
-                permissionStore.syncFromMongo()
-            ]);
-            console.log("MongoDB synchronization complete.");
-        }).catch(err => {
-            console.error("MongoDB init error:", err);
-            loggerService.logError(err, { source: 'migration', action: 'DB_CONNECT' });
-        });
-
+        await initializeMongoBackedStores();
 
         bot.setMyCommands([
             { command: "/start", description: "start" },
@@ -136,5 +153,3 @@ const start = async () => {
 };
 
 start();
-
-

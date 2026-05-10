@@ -8,7 +8,7 @@ const BotStateSchema = new mongoose.Schema({
     step: { type: Number },
     menuId: { type: mongoose.Schema.Types.ObjectId, ref: 'Menu' },
     subMenuId: { type: mongoose.Schema.Types.ObjectId, ref: 'SubMenu' },
-    dataId: { type: mongoose.Schema.Types.ObjectId, ref: 'Request' },
+    dataId: { type: mongoose.Schema.Types.Mixed },
     role: { type: String }
   },
 
@@ -38,7 +38,7 @@ const BotStateSchema = new mongoose.Schema({
     fileName: { type: String },
     mimeType: { type: String },
     size: { type: Number },
-    currentDataId: { type: mongoose.Schema.Types.ObjectId, ref: 'Request' }
+    currentDataId: { type: mongoose.Schema.Types.Mixed }
   },
 
   adminFlow: {

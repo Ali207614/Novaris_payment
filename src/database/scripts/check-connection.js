@@ -12,14 +12,14 @@ const checkConnection = async () => {
     if (pingResult.ok === 1) {
       console.log('✅ MongoDB ping successful.');
       console.log(`✅ Connected to database: ${connection.name}`);
-      process.exit(0);
+      process.exitCode = 0;
     } else {
       console.error('❌ MongoDB ping failed:', pingResult);
-      process.exit(1);
+      process.exitCode = 1;
     }
   } catch (error) {
     console.error('❌ Failed to connect to MongoDB:', error.message);
-    process.exit(1);
+    process.exitCode = 1;
   } finally {
     await disconnectDB();
   }

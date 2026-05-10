@@ -1,12 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 
-const FILE_PATH = path.join(process.cwd(), "database", "permisson.json");
+const FILE_PATH = path.join(process.cwd(), "data", "db", "permisson.json");
 
 class PermissionStore {
     constructor() {
         this.cache = null;
         this.mongoConnected = false;
+        this.jsonFallbackEnabled = false;
     }
 
     async syncFromMongo() {
@@ -16,7 +17,7 @@ class PermissionStore {
 
             console.log('[PermissionStore] Syncing from MongoDB...');
             const mongoPermissions = await permissionRepository.find({});
-            
+
             // Group by chatId
             const grouped = {};
             mongoPermissions.forEach(p => {
@@ -30,23 +31,39 @@ class PermissionStore {
             });
 
             this.mongoConnected = true;
+            this.jsonFallbackEnabled = false;
             console.log(`[PermissionStore] Synced permissions for ${this.cache.length} users from MongoDB.`);
         } catch (error) {
             console.error('[PermissionStore] Failed to sync from MongoDB:', error.message);
+            this.jsonFallbackEnabled = true;
             this._loadOnce();
         }
     }
 
     _loadOnce() {
         if (this.cache && this.mongoConnected) return this.cache;
-        
+        if (!this.jsonFallbackEnabled) {
+            this.cache = [];
+            return this.cache;
+        }
+        this.cache = this._readJson();
+        return this.cache;
+    }
+
+    enableJsonFallback() {
+        this.mongoConnected = false;
+        this.jsonFallbackEnabled = true;
+        this.cache = null;
+        return this._loadOnce();
+    }
+
+    _readJson() {
         try {
             const raw = fs.readFileSync(FILE_PATH, "utf-8");
-            this.cache = raw ? JSON.parse(raw) : [];
+            return raw ? JSON.parse(raw) : [];
         } catch (e) {
-            this.cache = [];
+            return [];
         }
-        return this.cache;
     }
 
     infoPermisson() {
@@ -58,8 +75,10 @@ class PermissionStore {
         const index = main.findIndex((item) => item.chat_id == id);
         if (index != -1) {
             main[index] = { ...main[index], ...data };
+            data = main[index];
         } else {
-            main.push({ chat_id: id, ...data });
+            data = { chat_id: id, ...data };
+            main.push(data);
         }
         
         fs.writeFileSync(FILE_PATH, JSON.stringify(main, null, 4));
@@ -78,9 +97,18 @@ class PermissionStore {
     _syncToMongo(chatId, data) {
         if (!this.mongoConnected) return;
         
-        // This is complex because mapping back from legacy to normalized Mongo permissions
-        // is non-trivial. For now, we'll log that it's not implemented or do a simple version.
-        // Actually, the user's focus was on READING from Mongo.
+        try {
+            const permissionRepository = require('../database/repositories/permission.repository');
+            const { mapLegacyPermissionToMongoList } = require('./mongoLegacyMapper');
+            const legacyPermission = { ...data, chat_id: chatId };
+            const permissions = mapLegacyPermissionToMongoList(legacyPermission);
+
+            permissionRepository.replaceUserPermissions(Number(chatId), permissions).catch((error) => {
+                console.error('[PermissionStore] MongoDB permission sync failed:', error.message);
+            });
+        } catch (error) {
+            console.error('[PermissionStore] MongoDB permission sync setup failed:', error.message);
+        }
     }
 }
 

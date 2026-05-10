@@ -32,10 +32,10 @@ const checkIndexes = async () => {
     }
 
     console.log('🎉 All indexes successfully created/synced.');
-    process.exit(0);
+    process.exitCode = 0;
   } catch (error) {
     console.error('❌ Failed to create/sync indexes:', error.message);
-    process.exit(1);
+    process.exitCode = 1;
   } finally {
     await disconnectDB();
   }

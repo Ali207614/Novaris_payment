@@ -20,12 +20,26 @@ class BaseRepository {
     return await this.model.find(query).sort(sort).limit(limit).exec();
   }
 
-  async updateById(id, data) {
-    return await this.model.findByIdAndUpdate(id, data, { returnDocument: 'after' }).exec();
+  _buildUpdate(data) {
+    if (!data || typeof data !== 'object') return data;
+    const hasOperator = Object.keys(data).some((key) => key.startsWith('$'));
+    return hasOperator ? data : { $set: data };
   }
 
-  async updateOne(query, data) {
-    return await this.model.findOneAndUpdate(query, data, { returnDocument: 'after' }).exec();
+  async updateById(id, data, options = {}) {
+    return await this.model.findByIdAndUpdate(
+      id,
+      this._buildUpdate(data),
+      { new: true, ...options }
+    ).exec();
+  }
+
+  async updateOne(query, data, options = {}) {
+    return await this.model.findOneAndUpdate(
+      query,
+      this._buildUpdate(data),
+      { new: true, ...options }
+    ).exec();
   }
 
   async deleteById(id) {
@@ -34,6 +48,10 @@ class BaseRepository {
 
   async deleteOne(query) {
     return await this.model.findOneAndDelete(query).exec();
+  }
+
+  async deleteMany(query) {
+    return await this.model.deleteMany(query).exec();
   }
 
   async softDeleteById(id) {

@@ -18,7 +18,7 @@ const AuditLogSchema = new mongoose.Schema({
   after: { type: mongoose.Schema.Types.Mixed },
 
   metadata: {
-    source: { type: String, enum: ['telegram_bot', 'migration', 'admin_panel', 'sap_sync', 'verifix_sync'], default: 'telegram_bot' },
+    source: { type: String, enum: ['telegram_bot', 'migration', 'admin_panel', 'sap_sync', 'verifix_sync', 'system'], default: 'telegram_bot' },
     requestId: { type: String },
     ip: { type: String },
     details: { type: mongoose.Schema.Types.Mixed }
