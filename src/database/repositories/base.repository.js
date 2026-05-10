@@ -30,7 +30,7 @@ class BaseRepository {
     return await this.model.findByIdAndUpdate(
       id,
       this._buildUpdate(data),
-      { new: true, ...options }
+      { returnDocument: 'after', ...options }
     ).exec();
   }
 
@@ -38,7 +38,7 @@ class BaseRepository {
     return await this.model.findOneAndUpdate(
       query,
       this._buildUpdate(data),
-      { new: true, ...options }
+      { returnDocument: 'after', ...options }
     ).exec();
   }
 

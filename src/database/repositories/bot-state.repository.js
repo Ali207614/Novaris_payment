@@ -14,7 +14,7 @@ class BotStateRepository extends BaseRepository {
     return await this.model.findOneAndUpdate(
       { chatId },
       { $set: data },
-      { new: true, upsert: true }
+      { returnDocument: 'after', upsert: true }
     ).exec();
   }
 
@@ -22,7 +22,7 @@ class BotStateRepository extends BaseRepository {
     return await this.model.findOneAndUpdate(
       { chatId },
       { $push: { 'navigation.backStack': stackItem } },
-      { new: true }
+      { returnDocument: 'after' }
     ).exec();
   }
 
