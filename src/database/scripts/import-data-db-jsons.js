@@ -17,7 +17,8 @@ const {
   mapLegacyPermissionToMongoList
 } = require("../../helpers/mongoLegacyMapper");
 
-const DB_DIR = path.join(process.cwd(), "data", "db");
+const inputDir = process.argv[2] || process.env.JSON_IMPORT_DIR || path.join("data", "db");
+const DB_DIR = path.isAbsolute(inputDir) ? inputDir : path.join(process.cwd(), inputDir);
 const BATCH_SIZE = Number(process.env.MONGODB_IMPORT_BATCH_SIZE || 500);
 const EXCLUDED_FILES = new Set(["clone.data.json"]);
 
@@ -518,6 +519,7 @@ async function run() {
 
   try {
     console.log("[Import] Starting data/db JSON import");
+    console.log(`[Import] Source: ${DB_DIR}`);
     console.log("[Import] Excluding: clone.data.json");
 
     const result = {
