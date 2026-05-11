@@ -1133,7 +1133,7 @@ let adminStep = {
             });
         },
         middleware: ({ user }) => {
-            return get(user, 'JobTitle') == 'Admin' && user.user_step == 709;
+            return isAdminUser(user) && user.user_step == 709;
         },
         next: {
             text: ({ user }) => {

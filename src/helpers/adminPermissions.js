@@ -1,6 +1,13 @@
 const { get } = require('lodash');
 
-const isAdminUser = (user = {}) => get(user, 'JobTitle') === 'Admin' && get(user, 'is_active') !== false;
+const isAdminUser = (user = {}) => {
+    if (get(user, 'is_active') === false) return false;
+
+    return get(user, 'JobTitle') === 'Admin'
+        || get(user, 'role.isAdmin') === true
+        || get(user, 'isAdmin') === true
+        || get(user, 'currentUserRole') === 'Admin';
+};
 
 const normalizeId = (value) => `${value}`;
 
