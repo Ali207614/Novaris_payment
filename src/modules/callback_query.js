@@ -14,6 +14,16 @@ let moment = require('moment');
 const { boshqaBtn } = require("./text");
 const { CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection");
 const { permissionChatIds, hasPermissionOrAdmin } = require("../helpers/adminPermissions");
+const {
+    findLocalUserByVerifixEmployee,
+    buildVerifixAccessRevocationPatch,
+    buildEmptyPermissionPatch,
+    buildVerifixDeleteNotificationText
+} = require("../helpers/verifixDeleteAccess");
+const {
+    getManageableAdminUsers,
+    toAdminUserButtonList
+} = require("../helpers/adminUserDirectory");
 
 
 const sleepNow = (delay) =>
@@ -33,25 +43,6 @@ const getSelectedAdminUser = (user = {}) => {
 
 const getUserFullName = (user = {}) => {
     return `${get(user, 'LastName', '')} ${get(user, 'FirstName', '')}`.trim() || "Noma'lum foydalanuvchi";
-};
-
-const normalizePhone = (value = '') => String(value).replace(/\D/g, '');
-
-const findLocalUserByVerifixEmployee = (employee = {}) => {
-    const employeeId = get(employee, 'EmployeeID');
-    const phone = normalizePhone(get(employee, 'MobilePhone', ''));
-
-    return infoUser().find(item => {
-        const sameEmployeeId = employeeId && `${get(item, 'EmployeeID', '')}` == `${employeeId}`;
-        const localPhone = normalizePhone(get(item, 'MobilePhone', ''));
-        const samePhone = phone && localPhone && (
-            phone == localPhone ||
-            phone.endsWith(localPhone) ||
-            localPhone.endsWith(phone)
-        );
-
-        return sameEmployeeId || samePhone;
-    });
 };
 
 let xorijiyXaridCallback = {
@@ -1844,7 +1835,7 @@ let adminCallback = {
         selfExecuteFn: async ({ chat_id, data, id, user }) => {
             const selectedUser = getSelectedAdminUser(user);
             const lookupEmployee = get(user, 'verifixDeleteLookup', {});
-            const targetUser = selectedUser || findLocalUserByVerifixEmployee(lookupEmployee);
+            const targetUser = selectedUser || findLocalUserByVerifixEmployee(infoUser(), lookupEmployee);
             const manualEmployeeId = get(user, 'verifixDeleteManualEmployeeId');
             const employeeId = get(selectedUser, 'EmployeeID') || get(lookupEmployee, 'EmployeeID') || manualEmployeeId;
             const deleteMode = get(user, 'verifixDeleteMode', selectedUser ? 'selected' : 'lookup');
@@ -1909,27 +1900,30 @@ let adminCallback = {
             const deleteResult = await verifixController.deleteEmployee(employeeId);
 
             if (deleteResult.status) {
+                let notificationSent = false;
+
                 if (targetUser) {
-                    updateUser(get(targetUser, 'chat_id'), {
-                        is_active: false,
-                        user_step: 0,
-                        currentDataId: '',
-                        currentUserRole: '',
-                        back: [],
-                        update: false,
-                        confirmationStatus: false,
-                        waitingUpdateStatus: false,
-                        extraWaiting: false,
-                        deactivatedAt: new Date(),
-                        deactivatedBy: chat_id,
-                        deactivatedSource: 'verifix_employee_delete'
-                    });
-                    updatePermisson(get(targetUser, 'chat_id'), {
-                        roles: [],
-                        permissonMenuEmp: {},
-                        permissonMenuAffirmative: {},
-                        permissonMenuExecutor: {}
-                    });
+                    updateUser(get(targetUser, 'chat_id'), buildVerifixAccessRevocationPatch(chat_id));
+                    updatePermisson(get(targetUser, 'chat_id'), buildEmptyPermissionPatch());
+
+                    try {
+                        const sentMessage = await sendMessageHelper(
+                            get(targetUser, 'chat_id'),
+                            buildVerifixDeleteNotificationText({
+                                employeeId,
+                                adminName: getUserFullName(user)
+                            })
+                        );
+                        notificationSent = Boolean(sentMessage);
+                    } catch (err) {
+                        await loggerService.logError(err, {
+                            source: 'telegram_bot',
+                            action: 'VERIFIX_DELETE_USER_NOTIFICATION_FAILED',
+                            actor: { chatId: chat_id, role: 'admin' },
+                            entity: { type: 'employee' },
+                            metadata: { employeeId, targetChatId: get(targetUser, 'chat_id', '') }
+                        });
+                    }
                 }
                 updateStep(chat_id, 1);
                 updateUser(chat_id, {
@@ -1944,6 +1938,7 @@ let adminCallback = {
                         targetChatId: get(targetUser, 'chat_id', ''),
                         targetName,
                         localAccessRevoked: Boolean(targetUser),
+                        notificationSent,
                         mode: deleteMode
                     }
                 });
@@ -1952,8 +1947,8 @@ let adminCallback = {
                     { chat: { id: chat_id }, message_id: id },
                     'ADMIN_VERIFIX_EMPLOYEE_DELETE_SUCCESS',
                     { type: 'employee' },
-                    { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode } },
-                    { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode }
+                    { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode, notificationSent } },
+                    { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode, notificationSent }
                 );
                 return;
             }
@@ -1993,8 +1988,11 @@ let adminCallback = {
                         `Employee ID: ${get(result, 'employeeId')}`,
                         get(result, 'localAccessRevoked')
                             ? "Botdagi kirish huquqlari ham bloklandi."
-                            : "Botda mahalliy foydalanuvchi topilmadi, Verifix amali bajarildi."
-                    ].join('\n');
+                            : "Botda mahalliy foydalanuvchi topilmadi, Verifix amali bajarildi.",
+                        get(result, 'localAccessRevoked')
+                            ? (get(result, 'notificationSent') ? "Foydalanuvchiga xabar yuborildi." : "Foydalanuvchiga xabar yuborilmadi.")
+                            : null
+                    ].filter(Boolean).join('\n');
                 }
 
                 if (get(result, 'status') == 'cancelled') {
@@ -2244,16 +2242,23 @@ let adminCallback = {
         },
         next: {
             text: ({ chat_id, data }) => {
+                const users = getManageableAdminUsers(infoUser());
+
+                if (!users.length) {
+                    return "Foydalanuvchilar topilmadi"
+                }
+
                 return `Foydalanuvchini tanlang`
             },
             btn: async ({ chat_id, data }) => {
-                let user = infoUser().filter(item => item.JobTitle !== 'Admin')
+                const users = getManageableAdminUsers(infoUser());
+
+                if (!users.length) {
+                    return dataConfirmBtnEmp(chat_id, [], 1, 'adminUsers');
+                }
+
                 let pagination = data[1] == 'prev' ? { prev: +data[2] - 10, next: data[2] } : { prev: data[2], next: +data[2] + 10 }
-                let btn = await dataConfirmBtnEmp(chat_id, user.map(item => {
-                    return {
-                        name: `${item.LastName} ${item.FirstName} `, id: item.chat_id
-                    }
-                }), 1, 'adminUsers', pagination)
+                let btn = await dataConfirmBtnEmp(chat_id, toAdminUserButtonList(users), 1, 'adminUsers', pagination)
                 return btn
             },
             update: true

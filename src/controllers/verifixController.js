@@ -135,7 +135,7 @@ class verifixController {
             FirstName: get(employee, 'first_name', ''),
             MiddleName: get(employee, 'middle_name', ''),
             JobTitle: get(employee, 'job_name') || get(employee, 'job_title', ''),
-            MobilePhone: get(this._employeePhoneValues(employee), '[0]', ''),
+            MobilePhone: get(this._employeePhoneValues(employee), '[0]', '') || get(this._employeePhoneFallbackValues(employee), '[0]', ''),
             DivisionName: get(employee, 'division_name') || get(employee, 'division', ''),
             LocationName: get(employee, 'location_name') || get(employee, 'location', ''),
             State: get(employee, 'state', ''),
@@ -161,24 +161,42 @@ class verifixController {
     }
 
     _employeePhoneValues(employee = {}) {
-        const dynamicFields = Array.isArray(employee.dynamic_fields) ? employee.dynamic_fields : [];
-        const dynamicPhones = dynamicFields.flatMap(field => [
-            get(field, 'value'),
-            get(field, 'field_value'),
-            get(field, 'text')
-        ]);
+        const dynamicFields = [
+            ...(Array.isArray(employee.fields) ? employee.fields : []),
+            ...(Array.isArray(employee.dynamic_fields) ? employee.dynamic_fields : [])
+        ];
+        const extraPhoneFields = dynamicFields
+            .filter(field => this._isExtraPhoneField(field))
+            .flatMap(field => [
+                get(field, 'value'),
+                get(field, 'field_value'),
+                get(field, 'text')
+            ]);
 
         return [
-            get(employee, 'phone_number'),
-            get(employee, 'main_phone'),
-            get(employee, 'mobile_phone'),
-            get(employee, 'phone'),
-            ...dynamicPhones
+            get(employee, 'extra_phone'),
+            ...extraPhoneFields
+        ].flatMap(value => Array.isArray(value) ? value : [value]).filter(Boolean);
+    }
+
+    _employeePhoneFallbackValues(employee = {}) {
+        return [
+            get(employee, 'phone_number')
         ].filter(Boolean);
+    }
+
+    _isExtraPhoneField(field = {}) {
+        return [
+            get(field, 'code'),
+            get(field, 'name'),
+            get(field, 'field_name'),
+            get(field, 'label')
+        ].some(value => String(value || '').trim().toLowerCase() === 'extra_phone');
     }
 
     async _findEmployeeByPhone(instance, phone) {
         let cursor = null;
+        let fallbackEmployee = null;
         const visitedCursors = new Set();
 
         do {
@@ -195,19 +213,26 @@ class verifixController {
             const response = await instance.post('/b/vhr/api/v1/core/employee$list', {}, { headers });
 
             const employees = get(response, 'data.data', []);
-            const matchedEmployee = employees.find(emp =>
+            const matchedEmployeeByExtraPhone = employees.find(emp =>
                 this._isActiveEmployee(emp) &&
                 this._employeePhoneValues(emp).some(value => this._isSamePhone(value, phone))
             );
 
-            if (matchedEmployee) {
-                return matchedEmployee;
+            if (matchedEmployeeByExtraPhone) {
+                return matchedEmployeeByExtraPhone;
+            }
+
+            if (!fallbackEmployee) {
+                fallbackEmployee = employees.find(emp =>
+                    this._isActiveEmployee(emp) &&
+                    this._employeePhoneFallbackValues(emp).some(value => this._isSamePhone(value, phone))
+                ) || null;
             }
 
             cursor = this._normalizeCursor(get(response, 'data.meta.next_cursor'));
         } while (cursor);
 
-        return null;
+        return fallbackEmployee;
     }
 
     _isActiveEmployee(employee = {}) {

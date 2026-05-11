@@ -13,6 +13,11 @@ const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 let moment = require('moment')
 const { getCustomerSelectionText } = require("../helpers/customerSelection")
+const {
+    getAdminUserFullName,
+    getManageableAdminUsers,
+    toAdminUserButtonList
+} = require("../helpers/adminUserDirectory");
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -2527,10 +2532,6 @@ const getSelectedAdminUser = (user = {}) => {
     return infoUser().find(item => `${item.chat_id}` == `${get(user, 'selectedAdminUserChatId', '')}`);
 };
 
-const getAdminUserFullName = (user = {}) => {
-    return `${get(user, 'LastName', '')} ${get(user, 'FirstName', '')}`.trim() || "Noma'lum foydalanuvchi";
-};
-
 const getVerifixDeleteConfirmText = (targetUser = {}) => {
     return [
         "Verifixdan xodimni o'chirish",
@@ -2555,15 +2556,22 @@ let adminBtn = {
         },
         next: {
             text: ({ chat_id }) => {
+                const users = getManageableAdminUsers(infoUser());
+
+                if (!users.length) {
+                    return "Foydalanuvchilar topilmadi"
+                }
+
                 return "Foydalanuvchini tanlang"
             },
             btn: async ({ chat_id, }) => {
-                let user = infoUser().filter(item => item.JobTitle !== 'Admin')
-                return dataConfirmBtnEmp(chat_id, user.map(item => {
-                    return {
-                        name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
-                    }
-                }), 1, 'adminUsers')
+                const users = getManageableAdminUsers(infoUser());
+
+                if (!users.length) {
+                    return empDynamicBtn();
+                }
+
+                return dataConfirmBtnEmp(chat_id, toAdminUserButtonList(users), 1, 'adminUsers')
             },
         },
     },

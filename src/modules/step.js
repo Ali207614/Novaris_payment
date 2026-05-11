@@ -14,6 +14,10 @@ const path = require('path')
 const writeXlsxFile = require('write-excel-file/node')
 const { CUSTOMER_SEARCH_STEP, CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection")
 const { permissionChatIds } = require("../helpers/adminPermissions")
+const {
+    searchManageableAdminUsers,
+    toAdminUserButtonList
+} = require("../helpers/adminUserDirectory")
 
 
 const cleanTelegramText = (text = '') => {
@@ -1637,16 +1641,22 @@ let adminStep = {
         },
         next: {
             text: async ({ chat_id, msgText }) => {
+                const users = searchManageableAdminUsers(infoUser(), msgText);
+
+                if (!users.length) {
+                    return "Qidiruv bo'yicha foydalanuvchi topilmadi"
+                }
+
                 return `Foydalanuvchilar ro'yxati`
             },
             btn: async ({ chat_id, msgText }) => {
+                const users = searchManageableAdminUsers(infoUser(), msgText);
 
-                let user = infoUser().filter(item => item.JobTitle !== 'Admin' && (`${item.LastName.toLowerCase()} ${item.FirstName.toLowerCase()}`.includes(msgText.toLowerCase()) || item.MobilePhone.includes(msgText)))
-                return dataConfirmBtnEmp(chat_id, user.map(item => {
-                    return {
-                        name: `${item.LastName} ${item.FirstName}`, id: item.chat_id
-                    }
-                }), 1, 'adminUsers')
+                if (!users.length) {
+                    return empDynamicBtn();
+                }
+
+                return dataConfirmBtnEmp(chat_id, toAdminUserButtonList(users), 1, 'adminUsers')
             },
         },
     },
