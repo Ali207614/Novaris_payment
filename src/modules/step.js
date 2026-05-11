@@ -107,6 +107,43 @@ const getFilteredAccount43 = async (data = {}) => {
 const isKeepOldDateMessage = (msgText = '') => ['-', 'old', 'eski'].includes(cleanTelegramText(msgText).toLowerCase());
 
 let xorijiyXaridStep = {
+    "1101": {
+        selfExecuteFn: ({ chat_id, msgText }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            let list = infoData().find(item => item.id == user.currentDataId)
+
+            if (user?.update) {
+                updateStep(chat_id, get(list, 'lastStep', 0))
+            }
+            else {
+                updateStep(chat_id, 13)
+                updateBack(chat_id, { text: "Ketgan vaqtingizni kiriting", btn: empDynamicBtn(), step: 1101 })
+            }
+            updateData(user.currentDataId, { leaveTime: msgText })
+        },
+        middleware: ({ chat_id }) => {
+            let user = infoUser().find(item => item.chat_id == chat_id)
+            return user.user_step == 1101
+        },
+        next: {
+            text: ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user.currentDataId)
+                if (user?.update) {
+                    let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                    return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
+                }
+                return SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.comment
+            },
+            btn: async ({ chat_id }) => {
+                let user = infoUser().find(item => item.chat_id == chat_id)
+                let list = infoData().find(item => item.id == user.currentDataId)
+                let btn = user?.update ? list.lastBtn : empDynamicBtn()
+                updateUser(chat_id, { update: false })
+                return btn
+            }
+        }
+    },
     "12": {
         selfExecuteFn: ({ chat_id, msgText }) => {
         },

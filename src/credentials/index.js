@@ -107,14 +107,18 @@ let SubMenu = () => {
     let subMenuList = infoSubMenu()
     for (let i = 0; i < subMenuList.length; i++) {
         let item = subMenuList[i]
+        const mappedUpdate = (item.update || []).map(u => ({
+             ...u, 
+             btn: u.btn ? eval(u.btn) : undefined 
+        }));
         if (newSubMenus[item.menuId]?.length) {
             newSubMenus[item.menuId].push({
-                ...item, menuId: Number(item.menuId), infoFn: eval(item.infoFn), update: [{ ...item.update[0], btn: eval(item.update[0].btn) }]
+                ...item, menuId: Number(item.menuId), infoFn: eval(item.infoFn), update: mappedUpdate
             })
         }
         else {
             newSubMenus[item.menuId] = [{
-                ...item, infoFn: eval(item.infoFn), update: [{ ...item.update[0], btn: eval(item.update[0].btn) }]
+                ...item, infoFn: eval(item.infoFn), update: mappedUpdate
             }]
         }
     }

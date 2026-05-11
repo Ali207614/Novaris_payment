@@ -202,6 +202,26 @@ let xorijiyXaridCallback = {
                         accountList: get(list, 'accountList', []).filter(item => get(item, 'id') == get(list, 'accountCodeOther'))
                     }
 
+                    if (get(list, 'menu') == 11) {
+                        try {
+                            const employee = infoUser().find(item => item.chat_id == list.chat_id);
+                            if (employee && employee.EmployeeID) {
+                                const datePart = moment(list.creationDate || new Date()).format('YYYY-MM-DD');
+                                const timePart = list.leaveTime ? list.leaveTime.trim() : "18:00";
+                                const trackDatetime = `${datePart} ${timePart.length === 5 ? timePart + ':00' : timePart}`;
+                                
+                                verifixController.createTrack({
+                                    employee_id: employee.EmployeeID,
+                                    track_type: 'O',
+                                    track_datetime: trackDatetime,
+                                    comment: list.comment
+                                }).catch(err => console.log('Error creating track in verifix for menu 11:', err));
+                            }
+                        } catch (err) {
+                            console.log('Error preparing verifix track data:', err);
+                        }
+                    }
+
                     if (get(list, 'menuName') == 'Shartnoma') {
                         updateData(data[2], {
                             executor: { chat_id, status: true },
