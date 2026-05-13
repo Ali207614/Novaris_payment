@@ -1,0 +1,51 @@
+PS D:\Shakhzod\Javascript\NovarisPayment> npm start
+
+> novaris_payment@1.0.0 start
+> node src/index.js
+
+◇ injected env (15) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+[MongoDB] Connected successfully to telegram_bot_db
+[UserStore] Syncing from MongoDB...
+[DataStore] Syncing requests from MongoDB...
+[PermissionStore] Syncing from MongoDB...
+[PermissionStore] Synced permissions for 2 users from MongoDB.
+[UserStore] Synced 2 users from MongoDB.
+[LegacyStore] Synced legacy helper caches from MongoDB.
+[DataStore] Synced 20956 requests from MongoDB.
+MongoDB synchronization complete.
+Verifix authenticated successfully.
+SAP HANA Connection error: Error: Connection failed (RTE:[89006] System call 'connect' failed, rc=10060:A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond {192.168.1.3:30015} (192.168.1.3:30015))
+    at Socket.<anonymous> (D:\Shakhzod\Javascript\NovarisPayment\node_modules\@sap\hana-client\lib\index.js:53:13)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23) {
+  code: -10709,
+  sqlState: 'HY000'
+}
+[LoggerService] Logging Error: Connection failed (RTE:[89006] System call 'connect' failed, rc=10060:A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond {192.168.1.3:30015} (192.168.1.3:30015)) { source: 'sap_sync', action: 'SAP_CONNECT' }
+SAP HANA is unavailable. Continuing because SAP_CONNECTION_REQUIRED is disabled.
+[LoggerService] Logging Error: No Connection Available (the connection may not have been successfully connected, was already disconnected, or was disconnected while this operation was in progress) {
+  source: 'sap_sync',
+  action: 'SAP_GET_CUSTOMER_ERROR',
+  metadata: { name: 'test' }
+}
+Error: Error: No Connection Available (the connection may not have been successfully connected, was already disconnected, or was disconnected while this operation was in progress)
+    at b1Controller.getCustomer (D:\Shakhzod\Javascript\NovarisPayment\src\controllers\b1Controller.js:92:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Object.selfExecuteFn (D:\Shakhzod\Javascript\NovarisPayment\src\modules\step.js:920:34)
+    at async botConroller.text (D:\Shakhzod\Javascript\NovarisPayment\src\controllers\botController.js:139:52)
+    at async TelegramBot.<anonymous> (D:\Shakhzod\Javascript\NovarisPayment\src\index.js:101:17)  bu err
+Bot text handler error: Error: Error: Error: No Connection Available (the connection may not have been successfully connected, was already disconnected, or was disconnected while this operation was in progress)
+    at botConroller.text (D:\Shakhzod\Javascript\NovarisPayment\src\controllers\botController.js:161:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async TelegramBot.<anonymous> (D:\Shakhzod\Javascript\NovarisPayment\src\index.js:101:17)
+[LoggerService] Logging Error: Error: Error: No Connection Available (the connection may not have been successfully connected, was already disconnected, or was disconnected while this operation was in progress) {
+  source: 'telegram_bot',
+  action: 'TEXT_HANDLER_ERROR',
+  metadata: { chatId: 8641624618 }
+}
+PS D:\Shakhzod\Javascript\NovarisPayment>

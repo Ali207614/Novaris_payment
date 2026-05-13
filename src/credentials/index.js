@@ -27,7 +27,7 @@ function mapRoles(roles) {
 
 
 let Menu = () => {
-    return [
+    let baseMenus = [
         {
             name: 'Xorijiy xarid',
             status: true, isDelete: false,
@@ -57,9 +57,13 @@ let Menu = () => {
             name: "Boshqa",
             status: true, isDelete: false,
             id: 6
-        },
-        ...infoMenu()
-    ]
+        }
+    ];
+    let baseIds = new Set(baseMenus.map(m => String(m.id)));
+    return [
+        ...baseMenus,
+        ...infoMenu().filter(m => !baseIds.has(String(m.id)))
+    ];
 }
 
 let newMenu = [
@@ -4061,14 +4065,23 @@ let SubMenu = () => {
             }
         ],
     }
-    return {
+    let result = {
         ...Object.fromEntries(Object.entries(menuCred).map(item => [item[0], item[1].map((el, i) => {
             return {
                 ...el, id: i + 1, menuId: Number(item[0])
             }
-        })])),
-        ...newSubMenus
+        })]))
+    };
+    for (let key in newSubMenus) {
+        if (!result[key]) {
+            result[key] = newSubMenus[key];
+        } else {
+            const existingIds = new Set(result[key].map(i => String(i.id)));
+            result[key] = [...result[key], ...newSubMenus[key].filter(i => !existingIds.has(String(i.id)))];
+        }
+        result[key].sort((a, b) => a.id - b.id);
     }
+    return result;
 }
 
 
