@@ -3893,6 +3893,40 @@ let SubMenu = () => {
             }
         ],
         6: [
+
+            {
+                name: "Tovar o'chirish",
+                comment: "Sana:\nTovar o'chirish\n- Tovar nomi:\n- O'chirish sababi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#ochirish\n",
+                update: [
+                    {
+                        id: 1,
+                        name: "Izoh",
+                        message: `Sana:\nTovar o'chirish\n- Tovar nomi:\n- O'chirish sababi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#ochirish\n`,
+                        btn: () => empDynamicBtn(),
+                        step: '13'
+                    },
+                    {
+                        id: 2,
+                        name: "File",
+                        message: `File jo'natasizmi ?`,
+                        btn: async ({ chat_id }) => await dataConfirmBtnEmp(chat_id, [
+                            {
+                                name: 'Ha', id: 1
+                            },
+                            { name: "Yo'q", id: 2 },
+                        ], 2, 'isSendFile'),
+                        step: true
+                    }
+                ],
+                updateLine: 1,
+                lastStep: 62,
+                infoFn: ({ chat_id, id }) => {
+                    let user = infoUser().find(item => item.chat_id == chat_id)
+                    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+                    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data?.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+                    return info
+                }
+            },
             {
                 name: "SAPda o'zgartirishni tasdiqlash",
                 comment: "#XATO\nSababi: Tovar nomi va nima o'zgarish bo'lgani\n12 do'kon sap - 0 real - 0\n64 do'kon sap - 0 real - 0\n777 do'kon sap - 0 real - 0\nOmbor sap - 0 real - 0\nDis sap - 0 real - 0\nKim qilgan: Sklad nomi\nO'zgartirish kerak: SAP da pt/vt qilish kerak\nTasdiqlovchi:  \n",

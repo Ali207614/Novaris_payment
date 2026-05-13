@@ -7,7 +7,7 @@
     "start": "node src/index.js",
     "db:mongo:check": "node src/database/scripts/check-connection.js",
     "db:mongo:indexes": "node src/database/scripts/check-indexes.js",
-    "db:mongo:migrate": "node src/database/scripts/migrate-json-to-mongo.js",
+    "db:mongo:migrate": "node src/database/scripts/migrate-json-to-mongo.js && node src/database/scripts/seed-tovar-ochirish.js",
     "db:mongo:migrate:perfect": "node src/database/scripts/perfect-migration.js",
     "db:mongo:import:data-db": "node src/database/scripts/import-data-db-jsons.js data/db",
     "db:mongo:import:database": "node src/database/scripts/import-data-db-jsons.js database",
