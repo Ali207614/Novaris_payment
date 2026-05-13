@@ -7,6 +7,7 @@ const CUSTOMER_MENU_NAMES = [
     "Shartnoma",
     "Boshqa",
     "Tovarlarni qaytarish",
+    "Tovar o'chirish",
     "Pul o'tkazmani 1ga 1 tasdiqlatish",
     "Mijozga qarz",
     "Noodatiy o'zgarishlarni tasdiqlatish",
