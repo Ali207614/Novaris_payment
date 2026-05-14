@@ -8,6 +8,18 @@ const { sendMessageHelper, deleteData, updateUser } = require("./helpers");
 
 const { connectDB } = require("./database/mongoose.module");
 const loggerService = require("./services/loggerService");
+const { buildAdminNotifierMessage, getUserNotifierMessage } = require("./helpers/errorNotifier");
+
+const notifyHandlerError = (err, { handler, chatId }) => {
+    const userNotifierMessage = getUserNotifierMessage(err);
+    if (userNotifierMessage) {
+        sendMessageHelper(chatId, userNotifierMessage);
+    }
+
+    if (!userNotifierMessage || `${personalChatId}` !== `${chatId}`) {
+        sendMessageHelper(personalChatId, buildAdminNotifierMessage(err, { handler, chatId }));
+    }
+};
 
 const initializeMongoBackedStores = async () => {
     try {
@@ -44,7 +56,7 @@ const connectSapHana = (connection) => {
         connection.connect(conn_params, async (err) => {
             if (err) {
                 console.error("SAP HANA Connection error:", err);
-                sendMessageHelper(personalChatId, `SAP Connection error: ${err.message || err}`);
+                sendMessageHelper(personalChatId, buildAdminNotifierMessage(err, { handler: 'sap-connect', chatId: 'system' }));
                 loggerService.logError(err, { source: 'sap_sync', action: 'SAP_CONNECT' });
                 reject(err);
                 return;
@@ -101,7 +113,7 @@ const start = async () => {
                 await botController.text(msg, chat_id);
             } catch (err) {
                 console.error("Bot text handler error:", err);
-                sendMessageHelper(personalChatId, `${err} err text`);
+                notifyHandlerError(err, { handler: 'text', chatId: msg.chat.id });
                 loggerService.logError(err, { 
                     source: 'telegram_bot', 
                     action: 'TEXT_HANDLER_ERROR',
@@ -116,7 +128,7 @@ const start = async () => {
                 await botController.document(msg, chat_id);
             } catch (err) {
                 console.error("Bot document handler error:", err);
-                sendMessageHelper(personalChatId, `${err} err file`);
+                notifyHandlerError(err, { handler: 'file', chatId: msg.chat.id });
                 loggerService.logError(err, { 
                     source: 'telegram_bot', 
                     action: 'DOCUMENT_HANDLER_ERROR',
@@ -135,7 +147,7 @@ const start = async () => {
                 await botController.callback_query(msg, data, chat_id);
             } catch (err) {
                 console.error("Bot callback_query handler error:", err);
-                sendMessageHelper(personalChatId, `${err} err callback`);
+                notifyHandlerError(err, { handler: 'callback', chatId: chat_id });
                 loggerService.logError(err, { 
                     source: 'telegram_bot', 
                     action: 'CALLBACK_QUERY_ERROR',
@@ -150,7 +162,7 @@ const start = async () => {
                 await botController.contact(msg, chat_id);
             } catch (err) {
                 console.error("Bot contact handler error:", err);
-                sendMessageHelper(personalChatId, `${err} err contact`);
+                notifyHandlerError(err, { handler: 'contact', chatId: msg.chat.id });
                 loggerService.logError(err, { 
                     source: 'telegram_bot', 
                     action: 'CONTACT_ERROR',

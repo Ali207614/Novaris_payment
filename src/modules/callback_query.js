@@ -13,7 +13,7 @@ const { dataConfirmText, ticketAddText, userInfoText } = require("../keyboards/t
 let moment = require('moment');
 const { boshqaBtn } = require("./text");
 const { CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection");
-const { permissionChatIds, hasPermissionOrAdmin } = require("../helpers/adminPermissions");
+const { permissionChatIds, hasPermissionOrAdmin, isAdminUser } = require("../helpers/adminPermissions");
 const {
     findLocalUserByVerifixEmployee,
     buildVerifixAccessRevocationPatch,
@@ -43,6 +43,18 @@ const getSelectedAdminUser = (user = {}) => {
 
 const getUserFullName = (user = {}) => {
     return `${get(user, 'LastName', '')} ${get(user, 'FirstName', '')}`.trim() || "Noma'lum foydalanuvchi";
+};
+
+const getAdminUserCardText = (targetUser, targetChatId = '') => {
+    if (!targetUser) {
+        return "Foydalanuvchi topilmadi. Qaytadan qidiring.";
+    }
+
+    if (isAdminUser(targetUser)) {
+        return `ID: ${get(targetUser, 'EmployeeID', 1)}\n${getUserFullName(targetUser)}\n\nAdmin`;
+    }
+
+    return userInfoText({ user: targetUser, chat_id: targetChatId });
 };
 
 let xorijiyXaridCallback = {
@@ -1829,23 +1841,38 @@ let othersCallback = {
 let adminCallback = {
     "adminUsers": {
         selfExecuteFn: async ({ chat_id, data, id }) => {
-            updateUser(chat_id, { selectedAdminUserChatId: data[1] })
-            updateStep(chat_id, 701)
-            await bot.deleteMessage(chat_id, id)
+            const targetUser = infoUser().find(item => `${item.chat_id}` == `${data[1]}`)
+
+            if (targetUser) {
+                updateUser(chat_id, { selectedAdminUserChatId: data[1] })
+                updateStep(chat_id, 701)
+            } else {
+                updateUser(chat_id, { selectedAdminUserChatId: '' })
+                updateStep(chat_id, 1)
+            }
+
+            try {
+                await bot.deleteMessage(chat_id, id)
+            } catch (err) {
+            }
 
         },
         middleware: async ({ chat_id, user, id }) => {
 
-            return get(user, 'user_step')
+            return isAdminUser(user) && get(user, 'user_step')
         },
         next: {
             text: async ({ chat_id, data }) => {
-                let user = infoUser().find(item => item.chat_id == data[1])
-                let adminText = `ID: ${get(user, 'EmployeeID', 1)}\n${get(user, 'LastName', '')} ${get(user, 'FirstName')}\n\n`
-                await sendMessageHelper(chat_id, (isAdminUser(user) ? adminText : userInfoText({ user, chat_id: data[1] })))
-                return `${user?.LastName} ${user?.FirstName} `
+                const targetUser = infoUser().find(item => `${item.chat_id}` == `${data[1]}`)
+                return getAdminUserCardText(targetUser, data[1])
             },
             btn: async ({ chat_id, data }) => {
+
+                const targetUser = infoUser().find(item => `${item.chat_id}` == `${data[1]}`)
+
+                if (!targetUser) {
+                    return mainMenuByRoles({ chat_id })
+                }
 
                 return empDynamicBtn(adminUserActionButtons, 2)
             },
