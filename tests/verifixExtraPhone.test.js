@@ -79,6 +79,104 @@ test('employee lookup matches documented fields extra_phone value', async () => 
     assert.equal(matchedEmployee.employee_id, 1);
 });
 
+test('employee lookup matches ad_Extra_Num dynamic field value', async () => {
+    const instance = {
+        async post() {
+            return {
+                data: {
+                    data: [
+                        {
+                            employee_id: 1,
+                            state: 'A',
+                            dynamic_fields: [
+                                { field_name: 'ad_Extra_Num', field_value: '+998330094112' }
+                            ]
+                        }
+                    ],
+                    meta: { next_cursor: '-1' }
+                }
+            };
+        }
+    };
+
+    const matchedEmployee = await verifixController._findEmployeeByPhone(instance, '+998330094112');
+
+    assert.equal(matchedEmployee.employee_id, 1);
+});
+
+test('employee lookup matches ad_Extra_Num direct employee field value', async () => {
+    const instance = {
+        async post() {
+            return {
+                data: {
+                    data: [
+                        {
+                            employee_id: 1,
+                            state: 'A',
+                            ad_Extra_Num: '+998330094112'
+                        }
+                    ],
+                    meta: { next_cursor: '-1' }
+                }
+            };
+        }
+    };
+
+    const matchedEmployee = await verifixController._findEmployeeByPhone(instance, '+998330094112');
+
+    assert.equal(matchedEmployee.employee_id, 1);
+});
+
+test('employee lookup matches ad_Extra_Num inside dynamicFields object', async () => {
+    const instance = {
+        async post() {
+            return {
+                data: {
+                    data: [
+                        {
+                            employee_id: 1,
+                            state: 'A',
+                            dynamicFields: {
+                                ad_Extra_Num: '+998330094112'
+                            }
+                        }
+                    ],
+                    meta: { next_cursor: '-1' }
+                }
+            };
+        }
+    };
+
+    const matchedEmployee = await verifixController._findEmployeeByPhone(instance, '+998330094112');
+
+    assert.equal(matchedEmployee.employee_id, 1);
+});
+
+test('employee lookup matches ad_Extra_Num inside additionalFields array', async () => {
+    const instance = {
+        async post() {
+            return {
+                data: {
+                    data: [
+                        {
+                            employee_id: 1,
+                            state: 'A',
+                            additionalFields: [
+                                { code: 'ad_Extra_Num', value: '+998330094112' }
+                            ]
+                        }
+                    ],
+                    meta: { next_cursor: '-1' }
+                }
+            };
+        }
+    };
+
+    const matchedEmployee = await verifixController._findEmployeeByPhone(instance, '+998330094112');
+
+    assert.equal(matchedEmployee.employee_id, 1);
+});
+
 test('employee lookup tolerates exrta_phone field code typo', async () => {
     const instance = {
         async post() {

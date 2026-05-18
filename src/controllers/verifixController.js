@@ -163,7 +163,10 @@ class verifixController {
     _employeePhoneValues(employee = {}) {
         const dynamicFields = [
             ...(Array.isArray(employee.fields) ? employee.fields : []),
-            ...(Array.isArray(employee.dynamic_fields) ? employee.dynamic_fields : [])
+            ...(Array.isArray(employee.dynamic_fields) ? employee.dynamic_fields : []),
+            ...(Array.isArray(employee.dynamicFields) ? employee.dynamicFields : []),
+            ...(Array.isArray(employee.additionalFields) ? employee.additionalFields : []),
+            ...(Array.isArray(employee.additional_fields) ? employee.additional_fields : [])
         ];
         const extraPhoneFields = dynamicFields
             .filter(field => this._isExtraPhoneField(field))
@@ -175,6 +178,12 @@ class verifixController {
 
         return [
             get(employee, 'extra_phone'),
+            get(employee, 'ad_Extra_Num'),
+            get(employee, 'ad_extra_num'),
+            this._getExtraPhoneFromObject(get(employee, 'dynamicFields')),
+            this._getExtraPhoneFromObject(Array.isArray(employee.dynamic_fields) ? null : get(employee, 'dynamic_fields')),
+            this._getExtraPhoneFromObject(Array.isArray(employee.additionalFields) ? null : get(employee, 'additionalFields')),
+            this._getExtraPhoneFromObject(Array.isArray(employee.additional_fields) ? null : get(employee, 'additional_fields')),
             ...extraPhoneFields
         ].flatMap(value => Array.isArray(value) ? value : [value]).filter(Boolean);
     }
@@ -186,7 +195,7 @@ class verifixController {
     }
 
     _isExtraPhoneField(field = {}) {
-        const extraPhoneFieldCodes = new Set(['extra_phone', 'exrta_phone']);
+        const extraPhoneFieldCodes = new Set(['extra_phone', 'exrta_phone', 'ad_extra_num']);
 
         return [
             get(field, 'code'),
@@ -194,6 +203,18 @@ class verifixController {
             get(field, 'field_name'),
             get(field, 'label')
         ].some(value => extraPhoneFieldCodes.has(this._normalizeFieldCode(value)));
+    }
+
+    _getExtraPhoneFromObject(value = {}) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) {
+            return null;
+        }
+
+        const matchedEntry = Object.entries(value).find(([key]) =>
+            ['extra_phone', 'exrta_phone', 'ad_extra_num'].includes(this._normalizeFieldCode(key))
+        );
+
+        return matchedEntry ? matchedEntry[1] : null;
     }
 
     _normalizeFieldCode(value = '') {
