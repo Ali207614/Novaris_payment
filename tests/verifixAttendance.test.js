@@ -4,8 +4,14 @@ const {
     extractVerifixAttendanceCorrections,
     hasExistingTrack,
     normalizeTime,
-    syncVerifixAttendanceForRequest
+    syncVerifixAttendanceForRequest,
+    calculateFactValue
 } = require('../src/helpers/verifixAttendance');
+
+// Mock config for tests
+const config = require('../src/verifixConfig');
+config.verifix.factValueUnit = 'seconds';
+config.verifix.timeKinds = { present: 81, late: 82, earlyLeave: 83, absence: 84 };
 
 test('Verifix attendance parser accepts common date and time formats', () => {
     const corrections = extractVerifixAttendanceCorrections(`
@@ -65,25 +71,26 @@ test('existing Verifix tracks are detected by employee, type and datetime', () =
     );
 });
 
-test('Verifix attendance sync creates requester-only missing I/O marks', async () => {
-    const created = [];
-    const listCalls = [];
+test('Verifix attendance sync applies timesheet correction facts', async () => {
+    const applied = [];
     const verifixController = {
-        async listTracks(filters) {
-            listCalls.push(filters);
+        async searchLastTrack(employeeId, trackDate) {
+            return { status: true, data: { staff_id: "staff-123" } };
+        },
+        async exportTimesheet(periodBeginDate, periodEndDate, employeeIds) {
             return {
                 status: true,
                 data: [
                     {
-                        employee_id: 77,
-                        track_type: 'I',
-                        track_datetime: '2025-07-01 08:00:00'
+                        timesheet_date: "01.07.2025",
+                        input_time: "",
+                        output_time: ""
                     }
                 ]
             };
         },
-        async createTrack(payload) {
-            created.push(payload);
+        async applyVerifixAttendanceCorrection(payload) {
+            applied.push(payload);
             return { status: true };
         }
     };
@@ -99,35 +106,57 @@ test('Verifix attendance sync creates requester-only missing I/O marks', async (
 
     assert.equal(result.status, true);
     assert.equal(result.created, 1);
-    assert.equal(result.duplicateSkipped, 1);
-    assert.deepEqual(listCalls[0].employee_ids, [77]);
-    assert.deepEqual(created, [
+    assert.deepEqual(applied, [
         {
-            employee_id: 77,
-            track_type: 'O',
-            track_datetime: '2025-07-01 18:00:00',
-            mark_type: 'C',
-            comment: 'Sana: 01.07.2025\nKelish(vaqt): 8:00\nKetish(vaqt): 18:00'
+            staff_id: "staff-123",
+            registration_period: "01.07.2025",
+            timesheets: [
+                {
+                    timesheet_date: "01.07.2025",
+                    input_time: "01.07.2025 08:00:00",
+                    output_time: "01.07.2025 18:00:00",
+                    fact_items: [
+                        { time_kind_id: 81, fact_value: 36000 },
+                        { time_kind_id: 82, fact_value: 0 },
+                        { time_kind_id: 83, fact_value: 0 },
+                        { time_kind_id: 84, fact_value: 0 }
+                    ]
+                }
+            ]
         }
     ]);
 });
 
 test('Verifix attendance sync fails without a parseable correction', async () => {
-    let createCalled = false;
+    let applyCalled = false;
     const result = await syncVerifixAttendanceForRequest({
         request: { menu: 11, comment: 'Sana yoq' },
         requester: { EmployeeID: 77 },
         verifixController: {
-            async listTracks() {
-                return { status: true, data: [] };
+            async searchLastTrack() {
+                return { status: true, data: { staff_id: "123" } };
             },
-            async createTrack() {
-                createCalled = true;
+            async applyVerifixAttendanceCorrection() {
+                applyCalled = true;
                 return { status: true };
             }
         }
     });
 
     assert.equal(result.status, false);
-    assert.equal(createCalled, false);
+    assert.equal(applyCalled, false);
+});
+
+test('calculateFactValue returns correct seconds', () => {
+    config.verifix.factValueUnit = 'seconds';
+    const seconds = calculateFactValue("01.07.2025 09:00:00", "01.07.2025 18:00:00");
+    assert.equal(seconds, 9 * 3600); // 32400
+});
+
+test('calculateFactValue returns correct minutes', () => {
+    config.verifix.factValueUnit = 'minutes';
+    const minutes = calculateFactValue("01.07.2025 09:00:00", "01.07.2025 18:00:00");
+    assert.equal(minutes, 9 * 60); // 540
+    // Reset config for other tests
+    config.verifix.factValueUnit = 'seconds';
 });

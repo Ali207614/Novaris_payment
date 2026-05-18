@@ -129,13 +129,14 @@ class verifixController {
     }
 
     _formatEmployee(employee = {}) {
+        const { primary, fallback } = this.getVerifixEmployeeSignInPhones(employee);
         return {
             EmployeeID: get(employee, 'employee_id'),
             LastName: get(employee, 'last_name', ''),
             FirstName: get(employee, 'first_name', ''),
             MiddleName: get(employee, 'middle_name', ''),
             JobTitle: get(employee, 'job_name') || get(employee, 'job_title', ''),
-            MobilePhone: get(this._employeePhoneValues(employee), '[0]', '') || get(this._employeePhoneFallbackValues(employee), '[0]', ''),
+            MobilePhone: get(primary, '[0]', '') || get(fallback, '[0]', ''),
             DivisionName: get(employee, 'division_name') || get(employee, 'division', ''),
             LocationName: get(employee, 'location_name') || get(employee, 'location', ''),
             State: get(employee, 'state', ''),
@@ -160,7 +161,7 @@ class verifixController {
             normalizedRight.endsWith(normalizedLeft);
     }
 
-    _employeePhoneValues(employee = {}) {
+    getVerifixEmployeeSignInPhones(employee = {}) {
         const dynamicFields = [
             ...(Array.isArray(employee.fields) ? employee.fields : []),
             ...(Array.isArray(employee.dynamic_fields) ? employee.dynamic_fields : []),
@@ -168,50 +169,49 @@ class verifixController {
             ...(Array.isArray(employee.additionalFields) ? employee.additionalFields : []),
             ...(Array.isArray(employee.additional_fields) ? employee.additional_fields : [])
         ];
-        const extraPhoneFields = dynamicFields
-            .filter(field => this._isExtraPhoneField(field))
+        const adExtraNumFields = dynamicFields
+            .filter(field => this._isAdExtraNumField(field))
             .flatMap(field => [
                 get(field, 'value'),
                 get(field, 'field_value'),
                 get(field, 'text')
             ]);
 
-        return [
-            get(employee, 'extra_phone'),
+        const primary = [
             get(employee, 'ad_Extra_Num'),
             get(employee, 'ad_extra_num'),
-            this._getExtraPhoneFromObject(get(employee, 'dynamicFields')),
-            this._getExtraPhoneFromObject(Array.isArray(employee.dynamic_fields) ? null : get(employee, 'dynamic_fields')),
-            this._getExtraPhoneFromObject(Array.isArray(employee.additionalFields) ? null : get(employee, 'additionalFields')),
-            this._getExtraPhoneFromObject(Array.isArray(employee.additional_fields) ? null : get(employee, 'additional_fields')),
-            ...extraPhoneFields
+            this._getAdExtraNumFromObject(get(employee, 'dynamicFields')),
+            this._getAdExtraNumFromObject(Array.isArray(employee.dynamic_fields) ? null : get(employee, 'dynamic_fields')),
+            this._getAdExtraNumFromObject(Array.isArray(employee.additionalFields) ? null : get(employee, 'additionalFields')),
+            this._getAdExtraNumFromObject(Array.isArray(employee.additional_fields) ? null : get(employee, 'additional_fields')),
+            ...adExtraNumFields
         ].flatMap(value => Array.isArray(value) ? value : [value]).filter(Boolean);
-    }
 
-    _employeePhoneFallbackValues(employee = {}) {
-        return [
+        const fallback = [
             get(employee, 'phone_number')
         ].filter(Boolean);
+
+        return { primary, fallback };
     }
 
-    _isExtraPhoneField(field = {}) {
-        const extraPhoneFieldCodes = new Set(['extra_phone', 'exrta_phone', 'ad_extra_num']);
+    _isAdExtraNumField(field = {}) {
+        const adExtraNumFieldCodes = new Set(['ad_extra_num']);
 
         return [
             get(field, 'code'),
             get(field, 'name'),
             get(field, 'field_name'),
             get(field, 'label')
-        ].some(value => extraPhoneFieldCodes.has(this._normalizeFieldCode(value)));
+        ].some(value => adExtraNumFieldCodes.has(this._normalizeFieldCode(value)));
     }
 
-    _getExtraPhoneFromObject(value = {}) {
+    _getAdExtraNumFromObject(value = {}) {
         if (!value || typeof value !== 'object' || Array.isArray(value)) {
             return null;
         }
 
         const matchedEntry = Object.entries(value).find(([key]) =>
-            ['extra_phone', 'exrta_phone', 'ad_extra_num'].includes(this._normalizeFieldCode(key))
+            ['ad_extra_num'].includes(this._normalizeFieldCode(key))
         );
 
         return matchedEntry ? matchedEntry[1] : null;
@@ -240,20 +240,23 @@ class verifixController {
             const response = await instance.post('/b/vhr/api/v1/core/employee$list', {}, { headers });
 
             const employees = get(response, 'data.data', []);
-            const matchedEmployeeByExtraPhone = employees.find(emp =>
-                this._isActiveEmployee(emp) &&
-                this._employeePhoneValues(emp).some(value => this._isSamePhone(value, phone))
-            );
+            
+            const matchedEmployeeByAdExtraNum = employees.find(emp => {
+                if (!this._isActiveEmployee(emp)) return false;
+                const { primary } = this.getVerifixEmployeeSignInPhones(emp);
+                return primary.some(value => this._isSamePhone(value, phone));
+            });
 
-            if (matchedEmployeeByExtraPhone) {
-                return matchedEmployeeByExtraPhone;
+            if (matchedEmployeeByAdExtraNum) {
+                return matchedEmployeeByAdExtraNum;
             }
 
             if (!fallbackEmployee) {
-                fallbackEmployee = employees.find(emp =>
-                    this._isActiveEmployee(emp) &&
-                    this._employeePhoneFallbackValues(emp).some(value => this._isSamePhone(value, phone))
-                ) || null;
+                fallbackEmployee = employees.find(emp => {
+                    if (!this._isActiveEmployee(emp)) return false;
+                    const { fallback } = this.getVerifixEmployeeSignInPhones(emp);
+                    return fallback.some(value => this._isSamePhone(value, phone));
+                }) || null;
             }
 
             cursor = this._normalizeCursor(get(response, 'data.meta.next_cursor'));
@@ -318,23 +321,87 @@ class verifixController {
         }
     }
 
-    async createTrack(data) {
-        /**
-         * data: {
-         *   employee_id: number,
-         *   track_type: 'I' (Input/Arrival) | 'O' (Output/Exit) | 'C' (Check/Presence),
-         *   track_datetime: 'YYYY-MM-DD HH:mm:ss',
-         *   location_id: number (optional),
-         *   mark_type: 'M' (Mobile) | 'R' (FaceID) etc.
-         * }
-         */
+    async searchLastTrack(employeeId, trackDate) {
         try {
             const instance = await this._getAxiosInstance();
-            const response = await instance.post('/b/vhr/api/v1/core/track$create', data);
+            const response = await instance.post('/b/vhr/api/v1/core/track$search_last_track', {
+                employee_id: employeeId,
+                track_date: trackDate
+            });
             return { status: true, data: response.data };
         } catch (err) {
             return { status: false, message: get(err, 'response.data.message', err.message) };
         }
+    }
+
+    async exportTimesheet(periodBeginDate, periodEndDate, employeeIds = []) {
+        try {
+            const instance = await this._getAxiosInstance();
+            const response = await instance.post('/b/vhr/api/v1/core/timesheet$export', {
+                period_begin_date: periodBeginDate,
+                period_end_date: periodEndDate,
+                employee_ids: employeeIds,
+                division_ids: []
+            });
+            return { status: true, data: get(response, 'data.data', []) };
+        } catch (err) {
+            return { status: false, message: get(err, 'response.data.message', err.message) };
+        }
+    }
+
+    async listTimeKinds() {
+        try {
+            const instance = await this._getAxiosInstance();
+            const response = await instance.post('/b/vhr/api/v1/core/time_kind$list', {});
+            return { status: true, data: get(response, 'data.data', []) };
+        } catch (err) {
+            return { status: false, message: get(err, 'response.data.message', err.message) };
+        }
+    }
+
+    async applyVerifixAttendanceCorrection(data) {
+        /**
+         * data: {
+         *   staff_id: string,
+         *   registration_period: string (dd.mm.yyyy),
+         *   timesheets: [
+         *     {
+         *       timesheet_date: string (dd.mm.yyyy),
+         *       input_time: string (dd.mm.yyyy HH:mm:ss),
+         *       output_time: string (dd.mm.yyyy HH:mm:ss),
+         *       fact_items: [ { time_kind_id: number, fact_value: number } ]
+         *     }
+         *   ]
+         * }
+         */
+        try {
+            const instance = await this._getAxiosInstance();
+            const response = await instance.post('/b/vhr/api/v1/core/timesheet$save_facts', data);
+            
+            await loggerService.logSystemAction('verifix_sync', 'VERIFIX_ATTENDANCE_CORRECTION_SUCCESS', {
+                type: 'timesheet_correction'
+            }, { metadata: { staff_id: data.staff_id } });
+
+            return { status: true, data: response.data };
+        } catch (err) {
+            await loggerService.logError(err, {
+                source: 'verifix_sync',
+                action: 'VERIFIX_ATTENDANCE_CORRECTION_ERROR'
+            });
+            return { status: false, message: get(err, 'response.data.message', err.message) };
+        }
+    }
+
+    /**
+     * @deprecated Use `applyVerifixAttendanceCorrection` instead. `track$create` is not a public API endpoint.
+     */
+    async createTrack(data) {
+        await loggerService.logError(new Error('Deprecated createTrack called'), {
+            source: 'verifix_sync',
+            action: 'VERIFIX_DEPRECATED_TRACK_CREATE'
+        });
+        console.warn('DEPRECATED: createTrack is no longer supported by Verifix Public API. Use applyVerifixAttendanceCorrection.');
+        return { status: false, message: 'createTrack is deprecated. Please use applyVerifixAttendanceCorrection.' };
     }
 
     async listTracks(filters = {}) {

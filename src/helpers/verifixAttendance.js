@@ -1,5 +1,6 @@
 const moment = require("moment");
 const { get } = require("lodash");
+const config = require("../verifixConfig");
 
 const DATE_PATTERN = /(?:\b(\d{4})[\s.,:\/-]+(\d{1,2})[\s.,:\/-]+(\d{1,2})\b|\b(\d{1,2})[\s.,:\/-]+(\d{1,2})[\s.,:\/-]+(\d{2,4})\b)/g;
 const ARRIVAL_PATTERN = /Kelish[^\S\r\n]*\(?[^\S\r\n]*vaqt[^\S\r\n]*\)?[^\S\r\n]*:?[^\S\r\n]*([^\r\n]*)/iu;
@@ -125,6 +126,22 @@ const hasExistingTrack = (tracks = [], employeeId, trackType, trackDatetime) => 
     );
 };
 
+const calculateFactValue = (inputTime, outputTime) => {
+    if (!inputTime || !outputTime) return 0;
+    const start = moment(inputTime, "DD.MM.YYYY HH:mm:ss");
+    const end = moment(outputTime, "DD.MM.YYYY HH:mm:ss");
+    if (!start.isValid() || !end.isValid()) return 0;
+    
+    let durationSeconds = end.diff(start, 'seconds');
+    if (durationSeconds < 0) durationSeconds = 0;
+
+    const unit = config.verifix.factValueUnit || 'seconds';
+    if (unit === 'minutes') {
+        return Math.floor(durationSeconds / 60);
+    }
+    return durationSeconds;
+};
+
 const syncVerifixAttendanceForRequest = async ({ request, requester, verifixController }) => {
     if (!isVerifixAttendanceRequest(request)) {
         return { status: true, skipped: true, reason: "not_verifix_request" };
@@ -143,45 +160,68 @@ const syncVerifixAttendanceForRequest = async ({ request, requester, verifixCont
     let created = 0;
     let skipped = 0;
 
+    const firstDateVerifix = moment(corrections[0].date, "YYYY-MM-DD").format("DD.MM.YYYY");
+    const lastTrackResult = await verifixController.searchLastTrack(employeeId, firstDateVerifix);
+    const staffId = get(lastTrackResult, "data.staff_id");
+    
+    if (!staffId) {
+        return { status: false, message: "Xodimning staff_id raqami topilmadi. Avvalgi Verifix ma'lumotlari yo'q." };
+    }
+
     for (const correction of corrections) {
-        const beginDatetime = `${correction.date} 00:00:00`;
-        const endDatetime = `${correction.date} 23:59:59`;
-        const listResult = await verifixController.listTracks({
-            employee_ids: [employeeId],
-            begin_datetime: beginDatetime,
-            end_datetime: endDatetime
-        });
-
-        if (!listResult.status) {
-            return { status: false, message: listResult.message || "Verifix track ro'yxatini olishda xatolik yuz berdi." };
+        const verifixDate = moment(correction.date, "YYYY-MM-DD").format("DD.MM.YYYY");
+        
+        const exportResult = await verifixController.exportTimesheet(verifixDate, verifixDate, [employeeId]);
+        if (!exportResult.status) {
+            return { status: false, message: exportResult.message || "Verifix timesheet export xatolik yuz berdi." };
+        }
+        
+        const currentTimesheet = get(exportResult, "data[0]", {});
+        
+        let inputTime = currentTimesheet.input_time || "";
+        let outputTime = currentTimesheet.output_time || "";
+        
+        if (correction.arrivalTime) {
+            inputTime = `${verifixDate} ${correction.arrivalTime}`;
+        }
+        if (correction.exitTime) {
+            outputTime = `${verifixDate} ${correction.exitTime}`;
+        }
+        
+        if (!inputTime && !outputTime) {
+            skipped += 1;
+            continue;
         }
 
-        const existingTracks = get(listResult, "data", []);
-        const operations = [
-            correction.arrivalTime ? { track_type: "I", track_datetime: buildTrackDatetime(correction.date, correction.arrivalTime) } : null,
-            correction.exitTime ? { track_type: "O", track_datetime: buildTrackDatetime(correction.date, correction.exitTime) } : null
-        ].filter(Boolean);
+        const factValue = calculateFactValue(inputTime, outputTime);
+        const { timeKinds } = config.verifix;
 
-        for (const operation of operations) {
-            if (hasExistingTrack(existingTracks, employeeId, operation.track_type, operation.track_datetime)) {
-                skipped += 1;
-                continue;
-            }
+        const factItems = [
+            { time_kind_id: timeKinds.present, fact_value: factValue },
+            { time_kind_id: timeKinds.late, fact_value: 0 },
+            { time_kind_id: timeKinds.earlyLeave, fact_value: 0 },
+            { time_kind_id: timeKinds.absence, fact_value: 0 }
+        ];
 
-            const createResult = await verifixController.createTrack({
-                employee_id: employeeId,
-                track_type: operation.track_type,
-                track_datetime: operation.track_datetime,
-                mark_type: "C",
-                comment: get(request, "comment", "")
-            });
+        const payload = {
+            staff_id: staffId,
+            registration_period: moment(correction.date, "YYYY-MM-DD").startOf('month').format("DD.MM.YYYY"),
+            timesheets: [
+                {
+                    timesheet_date: verifixDate,
+                    input_time: inputTime,
+                    output_time: outputTime,
+                    fact_items: factItems
+                }
+            ]
+        };
 
-            if (!createResult.status) {
-                return { status: false, message: createResult.message || "Verifix track yaratishda xatolik yuz berdi." };
-            }
-
-            created += 1;
+        const applyResult = await verifixController.applyVerifixAttendanceCorrection(payload);
+        if (!applyResult.status) {
+            return { status: false, message: applyResult.message || "Verifix attendance correction xatolik yuz berdi." };
         }
+
+        created += 1;
     }
 
     return { status: true, skipped: false, created, duplicateSkipped: skipped, corrections };
@@ -192,5 +232,6 @@ module.exports = {
     hasExistingTrack,
     isVerifixAttendanceRequest,
     normalizeTime,
-    syncVerifixAttendanceForRequest
+    syncVerifixAttendanceForRequest,
+    calculateFactValue
 };

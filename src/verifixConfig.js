@@ -15,5 +15,12 @@ module.exports = {
         clientSecret: optionalEnv('VERIFIX_CLIENT_SECRET', ['your_client_secret_here']),
         projectCode: optionalEnv('VERIFIX_PROJECT_CODE', ['your_project_code_here']),
         filialId: optionalEnv('VERIFIX_FILIAL_ID', ['your_filial_id_here']),
+        factValueUnit: optionalEnv('VERIFIX_FACT_VALUE_UNIT') || 'seconds',
+        timeKinds: {
+            present: Number(optionalEnv('VERIFIX_TIME_KIND_PRESENT_ID')) || 81,
+            late: Number(optionalEnv('VERIFIX_TIME_KIND_LATE_ID')) || 82,
+            earlyLeave: Number(optionalEnv('VERIFIX_TIME_KIND_EARLY_LEAVE_ID')) || 83,
+            absence: Number(optionalEnv('VERIFIX_TIME_KIND_ABSENCE_ID')) || 84
+        }
     }
 };
