@@ -54,6 +54,56 @@ test('employee lookup prefers extra_phone before phone_number fallback', async (
     assert.equal(matchedEmployee.employee_id, 2);
 });
 
+test('employee lookup matches documented fields extra_phone value', async () => {
+    const instance = {
+        async post() {
+            return {
+                data: {
+                    data: [
+                        {
+                            employee_id: 1,
+                            state: 'A',
+                            fields: [
+                                { code: 'extra_phone', value: '+998901111111' }
+                            ]
+                        }
+                    ],
+                    meta: { next_cursor: '-1' }
+                }
+            };
+        }
+    };
+
+    const matchedEmployee = await verifixController._findEmployeeByPhone(instance, '+998901111111');
+
+    assert.equal(matchedEmployee.employee_id, 1);
+});
+
+test('employee lookup tolerates exrta_phone field code typo', async () => {
+    const instance = {
+        async post() {
+            return {
+                data: {
+                    data: [
+                        {
+                            employee_id: 1,
+                            state: 'A',
+                            fields: [
+                                { code: 'exrta_phone', value: '+998901111111' }
+                            ]
+                        }
+                    ],
+                    meta: { next_cursor: '-1' }
+                }
+            };
+        }
+    };
+
+    const matchedEmployee = await verifixController._findEmployeeByPhone(instance, '+998901111111');
+
+    assert.equal(matchedEmployee.employee_id, 1);
+});
+
 test('employee lookup falls back to phone_number when extra_phone is not found', async () => {
     const instance = {
         async post() {

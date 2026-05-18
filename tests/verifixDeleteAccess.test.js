@@ -43,7 +43,7 @@ test('Verifix removal revokes bot access and every menu tool permission', () => 
     assert.equal(userPatch.currentUserRole, '');
     assert.deepEqual(userPatch.back, []);
     assert.equal(userPatch.deactivatedBy, 999);
-    assert.equal(userPatch.deactivatedSource, 'verifix_employee_delete');
+    assert.equal(userPatch.deactivatedSource, 'bot_admin_deactivation');
     assert.deepEqual(permissionPatch, {
         roles: [],
         permissonMenuEmp: {},
@@ -52,13 +52,14 @@ test('Verifix removal revokes bot access and every menu tool permission', () => 
     });
 });
 
-test('Verifix removal notification is Uzbek and explains access removal', () => {
+test('bot-only removal notification is Uzbek and explains access removal', () => {
     const text = buildVerifixDeleteNotificationText({
         employeeId: 123,
         adminName: 'Admin User'
     });
 
-    assert.match(text, /Siz Verifix tizimidan chiqarildingiz/);
+    assert.match(text, /botdagi kirish huquqingiz bloklandi/);
     assert.match(text, /Employee ID: 123/);
-    assert.match(text, /barcha rollar va menular bo'yicha kirish huquqlaringiz o'chirildi/);
+    assert.match(text, /Barcha rollar va menular bo'yicha kirish huquqlaringiz o'chirildi/);
+    assert.match(text, /Verifix tizimidagi xodim ma'lumotingiz o'zgartirilmadi/);
 });

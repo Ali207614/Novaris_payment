@@ -19,6 +19,7 @@ const {
     toAdminUserButtonList
 } = require("../helpers/adminUserDirectory");
 const { isAdminUser } = require("../helpers/adminPermissions");
+const { findSubMenuForRequest } = require("../helpers/subMenuResolver");
 const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -2527,7 +2528,7 @@ let boshqaBtn = {
 
 
 const ADMIN_DELETE_EMPLOYEE_STEP = 708;
-const adminUserActionButtons = ['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya", "Verifixdan o'chirish"];
+const adminUserActionButtons = ['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya", "Botdan bloklash"];
 
 const getSelectedAdminUser = (user = {}) => {
     return infoUser().find(item => `${item.chat_id}` == `${get(user, 'selectedAdminUserChatId', '')}`);
@@ -2535,13 +2536,14 @@ const getSelectedAdminUser = (user = {}) => {
 
 const getVerifixDeleteConfirmText = (targetUser = {}) => {
     return [
-        "Verifixdan xodimni o'chirish",
+        "Xodimni botdan bloklash",
         "",
         `Xodim: ${getAdminUserFullName(targetUser)}`,
         `Employee ID: ${get(targetUser, 'EmployeeID', 'topilmadi')}`,
         `Telegram ID: ${get(targetUser, 'chat_id', 'topilmadi')}`,
         "",
-        "Bu amal Verifix tizimida xodimni o'chiradi va botdagi kirish huquqlarini bloklaydi.",
+        "Bu amal faqat botdagi kirish huquqlarini bloklaydi.",
+        "Verifix tizimidagi xodim ma'lumoti o'zgartirilmaydi.",
         "Davom etasizmi?"
     ].join('\n');
 };
@@ -2592,7 +2594,7 @@ let adminBtn = {
             },
         },
     },
-    "Verifixdan xodim o'chirish": {
+    "Botdan xodim bloklash": {
         selfExecuteFn: ({ chat_id }) => {
             updateBack(chat_id, { text: "Asosiy Menu", btn: adminKeyboard, step: 1 });
             updateStep(chat_id, 709);
@@ -2616,7 +2618,7 @@ let adminBtn = {
             },
         },
     },
-    "Verifixdan o'chirish": {
+    "Botdan bloklash": {
         selfExecuteFn: ({ chat_id, user }) => {
             const targetUser = getSelectedAdminUser(user);
 
@@ -2654,7 +2656,7 @@ let adminBtn = {
                 }
 
                 if (!get(targetUser, 'EmployeeID')) {
-                    return "Bu foydalanuvchida Employee ID topilmadi. Verifixdan o'chirib bo'lmaydi.";
+                    return "Bu foydalanuvchida Employee ID topilmadi. Botdan bloklab bo'lmaydi.";
                 }
 
                 return getVerifixDeleteConfirmText(targetUser);
@@ -2667,7 +2669,7 @@ let adminBtn = {
                 }
 
                 return dataConfirmBtnEmp(chat_id, [
-                    { name: "Ha, o'chirish", id: 1 },
+                    { name: "Ha, bloklash", id: 1 },
                     { name: "Bekor qilish", id: 2 }
                 ], 1, 'verifixDeleteEmployee');
             },
@@ -2972,6 +2974,8 @@ let adminBtn = {
     }
 }
 
+adminBtn["Verifixdan xodim o'chirish"] = adminBtn["Botdan xodim bloklash"];
+adminBtn["Verifixdan o'chirish"] = adminBtn["Botdan bloklash"];
 
 let updateAdminBtn = {
     "Foydalanuvchilar excel": {
@@ -3396,7 +3400,7 @@ let newBtnExecuter = () => {
                         let permisson = infoPermisson().find(el => el.chat_id == chat_id)
                         let permissonSubMenu = get(permisson, 'permissonMenuEmp', {})[dataCurUser.menu]
                         updateStep(chat_id, 61)
-                        updateData(get(dataCurUser, 'id'), { subMenu: `${s.name}` })
+                        updateData(get(dataCurUser, 'id'), { subMenu: `${s.name}`, subMenuId: s.id })
                         updateBack(chat_id, { text: "Sub Menuni tanlang", btn: empDynamicBtn([...SubMenu()[dataCurUser.menu].filter(el => permissonSubMenu.includes(`${el.id}`)).map(el => el.name)], 2), step: 60 })
                     },
                     middleware: ({ chat_id, user }) => {
@@ -3405,7 +3409,7 @@ let newBtnExecuter = () => {
                     next: {
                         text: ({ chat_id, user }) => {
                             let list = infoData().find(el => el.id == user?.currentDataId)
-                            let findComment = SubMenu()[get(list, 'menu', 3)]?.find(el => el.name == list.subMenu)?.comment
+                            let findComment = findSubMenuForRequest(SubMenu(), list, 3)?.comment
                             return getCustomerSelectionText(list, findComment || 'Error')
                         },
                         btn: async ({ chat_id, }) => {

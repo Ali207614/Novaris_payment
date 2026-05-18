@@ -106,6 +106,28 @@ let payType50 = [
     // { name: `O'tkazma`, id: `O'tkazma` }
 ]
 
+const genericSubMenuInfoFn = ({ chat_id, id }) => {
+    let user = infoUser().find(item => item.chat_id == chat_id)
+    let data = infoData().find(item => item.id == (id ? id : user?.currentDataId))
+    return [
+        { name: 'ID', message: data?.ID },
+        { name: 'Menu', message: data?.menuName },
+        { name: 'SubMenu', message: data?.subMenu },
+        { name: 'Izoh', message: data?.comment }
+    ]
+}
+
+const compileDynamicFunction = (value, fallback) => {
+    if (typeof value === 'function') return value
+    if (!value) return fallback
+
+    try {
+        return eval(value)
+    } catch (e) {
+        return fallback
+    }
+}
+
 let SubMenu = () => {
     let newSubMenus = {}
     let subMenuList = infoSubMenu()
@@ -113,16 +135,16 @@ let SubMenu = () => {
         let item = subMenuList[i]
         const mappedUpdate = (item.update || []).map(u => ({
              ...u, 
-             btn: u.btn ? eval(u.btn) : undefined 
+             btn: compileDynamicFunction(u.btn, undefined)
         }));
         if (newSubMenus[item.menuId]?.length) {
             newSubMenus[item.menuId].push({
-                ...item, menuId: Number(item.menuId), infoFn: eval(item.infoFn), update: mappedUpdate
+                ...item, menuId: Number(item.menuId), infoFn: compileDynamicFunction(item.infoFn, genericSubMenuInfoFn), update: mappedUpdate
             })
         }
         else {
             newSubMenus[item.menuId] = [{
-                ...item, infoFn: eval(item.infoFn), update: mappedUpdate
+                ...item, infoFn: compileDynamicFunction(item.infoFn, genericSubMenuInfoFn), update: mappedUpdate
             }]
         }
     }

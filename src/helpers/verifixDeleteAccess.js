@@ -50,7 +50,7 @@ const buildVerifixAccessRevocationPatch = (adminChatId) => ({
     extraWaiting: false,
     deactivatedAt: new Date(),
     deactivatedBy: adminChatId,
-    deactivatedSource: 'verifix_employee_delete'
+    deactivatedSource: 'bot_admin_deactivation'
 });
 
 const buildEmptyPermissionPatch = () => ({
@@ -62,12 +62,13 @@ const buildEmptyPermissionPatch = () => ({
 
 const buildVerifixDeleteNotificationText = ({ employeeId, adminName } = {}) => {
     return [
-        "Siz Verifix tizimidan chiqarildingiz.",
+        "Sizning botdagi kirish huquqingiz bloklandi.",
         "",
         employeeId ? `Employee ID: ${employeeId}` : null,
         adminName ? `Amalni bajargan admin: ${adminName}` : null,
         "",
-        "Shu sabab botdagi barcha rollar va menular bo'yicha kirish huquqlaringiz o'chirildi.",
+        "Barcha rollar va menular bo'yicha kirish huquqlaringiz o'chirildi.",
+        "Verifix tizimidagi xodim ma'lumotingiz o'zgartirilmadi.",
         "Savollar bo'lsa admin bilan bog'laning."
     ].filter(line => line !== null).join('\n');
 };

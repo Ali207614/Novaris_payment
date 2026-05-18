@@ -1,8 +1,8 @@
 const { get } = require("lodash");
 let { bot } = require("../config");
-const { SubMenu } = require("../credentials");
+const { Menu, SubMenu } = require("../credentials");
 const {
-    writeUser, infoUser, updateStep, updateUser, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup, infoPermisson, updateData, infoData, sendMessageHelper
+    writeUser, infoUser, updateStep, updateUser, updateBack, deleteAllInvalidData, writePermisson, writeGroup, deleteGroup, infoGroup, infoPermisson, updateData, writeData, infoData, sendMessageHelper
 } = require("../helpers");
 const { dataConfirmBtnEmp } = require("../keyboards/inline_keyboards");
 const { option, jobMenu, mainMenuByRoles } = require("../keyboards/keyboards");
@@ -16,9 +16,39 @@ const jiraController = require("./jiraController");
 const { CUSTOMER_SEARCH_STEP, shouldAskCustomer } = require("../helpers/customerSelection");
 const loggerService = require("../services/loggerService");
 const { permissionChatIds, hasPermissionOrAdmin, isAdminUser } = require("../helpers/adminPermissions");
+const { findSubMenuForRequest, getSubMenuIdForRequest } = require("../helpers/subMenuResolver");
+const { syncVerifixAttendanceForRequest } = require("../helpers/verifixAttendance");
+const { runMessageBackFlow } = require("../helpers/messageBackFlow");
+const ShortUniqueId = require("short-unique-id");
+
+const { randomUUID } = new ShortUniqueId({ length: 10 });
 
 const CONTACT_AUTH_PROMPT = "Telefon raqamingizni faqat pastdagi tugma orqali ulashing. Qo'lda yozilgan raqam yoki boshqa kontaktlar qabul qilinmaydi.";
 const FOREIGN_CONTACT_BLOCK_MESSAGE = "Faqat o'zingizning Telegram kontakt raqamingizni ulashing. Boshqa odamning kontakti orqali tasdiqlash mumkin emas ❌";
+
+const syncExecutorVerifixAttendance = async ({ list = {}, executorChatId }) => {
+    const requester = infoUser().find(item => item.chat_id == get(list, 'chat_id'));
+    const result = await syncVerifixAttendanceForRequest({
+        request: list,
+        requester,
+        verifixController
+    });
+
+    if (!result.skipped) {
+        updateData(get(list, 'id'), {
+            verifixAttendance: {
+                status: Boolean(result.status),
+                message: result.message,
+                created: result.created || 0,
+                duplicateSkipped: result.duplicateSkipped || 0,
+                executorChatId,
+                syncedAt: result.status ? new Date() : undefined
+            }
+        });
+    }
+
+    return result;
+};
 
 class botConroller {
     isOwnSharedContact(msg) {
@@ -26,6 +56,27 @@ class botConroller {
         const contactUserId = get(msg, "contact.user_id");
 
         return Boolean(senderId && contactUserId && Number(senderId) === Number(contactUserId));
+    }
+
+    async messageBackFlow({ msgText, chat_id, isGroup, groupChatId, user }) {
+        return runMessageBackFlow({
+            msgText,
+            chat_id,
+            isGroup,
+            groupChatId,
+            user,
+            Menu,
+            SubMenu,
+            infoPermisson,
+            infoData,
+            updateUser,
+            updateStep,
+            updateBack,
+            updateData,
+            writeData,
+            sendMessageHelper,
+            randomId: randomUUID
+        });
     }
 
     async text(msg, chat_id) {
@@ -106,7 +157,9 @@ class botConroller {
                 let btnTreeList = [firtBtnExecutor(), confirmativeBtn, executeBtn, xorijiyXaridBtn, mahalliyXaridBtn, tolovHarajatBtn, narxChiqarishBtn, boshqaBtn, shartnomaBtn, tolovHarajatBojBtn, adminBtn, updateAdminBtn, deleteAdminBtn, changeStatusAdminBtn, infoAdminBtn, executorBtn, newBtnExecuter()]
                 let execute = btnTreeList.find(item => item[msg.text] && item[msg.text]?.middleware({ chat_id, msgText: msg.text, isGroup, groupChatId, user }))
                 execute = execute ? execute[msg.text] : {}
+                let handled = false
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
+                    handled = true
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, isGroup, groupChatId, user }) : undefined
                     let userAfterExecute = infoUser().find((item) => item.chat_id === chat_id);
                     let dataAfterExecute = infoData().find(item => get(item, 'id') == get(userAfterExecute, 'currentDataId'))
@@ -130,12 +183,17 @@ class botConroller {
                         updateUser(chat_id, { lastMessageId: lastMessageId?.message_id })
                     }
                 }
+                if (!handled) {
+                    await this.messageBackFlow({ msgText: msg.text, chat_id, isGroup, groupChatId, user })
+                }
             }
             else if (
                 stepTree[get(user, 'user_step', '1').toString()]
             ) {
                 let execute = stepTree[get(user, 'user_step', '1').toString()]
+                let handled = false
                 if (await get(execute, 'middleware', () => { })({ chat_id, msgText: msg.text, isGroup, groupChatId, user })) {
+                    handled = true
                     await execute?.selfExecuteFn ? await execute.selfExecuteFn({ chat_id, msgText: msg.text, isGroup, groupChatId, user }) : undefined
 
                     if (Object.values(get(execute, 'next', {})).length) {
@@ -154,6 +212,12 @@ class botConroller {
                         updateUser(chat_id, { lastMessageId: botInfo?.message_id })
                     }
                 }
+                if (!handled) {
+                    await this.messageBackFlow({ msgText: msg.text, chat_id, isGroup, groupChatId, user })
+                }
+            }
+            else {
+                await this.messageBackFlow({ msgText: msg.text, chat_id, isGroup, groupChatId, user })
             }
         }
         catch (err) {
@@ -291,8 +355,15 @@ class botConroller {
     async sendDocument(chat_id, dataId) {
         let user = infoUser().find(item => item.chat_id == chat_id)
         let list = infoData().find(item => item.id == dataId)
-        let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: dataId })
-        let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+        const attendanceResult = await syncExecutorVerifixAttendance({ list, executorChatId: chat_id });
+        if (!attendanceResult.status) {
+            await sendMessageHelper(chat_id, `Verifixga vaqt qo'shilmadi ❌\n${attendanceResult.message}\n\nSo'rov bajarilgan deb belgilanmadi. Ma'lumotni to'g'rilab qayta urinib ko'ring.`)
+            return
+        }
+
+        let requestSubMenu = findSubMenuForRequest(SubMenu(), list, 1)
+        let info = requestSubMenu.infoFn({ chat_id: list.chat_id, id: dataId })
+        let subMenuId = requestSubMenu?.id
         let file = get(list, 'file', {})
 
         let newText = `${'🔵'.repeat(10)}\n`
@@ -340,7 +411,7 @@ class botConroller {
         // group
 
         let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-        let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+        let subMenuIdGroup = findSubMenuForRequest(SubMenu(), list)
         let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
         for (let i = 0; i < specialGroup.length; i++) {
@@ -359,8 +430,8 @@ class botConroller {
     async helperDocument(chat_id, dataId) {
         let user = infoUser().find(item => item.chat_id == chat_id)
         let list = infoData().find(item => item.id == dataId)
-        let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
-        let deleteMessage = sendMessageHelper(chat_id, `Loading...`)
+        let cred = findSubMenuForRequest(SubMenu(), list, 1)
+        let deleteMessage = await sendMessageHelper(chat_id, `Loading...`)
         let count = 0;
 
         let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
@@ -402,7 +473,7 @@ class botConroller {
                     return
                 }
                 if (isGroup) {
-                    let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                    let subMenuId = getSubMenuIdForRequest(SubMenu(), list, 1)
                     if (!hasPermissionOrAdmin({
                         users: infoUser(),
                         permissions: infoPermisson(),
@@ -422,7 +493,7 @@ class botConroller {
             let list = infoData().find(item => item.id == user?.currentDataId)
             if (get(list, 'file.active')) {
                 updateData(get(list, 'id'), { file: { active: false, send: true, document: file } })
-                let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                let info = findSubMenuForRequest(SubMenu(), list, 2).infoFn({ chat_id })
                 let button = {
                     reply_markup: {
                         inline_keyboard: [
@@ -439,10 +510,12 @@ class botConroller {
                 if (get(user, 'waitingUpdateStatus')) {
                     button = {}
                 }
-                let botInfo = await bot.sendDocument(chat_id, get(file, 'file_id'), {
-                    caption: dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id),
-                    reply_markup: button?.reply_markup
-                })
+                let botInfo = await sendMessageHelper(
+                    chat_id,
+                    dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id),
+                    button,
+                    { file: { send: true, document: file } }
+                )
                 updateUser(chat_id, { lastMessageId: botInfo.message_id })
                 return
             }

@@ -14,6 +14,8 @@ let moment = require('moment');
 const { boshqaBtn } = require("./text");
 const { CUSTOMER_SELECT_STEP } = require("../helpers/customerSelection");
 const { permissionChatIds, hasPermissionOrAdmin, isAdminUser } = require("../helpers/adminPermissions");
+const { findSubMenuForRequest, getSubMenuIdForRequest } = require("../helpers/subMenuResolver");
+const { syncVerifixAttendanceForRequest } = require("../helpers/verifixAttendance");
 const {
     findLocalUserByVerifixEmployee,
     buildVerifixAccessRevocationPatch,
@@ -30,12 +32,36 @@ const sleepNow = (delay) =>
     new Promise((resolve) => setTimeout(resolve, delay));
 
 const isSapExecutorRequest = (list = {}) => {
-    let cred = SubMenu()[get(list, 'menu', 1)]?.find(item => item.name == list.subMenu)
+    let cred = findSubMenuForRequest(SubMenu(), list, 1)
     return Boolean(get(cred, 'b1.status')) && get(list, 'sapB1') !== false
 }
 
+const syncExecutorVerifixAttendance = async ({ list = {}, executorChatId }) => {
+    const requester = infoUser().find(item => item.chat_id == get(list, 'chat_id'));
+    const result = await syncVerifixAttendanceForRequest({
+        request: list,
+        requester,
+        verifixController
+    });
+
+    if (!result.skipped) {
+        updateData(get(list, 'id'), {
+            verifixAttendance: {
+                status: Boolean(result.status),
+                message: result.message,
+                created: result.created || 0,
+                duplicateSkipped: result.duplicateSkipped || 0,
+                executorChatId,
+                syncedAt: result.status ? new Date() : undefined
+            }
+        });
+    }
+
+    return result;
+};
+
 const ADMIN_DELETE_EMPLOYEE_STEP = 708;
-const adminUserActionButtons = ['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya", "Verifixdan o'chirish"];
+const adminUserActionButtons = ['Rollar', "Xodim-Menular", "Tasdiqlovchi-Menular", "Bajaruvchi-Menular", "Isim Familya", "Botdan bloklash"];
 
 const getSelectedAdminUser = (user = {}) => {
     return infoUser().find(item => `${item.chat_id}` == `${get(user, 'selectedAdminUserChatId', '')}`);
@@ -66,9 +92,9 @@ let xorijiyXaridCallback = {
                 return
             }
             updateStep(chat_id, user.user_step + 1)
-            let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+            let cred = findSubMenuForRequest(SubMenu(), list, 1)
             let info = cred.infoFn({ chat_id })
-            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            let subMenuId = getSubMenuIdForRequest(SubMenu(), list, 1)
 
             let file = get(list, 'file', {})
 
@@ -103,7 +129,7 @@ let xorijiyXaridCallback = {
                 if (get(list, 'full')) {
                     return `Tasdiqlovchiga jo'natilagan`
                 }
-                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                let info = findSubMenuForRequest(SubMenu(), list, 1).infoFn({ chat_id })
 
                 if (data[1] == '3') {
                     updateUser(chat_id, { update: true })
@@ -115,7 +141,7 @@ let xorijiyXaridCallback = {
                 else if (data[1] == '1') {
                     // group
                     let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                    let subMenuId = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                    let subMenuId = findSubMenuForRequest(SubMenu(), list)
                     let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuId, 'id', 0)))
 
                     let btnConfirmative = await dataConfirmBtnEmp(chat_id, [{ name: 'Tasdiqlash', id: `1#${list.id}`, }, { name: 'Bekor qilish', id: `2#${list.id}` }], 2, 'confirmConfirmative')
@@ -141,7 +167,7 @@ let xorijiyXaridCallback = {
                 }
 
                 if (data[1] == '3') {
-                    let updateList = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+                    let updateList = findSubMenuForRequest(SubMenu(), list, 1)
                     return await dataConfirmBtnEmp(chat_id, [...updateList.update, { name: "Bekor qilish ❌", id: 0 }], updateList.updateLine, 'update')
                 }
                 else if (data[1] == '2') {
@@ -177,7 +203,7 @@ let xorijiyXaridCallback = {
         middleware: ({ chat_id, data }) => {
             try {
                 let list = infoData().find(item => item.id == data[2])
-                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                let subMenuId = getSubMenuIdForRequest(SubMenu(), list, 1)
                 return hasPermissionOrAdmin({
                     users: infoUser(),
                     permissions: infoPermisson(),
@@ -195,8 +221,9 @@ let xorijiyXaridCallback = {
             text: async ({ chat_id, data, isGroup, groupChatId, user }) => {
 
                 let list = infoData().find(item => item.id == data[2])
-                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
-                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                let requestSubMenu = findSubMenuForRequest(SubMenu(), list, 1)
+                let info = requestSubMenu.infoFn({ chat_id: list.chat_id, id: data[2] })
+                let subMenuId = requestSubMenu?.id
                 let file = get(list, 'file', {})
 
                 if (get(list, 'confirmative')) {
@@ -212,26 +239,6 @@ let xorijiyXaridCallback = {
                         accountList43: get(list, 'accountList43', []).filter(item => get(item, 'id') == (get(list, 'accountCodeOther') || list?.accountCode)),
                         accountList50: get(list, 'accountList50', []).filter(item => get(item, 'id') == get(list, 'accountCode')),
                         accountList: get(list, 'accountList', []).filter(item => get(item, 'id') == get(list, 'accountCodeOther'))
-                    }
-
-                    if (get(list, 'menu') == 11) {
-                        try {
-                            const employee = infoUser().find(item => item.chat_id == list.chat_id);
-                            if (employee && employee.EmployeeID) {
-                                const datePart = moment(list.creationDate || new Date()).format('YYYY-MM-DD');
-                                const timePart = list.leaveTime ? list.leaveTime.trim() : "18:00";
-                                const trackDatetime = `${datePart} ${timePart.length === 5 ? timePart + ':00' : timePart}`;
-                                
-                                verifixController.createTrack({
-                                    employee_id: employee.EmployeeID,
-                                    track_type: 'O',
-                                    track_datetime: trackDatetime,
-                                    comment: list.comment
-                                }).catch(err => console.log('Error creating track in verifix for menu 11:', err));
-                            }
-                        } catch (err) {
-                            console.log('Error preparing verifix track data:', err);
-                        }
                     }
 
                     if (get(list, 'menuName') == 'Shartnoma') {
@@ -281,7 +288,7 @@ let xorijiyXaridCallback = {
                     sendMessageHelper(list.chat_id, newText + dataConfirmText(info, text, chat_id), { file })
                     // group
                     let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                    let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                    let subMenuIdGroup = findSubMenuForRequest(SubMenu(), list)
                     let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
                     for (let i = 0; i < specialGroup.length; i++) {
@@ -371,7 +378,7 @@ let xorijiyXaridCallback = {
             //     xorijiyXaridCallback['confirmExecuter'].next = {}
             // }
             let list = infoData().find(item => item.id == data[2])
-            let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+            let subMenuId = getSubMenuIdForRequest(SubMenu(), list, 1)
             return hasPermissionOrAdmin({
                 users: infoUser(),
                 permissions: infoPermisson(),
@@ -432,8 +439,9 @@ let xorijiyXaridCallback = {
             let list = infoData().find(item => item.id == user.currentDataId)
             updateStep(chat_id, user.user_step + 1)
             if (data[1] != 0) {
-                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
-                let updateList = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+                let requestSubMenu = findSubMenuForRequest(SubMenu(), list, 1)
+                let info = requestSubMenu.infoFn({ chat_id })
+                let updateList = requestSubMenu
                 let btn = await dataConfirmBtnEmp(chat_id, [...updateList.update, { name: "Bekor qilish", id: 0 }], updateList.updateLine, 'update')
                 updateBack(chat_id, { text: dataConfirmText(info, "O'zgartirasizmi ?", chat_id), btn, step: user.user_step })
                 updateData(user.currentDataId, { lastStep: updateList.lastStep, lastBtn: await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp') })
@@ -450,11 +458,11 @@ let xorijiyXaridCallback = {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let actData = infoData().find(item => item.id == user.currentDataId)
                 if (data[1] == '0') {
-                    let info = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu).infoFn({ chat_id })
+                    let info = findSubMenuForRequest(SubMenu(), actData, 1).infoFn({ chat_id })
                     updateUser(chat_id, { update: false })
                     return dataConfirmText(info, "Tasdiqlaysizmi ?", chat_id)
                 }
-                let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu).update
+                let updateList = findSubMenuForRequest(SubMenu(), actData, 1).update
                 let update = updateList.find(item => item.id == data[1])
                 updateStep(chat_id, update.step)
                 return update.message
@@ -463,7 +471,7 @@ let xorijiyXaridCallback = {
             btn: async ({ chat_id, data }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let actData = infoData().find(item => item.id == user.currentDataId)
-                let updateList = SubMenu()[get(actData, 'menu', 1)].find(item => item.name == actData.subMenu)
+                let updateList = findSubMenuForRequest(SubMenu(), actData, 1)
                 if (data[1] == '0') {
                     updateStep(chat_id, updateList.lastStep)
                     return await dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
@@ -478,7 +486,7 @@ let xorijiyXaridCallback = {
             try {
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
-                let cred = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)
+                let cred = findSubMenuForRequest(SubMenu(), list, 1)
                 if (data[1] == 1) {
                     updateUser(chat_id, { lastFile: { currentDataId: data[2] } })
 
@@ -486,7 +494,7 @@ let xorijiyXaridCallback = {
                 else {
                     updateUser(chat_id, { lastFile: {} })
 
-                    let deleteMessage = sendMessageHelper((isGroup ? groupChatId : chat_id), `Loading...`)
+                    let deleteMessage = await sendMessageHelper((isGroup ? groupChatId : chat_id), `Loading...`)
                     let count = 0;
 
                     let text = `${get(user, 'LastName')} ${get(user, 'FirstName')} Bajaruvchi bajardi ✅ ID:${list.ID}`
@@ -509,7 +517,9 @@ let xorijiyXaridCallback = {
                             bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
                         }
                     }
-                    bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id)
+                    if (deleteMessage?.message_id) {
+                        await bot.deleteMessage((isGroup ? groupChatId : chat_id), deleteMessage.message_id).catch(() => { })
+                    }
                     return
                 }
             } catch (e) {
@@ -522,14 +532,20 @@ let xorijiyXaridCallback = {
             return get(user, 'lastMessageId', 1) == id
         },
         next: {
-            text: ({ chat_id, data }) => {
+            text: async ({ chat_id, data }) => {
                 if (data[1] == '1') {
                     return `File jo'nating`
                 }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == data[2])
-                let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id: list.chat_id, id: data[2] })
-                let subMenuId = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.id
+                const attendanceResult = await syncExecutorVerifixAttendance({ list, executorChatId: chat_id });
+                if (!attendanceResult.status) {
+                    return `Verifixga vaqt qo'shilmadi ❌\n${attendanceResult.message}\n\nSo'rov bajarilgan deb belgilanmadi. Ma'lumotni to'g'rilab qayta urinib ko'ring.`
+                }
+
+                let requestSubMenu = findSubMenuForRequest(SubMenu(), list, 1)
+                let info = requestSubMenu.infoFn({ chat_id: list.chat_id, id: data[2] })
+                let subMenuId = requestSubMenu?.id
                 let file = get(list, 'file', {})
 
                 let newText = `${'🔵'.repeat(10)}\n`
@@ -577,7 +593,7 @@ let xorijiyXaridCallback = {
                 // group
 
                 let groups = infoGroup().filter(item => get(item, 'permissions', {})[get(list, 'menu')]?.length)
-                let subMenuIdGroup = SubMenu()[get(list, 'menu')]?.find(item => item.name == get(list, 'subMenu'))
+                let subMenuIdGroup = findSubMenuForRequest(SubMenu(), list)
                 let specialGroup = groups.filter(item => get(item, 'permissions', {})[get(list, 'menu')].find(el => el == get(subMenuIdGroup, 'id', 0)))
 
                 for (let i = 0; i < specialGroup.length; i++) {
@@ -1386,7 +1402,7 @@ let mahalliyXaridCallback = {
                 }
                 let user = infoUser().find(item => item.chat_id == chat_id)
                 let list = infoData().find(item => item.id == user?.currentDataId)
-                let info = SubMenu()[get(list, 'menu', 2)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                let info = findSubMenuForRequest(SubMenu(), list, 2).infoFn({ chat_id })
                 return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
             },
             btn: async ({ chat_id, data }) => {
@@ -1944,80 +1960,77 @@ let adminCallback = {
                 return;
             }
 
-            const deleteResult = await verifixController.deleteEmployee(employeeId);
-
-            if (deleteResult.status) {
-                let notificationSent = false;
-
-                if (targetUser) {
-                    updateUser(get(targetUser, 'chat_id'), buildVerifixAccessRevocationPatch(chat_id));
-                    updatePermisson(get(targetUser, 'chat_id'), buildEmptyPermissionPatch());
-
-                    try {
-                        const sentMessage = await sendMessageHelper(
-                            get(targetUser, 'chat_id'),
-                            buildVerifixDeleteNotificationText({
-                                employeeId,
-                                adminName: getUserFullName(user)
-                            })
-                        );
-                        notificationSent = Boolean(sentMessage);
-                    } catch (err) {
-                        await loggerService.logError(err, {
-                            source: 'telegram_bot',
-                            action: 'VERIFIX_DELETE_USER_NOTIFICATION_FAILED',
-                            actor: { chatId: chat_id, role: 'admin' },
-                            entity: { type: 'employee' },
-                            metadata: { employeeId, targetChatId: get(targetUser, 'chat_id', '') }
-                        });
-                    }
-                }
-                updateStep(chat_id, 1);
+            if (!targetUser) {
+                updateStep(chat_id, ADMIN_DELETE_EMPLOYEE_STEP);
                 updateUser(chat_id, {
-                    selectedAdminUserChatId: '',
-                    verifixDeleteManualEmployeeId: '',
-                    verifixDeleteLookup: {},
-                    verifixDeleteLookupResult: {},
-                    verifixDeleteMode: '',
                     verifixDeleteResult: {
-                        status: 'success',
+                        status: 'error',
                         employeeId,
-                        targetChatId: get(targetUser, 'chat_id', ''),
+                        targetChatId: '',
                         targetName,
-                        localAccessRevoked: Boolean(targetUser),
-                        notificationSent,
+                        message: "Botda mahalliy foydalanuvchi topilmadi. Verifix ma'lumoti o'zgartirilmadi.",
                         mode: deleteMode
                     }
                 });
 
                 await loggerService.logBotAction(
                     { chat: { id: chat_id }, message_id: id },
-                    'ADMIN_VERIFIX_EMPLOYEE_DELETE_SUCCESS',
+                    'ADMIN_BOT_USER_DEACTIVATE_FAILURE',
                     { type: 'employee' },
-                    { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode, notificationSent } },
-                    { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode, notificationSent }
+                    { after: { employeeId, targetChatId: '', message: 'local_user_not_found', mode: deleteMode } },
+                    { employeeId, targetChatId: '', mode: deleteMode }
                 );
                 return;
             }
 
-            updateStep(chat_id, ADMIN_DELETE_EMPLOYEE_STEP);
+            let notificationSent = false;
+
+            updateUser(get(targetUser, 'chat_id'), buildVerifixAccessRevocationPatch(chat_id));
+            updatePermisson(get(targetUser, 'chat_id'), buildEmptyPermissionPatch());
+
+            try {
+                const sentMessage = await sendMessageHelper(
+                    get(targetUser, 'chat_id'),
+                    buildVerifixDeleteNotificationText({
+                        employeeId,
+                        adminName: getUserFullName(user)
+                    })
+                );
+                notificationSent = Boolean(sentMessage);
+            } catch (err) {
+                await loggerService.logError(err, {
+                    source: 'telegram_bot',
+                    action: 'BOT_USER_DEACTIVATE_NOTIFICATION_FAILED',
+                    actor: { chatId: chat_id, role: 'admin' },
+                    entity: { type: 'employee' },
+                    metadata: { employeeId, targetChatId: get(targetUser, 'chat_id', '') }
+                });
+            }
+
+            updateStep(chat_id, 1);
             updateUser(chat_id, {
+                selectedAdminUserChatId: '',
+                verifixDeleteManualEmployeeId: '',
+                verifixDeleteLookup: {},
+                verifixDeleteLookupResult: {},
+                verifixDeleteMode: '',
                 verifixDeleteResult: {
-                    status: 'error',
+                    status: 'success',
                     employeeId,
                     targetChatId: get(targetUser, 'chat_id', ''),
                     targetName,
-                    message: deleteResult.message || "Verifixdan o'chirishda xatolik yuz berdi.",
+                    localAccessRevoked: true,
+                    notificationSent,
                     mode: deleteMode
                 }
             });
 
             await loggerService.logBotAction(
                 { chat: { id: chat_id }, message_id: id },
-                'ADMIN_VERIFIX_EMPLOYEE_DELETE_FAILURE',
+                'ADMIN_BOT_USER_DEACTIVATE_SUCCESS',
                 { type: 'employee' },
-                { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), message: deleteResult.message, mode: deleteMode } },
-                { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode }
+                { after: { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode, notificationSent } },
+                { employeeId, targetChatId: get(targetUser, 'chat_id', ''), mode: deleteMode, notificationSent }
             );
         },
         middleware: ({ user }) => {
@@ -2029,16 +2042,13 @@ let adminCallback = {
 
                 if (get(result, 'status') == 'success') {
                     return [
-                        "Verifixdan o'chirildi.",
+                        "Botdan bloklandi.",
                         "",
                         `Xodim: ${get(result, 'targetName')}`,
                         `Employee ID: ${get(result, 'employeeId')}`,
-                        get(result, 'localAccessRevoked')
-                            ? "Botdagi kirish huquqlari ham bloklandi."
-                            : "Botda mahalliy foydalanuvchi topilmadi, Verifix amali bajarildi.",
-                        get(result, 'localAccessRevoked')
-                            ? (get(result, 'notificationSent') ? "Foydalanuvchiga xabar yuborildi." : "Foydalanuvchiga xabar yuborilmadi.")
-                            : null
+                        "Botdagi kirish huquqlari bloklandi.",
+                        "Verifix tizimidagi ma'lumot o'zgartirilmadi.",
+                        get(result, 'notificationSent') ? "Foydalanuvchiga xabar yuborildi." : "Foydalanuvchiga xabar yuborilmadi."
                     ].filter(Boolean).join('\n');
                 }
 
@@ -2047,7 +2057,7 @@ let adminCallback = {
                 }
 
                 return [
-                    "Verifixdan o'chirib bo'lmadi.",
+                    "Botdan bloklab bo'lmadi.",
                     "",
                     `Xodim: ${get(result, 'targetName', '-')}`,
                     `Employee ID: ${get(result, 'employeeId', '-')}`,

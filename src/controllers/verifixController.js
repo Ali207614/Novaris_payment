@@ -186,12 +186,18 @@ class verifixController {
     }
 
     _isExtraPhoneField(field = {}) {
+        const extraPhoneFieldCodes = new Set(['extra_phone', 'exrta_phone']);
+
         return [
             get(field, 'code'),
             get(field, 'name'),
             get(field, 'field_name'),
             get(field, 'label')
-        ].some(value => String(value || '').trim().toLowerCase() === 'extra_phone');
+        ].some(value => extraPhoneFieldCodes.has(this._normalizeFieldCode(value)));
+    }
+
+    _normalizeFieldCode(value = '') {
+        return String(value || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
     }
 
     async _findEmployeeByPhone(instance, phone) {
@@ -200,7 +206,7 @@ class verifixController {
         const visitedCursors = new Set();
 
         do {
-            const headers = { limit: 100 };
+            const headers = { limit: 500 };
 
             if (cursor) {
                 if (visitedCursors.has(cursor)) {
@@ -305,6 +311,16 @@ class verifixController {
             const instance = await this._getAxiosInstance();
             const response = await instance.post('/b/vhr/api/v1/core/track$create', data);
             return { status: true, data: response.data };
+        } catch (err) {
+            return { status: false, message: get(err, 'response.data.message', err.message) };
+        }
+    }
+
+    async listTracks(filters = {}) {
+        try {
+            const instance = await this._getAxiosInstance();
+            const response = await instance.post('/b/vhr/api/v1/core/track$list', filters);
+            return { status: true, data: get(response, 'data.data', []) };
         } catch (err) {
             return { status: false, message: get(err, 'response.data.message', err.message) };
         }

@@ -5,6 +5,7 @@ const { dataStore } = require('./dataStore')
 const { userStore } = require('./userStore')
 const legacyStore = require('./legacyStore')
 const { bot } = require('../config')
+const { splitTelegramText, TELEGRAM_SAFE_CAPTION_LIMIT } = require('./telegramText')
 
 
 
@@ -146,12 +147,24 @@ function parseDate(dateStr) {
     return new Date(Date.UTC(year, month - 1, day)); // Date.UTC yil, oy (0-indexed), kun
 }
 
+async function sendSplitTelegramMessage(chat_id, text, options) {
+    const chunks = splitTelegramText(String(text ?? ''));
+    let lastMessage = null;
+
+    for (let i = 0; i < chunks.length; i++) {
+        const isLast = i === chunks.length - 1;
+        lastMessage = await bot.sendMessage(chat_id, chunks[i] || ' ', isLast ? options : undefined);
+    }
+
+    return lastMessage;
+}
+
 async function sendMessageHelper(...arg) {
     try {
         let file = arg.find(item => get(item, 'file'))
         let lastFile = arg.find(item => get(item, 'lastFile'))
         if (get(lastFile, 'lastFile.file')) {
-            let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
+            let [chat_id, text, btn] = arg.filter(item => !get(item, 'file') && !get(item, 'lastFile'))
             const mediaGroup = [
                 {
                     media: get(file, 'file.document.file_id'),
@@ -160,28 +173,30 @@ async function sendMessageHelper(...arg) {
                 {
                     media: get(lastFile, 'lastFile.file.file_id'),
                     type: 'document',
-                    caption: text,
                 },
             ]
-            bot.sendMediaGroup(chat_id, mediaGroup.filter(item => get(item, 'media'))).then(() => {
-            }).catch(async (e) => {
-                return await bot.sendMessage(chat_id, text)
+            return await bot.sendMediaGroup(chat_id, mediaGroup.filter(item => get(item, 'media'))).then(async () => {
+                return await sendSplitTelegramMessage(chat_id, text, btn)
+            }).catch(async () => {
+                return await sendSplitTelegramMessage(chat_id, text, btn)
             })
-            return
         }
         if (file && get(file, 'file.send') && get(file, 'file.document')) {
             let [chat_id, text, btn] = arg.filter(item => !get(item, 'file'))
+            const textValue = String(text ?? '')
+            const useCaption = textValue.length <= TELEGRAM_SAFE_CAPTION_LIMIT
             return await bot.sendDocument(chat_id, get(file, 'file.document.file_id'), {
-                caption: text,
-                reply_markup: btn?.reply_markup
+                ...(useCaption ? { caption: textValue, reply_markup: btn?.reply_markup } : {})
             }).then((data) => {
-                return data
-            }).catch(async e => {
-                return await bot.sendMessage(chat_id, text)
+                if (useCaption) return data
+                return sendSplitTelegramMessage(chat_id, textValue, btn)
+            }).catch(async () => {
+                return await sendSplitTelegramMessage(chat_id, textValue, btn)
             })
         }
 
-        return await bot.sendMessage(...arg)
+        const [chat_id, text, btn] = arg
+        return await sendSplitTelegramMessage(chat_id, text, btn)
     } catch (e) {
         console.log(e, ' bu err bu ')
     }

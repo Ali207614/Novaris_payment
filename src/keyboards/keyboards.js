@@ -177,7 +177,7 @@ const adminKeyboard = {
                     text: "Foydalanuvchilar excel"
                 },
                 {
-                    text: "Verifixdan xodim o'chirish"
+                    text: "Botdan xodim bloklash"
                 }
             ],
             [

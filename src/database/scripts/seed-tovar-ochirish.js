@@ -2,6 +2,14 @@ const { connectDB, disconnectDB } = require("../mongoose.module");
 const Menu = require("../models/menu.model");
 const SubMenu = require("../models/sub-menu.model");
 
+const TOVAR_OCHIRISH_COMMENT = "Sana:\nTovar o'chirish\n- Tovar nomi:\n- O'chirish sababi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#ochirish\n";
+const TOVAR_OCHIRISH_INFO_FUNCTION = `({ chat_id, id }) => {
+    let user = infoUser().find(item => item.chat_id == chat_id)
+    let data = infoData().find(item => item.id == (id ? id : user.currentDataId))
+    let info = [{ name: 'ID', message: data?.ID }, { name: 'Menu', message: data.menuName }, { name: 'SubMenu', message: data.subMenu }, { name: 'Izoh', message: data.comment }]
+    return info
+} `;
+
 async function seed() {
     try {
         await connectDB();
@@ -23,8 +31,43 @@ async function seed() {
                 menuId: menu._id,
                 legacyMenuId: String(menu.legacyId),
                 name: "Tovar o'chirish",
-                comment: "Sana:\nTovar o'chirish\n- Tovar nomi:\n- O'chirish sababi:\n\nIzoh: Bo'lgan ish sababini to'liq bayon qilib yozing!\n\n#ochirish\n",
+                comment: TOVAR_OCHIRISH_COMMENT,
+                infoFunction: TOVAR_OCHIRISH_INFO_FUNCTION,
+                flow: {
+                    updateLine: 1,
+                    lastStep: 62,
+                    steps: [
+                        {
+                            legacyId: 1,
+                            name: "Izoh",
+                            message: TOVAR_OCHIRISH_COMMENT,
+                            button: "() => empDynamicBtn()",
+                            step: "13"
+                        }
+                    ]
+                },
                 status: { isActive: true, isDeleted: false },
+                legacy: {
+                    sourceFile: "seed-tovar-ochirish.js",
+                    raw: {
+                        id: 9999,
+                        menuId: String(menu.legacyId),
+                        name: "Tovar o'chirish",
+                        comment: TOVAR_OCHIRISH_COMMENT,
+                        update: [
+                            {
+                                id: 1,
+                                name: "Izoh",
+                                message: TOVAR_OCHIRISH_COMMENT,
+                                btn: "() => empDynamicBtn()",
+                                step: "13"
+                            }
+                        ],
+                        updateLine: 1,
+                        lastStep: 62,
+                        infoFn: TOVAR_OCHIRISH_INFO_FUNCTION
+                    }
+                }
             },
             { upsert: true }
         );

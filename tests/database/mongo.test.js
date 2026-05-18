@@ -85,6 +85,7 @@ test('Legacy Mongo mapping', async (t) => {
       menu: 8,
       menuName: 'Menu',
       subMenu: 'Sub',
+      subMenuId: 9999,
       summa: '123.45',
       full: true,
       is_delete: false,
@@ -96,12 +97,14 @@ test('Legacy Mongo mapping', async (t) => {
     assert.strictEqual(mongo.requestNo, 42);
     assert.strictEqual(mongo.creator.chatId, 111);
     assert.strictEqual(mongo.menu.legacyMenuId, 8);
+    assert.strictEqual(mongo.menu.legacySubMenuId, '9999');
     assert.strictEqual(mongo.financial.rawAmount, '123.45');
 
     const mappedBack = mapToLegacyRequest(mongo);
     assert.strictEqual(mappedBack.id, 'abc123');
     assert.strictEqual(mappedBack.ID, 42);
     assert.strictEqual(mappedBack.chat_id, 111);
+    assert.strictEqual(mappedBack.subMenuId, '9999');
   });
 
   await t.test('Should normalize legacy permission menus into documents', () => {

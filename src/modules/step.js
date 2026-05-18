@@ -18,6 +18,8 @@ const {
     searchManageableAdminUsers,
     toAdminUserButtonList
 } = require("../helpers/adminUserDirectory")
+const { findSubMenuForRequest } = require("../helpers/subMenuResolver")
+const { validateCommentLength } = require("../helpers/commentLimits")
 
 
 const cleanTelegramText = (text = '') => {
@@ -207,12 +209,20 @@ let xorijiyXaridStep = {
         selfExecuteFn: ({ chat_id, msgText }) => {
             let user = infoUser().find(item => item.chat_id == chat_id)
             let list = infoData().find(item => item.id == user.currentDataId)
+            const commentValidation = validateCommentLength(msgText)
+
+            if (!commentValidation.ok) {
+                updateUser(chat_id, { commentValidationError: commentValidation.message })
+                return
+            }
+
+            updateUser(chat_id, { commentValidationError: '' })
 
             if (user?.update) {
                 updateStep(chat_id, get(list, 'lastStep', 0))
             }
             else {
-                let findComment = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu)?.comment
+                let findComment = findSubMenuForRequest(SubMenu(), list, 1)?.comment
                 updateStep(chat_id, 14)
                 updateBack(chat_id, { text: findComment, btn: empDynamicBtn(), step: 13 })
             }
@@ -226,15 +236,23 @@ let xorijiyXaridStep = {
             text: ({ chat_id }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
 
+                if (get(user, 'commentValidationError')) {
+                    return get(user, 'commentValidationError')
+                }
+
                 if (user?.update) {
                     let list = infoData().find(item => item.id == user.currentDataId)
-                    let info = SubMenu()[get(list, 'menu', 1)].find(item => item.name == list.subMenu).infoFn({ chat_id })
+                    let info = findSubMenuForRequest(SubMenu(), list, 1).infoFn({ chat_id })
                     return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
                 }
                 return "File jo'natasizmi ?"
             },
             btn: async ({ chat_id, }) => {
                 let user = infoUser().find(item => item.chat_id == chat_id)
+
+                if (get(user, 'commentValidationError')) {
+                    return empDynamicBtn()
+                }
 
                 if (user?.update) {
                     return dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
@@ -957,11 +975,20 @@ let tolovHarajatStep = {
     "61": {
         selfExecuteFn: ({ chat_id, msgText, user }) => {
             let data = infoData().find(item => item.id == user.currentDataId)
+            const commentValidation = validateCommentLength(msgText)
+
+            if (!commentValidation.ok) {
+                updateUser(chat_id, { commentValidationError: commentValidation.message })
+                return
+            }
+
+            updateUser(chat_id, { commentValidationError: '' })
+
             if (user?.update) {
                 updateStep(chat_id, get(data, 'lastStep', 30))
             }
             else {
-                let findComment = SubMenu()[get(data, 'menu', 3)].find(item => item.name == get(data, 'subMenu'))?.comment
+                let findComment = findSubMenuForRequest(SubMenu(), data, 3)?.comment
                 updateBack(chat_id, { text: findComment, btn: empDynamicBtn(), step: 61 })
                 updateStep(chat_id, 62)
             }
@@ -973,15 +1000,25 @@ let tolovHarajatStep = {
         next: {
             text: ({ chat_id, user }) => {
 
+                user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'commentValidationError')) {
+                    return get(user, 'commentValidationError')
+                }
+
                 if (user?.update) {
                     let list = infoData().find(item => item.id == user.currentDataId)
-                    let info = SubMenu()[get(list, 'menu', 3)].find(item => item.name == get(list, 'subMenu')).infoFn({ chat_id })
+                    let info = findSubMenuForRequest(SubMenu(), list, 3).infoFn({ chat_id })
                     return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
                 }
                 return "File jo'natasizmi"
 
             },
             btn: async ({ chat_id, user }) => {
+
+                user = infoUser().find(item => item.chat_id == chat_id)
+                if (get(user, 'commentValidationError')) {
+                    return empDynamicBtn()
+                }
 
                 if (user?.update) {
                     return dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }, { name: "O'zgartirish", id: 3 }], 2, 'confirmEmp')
@@ -1109,7 +1146,8 @@ const getVerifixLookupDeleteText = (employee = {}) => {
         `Bo'lim: ${get(employee, 'DivisionName', '-')}`,
         `Lokatsiya: ${get(employee, 'LocationName', '-')}`,
         "",
-        "Bu xodimni Verifixdan o'chirishni tasdiqlaysizmi?"
+        "Bu xodimni faqat botdan bloklashni tasdiqlaysizmi?",
+        "Verifix tizimidagi ma'lumot o'zgartirilmaydi."
     ];
 
     return rows.join('\n');
@@ -1188,7 +1226,7 @@ let adminStep = {
                 }
 
                 return dataConfirmBtnEmp(chat_id, [
-                    { name: "Ha, o'chirish", id: 1 },
+                    { name: "Ha, bloklash", id: 1 },
                     { name: "Bekor qilish", id: 2 }
                 ], 1, 'verifixDeleteEmployee');
             },
@@ -1319,9 +1357,14 @@ let adminStep = {
     },
     "706": {
         selfExecuteFn: ({ chat_id, msgText, user }) => {
+            const commentValidation = validateCommentLength(msgText)
+            if (!commentValidation.ok) {
+                updateUser(chat_id, { commentValidationError: commentValidation.message })
+                return
+            }
+
             updateStep(chat_id, 707)
-            let data = infoData().find(item => item.id == user.currentDataId)
-            updateUser(chat_id, { newSubMenu: { ...get(user, 'newSubMenu', {}), comment: msgText } })
+            updateUser(chat_id, { commentValidationError: '', newSubMenu: { ...get(user, 'newSubMenu', {}), comment: msgText } })
             updateBack(chat_id, { text: 'Kommentariyani yozing', btn: empDynamicBtn(), step: 706 })
         },
         middleware: ({ chat_id, user }) => {
@@ -1329,6 +1372,10 @@ let adminStep = {
         },
         next: {
             text: ({ chat_id, user }) => {
+                if (get(user, 'commentValidationError')) {
+                    return get(user, 'commentValidationError')
+                }
+
                 let info = [
                     {
                         name: 'Asosiy Menu Nomi',
@@ -1345,7 +1392,10 @@ let adminStep = {
                 ]
                 return dataConfirmText(info, 'Tasdiqlaysizmi ?', chat_id)
             },
-            btn: async ({ chat_id, }) => {
+            btn: async ({ chat_id, user }) => {
+                if (get(user, 'commentValidationError')) {
+                    return empDynamicBtn()
+                }
                 return dataConfirmBtnEmp(chat_id, [{ name: 'Ha', id: 1, }, { name: 'Bekor qilish', id: 2 }], 2, 'confirmAdminSubMenu')
             },
         },
@@ -1387,8 +1437,17 @@ let adminStep = {
             let type = get(user, 'updateMenu.menuType')
             let id = get(user, 'updateMenu.menuId')
             let key = get(user, 'updateMenu.key')
+            const isSubMenuComment = String(type) != '1' && String(key) != '1'
+            if (isSubMenuComment) {
+                const commentValidation = validateCommentLength(msgText)
+                if (!commentValidation.ok) {
+                    updateUser(chat_id, { commentValidationError: commentValidation.message })
+                    return
+                }
+            }
+
             type == 1 ? updateMenu(id, { name: msgText }) : updateSubMenu(id, (key == 1 ? { name: msgText } : { comment: msgText }))
-            updateUser(chat_id, { back: get(user, 'back').filter(item => ![800, 801, 802].includes(+item.step)) })
+            updateUser(chat_id, { commentValidationError: '', back: get(user, 'back').filter(item => ![800, 801, 802].includes(+item.step)) })
             updateStep(chat_id, 800)
         },
         middleware: ({ chat_id, user }) => {
@@ -1396,13 +1455,20 @@ let adminStep = {
         },
         next: {
             text: ({ chat_id, msgText, user }) => {
+                if (get(user, 'commentValidationError')) {
+                    return get(user, 'commentValidationError')
+                }
+
                 let type = get(user, 'updateMenu.menuType')
                 let id = get(user, 'updateMenu.menuId')
                 let menu = (type == 1) ? infoMenu().find(item => item.id == id) : infoSubMenu().find(item => item.id == id)
                 sendMessageHelper(chat_id, `${type == '1' ? 'Asosiy' : 'Sub'} Menu ${get(user, 'updateMenu.key') == 1 ? 'nomi' : 'kommentariya'} o'zgartirildi ✅`)
                 return `Menular o'zgartirish`
             },
-            btn: async ({ chat_id, msgText }) => {
+            btn: async ({ chat_id, msgText, user }) => {
+                if (get(user, 'commentValidationError')) {
+                    return empDynamicBtn()
+                }
                 return empDynamicBtn(["Asosiy Menu", "Sub Menu"], 2)
             },
         },
